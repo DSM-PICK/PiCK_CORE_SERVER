@@ -9,5 +9,4 @@ class Pick2024ServerApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

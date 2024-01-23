@@ -2,7 +2,6 @@ object Dependencies {
 
     // kotlin
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
-    const val KOTLIN_JDK = "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     const val JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin:${DependencyVersions.JACKSON_VERSION}"
     const val JACKSON_TYPE = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${DependencyVersions.JACKSON_VERSION}"
 
