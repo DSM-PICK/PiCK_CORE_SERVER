@@ -1,6 +1,6 @@
 package dsm.pick2024_server.global.security.jwt.dto
 
-data class TokenResponse (
+data class TokenResponse(
     val accessToken: String,
-    val refreshToken: String,
+    val refreshToken: String
 )

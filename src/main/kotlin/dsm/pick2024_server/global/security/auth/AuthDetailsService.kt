@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class AuthDetailsService(
     private val userByNamePort: UserByNamePort
-): UserDetailsService {
+) : UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails {
         val user = userByNamePort.findByName(username!!) ?: throw UserNotFoundException
 

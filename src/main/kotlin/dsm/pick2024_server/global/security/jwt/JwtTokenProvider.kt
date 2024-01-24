@@ -59,7 +59,9 @@ class JwtTokenProvider(
     fun parseToken(bearerToken: String?): String? {
         return if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.replace("Bearer ", "")
-        } else null
+        } else {
+            null
+        }
     }
 
     fun authorization(token: String): UsernamePasswordAuthenticationToken {

@@ -26,11 +26,15 @@ class GlobalExceptionFilter(
     }
 
     @Throws(IOException::class)
-    private fun writeErrorResponse(response: HttpServletResponse, status:Int, errorResponse:
-    ErrorResponse) {
+    private fun writeErrorResponse(
+        response: HttpServletResponse,
+        status: Int,
+        errorResponse:
+            ErrorResponse
+    ) {
         response.status = status
         response.contentType = "application/json"
         response.characterEncoding = "UTF-8"
-        objectMapper.writeValue(response.writer,errorResponse)
+        objectMapper.writeValue(response.writer, errorResponse)
     }
 }

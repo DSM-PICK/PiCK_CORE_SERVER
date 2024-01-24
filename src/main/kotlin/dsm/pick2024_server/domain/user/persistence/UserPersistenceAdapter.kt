@@ -10,8 +10,7 @@ import org.springframework.stereotype.Component
 class UserPersistenceAdapter(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper
-): UserByNamePort {
+) : UserByNamePort {
     override fun findByName(name: String): User? =
         userRepository.findByName(name)?.let { userMapper.toDomain(it) }
-
 }

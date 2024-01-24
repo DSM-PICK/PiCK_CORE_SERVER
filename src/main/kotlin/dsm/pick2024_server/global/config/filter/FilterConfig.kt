@@ -9,9 +9,9 @@ import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.access.intercept.AuthorizationFilter
 
 @Configuration
-class FilterConfig (
+class FilterConfig(
     private val objectMapper: ObjectMapper
-) : SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>(){
+) : SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>() {
     override fun configure(builder: HttpSecurity) {
         builder.addFilterBefore(GlobalExceptionFilter(objectMapper), AuthorizationFilter::class.java)
     }

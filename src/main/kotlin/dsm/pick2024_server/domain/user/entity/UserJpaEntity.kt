@@ -5,8 +5,8 @@ import java.util.UUID
 import javax.persistence.Entity
 
 @Entity(name = "tbl_user")
-class UserJpaEntity (
+class UserJpaEntity(
     id: UUID?,
 
     val name: String
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)
