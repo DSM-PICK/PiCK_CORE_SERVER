@@ -1,8 +1,10 @@
 package dsm.pick2024_server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
+@ConfigurationPropertiesScan
 @SpringBootApplication
 class Pick2024ServerApplication
 
