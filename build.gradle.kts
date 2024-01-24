@@ -51,7 +51,7 @@ dependencies {
     // Valid
     implementation(Dependencies.SPRING_VALIDATION)
 
-    // Gson
+    // Json
     implementation(Dependencies.JSON)
 
     // Jwt
@@ -66,6 +66,8 @@ dependencies {
     implementation(Dependencies.JACKSON_TYPE)
 
     implementation(Dependencies.MYSQL_CONNECTOR)
+
+    implementation(Dependencies.OPEN_FEIGN)
 }
 
 tasks.withType<KotlinCompile> {
