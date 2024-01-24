@@ -57,13 +57,8 @@ dependencies {
     // Jwt
     implementation(Dependencies.JWT)
 
-    // Kafka
-    implementation(Dependencies.KAFKA)
-
     // Spring Config
     implementation(Dependencies.CLOUD_CONFIG)
-
-    implementation(Dependencies.JACKSON_TYPE)
 
     implementation(Dependencies.MYSQL_CONNECTOR)
 
