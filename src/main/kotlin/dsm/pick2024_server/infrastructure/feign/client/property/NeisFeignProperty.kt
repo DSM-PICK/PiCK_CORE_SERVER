@@ -7,4 +7,8 @@ object NeisFeignProperty {
     const val PAGE_SIZE = "pSize"
     const val SD_SCHUL_CODE = "SD_SCHUL_CODE"
     const val ATPT_OFCDC_SC_CODE = "ATPT_OFCDC_SC_CODE"
+    const val SEM = "SEM"
+    const val ALL_TI_YMD = "ALL_TI_YMD"
+    const val DDDEP_NM = "DDDEP_NM"
+    const val GRADE = "GRADE"
 }
