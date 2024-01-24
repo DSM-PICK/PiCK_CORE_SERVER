@@ -1,12 +1,13 @@
-package dsm.pick2024_server
+package dsm.buildsrc
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class Pick2024ServerApplicationTests {
+class BuildSrcApplicationTests {
 
     @Test
     fun contextLoads() {
     }
+
 }
