@@ -38,6 +38,6 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String,
         @RequestParam(name = NeisFeignProperty.SEM)sem: String,
         @RequestParam(name = NeisFeignProperty.DDDEP_NM)major: String,
-        @RequestParam(name = NeisFeignProperty.GRADE)grade: String,
+        @RequestParam(name = NeisFeignProperty.GRADE)grade: String
     )
 }
