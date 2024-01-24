@@ -1,1 +1,0 @@
-[90m/Users/dokyung/Desktop/project/PICK2024_SERVER/src/main/kotlin/dsm/pick2024_server/[0mPick2024ServerApplication.kt[90m:[0m1[90m:1:[0m Package name must not contain underscore [90m(package-name)[0m
