@@ -17,4 +17,14 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
         @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String
     ): String
+
+    @GetMapping("/SchoolSchedule")
+    fun getSchoolSchedule(
+        @RequestParam(name = NeisFeignProperty.KEY) key: String,
+        @RequestParam(name = NeisFeignProperty.TYPE) type: String,
+        @RequestParam(name = NeisFeignProperty.PAGE_INDEX) pageIndex: Int,
+        @RequestParam(name = NeisFeignProperty.PAGE_SIZE) pageSize: Int,
+        @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
+        @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String
+    ): String
 }
