@@ -7,11 +7,11 @@ import javax.persistence.Entity
 
 @Entity(name = "tbl_admin")
 class AdminJpaEntity(
-    id: UUID,
+    id: UUID?,
 
     @Column(name = "name", nullable = false)
     val name: String,
 
     @Column(name = "class_rom")
     val classRoom: String? = null
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)
