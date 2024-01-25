@@ -11,7 +11,11 @@ class UserMapper {
         domain.run {
             UserJpaEntity(
                 id = id,
-                name = name
+                name = name,
+                grade = grade,
+                classNum = classNum,
+                num = num,
+                role = role
             )
         }
 
@@ -19,7 +23,11 @@ class UserMapper {
         entity.run {
             User(
                 id = id!!,
-                name = name
+                name = name,
+                grade = grade,
+                classNum = classNum,
+                num = num,
+                role = role
             )
         }
 }
