@@ -7,7 +7,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "tbl_meal")
-class MealJpaEntity (
+class MealJpaEntity(
     id: UUID?,
 
     @Column(columnDefinition = "DATE", nullable = false)
@@ -22,4 +22,4 @@ class MealJpaEntity (
     @Column(columnDefinition = "VARCHAR(255)")
     val dinner: String
 
-    ): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)
