@@ -1,11 +1,11 @@
 package dsm.pick2024.global.security.jwt
 
-import dsm.pick2024_server.global.security.auth.AuthDetailsService
-import dsm.pick2024_server.global.security.jwt.dto.TokenResponse
-import dsm.pick2024_server.global.security.jwt.entity.RefreshToken
-import dsm.pick2024_server.global.security.jwt.entity.repository.RefreshTokenRepository
-import dsm.pick2024_server.global.security.jwt.exception.ExpiredTokenException
-import dsm.pick2024_server.global.security.jwt.exception.InvalidJwtException
+import dsm.pick2024.global.security.auth.AuthDetailsService
+import dsm.pick2024.global.security.jwt.dto.TokenResponse
+import dsm.pick2024.global.security.jwt.entity.RefreshToken
+import dsm.pick2024.global.security.jwt.entity.repository.RefreshTokenRepository
+import dsm.pick2024.global.security.jwt.exception.ExpiredTokenException
+import dsm.pick2024.global.security.jwt.exception.InvalidJwtException
 import io.jsonwebtoken.*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails

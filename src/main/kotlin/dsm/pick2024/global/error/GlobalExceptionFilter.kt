@@ -1,7 +1,7 @@
 package dsm.pick2024.global.error
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dsm.pick2024_server.global.error.exception.PickException
+import dsm.pick2024.global.error.exception.PickException
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 import javax.servlet.FilterChain

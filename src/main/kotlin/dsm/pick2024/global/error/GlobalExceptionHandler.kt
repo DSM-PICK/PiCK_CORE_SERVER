@@ -1,6 +1,6 @@
 package dsm.pick2024.global.error
 
-import dsm.pick2024_server.global.error.exception.PickException
+import dsm.pick2024.global.error.exception.PickException
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
