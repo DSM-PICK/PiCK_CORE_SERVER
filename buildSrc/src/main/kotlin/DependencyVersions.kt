@@ -6,4 +6,5 @@ object DependencyVersions {
     const val OPEN_FEIGN_VERSION = "3.1.4"
     const val JSON_VERSION = "20200518"
     const val JWT_VERSION = "0.9.1"
+    const val SWAGGER_VERSION = "1.6.11"
 }

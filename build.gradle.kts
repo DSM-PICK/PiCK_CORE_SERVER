@@ -63,6 +63,8 @@ dependencies {
     implementation(Dependencies.MYSQL_CONNECTOR)
 
     implementation(Dependencies.OPEN_FEIGN)
+
+    implementation(Dependencies.SWAGGER)
 }
 
 tasks.withType<KotlinCompile> {
