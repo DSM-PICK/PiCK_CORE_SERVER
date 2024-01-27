@@ -37,9 +37,8 @@ object Dependencies {
     // Cloud Config
     const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"
 
-    //redis
-    const val REDIS = "org.springframework.boot:spring-boot-starter-data-redis: ${DependencyVersions.REDIS_VERSION}"
-
     // cloud
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
+
+    const val SWAGGER = "org.springdoc:springdoc-openapi-ui:${DependencyVersions.SWAGGER_VERSION}"
 }
