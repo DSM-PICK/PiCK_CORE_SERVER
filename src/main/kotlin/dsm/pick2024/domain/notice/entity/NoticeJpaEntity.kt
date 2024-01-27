@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity(name = "tbl_notice")
-class NoticeJpaEntity (
+class NoticeJpaEntity(
     id: UUID?,
 
     val title: String,
@@ -22,4 +22,4 @@ class NoticeJpaEntity (
     @JoinColumn(name = "admin")
     val admin: AdminJpaEntity
 
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

@@ -1,7 +1,5 @@
 package dsm.pick2024.domain.notice.mapper
 
-import dsm.pick2024.domain.admin.domain.Admin
-import dsm.pick2024.domain.admin.entity.AdminJpaEntity
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.NoticeJpaEntity
 import org.springframework.stereotype.Component
@@ -15,7 +13,7 @@ class NoticeMapper {
                 title = title,
                 content = content,
                 createAt = createAt,
-                admin = admin,
+                admin = admin
             )
         }
 
