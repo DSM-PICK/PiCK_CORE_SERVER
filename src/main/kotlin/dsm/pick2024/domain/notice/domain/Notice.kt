@@ -9,5 +9,5 @@ data class Notice (
     val title: String,
     val content: String,
     val createAt: LocalDateTime,
-    val adminJpaEntity: AdminJpaEntity,
+    val admin: AdminJpaEntity,
 )

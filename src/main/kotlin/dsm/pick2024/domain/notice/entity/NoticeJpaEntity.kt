@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne
 
 @Entity(name = "tbl_notice")
 class NoticeJpaEntity (
-    id: UUID,
+    id: UUID?,
 
     val title: String,
 
