@@ -65,6 +65,10 @@ dependencies {
     implementation(Dependencies.OPEN_FEIGN)
 
     implementation(Dependencies.SWAGGER)
+
+    // QueryDSL
+    implementation(Dependencies.QUERYDSL)
+    implementation(Dependencies.QUERYDSL_PROCESSOR)
 }
 
 tasks.withType<KotlinCompile> {
