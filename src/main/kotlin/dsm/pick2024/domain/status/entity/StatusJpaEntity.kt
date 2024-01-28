@@ -19,4 +19,4 @@ class StatusJpaEntity(
     @Enumerated(EnumType.STRING)
     val status: StatusType
 
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)
