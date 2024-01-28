@@ -41,4 +41,8 @@ object Dependencies {
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
 
     const val SWAGGER = "org.springdoc:springdoc-openapi-ui:${DependencyVersions.SWAGGER_VERSION}"
+
+    //QueryDSL
+    const val QUERYDSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERYDSL}"
+    const val QUERYDSL_PROCESSOR = "com.querydsl:querydsl-apt:${DependencyVersions.QUERYDSL}:jpa"
 }

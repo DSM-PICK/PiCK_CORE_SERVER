@@ -7,4 +7,5 @@ object DependencyVersions {
     const val JSON_VERSION = "20200518"
     const val JWT_VERSION = "0.9.1"
     const val SWAGGER_VERSION = "1.6.11"
+    const val QUERYDSL = "5.0.0"
 }
