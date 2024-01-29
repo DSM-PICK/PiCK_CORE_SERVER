@@ -15,6 +15,9 @@ class AdminJpaEntity(
     @Column(name = "password", nullable = false)
     val password: String,
 
+    @Column(name = "admin_id", nullable = false)
+    val adminId: String,
+
     @Column(name = "class_rom")
     val classRoom: String? = null
 ) : BaseUUIDEntity(id)

@@ -2,11 +2,12 @@ package dsm.pick2024.domain.notice.mapper
 
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.NoticeJpaEntity
+import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class NoticeMapper {
-    fun toEntity(domain: Notice): NoticeJpaEntity =
+abstract class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice>{
+    override fun toEntity(domain: Notice): NoticeJpaEntity =
         domain.run {
             NoticeJpaEntity(
                 id = id,
@@ -17,7 +18,7 @@ class NoticeMapper {
             )
         }
 
-    fun toDomain(entity: NoticeJpaEntity): Notice =
+    override fun toDomain(entity: NoticeJpaEntity): Notice =
         entity.run {
             Notice(
                 id = id!!,
