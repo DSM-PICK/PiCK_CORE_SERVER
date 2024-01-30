@@ -11,6 +11,10 @@ enum class ErrorCode(
 
     USER_NOT_FOUND(404, "User Not Found"),
 
+    PASSWORD_MISS_MATCH(401, "Password Miss Match"),
+
+    ADMIN_NOT_FOUND(404, "Admin Not Found"),
+
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
 
