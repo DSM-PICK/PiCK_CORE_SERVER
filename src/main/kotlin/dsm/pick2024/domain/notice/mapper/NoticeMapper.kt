@@ -6,7 +6,7 @@ import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-abstract class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice>{
+abstract class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
     abstract override fun toEntity(domain: Notice): NoticeJpaEntity
 
     abstract override fun toDomain(entity: NoticeJpaEntity): Notice

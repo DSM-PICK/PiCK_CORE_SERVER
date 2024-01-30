@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @Tag(name = "admin API")
 @RestController
 @RequestMapping("/admin")
-class AdminController (
+class AdminController(
     private val adminLoginUseCase: AdminLoginUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")

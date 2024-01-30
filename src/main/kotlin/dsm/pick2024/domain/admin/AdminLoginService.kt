@@ -17,10 +17,10 @@ class AdminLoginService(
     private val findByAdminIdPort: FindByAdminIdPort,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider
-): AdminLoginUseCase {
+) : AdminLoginUseCase {
     @Transactional(readOnly = true)
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-       val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId)?:  throw AdminNotFoundException
+        val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
         if (passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
             throw PasswordMissMatchException
         }

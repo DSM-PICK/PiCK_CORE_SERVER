@@ -10,5 +10,5 @@ abstract class UserMapper : GenericMapper<UserJpaEntity, User> {
 
     abstract override fun toEntity(domain: User): UserJpaEntity
 
-   abstract override fun toDomain(entity: UserJpaEntity): User
+    abstract override fun toDomain(entity: UserJpaEntity): User
 }

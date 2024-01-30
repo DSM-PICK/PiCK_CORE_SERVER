@@ -26,14 +26,14 @@ class JwtTokenProvider(
 
     fun getToken(name: String, role: String): TokenResponse {
         val accessToken: String = generateAccessToken(name, role, ACCESS_KEY, jwtProperties.accessExp)
-        val refreshToken: String = generateRefreshToken(REFRESH_KEY, role,jwtProperties.refreshExp)
+        val refreshToken: String = generateRefreshToken(REFRESH_KEY, role, jwtProperties.refreshExp)
         refreshTokenRepository.save(
             RefreshToken(name, refreshToken, jwtProperties.refreshExp)
         )
         return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
     }
 
-    private fun generateAccessToken(name: String, role:String, type: String, expiration: Long): String {
+    private fun generateAccessToken(name: String, role: String, type: String, expiration: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
             .setSubject(name)
             .setHeaderParam("type", type)

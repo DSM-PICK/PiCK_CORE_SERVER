@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 abstract class MealMapper : GenericMapper<MealJpaEntity, Meal> {
-   abstract override fun toEntity(domain: Meal): MealJpaEntity
+    abstract override fun toEntity(domain: Meal): MealJpaEntity
 
-   abstract override fun toDomain(entity: MealJpaEntity): Meal
+    abstract override fun toDomain(entity: MealJpaEntity): Meal
 }

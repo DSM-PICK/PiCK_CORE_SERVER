@@ -4,16 +4,14 @@ import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.mapper.AdminMapper
 import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
 import dsm.pick2024.domain.admin.port.out.AdminPort
-import dsm.pick2024.domain.admin.port.out.FindByAdminIdPort
 import org.springframework.stereotype.Component
 
 @Component
-class AdminPersistenceAdapter (
+class AdminPersistenceAdapter(
     private val adminRepository: AdminRepository,
     private val adminMapper: AdminMapper
-): AdminPort {
+) : AdminPort {
     override fun findByAdminId(adminId: String): Admin {
         return adminRepository.findByAdminId(adminId).let(adminMapper::toDomain)
     }
-
 }
