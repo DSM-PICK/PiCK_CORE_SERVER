@@ -10,5 +10,5 @@ abstract class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
 
     abstract override fun toEntity(domain: Admin): AdminJpaEntity
 
-    abstract override fun toDomain(entity: AdminJpaEntity): Admin
+    abstract override fun toDomain(entity: AdminJpaEntity?): Admin?
 }
