@@ -41,4 +41,6 @@ object Dependencies {
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
 
     const val SWAGGER = "org.springdoc:springdoc-openapi-ui:${DependencyVersions.SWAGGER_VERSION}"
+
+    const val MYBATIS = "org.mybatis.spring.boot:mybatis-spring-boot-starter:${DependencyVersions.MYBATIS}"
 }

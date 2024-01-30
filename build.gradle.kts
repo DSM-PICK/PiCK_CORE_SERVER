@@ -65,6 +65,8 @@ dependencies {
     implementation(Dependencies.OPEN_FEIGN)
 
     implementation(Dependencies.SWAGGER)
+
+    implementation(Dependencies.MYBATIS)
 }
 
 tasks.withType<KotlinCompile> {
