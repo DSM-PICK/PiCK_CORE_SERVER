@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component
 abstract class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
     abstract override fun toEntity(domain: Notice): NoticeJpaEntity
 
-    abstract override fun toDomain(entity: NoticeJpaEntity): Notice
+    abstract override fun toDomain(entity: NoticeJpaEntity?): Notice?
 }
