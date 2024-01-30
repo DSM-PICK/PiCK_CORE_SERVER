@@ -24,27 +24,29 @@ class JwtTokenProvider(
         private const val REFRESH_KEY = "refresh_token"
     }
 
-    fun getToken(name: String): TokenResponse {
-        val accessToken: String = generateAccessToken(name, ACCESS_KEY, jwtProperties.accessExp)
-        val refreshToken: String = generateRefreshToken(REFRESH_KEY, jwtProperties.refreshExp)
+    fun getToken(name: String, role: String): TokenResponse {
+        val accessToken: String = generateAccessToken(name, role, ACCESS_KEY, jwtProperties.accessExp)
+        val refreshToken: String = generateRefreshToken(REFRESH_KEY, role,jwtProperties.refreshExp)
         refreshTokenRepository.save(
             RefreshToken(name, refreshToken, jwtProperties.refreshExp)
         )
         return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
     }
 
-    private fun generateAccessToken(name: String, type: String, expiration: Long): String {
+    private fun generateAccessToken(name: String, role:String, type: String, expiration: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
             .setSubject(name)
             .setHeaderParam("type", type)
+            .claim("role", role)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
             .compact()
     }
 
-    private fun generateRefreshToken(type: String, ttl: Long): String {
+    private fun generateRefreshToken(role: String, type: String, ttl: Long): String {
         return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
             .setHeaderParam("type", type)
+            .claim("role", role)
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + ttl * 1000))
             .compact()
