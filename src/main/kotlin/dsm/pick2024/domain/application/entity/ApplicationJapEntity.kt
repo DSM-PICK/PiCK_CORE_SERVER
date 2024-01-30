@@ -23,9 +23,8 @@ class ApplicationJapEntity(
     @Column(name = "end_time", nullable = false)
     val endTime: LocalTime,
 
-
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     val userId: UserJpaEntity
 
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)
