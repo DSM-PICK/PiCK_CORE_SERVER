@@ -7,25 +7,7 @@ import org.springframework.stereotype.Component
 
 @Component
 abstract class MealMapper : GenericMapper<MealJpaEntity, Meal> {
-    override fun toEntity(domain: Meal): MealJpaEntity =
-        domain.run {
-            MealJpaEntity(
-                id = id,
-                mealDate = mealDate,
-                breakfast = breakfast,
-                lunch = lunch,
-                dinner = dinner
-            )
-        }
+   abstract override fun toEntity(domain: Meal): MealJpaEntity
 
-    override fun toDomain(entity: MealJpaEntity): Meal =
-        entity.run {
-            Meal(
-                id = id!!,
-                mealDate = mealDate,
-                breakfast = breakfast,
-                lunch = lunch,
-                dinner = dinner
-            )
-        }
+   abstract override fun toDomain(entity: MealJpaEntity): Meal
 }
