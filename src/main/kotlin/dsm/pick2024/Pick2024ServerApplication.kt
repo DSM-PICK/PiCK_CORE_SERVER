@@ -11,3 +11,4 @@ class Pick2024ServerApplication
 fun main(args: Array<String>) {
     runApplication<Pick2024ServerApplication>(*args)
 }
+
