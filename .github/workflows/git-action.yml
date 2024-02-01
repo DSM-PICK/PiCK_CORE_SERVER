@@ -1,0 +1,40 @@
+name: gradle-pick
+
+on:
+    push:
+        branches: [ "main" ]
+
+jobs:
+    build:
+        permissions:
+            id-token: write
+            contents: read
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Java
+              uses: actions/setup-java@v2
+              with:
+                  java-version: '17'
+
+            - name: Build Gradle
+              uses: gradle/gradle-build-action@v2
+              with:
+                  arguments: |
+                      build
+                      --build-cache
+                      --no-daemon
+
+            - name: Deploy to xquare
+              uses: team-xquare/xquare-deployment-action@master
+              with:
+                  environment: prod
+                  access_key: ${{ secrets.ACCESS_KEY }}
+                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  buildargs: |
+                      MYSQL_HOST=${{ secrets.MYSQL_HOST }}
+                      MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}
+                      MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+                      REDIS_HOST=${{ secrets.REDIS_HOST }}
