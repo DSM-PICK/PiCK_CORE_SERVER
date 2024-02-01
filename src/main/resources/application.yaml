@@ -1,0 +1,35 @@
+spring:
+    config:
+        import: "optional:configserver:"
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url:  ${URL}
+        username: ${USERNAME}
+        password: ${PASSWORD}
+        hikari:
+            maxLifetime: 580000
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+        open-in-view: false
+        database: mysql
+
+
+    jackson:
+        property-naming-strategy : SNAKE_CASE
+
+auth:
+    jwt:
+        secretKey: pickpickpickpickpickpick
+        accessExp: 360000
+        refreshExp: 3600
+        header: Authorization
+        prefix: Bearer
+
+redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
