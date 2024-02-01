@@ -20,7 +20,7 @@ class AdminLoginService(
 ) : AdminLoginUseCase {
     @Transactional(readOnly = true)
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-        val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId!!) ?: throw AdminNotFoundException
+        val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
         if ((adminLoginRequest.password != admin.password)) {
             throw PasswordMissMatchException
         }

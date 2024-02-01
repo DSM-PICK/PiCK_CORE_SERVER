@@ -6,26 +6,25 @@ import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
- class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
+class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
 
-     override fun toEntity(domain: Admin) = domain.run {
-         AdminJpaEntity(
-             id = id,
-             name = name,
-             password = password,
-             classRoom = classRoom,
-             adminId = adminId
-         )
-     }
+    override fun toEntity(domain: Admin) = domain.run {
+        AdminJpaEntity(
+            id = id,
+            name = name,
+            password = password,
+            classRoom = classRoom,
+            adminId = adminId
+        )
+    }
 
-     override fun toDomain(entity: AdminJpaEntity?) = entity?.run {
-         Admin(
-             id = id,
-             name = name,
-             password = password,
-             classRoom = classRoom,
-             adminId = adminId
-         )
-     }
+    override fun toDomain(entity: AdminJpaEntity?) = entity?.run {
+        Admin(
+            id = id,
+            name = name,
+            password = password,
+            classRoom = classRoom,
+            adminId = adminId
+        )
+    }
 }
-
