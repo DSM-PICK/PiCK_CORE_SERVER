@@ -3,11 +3,27 @@ package dsm.pick2024.domain.notice.mapper
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.NoticeJpaEntity
 import dsm.pick2024.global.base.GenericMapper
-import org.apache.ibatis.annotations.Mapper
+import org.springframework.stereotype.Component
 
-@Mapper
-abstract class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
-    abstract override fun toEntity(domain: Notice): NoticeJpaEntity
+@Component
+ class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
+     override fun toEntity(domain: Notice) = domain.run {
+         NoticeJpaEntity(
+             id = id,
+             title = title,
+             content = content,
+             createAt = createAt,
+             admin = admin
+         )
+     }
 
-    abstract override fun toDomain(entity: NoticeJpaEntity?): Notice?
+     override fun toDomain(entity: NoticeJpaEntity?) = entity?.run {
+         Notice(
+             id = id,
+             title = title,
+             content = content,
+             createAt = createAt,
+             admin = admin
+         )
+     }
 }

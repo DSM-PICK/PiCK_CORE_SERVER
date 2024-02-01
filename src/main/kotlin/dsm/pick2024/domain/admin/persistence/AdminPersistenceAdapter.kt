@@ -12,6 +12,6 @@ class AdminPersistenceAdapter(
     private val adminMapper: AdminMapper
 ) : AdminPort {
     override fun findByAdminId(adminId: String): Admin? {
-        return adminRepository.findByAdminId(adminId).let(adminMapper::toDomain)
+        return adminRepository.findByAdminId(adminId)?.let(adminMapper::toDomain)
     }
 }

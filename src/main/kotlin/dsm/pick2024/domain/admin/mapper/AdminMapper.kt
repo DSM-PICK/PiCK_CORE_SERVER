@@ -3,12 +3,29 @@ package dsm.pick2024.domain.admin.mapper
 import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.entity.AdminJpaEntity
 import dsm.pick2024.global.base.GenericMapper
-import org.apache.ibatis.annotations.Mapper
+import org.springframework.stereotype.Component
 
-@Mapper
-abstract class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
+@Component
+ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
 
-    abstract override fun toEntity(domain: Admin): AdminJpaEntity
+     override fun toEntity(domain: Admin) = domain.run {
+         AdminJpaEntity(
+             id = id,
+             name = name,
+             password = password,
+             classRoom = classRoom,
+             adminId = adminId
+         )
+     }
 
-    abstract override fun toDomain(entity: AdminJpaEntity?): Admin?
+     override fun toDomain(entity: AdminJpaEntity?) = entity?.run {
+         Admin(
+             id = id,
+             name = name,
+             password = password,
+             classRoom = classRoom,
+             adminId = adminId
+         )
+     }
 }
+
