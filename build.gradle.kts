@@ -66,7 +66,9 @@ dependencies {
 
     implementation(Dependencies.SWAGGER)
 
-    implementation(Dependencies.MYBATIS)
+    // QueryDSL
+    implementation(Dependencies.QUERYDSL)
+    implementation(Dependencies.QUERYDSL_PROCESSOR)
 }
 
 tasks.withType<KotlinCompile> {
