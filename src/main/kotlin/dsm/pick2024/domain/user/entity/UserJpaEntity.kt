@@ -13,6 +13,12 @@ class UserJpaEntity(
 
     id: UUID?,
 
+    @Column(name = "account_id", nullable = false, unique = true)
+    val accountId: String,
+
+    @Column(name = "password", nullable = false)
+    val password: String,
+
     @Column(name = "name", columnDefinition = "CHAR(4)", nullable = false, unique = true)
     val name: String,
 
