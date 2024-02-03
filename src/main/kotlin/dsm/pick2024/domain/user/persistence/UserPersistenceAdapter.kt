@@ -3,7 +3,6 @@ package dsm.pick2024.domain.user.persistence
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.mapper.UserMapper
 import dsm.pick2024.domain.user.persistence.repository.UserRepository
-import dsm.pick2024.domain.user.port.out.UserByNamePort
 import dsm.pick2024.domain.user.port.out.UserPort
 import org.springframework.stereotype.Component
 
@@ -17,5 +16,4 @@ class UserPersistenceAdapter(
 
     override fun findByAccountId(accountId: String): User? =
         userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
-
 }

@@ -7,10 +7,10 @@ import javax.persistence.Entity
 
 @Entity(name = "tbl_classroom")
 class ClassroomJpaEntity(
-    id:UUID?,
+    id: UUID?,
     @Column(name = "classroom", nullable = false, unique = true)
     val classroomName: String,
 
     @Column(name = "floor", nullable = false)
     val floor: Int
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

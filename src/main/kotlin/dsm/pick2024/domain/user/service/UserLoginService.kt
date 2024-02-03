@@ -17,11 +17,11 @@ class UserLoginService(
     private val passwordEncoder: PasswordEncoder,
     private val findByAccountIdPort: FindByAccountIdPort,
     private val jwtTokenProvider: JwtTokenProvider
-): LoginUseCase {
+) : LoginUseCase {
 
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
-        val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)?: throw UserNotFoundException
+        val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId) ?: throw UserNotFoundException
         if (passwordEncoder.matches(userLoginRequest.password, user.password)) {
             throw PasswordMissMatchException
         }
