@@ -2,7 +2,6 @@ package dsm.pick2024.domain.classroom.presentation
 
 import dsm.pick2024.domain.classroom.port.`in`.UserMoveClassroomUseCase
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
-import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus

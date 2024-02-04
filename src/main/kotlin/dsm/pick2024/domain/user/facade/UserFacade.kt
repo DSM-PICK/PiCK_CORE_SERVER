@@ -12,11 +12,11 @@ class UserFacade(
     private val findByNamePort: FindByNamePort
 ) : UserFacadeUseCase {
 
-    override fun currentUser() : User{
+    override fun currentUser(): User {
         val name = SecurityContextHolder.getContext().authentication.name
-        return getUserName(name)
+        return getUserByName(name)
     }
 
-    override fun getUserName(name: String): User =
+    override fun getUserByName(name: String) =
         findByNamePort.findByName(name) ?: throw UserNotFoundException
 }

@@ -8,7 +8,7 @@ import javax.persistence.Entity
 @Entity(name = "tbl_classroom")
 class ClassroomJpaEntity(
     id: UUID?,
-    @Column(name = "classroom", nullable = false, unique = true)
+    @Column(name = "classroom", nullable = false)
     val classroomName: String,
 
     @Column(name = "floor", nullable = false)

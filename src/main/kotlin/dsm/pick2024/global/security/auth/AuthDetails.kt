@@ -1,14 +1,19 @@
 package dsm.pick2024.global.security.auth
 
 import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class AuthDetails(
     private val name: String
 ) : UserDetails {
 
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        TODO("Not yet implemented")
+    companion object {
+        private val ROLE = "ROLE"
+    }
+
+    override fun getAuthorities(): Collection<GrantedAuthority?> {
+        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority(ROLE))
     }
 
     override fun getPassword(): String? {
