@@ -17,6 +17,6 @@ class UserFacade(
         return getUserName(name)
     }
 
-    override fun getUserName(name: String) =
+    override fun getUserName(name: String): User =
         findByNamePort.findByName(name) ?: throw UserNotFoundException
 }
