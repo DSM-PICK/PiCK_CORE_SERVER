@@ -22,7 +22,9 @@ class UserMoveClassroomService(
     override fun moveClassroom(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser().name
 
-        existsByUsernamePort.existsByUsername(user)?: throw AleadyApplyingMovementException
+        if (existsByUsernamePort.existsByUsername(user) == true) {
+            throw AleadyApplyingMovementException
+        }
 
         val classroom = Classroom(
             username = user,
