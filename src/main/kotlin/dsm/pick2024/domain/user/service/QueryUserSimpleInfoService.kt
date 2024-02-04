@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryUserSimpleInfoService(
     private val userFacadeUseCase: UserFacadeUseCase
-): QueryUserSimpleInfoUseCase {
+) : QueryUserSimpleInfoUseCase {
 
     @Transactional(readOnly = true)
     override fun queryUserSimpleInfo(): QueryUserSimpleInfoResponse {

@@ -36,5 +36,4 @@ class UserController(
     @GetMapping("/details")
     fun queryUserDetailsInfo() =
         queryUserDetailsInfoUseCase.queryUserDetailsInfo()
-
 }
