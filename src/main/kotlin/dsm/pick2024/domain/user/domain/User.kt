@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.user.domain
 
 import dsm.pick2024.domain.user.entity.enums.Role
+import java.time.LocalDate
 import java.util.UUID
 
 data class User(
@@ -11,5 +12,7 @@ data class User(
     val grade: Int,
     val classNum: Int,
     val num: Int,
+    val birthDay: LocalDate,
+    val profile: String,
     val role: Role
 )

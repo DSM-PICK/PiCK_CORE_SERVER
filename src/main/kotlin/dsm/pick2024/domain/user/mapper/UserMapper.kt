@@ -17,6 +17,8 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             grade = grade,
             classNum = classNum,
             num = num,
+            birthDay = birthDay,
+            profile = profile,
             role = role
         )
     }
@@ -30,6 +32,8 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             grade = grade,
             classNum = classNum,
             num = num,
+            birthDay = birthDay,
+            profile = profile,
             role = role
         )
     }
