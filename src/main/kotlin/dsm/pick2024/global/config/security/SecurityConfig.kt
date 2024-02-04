@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.global.config.filter.FilterConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -14,7 +15,6 @@ import org.springframework.web.cors.CorsUtils
 class SecurityConfig(
     private val objectMapper: ObjectMapper
 ) {
-
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf()
@@ -29,6 +29,10 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
+            .antMatchers(HttpMethod.POST, "/class-room/")
+            .hasRole("user")
+            .anyRequest()
+            .authenticated()
 
         http
             .apply(dsm.pick2024.global.config.filter.FilterConfig(objectMapper))
