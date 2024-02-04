@@ -5,7 +5,6 @@ import dsm.pick2024.domain.classroom.exception.AleadyApplyingMovementException
 import dsm.pick2024.domain.classroom.port.`in`.UserMoveClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.ClassroomSavePort
 import dsm.pick2024.domain.classroom.port.out.ExistsByUsernamePort
-import dsm.pick2024.domain.classroom.port.out.FindByUsernamePort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
@@ -29,7 +28,7 @@ class UserMoveClassroomService(
         val classroom = Classroom(
             username = user,
             classroomName = request.classroomName,
-            floor = request.floor,
+            floor = request.floor
         )
         classroomSavePort.save(classroom)
     }
