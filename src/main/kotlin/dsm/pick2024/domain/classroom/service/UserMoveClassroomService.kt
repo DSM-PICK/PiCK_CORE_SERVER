@@ -16,14 +16,13 @@ class UserMoveClassroomService(
 ) : UserMoveClassroomUseCase {
 
     @Transactional
-    override fun moveClassroom(request: UserMoveClassroomRequest): UserMoveClassroomResponse {
+    override fun moveClassroom(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser()
         val classroom = Classroom(
-            username = user.name,
+            user = user,
             classroomName = request.classroomName,
             floor = request.floor
         )
         classroomSavePort.save(classroom)
-        return UserMoveClassroomResponse(classroom.username, classroom.classroomName, classroom.floor)
     }
 }
