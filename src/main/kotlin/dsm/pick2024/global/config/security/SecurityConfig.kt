@@ -35,7 +35,7 @@ class SecurityConfig(
             .authenticated()
 
         http
-            .apply(dsm.pick2024.global.config.filter.FilterConfig(objectMapper))
+            .apply(FilterConfig(objectMapper))
 
         return http.build()
     }
