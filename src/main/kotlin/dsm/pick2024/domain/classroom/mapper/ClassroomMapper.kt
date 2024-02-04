@@ -12,7 +12,8 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
         ClassroomJpaEntity(
             id = id,
             classroomName = classroomName,
-            floor = floor
+            floor = floor,
+            userId = userId
         )
     }
 
@@ -20,7 +21,8 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
         Classroom(
             id = id,
             classroomName = classroomName,
-            floor = floor
+            floor = floor,
+            userId = userId
         )
     }
 }

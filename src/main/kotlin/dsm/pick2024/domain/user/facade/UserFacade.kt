@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component
 @Component
 class UserFacade(
     private val findByNamePort: FindByNamePort
-): UserFacadeUseCase {
-    
-    override fun currentUser(): User? {
+) : UserFacadeUseCase {
+
+    override fun currentUser() : User{
         val name = SecurityContextHolder.getContext().authentication.name
         return getUserName(name)
     }
 
-    override fun getUserName(name: String): User? =
+    override fun getUserName(name: String) =
         findByNamePort.findByName(name) ?: throw UserNotFoundException
 }
