@@ -6,4 +6,6 @@ import java.util.UUID
 
 interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
     fun findByUsername(username: String): ClassroomJpaEntity
+
+    fun deleteByUsername(username: String)
 }

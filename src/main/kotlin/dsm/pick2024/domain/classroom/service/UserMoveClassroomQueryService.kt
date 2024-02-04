@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserMoveClassroomQueryService (
+class UserMoveClassroomQueryService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findByUsernamePort: FindByUsernamePort
-): QueryUserMoveClassroomUseCase {
+) : QueryUserMoveClassroomUseCase {
 
     @Transactional(readOnly = true)
     override fun queryUserMoveClassroom(): UserMoveClassroomResponse {

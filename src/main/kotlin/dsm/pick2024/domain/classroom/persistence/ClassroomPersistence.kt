@@ -5,7 +5,6 @@ import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
 import dsm.pick2024.domain.classroom.persistence.repository.ClassroomRepository
 import dsm.pick2024.domain.classroom.port.out.ClassroomPort
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class ClassroomPersistence(
@@ -16,11 +15,10 @@ class ClassroomPersistence(
         classroomRepository.save(classroomMapper.toEntity(classroom))
     }
 
-    override fun deleteById(id: UUID) {
-        classroomRepository.deleteById(id)
+    override fun deleteByUsername(username: String) {
+        classroomRepository.deleteByUsername(username)
     }
 
-    override fun findByUsername(username: String) {
-        classroomRepository.findByUsername(username).let { classroomMapper.toDomain(it)}
-    }
+    override fun findByUsername(username: String) =
+        classroomRepository.findByUsername(username).let { classroomMapper.toDomain(it) }
 }
