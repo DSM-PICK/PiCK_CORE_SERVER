@@ -21,4 +21,8 @@ class ClassroomPersistence(
 
     override fun findByUsername(username: String) =
         classroomRepository.findByUsername(username).let { classroomMapper.toDomain(it) }
+
+    override fun existsByUsername(username: String): Boolean? {
+        return classroomRepository.existsByUsername(username)
+    }
 }

@@ -25,7 +25,7 @@ class ClassroomController(
 ) {
     @Operation(summary = "교실이동 API")
     @PostMapping("/move")
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.CREATED)
     fun moveClassroom(@RequestBody userMoveClassroomRequest: UserMoveClassroomRequest) =
         userMoveClassroomUseCase.moveClassroom(userMoveClassroomRequest)
 

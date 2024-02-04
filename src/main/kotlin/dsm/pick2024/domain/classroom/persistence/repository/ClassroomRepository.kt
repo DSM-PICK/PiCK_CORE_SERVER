@@ -7,5 +7,7 @@ import java.util.UUID
 interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
     fun findByUsername(username: String): ClassroomJpaEntity
 
+    fun existsByUsername(username: String): Boolean
+
     fun deleteByUsername(username: String)
 }

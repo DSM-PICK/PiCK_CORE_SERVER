@@ -15,6 +15,8 @@ enum class ErrorCode(
 
     ADMIN_NOT_FOUND(404, "Admin Not Found"),
 
+    ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
+
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
 
