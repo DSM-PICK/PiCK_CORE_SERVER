@@ -8,19 +8,20 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class JwtTokenFilter(
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val bearer: String? = jwtTokenProvider.resolveToken(request)
+        val token = jwtTokenProvider.resolveToken(request)
 
-        if (bearer != null) {
-            val authentication: Authentication = jwtTokenProvider.authorization(bearer)
-            authentication.also { SecurityContextHolder.getContext().authentication = it }
+        token?.run {
+            SecurityContextHolder.getContext().authentication = jwtTokenProvider.authorization(token)
         }
+
         filterChain.doFilter(request, response)
     }
+
 }

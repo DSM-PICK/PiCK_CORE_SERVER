@@ -2,6 +2,7 @@ package dsm.pick2024.global.config.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.global.config.filter.FilterConfig
+import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -13,7 +14,8 @@ import org.springframework.web.cors.CorsUtils
 
 @Configuration
 class SecurityConfig(
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val jwtTokenProvider: JwtTokenProvider
 ) {
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -29,13 +31,9 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers(HttpMethod.POST, "/class-room/")
-            .hasRole("user")
-            .anyRequest()
-            .authenticated()
 
         http
-            .apply(FilterConfig(objectMapper))
+            .apply(FilterConfig(objectMapper, jwtTokenProvider))
 
         return http.build()
     }
