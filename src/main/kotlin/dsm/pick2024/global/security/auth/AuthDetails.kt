@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class AuthDetails(
-    private val userId: String
+    private val name: String
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
@@ -16,7 +16,7 @@ class AuthDetails(
     }
 
     override fun getUsername(): String {
-        return userId
+        return name
     }
 
     override fun isAccountNonExpired(): Boolean {

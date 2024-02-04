@@ -53,13 +53,13 @@ class JwtTokenProvider(
     }
 
     fun resolveToken(request: HttpServletRequest): String? {
-        val bearer: String? = request.getHeader("Authorization")
+        val bearer: String? = request.getHeader(jwtProperties.header)
 
         return parseToken(bearer)
     }
 
     fun parseToken(bearerToken: String?): String? {
-        return if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+        return if (bearerToken != null && bearerToken.startsWith(jwtProperties.prefix)) {
             return bearerToken.replace("Bearer ", "")
         } else {
             null
