@@ -19,4 +19,8 @@ class ClassroomPersistence(
     override fun deleteById(id: UUID) {
         classroomRepository.deleteById(id)
     }
+
+    override fun findByUsername(username: String) {
+        classroomRepository.findByUsername(username).let { classroomMapper.toDomain(it)}
+    }
 }

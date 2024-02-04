@@ -4,5 +4,5 @@ import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomR
 import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse
 
 interface UserMoveClassroomUseCase {
-    fun moveClassroom(request: UserMoveClassroomRequest): UserMoveClassroomResponse
+    fun moveClassroom(request: UserMoveClassroomRequest)
 }
