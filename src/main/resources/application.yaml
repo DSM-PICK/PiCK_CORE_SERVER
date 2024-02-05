@@ -18,6 +18,9 @@ spring:
         open-in-view: false
         database: mysql
 
+    redis:
+        host: ${REDIS_HOST}
+        port: ${REDIS_PORT:6379}
 
     jackson:
         property-naming-strategy : SNAKE_CASE
@@ -29,10 +32,6 @@ auth:
         refreshExp: ${JWT_REFRESH_EXP}
         header: ${JWT_HEADER}
         prefix: ${JWT_PREFIX}
-
-redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
 
 server:
   servlet:
