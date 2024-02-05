@@ -37,4 +37,3 @@ redis:
 server:
   servlet:
       context-path: /dsm-pick
-
