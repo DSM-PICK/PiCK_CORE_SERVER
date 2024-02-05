@@ -36,7 +36,7 @@ jobs:
                   github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   buildargs: |
                       PROFILE=prod
-                      JWT_JWT_SECRET_KEY=pickpickpickpickpickpickpickpick
+                      JWT_SECRET_KEY=pickpickpickpickpickpickpickpick
                       JWT_ACCESS_EXP=3600
                       JWT_REFRESH_EXP=360000
                       JWT_HEADER=Authorization
