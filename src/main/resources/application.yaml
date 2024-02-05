@@ -33,3 +33,7 @@ auth:
 redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
+
+server:
+  servlet:
+      context-path: dsm-pick
