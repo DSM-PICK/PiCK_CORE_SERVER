@@ -24,11 +24,11 @@ spring:
 
 auth:
     jwt:
-        secretKey: pickpickpickpickpickpick
-        accessExp: 360000
-        refreshExp: 3600
-        header: Authorization
-        prefix: Bearer
+        secretKey: ${JWT_SECRET_KEY}
+        accessExp: ${JWT_ACCESS_EXP}
+        refreshExp: ${JWT_REFRESH_EXP}
+        header: ${JWT_HEADER}
+        prefix: ${JWT_PREFIX}
 
 redis:
     host: ${REDIS_HOST}
