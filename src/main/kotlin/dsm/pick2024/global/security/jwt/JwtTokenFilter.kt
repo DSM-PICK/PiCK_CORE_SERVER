@@ -1,6 +1,5 @@
 package dsm.pick2024.global.security.jwt
 
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
@@ -15,12 +14,12 @@ class JwtTokenFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val bearer: String? = jwtTokenProvider.resolveToken(request)
+        val token = jwtTokenProvider.resolveToken(request)
 
-        if (bearer != null) {
-            val authentication: Authentication = jwtTokenProvider.authorization(bearer)
-            authentication.also { SecurityContextHolder.getContext().authentication = it }
+        token?.run {
+            SecurityContextHolder.getContext().authentication = jwtTokenProvider.authorization(token)
         }
+
         filterChain.doFilter(request, response)
     }
 }

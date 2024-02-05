@@ -24,7 +24,7 @@ class AdminLoginService(
         if (passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
             throw PasswordMissMatchException
         }
-        val token = jwtTokenProvider.getToken(admin.name, Role.ADMIN.toString())
+        val token = jwtTokenProvider.getToken(admin.name, Role.SCH.toString())
         return token
     }
 }

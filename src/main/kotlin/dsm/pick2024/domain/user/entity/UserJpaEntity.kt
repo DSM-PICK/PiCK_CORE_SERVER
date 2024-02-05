@@ -2,6 +2,7 @@ package dsm.pick2024.domain.user.entity
 
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.base.BaseUUIDEntity
+import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -13,7 +14,13 @@ class UserJpaEntity(
 
     id: UUID?,
 
-    @Column(name = "name", columnDefinition = "CHAR(4)", nullable = false, unique = true)
+    @Column(name = "account_id", nullable = false, unique = true)
+    val accountId: String,
+
+    @Column(name = "password", nullable = false)
+    val password: String,
+
+    @Column(name = "name", nullable = false)
     val name: String,
 
     @Column(name = "grade", nullable = false)
@@ -24,6 +31,12 @@ class UserJpaEntity(
 
     @Column(name = "num", nullable = false)
     val num: Int,
+
+    @Column(name = "birth_day")
+    val birthDay: LocalDate,
+
+    @Column(name = "profile_file_name")
+    val profile: String,
 
     @Column(name = "role", nullable = false)
     @Enumerated(value = EnumType.STRING)
