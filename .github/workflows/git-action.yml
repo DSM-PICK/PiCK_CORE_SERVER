@@ -35,7 +35,7 @@ jobs:
                   access_key: ${{ secrets.XQUARE_ACCESS_KEY }}
                   github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   buildargs: |
-                      MYSQL_HOST=${{ secrets.MYSQL_HOST }}
+                      MYSQL_URL=${{secrets.MYSQL.URL}
                       MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }}
                       MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
                       REDIS_HOST=${{ secrets.REDIS_HOST }}
