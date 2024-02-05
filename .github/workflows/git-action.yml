@@ -36,7 +36,7 @@ jobs:
                   github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                   buildargs: |
                       PROFILE=prod
-                      DB_URL=${{secrets.DB_URL}}
+                      DB_URL=${{ secrets.DB_URL }}
                       DB_USERNAME=${{ secrets.DB_USERNAME }}
                       DB_PASSWORD=${{ secrets.DB_PASSWORD }}
                       REDIS_HOST=${{ secrets.REDIS_HOST }}
