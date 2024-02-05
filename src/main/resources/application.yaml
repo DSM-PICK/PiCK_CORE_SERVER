@@ -3,9 +3,9 @@ spring:
         import: "optional:configserver:"
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: ${URL}
-        username: ${USERNAME}
-        password: ${PASSWORD}
+        url: ${DB_URL}
+        username: ${DB_USERNAME}
+        password: ${DB_PASSWORD}
         hikari:
             maxLifetime: 580000
     jpa:
