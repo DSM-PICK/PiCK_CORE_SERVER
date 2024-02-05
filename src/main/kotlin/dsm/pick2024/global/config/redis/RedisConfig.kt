@@ -7,17 +7,15 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisKeyValueAdapter
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
 
-
 @EnableRedisRepositories(
     enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP,
-    keyspaceNotificationsConfigParameter = "" // Elastic Cache는 CONFIG 명령어를 허용하지 않는 이슈
+    keyspaceNotificationsConfigParameter = ""
 )
 @Configuration
-class RedisConfig (
+class RedisConfig(
     private val properties: RedisProperties
 ) {
 
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory = LettuceConnectionFactory(properties.host, properties.port)
-
 }
