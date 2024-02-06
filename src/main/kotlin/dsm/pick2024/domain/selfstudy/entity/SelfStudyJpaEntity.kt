@@ -8,7 +8,7 @@ import javax.persistence.Entity
 
 @Entity(name = "tbl_self_study")
 class SelfStudyJpaEntity (
-    id: UUID,
+    id: UUID?,
 
     @Column(nullable = false)
     val floor: Int,
