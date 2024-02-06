@@ -30,7 +30,7 @@ class ClassroomController(
         userMoveClassroomUseCase.moveClassroom(userMoveClassroomRequest)
 
     @Operation(summary = "교실복귀 API")
-    @DeleteMapping("/back-class-room")
+    @DeleteMapping("/return")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun backClassroom() =
         userBackClassroomUseCase.backClassroom()
