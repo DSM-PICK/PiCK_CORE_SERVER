@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
-class SelfStudyPersistenceAdapterAndFloor (
+class SelfStudyPersistenceAdapterAndFloor(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyMapper: SelfStudyMapper
-): SelfStudyPortAndFloor {
+) : SelfStudyPortAndFloor {
 
     override fun save(selfStudy: SelfStudy) {
         selfStudyRepository.save(selfStudyMapper.toEntity(selfStudy))

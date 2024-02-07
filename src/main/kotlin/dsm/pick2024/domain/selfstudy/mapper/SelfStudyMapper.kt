@@ -6,7 +6,7 @@ import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy>{
+class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy> {
 
     override fun toEntity(domain: SelfStudy) = domain.run {
         SelfStudyJpaEntity(

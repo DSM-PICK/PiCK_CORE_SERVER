@@ -7,7 +7,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "tbl_self_study")
-class SelfStudyJpaEntity (
+class SelfStudyJpaEntity(
     id: UUID?,
 
     @Column(nullable = false)
@@ -19,4 +19,4 @@ class SelfStudyJpaEntity (
     @Column(nullable = false)
     val date: LocalDate
 
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

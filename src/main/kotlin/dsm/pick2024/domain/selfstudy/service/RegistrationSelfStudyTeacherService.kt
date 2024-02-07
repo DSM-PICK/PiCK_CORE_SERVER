@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class RegistrationSelfStudyTeacherService(
     private val selfStudySavePort: SelfStudySavePort
-): RegistrationSelfStudyTeacherUseCase {
+) : RegistrationSelfStudyTeacherUseCase {
 
     @Transactional
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
