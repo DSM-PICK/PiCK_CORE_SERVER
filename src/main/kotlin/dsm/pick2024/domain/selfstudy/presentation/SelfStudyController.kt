@@ -19,11 +19,13 @@ class SelfStudyController(
     @Operation(summary = "자습감독 선생님 등록 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/register")
-    fun selfStudyTeacherRegister(@RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest) =
+    fun selfStudyTeacherRegister(
+        @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest) =
         registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "자습감독 선생님 변경 API")
     @PatchMapping("/change")
-    fun changeSelfStudyTeacher(@RequestBody changeSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest) =
+    fun changeSelfStudyTeacher(
+        @RequestBody changeSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest) =
         changeSelfStudyTeacherService.changeSelfStudyTeacher(changeSelfStudyTeacherRequest)
 }
