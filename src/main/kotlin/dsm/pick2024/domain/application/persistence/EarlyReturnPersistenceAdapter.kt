@@ -7,10 +7,10 @@ import dsm.pick2024.domain.application.port.out.EarlyReturnPort
 import org.springframework.stereotype.Component
 
 @Component
-class EarlyReturnPersistenceAdapter (
+class EarlyReturnPersistenceAdapter(
     private val earlyReturnMapper: EarlyReturnMapper,
     private val earlyReturnRepository: EarlyReturnRepository
-): EarlyReturnPort {
+) : EarlyReturnPort {
 
     override fun save(earlyReturn: EarlyReturn) {
         earlyReturnRepository.save(earlyReturnMapper.toEntity(earlyReturn))

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class CreateEarlyReturnService(
     private val saveEarlyReturnPort: SaveEarlyReturnPort,
     private val userFacadeUseCase: UserFacadeUseCase
-): CreateEarlyReturnUseCase {
+) : CreateEarlyReturnUseCase {
 
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {

@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.enums.Status
 import java.time.LocalTime
 import java.util.UUID
 
-data class EarlyReturn (
+data class EarlyReturn(
     val id: UUID? = null,
     val reason: String,
     val startTime: LocalTime,

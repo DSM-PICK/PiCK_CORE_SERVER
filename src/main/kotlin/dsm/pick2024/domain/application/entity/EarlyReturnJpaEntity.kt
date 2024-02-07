@@ -10,7 +10,7 @@ import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
 @Entity(name = "tbl_early_return")
-class EarlyReturnJpaEntity (
+class EarlyReturnJpaEntity(
     id: UUID?,
 
     @Column(name = "reason", nullable = false)
@@ -24,5 +24,4 @@ class EarlyReturnJpaEntity (
     @Enumerated(value = EnumType.STRING)
     val status: Status
 
-    ) : BaseUUIDEntity(id)
-
+) : BaseUUIDEntity(id)

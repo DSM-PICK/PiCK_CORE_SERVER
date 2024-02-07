@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.application.domain
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.user.entity.UserJpaEntity
 import java.time.LocalTime
 import java.util.UUID
 
