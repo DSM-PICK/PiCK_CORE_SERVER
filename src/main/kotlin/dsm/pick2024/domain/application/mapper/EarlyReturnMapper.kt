@@ -12,7 +12,8 @@ class EarlyReturnMapper {
             reason = reason,
             startTime = startTime,
             username = username,
-            status = status
+            status = status,
+            teacherName = teacherName
         )
     }
 
@@ -22,7 +23,8 @@ class EarlyReturnMapper {
             reason = reason,
             startTime = startTime,
             username = username,
-            status = status
+            status = status,
+            teacherName = teacherName
         )
     }
 }

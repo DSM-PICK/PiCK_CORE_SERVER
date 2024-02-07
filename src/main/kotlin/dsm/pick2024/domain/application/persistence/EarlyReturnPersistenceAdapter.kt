@@ -5,6 +5,7 @@ import dsm.pick2024.domain.application.mapper.EarlyReturnMapper
 import dsm.pick2024.domain.application.persistence.repository.EarlyReturnRepository
 import dsm.pick2024.domain.application.port.out.EarlyReturnPort
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class EarlyReturnPersistenceAdapter(
@@ -18,4 +19,7 @@ class EarlyReturnPersistenceAdapter(
 
     override fun existsByUsername(username: String) =
         earlyReturnRepository.existsByUsername(username)
+
+    override fun findByUsername(username: String) =
+        earlyReturnRepository.findByUsername(username).let { earlyReturnMapper.toDomain(it) }
 }
