@@ -34,7 +34,8 @@ ARG JWT_PREFIX
 ENV JWT_PREFIX ${JWT_PREFIX}
 
 
-ARG JAR_FILE=src/build/libs/*.jar
+ARG JAR_FILE=./build/libs/*.jar
+COPY ${JAR_FILE} application.jar
 
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java", "-Dspring.profiles.active=doker", "-jar", "app.jar"]
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "application.jar"]
