@@ -8,6 +8,8 @@ object Dependencies {
     // web
     const val SPRING_WEB = "org.springframework.boot:spring-boot-starter-web"
 
+    const val REDIS = "org.springframework.boot:spring-boot-starter-data-redis:${DependencyVersions.REDIS_VERSION}"
+
     // database
     const val SPRING_DATA_JPA = "org.springframework.boot:spring-boot-starter-data-jpa:${PluginVersions.SPRING_BOOT_VERSION}"
     const val MYSQL_CONNECTOR = "mysql:mysql-connector-java:${DependencyVersions.MYSQL}"
@@ -30,9 +32,6 @@ object Dependencies {
 
     // Jwt
     const val JWT = "io.jsonwebtoken:jjwt:${DependencyVersions.JWT_VERSION}"
-
-    // Kafka
-    const val KAFKA = "org.springframework.kafka:spring-kafka"
 
     // Cloud Config
     const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"

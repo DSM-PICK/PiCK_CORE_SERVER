@@ -36,4 +36,4 @@ auth:
 
 server:
     servlet:
-        context-path: dsm-pick
+        context-path: /dsm-pick

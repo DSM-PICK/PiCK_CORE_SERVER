@@ -69,7 +69,9 @@ dependencies {
 
     // QueryDSL
     implementation(Dependencies.QUERYDSL)
-    kapt(Dependencies.QUERYDSL_APT)
+    kapt(Dependencies.QUERYDSL_PROCESSOR)
+
+    implementation(Dependencies.REDIS)
 }
 
 kotlin.sourceSets.main {
