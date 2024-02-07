@@ -13,7 +13,7 @@ class ApplicationMapper {
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
-                userId = userId
+                username = username
             )
         }
 
@@ -24,7 +24,7 @@ class ApplicationMapper {
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
-                userId = userId
+                username = username
             )
         }
 }

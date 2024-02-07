@@ -9,5 +9,5 @@ data class Application(
     val reason: String,
     val startTime: LocalTime,
     val endTime: LocalTime,
-    val userId: UserJpaEntity
+    val username: String
 )
