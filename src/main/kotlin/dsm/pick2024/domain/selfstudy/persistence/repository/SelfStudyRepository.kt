@@ -7,4 +7,5 @@ import java.util.UUID
 
 interface SelfStudyRepository : JpaRepository<SelfStudyJpaEntity, UUID> {
     fun findByDateAndFloor(date: LocalDate, floor: Int): SelfStudyJpaEntity
+    fun existsByDateAndFloor(date: LocalDate, floor: Int): Boolean
 }
