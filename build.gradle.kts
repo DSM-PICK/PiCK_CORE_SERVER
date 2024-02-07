@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version PluginVersions.JVM_VERSION
     kotlin("plugin.spring") version PluginVersions.SPRING_PLUGIN_VERSION
     kotlin("plugin.jpa") version PluginVersions.JPA_PLUGIN_VERSION
+    kotlin("kapt") version "1.3.61"
 }
 
 dependencyManagement {
@@ -68,7 +69,11 @@ dependencies {
 
     // QueryDSL
     implementation(Dependencies.QUERYDSL)
-    implementation(Dependencies.QUERYDSL_PROCESSOR)
+    kapt(Dependencies.QUERYDSL_APT)
+}
+
+kotlin.sourceSets.main {
+    setBuildDir("$buildDir/generated/source/kapt/main")
 }
 
 tasks.withType<KotlinCompile> {
