@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.selfstudy.presentation
 
 import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
-import dsm.pick2024.domain.selfstudy.presentation.dto.request.ChangeSelfStudyTeacherRequest
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import dsm.pick2024.domain.selfstudy.service.ChangeSelfStudyTeacherService
 import io.swagger.v3.oas.annotations.Operation
@@ -25,6 +24,6 @@ class SelfStudyController(
 
     @Operation(summary = "자습감독 선생님 변경 API")
     @PatchMapping("/change")
-    fun changeSelfStudyTeacher(@RequestBody changeSelfStudyTeacherRequest: ChangeSelfStudyTeacherRequest) =
+    fun changeSelfStudyTeacher(@RequestBody changeSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest) =
         changeSelfStudyTeacherService.changeSelfStudyTeacher(changeSelfStudyTeacherRequest)
 }
