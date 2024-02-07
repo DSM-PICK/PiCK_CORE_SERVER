@@ -6,5 +6,5 @@ import java.time.LocalDate
 import java.util.UUID
 
 interface SelfStudyRepository : JpaRepository<SelfStudyJpaEntity, UUID> {
-    fun findByDate(date: LocalDate): SelfStudyJpaEntity
+    fun findByDateAndFloor(date: LocalDate, floor: Int): SelfStudyJpaEntity
 }
