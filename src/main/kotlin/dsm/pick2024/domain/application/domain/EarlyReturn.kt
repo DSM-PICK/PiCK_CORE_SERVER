@@ -4,11 +4,10 @@ import dsm.pick2024.domain.application.enums.Status
 import java.time.LocalTime
 import java.util.UUID
 
-data class Application(
+data class EarlyReturn(
     val id: UUID? = null,
     val reason: String,
     val startTime: LocalTime,
-    val endTime: LocalTime,
     val username: String,
     val status: Status
 )

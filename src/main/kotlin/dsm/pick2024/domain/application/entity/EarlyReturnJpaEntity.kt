@@ -3,11 +3,14 @@ package dsm.pick2024.domain.application.entity
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalTime
-import java.util.UUID
-import javax.persistence.*
+import java.util.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
-@Entity(name = "tbl_application")
-class ApplicationJapEntity(
+@Entity(name = "tbl_early_return")
+class EarlyReturnJpaEntity(
     id: UUID?,
 
     @Column(name = "reason", nullable = false)
@@ -15,9 +18,6 @@ class ApplicationJapEntity(
 
     @Column(name = "start_time", nullable = false)
     val startTime: LocalTime,
-
-    @Column(name = "end_time", nullable = false)
-    val endTime: LocalTime,
 
     val username: String,
 
