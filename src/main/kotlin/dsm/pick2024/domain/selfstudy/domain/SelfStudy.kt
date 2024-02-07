@@ -6,6 +6,6 @@ import java.util.UUID
 data class SelfStudy (
     val id: UUID? = null,
     val floor: Int,
-    val teacher: String,
+    var teacher: String,
     val date: LocalDate
 )
