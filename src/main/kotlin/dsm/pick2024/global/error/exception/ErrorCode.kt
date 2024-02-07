@@ -17,6 +17,8 @@ enum class ErrorCode(
     SELF_STUDY_NOT_FOUND(404, "Self Study Not Found"),
     EXISTS_SELF_STUDY_TEACHER(409, "Exists Self Study Teacher"),
 
+    ALREADY_APPLYING_EARLY_RETURN(409, "Already applying For Early Return Application"),
+
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 
     INVALID_TOKEN(401, "Invalid Token"),
