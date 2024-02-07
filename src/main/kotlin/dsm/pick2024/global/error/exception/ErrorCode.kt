@@ -10,10 +10,12 @@ enum class ErrorCode(
     FEIGN_SERVER_ERROR(500, "Feign Server Error"),
 
     USER_NOT_FOUND(404, "User Not Found"),
-
     PASSWORD_MISS_MATCH(401, "Password Miss Match"),
 
     ADMIN_NOT_FOUND(404, "Admin Not Found"),
+
+    SELF_STUDY_NOT_FOUND(404, "Self Study Not Found"),
+    EXISTS_SELF_STUDY_TEACHER(409, "Exists Self Study Teacher"),
 
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 

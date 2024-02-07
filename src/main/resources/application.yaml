@@ -35,5 +35,5 @@ auth:
         prefix: ${JWT_PREFIX}
 
 server:
-  servlet:
-      context-path: /dsm-pick
+    servlet:
+        context-path: dsm-pick
