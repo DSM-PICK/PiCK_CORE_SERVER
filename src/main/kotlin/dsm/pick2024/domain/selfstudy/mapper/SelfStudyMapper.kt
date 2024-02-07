@@ -16,7 +16,7 @@ class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy>{
             date = date
         )
     }
-    
+
     override fun toDomain(entity: SelfStudyJpaEntity?) = entity?.run {
         SelfStudy(
             id = id,
