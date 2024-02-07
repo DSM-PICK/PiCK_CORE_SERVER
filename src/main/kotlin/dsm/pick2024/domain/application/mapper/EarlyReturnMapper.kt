@@ -19,7 +19,7 @@ class EarlyReturnMapper {
 
     fun toDomain(entity: EarlyReturnJpaEntity) = entity.run {
         EarlyReturn(
-            id = id,
+            id = id!!,
             reason = reason,
             startTime = startTime,
             username = username,

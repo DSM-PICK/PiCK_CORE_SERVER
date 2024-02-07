@@ -10,5 +10,5 @@ data class EarlyReturn(
     val startTime: LocalTime,
     val username: String,
     val status: Status,
-    val teacherName: String? = null,
+    val teacherName: String? = null
 )
