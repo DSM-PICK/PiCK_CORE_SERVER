@@ -10,5 +10,6 @@ data class Application(
     val startTime: LocalTime,
     val endTime: LocalTime,
     val username: String,
+    val teacherName: String? = null,
     val status: Status
 )
