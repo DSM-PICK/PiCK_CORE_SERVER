@@ -21,6 +21,8 @@ enum class ErrorCode(
 
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 
+    ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
+
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
 
