@@ -1,5 +1,7 @@
 package dsm.pick2024.global.security.jwt
 
+import dsm.pick2024.domain.user.entity.enums.Role
+import dsm.pick2024.global.security.auth.AdminDetailsService
 import dsm.pick2024.global.security.auth.AuthDetailsService
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import dsm.pick2024.global.security.jwt.entity.RefreshToken
@@ -8,6 +10,7 @@ import dsm.pick2024.global.security.jwt.exception.ExpiredTokenException
 import dsm.pick2024.global.security.jwt.exception.InvalidJwtException
 import io.jsonwebtoken.*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.util.*
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest
 class JwtTokenProvider(
     private val jwtProperties: JwtProperties,
     private val authDetailsService: AuthDetailsService,
+    private val adminDetailsService: AdminDetailsService,
     private val refreshTokenRepository: RefreshTokenRepository
 ) {
     companion object {
@@ -24,69 +28,74 @@ class JwtTokenProvider(
         private const val REFRESH_KEY = "refresh_token"
     }
 
-    fun getToken(name: String, role: String): TokenResponse {
-        val accessToken: String = generateAccessToken(name, role, ACCESS_KEY, jwtProperties.accessExp)
-        val refreshToken: String = generateRefreshToken(REFRESH_KEY, role, jwtProperties.refreshExp)
-        refreshTokenRepository.save(
-            RefreshToken(name, refreshToken, jwtProperties.refreshExp)
-        )
-        return TokenResponse(accessToken = accessToken, refreshToken = refreshToken)
-    }
-
-    private fun generateAccessToken(name: String, role: String, type: String, expiration: Long): String {
-        return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
-            .setSubject(name)
-            .setHeaderParam("type", type)
-            .claim("role", role)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + expiration * 1000))
-            .compact()
-    }
-
-    private fun generateRefreshToken(role: String, type: String, ttl: Long): String {
-        return Jwts.builder().signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
-            .setHeaderParam("type", type)
-            .claim("role", role)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + ttl * 1000))
-            .compact()
-    }
-
-    fun resolveToken(request: HttpServletRequest): String? {
-        val bearer: String? = request.getHeader(jwtProperties.header)
-
-        return parseToken(bearer)
-    }
-
-    fun parseToken(bearerToken: String?): String? {
-        return if (bearerToken != null && bearerToken.startsWith(jwtProperties.prefix)) {
-            return bearerToken.replace("Bearer ", "")
-        } else {
-            null
-        }
-    }
-
-    fun authorization(token: String): UsernamePasswordAuthenticationToken {
-        return token.let {
-            val userDetails: UserDetails = authDetailsService.loadUserByUsername(getTokenSubject(token))
-            return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
-        }
-    }
-
-    private fun getTokenSubject(subject: String): String {
-        return getTokenBody(subject).subject
-    }
-
-    private fun getTokenBody(token: String?): Claims {
+    private fun getBody(token: String): Claims {
         return try {
-            Jwts.parser().setSigningKey(jwtProperties.secretKey)
-                .parseClaimsJws(token).body
-        } catch (e: Exception) {
-            when (e) {
-                is ExpiredJwtException -> throw ExpiredTokenException
-                is InvalidClaimException -> throw InvalidJwtException
-                else -> throw InvalidJwtException
+            Jwts.parser().setSigningKey(jwtProperties.secretKey).parseClaimsJws(token).body
+        } catch (e: JwtException) {
+            throw InvalidJwtException
+        }
+    }
+
+    fun generateToken(userId: String, role: String): TokenResponse {
+        val accessToken = generateAccessToken(userId, role, ACCESS_KEY, jwtProperties.accessExp)
+        val refreshToken = generateRefreshToken(role, REFRESH_KEY, jwtProperties.refreshExp)
+        refreshTokenRepository.save(
+            RefreshToken(userId, refreshToken, jwtProperties.refreshExp)
+        )
+        return TokenResponse(accessToken, refreshToken)
+    }
+
+    private fun generateAccessToken(id: String, role: String, type: String, exp: Long): String =
+        Jwts.builder()
+            .setSubject(id)
+            .setHeaderParam("typ", type)
+            .claim("role", role)
+            .signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
+            .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
+            .setIssuedAt(Date())
+            .compact()
+
+    private fun generateRefreshToken(role: String, type: String, exp: Long): String =
+        Jwts.builder()
+            .setHeaderParam("typ", type)
+            .claim("role", role)
+            .signWith(SignatureAlgorithm.HS256, jwtProperties.secretKey)
+            .setExpiration(Date(System.currentTimeMillis() + exp * 1000))
+            .setIssuedAt(Date())
+            .compact()
+
+    fun resolveToken(request: HttpServletRequest): String? =
+        request.getHeader(jwtProperties.header)?.also {
+            if (it.startsWith(jwtProperties.prefix)) {
+                return it.substring(jwtProperties.prefix.length)
             }
+        }
+
+    fun authentication(token: String): Authentication? {
+        val body: Claims = getJws(token).body
+        val userDetails: UserDetails = getDetails(body)
+        return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
+    }
+
+    private fun getJws(token: String): Jws<Claims> {
+        return try {
+            Jwts.parser().setSigningKey(jwtProperties.secretKey).parseClaimsJws(token)
+        } catch (e: ExpiredJwtException) {
+            throw ExpiredTokenException
+        } catch (e: Exception) {
+            throw InvalidJwtException
+        }
+    }
+
+    private fun isRefreshToken(token: String?): Boolean {
+        return REFRESH_KEY == getJws(token!!).header["typ"].toString()
+    }
+
+    private fun getDetails(body: Claims): UserDetails {
+        return if (Role.STU.toString() == body["role"].toString()) {
+            authDetailsService.loadUserByUsername(body.subject)
+        } else {
+            adminDetailsService.loadUserByUsername(body.subject)
         }
     }
 }

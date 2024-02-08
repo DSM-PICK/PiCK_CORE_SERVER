@@ -9,11 +9,11 @@ class AuthDetails(
 ) : UserDetails {
 
     companion object {
-        private val ROLE = "ROLE"
+        private val ROLE_STU = "ROLE_STU"
     }
 
     override fun getAuthorities(): Collection<GrantedAuthority?> {
-        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority(ROLE))
+        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority(ROLE_STU))
     }
 
     override fun getPassword(): String? {

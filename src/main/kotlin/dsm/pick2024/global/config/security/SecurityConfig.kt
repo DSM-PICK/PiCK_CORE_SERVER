@@ -5,6 +5,7 @@ import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -30,6 +31,14 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
+            .antMatchers(HttpMethod.POST, "self-study/register")
+            .hasRole("SCH")
+            .antMatchers(HttpMethod.PATCH, "self-study/change")
+            .hasRole("SCH")
+            .antMatchers(HttpMethod.POST, "early-return/create")
+            .hasRole("STU")
+            .antMatchers(HttpMethod.PATCH, "early-return/*")
+            .hasRole("SCH")
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))

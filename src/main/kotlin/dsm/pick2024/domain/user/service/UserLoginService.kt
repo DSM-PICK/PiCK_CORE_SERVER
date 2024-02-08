@@ -25,7 +25,7 @@ class UserLoginService(
         if (passwordEncoder.matches(userLoginRequest.password, user.password)) {
             throw PasswordMissMatchException
         }
-        val token = jwtTokenProvider.getToken(user.name, Role.STU.toString())
+        val token = jwtTokenProvider.generateToken(user.name, Role.STU.toString())
         return token
     }
 }
