@@ -20,6 +20,7 @@ enum class ErrorCode(
     EARLY_RETURN_NOT_FOUND(404, "Early Return Application Not Found"),
     ALREADY_APPLYING_EARLY_RETURN(409, "Already applying For Early Return Application"),
 
+    APPLICATION_NOT_FOUND(404, "Application Not Found"),
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
