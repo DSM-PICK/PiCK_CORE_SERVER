@@ -36,7 +36,7 @@ class StatusEarlyReturnService(
         )
 
         saveEarlyReturnPort.save(update)
-        
+
         applicationStorySavePort.save(
             ApplicationStory(
                 reason = earlyReturn.reason,
