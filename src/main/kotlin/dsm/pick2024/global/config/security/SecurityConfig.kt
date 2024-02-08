@@ -39,6 +39,16 @@ class SecurityConfig(
             .hasRole("STU")
             .antMatchers(HttpMethod.PATCH, "early-return/*")
             .hasRole("SCH")
+            .antMatchers(HttpMethod.POST, "application")
+            .hasRole("STU")
+            .antMatchers(HttpMethod.POST, "early-return/create")
+            .hasRole("STU")
+            .antMatchers(HttpMethod.PATCH, "application/status/*")
+            .hasRole("SCH")
+            .antMatchers(HttpMethod.PATCH, "early-return/status/*")
+            .hasRole("SCH")
+            .antMatchers(HttpMethod.GET, "story/*")
+            .hasRole("SCH")
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
