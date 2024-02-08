@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class QueryUserApplicationService(
+class QueryUserApplicationStoryService(
     private val findStoryByUsernamePort: FindStoryByUsernamePort
 ): QueryUserApplicationUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryUserApplication(username: String): List<QueryApplicationStoryResponse> {
+    override fun queryUserApplicationStory(username: String): List<QueryApplicationStoryResponse> {
         val story = findStoryByUsernamePort.findByUsername(username) ?: throw RuntimeException()
         return story.map {
             storyList ->
@@ -21,7 +21,8 @@ class QueryUserApplicationService(
                 username = storyList.username,
                 startTime = storyList.startTime,
                 endTime = storyList.endTime,
-                date = storyList.date
+                date = storyList.date,
+                type = storyList.type
                 )
         }
     }

@@ -15,7 +15,6 @@ class EarlyReturnMapper {
             status = status,
             teacherName = teacherName,
             date = date,
-            type = type
         )
     }
 
@@ -28,7 +27,6 @@ class EarlyReturnMapper {
             status = status,
             teacherName = teacherName,
             date = date,
-            type = type
         )
     }
 }

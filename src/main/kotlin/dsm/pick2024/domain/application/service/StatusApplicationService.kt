@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
@@ -44,7 +45,8 @@ class StatusApplicationService(
                 username = application.username,
                 startTime = application.startTime,
                 endTime = application.endTime,
-                date = application.date
+                date = application.date,
+                type = Type.APPLICATION
             )
         )
     }

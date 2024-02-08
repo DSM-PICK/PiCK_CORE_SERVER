@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.DeleteEarlyReturnApplicationPort
 import dsm.pick2024.domain.application.port.out.FindEarlyReturnByIdPort
@@ -42,7 +43,8 @@ class StatusEarlyReturnService(
                 reason = earlyReturn.reason,
                 username = earlyReturn.username,
                 startTime = earlyReturn.startTime,
-                date = earlyReturn.date
+                date = earlyReturn.date,
+                type = Type.EARLY_RETURN
             )
         )
     }

@@ -17,7 +17,6 @@ class ApplicationMapper {
                 status = status,
                 teacherName = teacherName,
                 date = date,
-                type = type
             )
         }
 
@@ -32,7 +31,6 @@ class ApplicationMapper {
                 status = status,
                 teacherName = teacherName,
                 date = date,
-                type = type
             )
         }
 }

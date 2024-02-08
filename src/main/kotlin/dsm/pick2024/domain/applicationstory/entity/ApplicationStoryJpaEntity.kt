@@ -1,11 +1,14 @@
 package dsm.pick2024.domain.applicationstory.entity
 
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
 @Entity
 class ApplicationStoryJpaEntity(
@@ -23,6 +26,9 @@ class ApplicationStoryJpaEntity(
 
     @Column(nullable = false)
     val username: String,
+
+    @Enumerated(value = EnumType.STRING)
+    val type: Type,
 
     val date: LocalDate
 
