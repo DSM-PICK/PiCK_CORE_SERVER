@@ -4,7 +4,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import java.time.LocalDate
 import java.time.LocalTime
 
-data class QueryApplicationStoryResponse (
+data class QueryApplicationStoryResponse(
     val reason: String,
     val startTime: LocalTime,
     val endTime: LocalTime? = null,
