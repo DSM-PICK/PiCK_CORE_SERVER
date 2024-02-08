@@ -1,7 +1,5 @@
 package dsm.pick2024.domain.applicationstory.mapper
 
-import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.entity.ApplicationJapEntity
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.entity.ApplicationStoryJpaEntity
 import org.springframework.stereotype.Component
