@@ -6,7 +6,6 @@ import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.DeleteEarlyReturnApplicationPort
 import dsm.pick2024.domain.application.port.out.FindEarlyReturnByIdPort
 import dsm.pick2024.domain.application.port.out.SaveEarlyReturnPort
-import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -20,17 +19,17 @@ class StatusEarlyReturnService(
 ) : StatusEarlyReturnUseCase {
 
     @Transactional
-    override fun statusEarlyReturn(request: StatusEarlyReturnRequest, id: UUID) {
+    override fun statusEarlyReturn(status: Status, id: UUID) {
         val admin = adminFacadeUseCase.currentUser()
 
-        if (Status.NO == request.status) {
+        if (Status.NO == status) {
             deleteEarlyReturnApplicationPort.deleteById(id)
         }
 
         val earlyReturn = findEarlyReturnByIdPort.findById(id)
         val update = earlyReturn.copy(
             teacherName = admin.name,
-            status = request.status
+            status = status
         )
 
         saveEarlyReturnPort.save(update)

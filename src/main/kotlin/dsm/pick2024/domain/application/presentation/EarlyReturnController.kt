@@ -1,9 +1,9 @@
 package dsm.pick2024.domain.application.presentation
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
-import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -29,8 +29,8 @@ class EarlyReturnController(
     @Operation(summary = "조기귀가 신청 상태변경 API")
     @PatchMapping("/status/{id}")
     fun statusEarlyReturn(
-        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest,
-        @PathVariable id: UUID
+        @RequestParam(name = "status") status: Status,
+        @PathVariable(value = "id") id: UUID
     ) =
-        statusEarlyReturnUseCase.statusEarlyReturn(statusEarlyReturnRequest, id)
+        statusEarlyReturnUseCase.statusEarlyReturn(status, id)
 }
