@@ -21,6 +21,8 @@ class ApplicationJapEntity(
 
     val username: String,
 
+    val teacherName: String? = null,
+
     @Enumerated(value = EnumType.STRING)
     val status: Status
 
