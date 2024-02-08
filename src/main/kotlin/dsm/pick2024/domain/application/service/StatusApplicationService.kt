@@ -7,6 +7,8 @@ import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
+import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
+import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
@@ -16,7 +18,8 @@ class StatusApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val deleteApplicationPort: DeleteApplicationPort,
-    private val saveApplicationPort: SaveApplicationPort
+    private val saveApplicationPort: SaveApplicationPort,
+    private val applicationStorySavePort: ApplicationStorySavePort
 ) : StatusApplicationUseCase {
 
     @Transactional
@@ -34,5 +37,15 @@ class StatusApplicationService(
             status = status
         )
         saveApplicationPort.save(update)
+
+        applicationStorySavePort.save(
+            ApplicationStory(
+                reason = application.reason,
+                username = application.username,
+                startTime = application.startTime,
+                endTime = application.endTime,
+                date = application.date
+            )
+        )
     }
 }
