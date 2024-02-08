@@ -13,7 +13,8 @@ class EarlyReturnMapper {
             startTime = startTime,
             username = username,
             status = status,
-            teacherName = teacherName
+            teacherName = teacherName,
+            date = date
         )
     }
 
@@ -24,7 +25,8 @@ class EarlyReturnMapper {
             startTime = startTime,
             username = username,
             status = status,
-            teacherName = teacherName
+            teacherName = teacherName,
+            date = date
         )
     }
 }

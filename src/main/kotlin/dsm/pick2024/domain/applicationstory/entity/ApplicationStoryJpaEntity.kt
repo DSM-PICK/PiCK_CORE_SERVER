@@ -1,8 +1,9 @@
 package dsm.pick2024.domain.applicationstory.entity
 
 import dsm.pick2024.global.base.BaseUUIDEntity
+import java.time.LocalDate
 import java.time.LocalTime
-import java.util.UUID
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 
@@ -22,5 +23,7 @@ class ApplicationStoryJpaEntity (
 
     @Column(nullable = false)
     val username: String,
+
+    val date: LocalDate
 
 ): BaseUUIDEntity(id)

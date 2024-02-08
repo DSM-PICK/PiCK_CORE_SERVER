@@ -15,7 +15,8 @@ class ApplicationMapper {
                 endTime = endTime,
                 username = username,
                 status = status,
-                teacherName = teacherName
+                teacherName = teacherName,
+                date = date
             )
         }
 
@@ -28,7 +29,8 @@ class ApplicationMapper {
                 endTime = endTime,
                 username = username,
                 status = status,
-                teacherName = teacherName
+                teacherName = teacherName,
+                date = date
             )
         }
 }
