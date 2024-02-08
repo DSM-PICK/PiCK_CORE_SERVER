@@ -1,34 +1,33 @@
-package dsm.pick2024.domain.application.mapper
+package dsm.pick2024.domain.applicationstory.mapper
 
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.entity.ApplicationJapEntity
+import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
+import dsm.pick2024.domain.applicationstory.entity.ApplicationStoryJpaEntity
 import org.springframework.stereotype.Component
 
 @Component
-class ApplicationMapper {
-    fun toEntity(domain: Application) =
+class ApplicationStoryMapper {
+
+    fun toEntity(domain: ApplicationStory) =
         domain.run {
-            ApplicationJapEntity(
+            ApplicationStoryJpaEntity(
                 id = id,
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
-                username = username,
-                status = status,
-                teacherName = teacherName
+                username = username
             )
         }
 
-    fun toDomain(entity: ApplicationJapEntity)  =
+    fun toDomain(entity: ApplicationStoryJpaEntity)  =
         entity.run {
-            Application(
+            ApplicationStory(
                 id = id,
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
                 username = username,
-                status = status,
-                teacherName = teacherName
             )
         }
 }
