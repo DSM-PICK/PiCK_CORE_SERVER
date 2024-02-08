@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.entity
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -25,6 +26,9 @@ class EarlyReturnJpaEntity(
     val teacherName: String? = null,
 
     val date: LocalDate,
+
+    @Enumerated(value = EnumType.STRING)
+    val type: Type,
 
     @Enumerated(value = EnumType.STRING)
     val status: Status

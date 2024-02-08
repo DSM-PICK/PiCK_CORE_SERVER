@@ -16,7 +16,8 @@ class ApplicationMapper {
                 username = username,
                 status = status,
                 teacherName = teacherName,
-                date = date
+                date = date,
+                type = type
             )
         }
 
@@ -30,7 +31,8 @@ class ApplicationMapper {
                 username = username,
                 status = status,
                 teacherName = teacherName,
-                date = date
+                date = date,
+                type = type
             )
         }
 }

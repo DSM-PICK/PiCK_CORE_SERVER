@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.enums.Type
 import dsm.pick2024.domain.application.exception.AlreadyApplyingForPicnicException
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistApplicationByUsernamePort
@@ -33,7 +34,8 @@ class ApplicationService(
                 startTime = request.startTime,
                 endTime = request.endTime,
                 status = Status.QUIET,
-                date = LocalDate.now()
+                date = LocalDate.now(),
+                type = Type.APPLICATION
             )
         )
     }

@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.domain.EarlyReturn
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.enums.Type
 import dsm.pick2024.domain.application.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.ExistsEarlyReturnByUsernamePort
@@ -33,7 +34,8 @@ class CreateEarlyReturnService(
                 reason = request.reason,
                 startTime = request.startTime,
                 status = Status.QUIET,
-                date = LocalDate.now()
+                date = LocalDate.now(),
+                type = Type.EARLY_RETURN
             )
         )
     }
