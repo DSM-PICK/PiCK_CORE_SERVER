@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
-data class ApplicationStory (
+data class ApplicationStory(
     val id: UUID? = null,
     val reason: String,
     val startTime: LocalTime,

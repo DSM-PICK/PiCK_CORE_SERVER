@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class ApplicationStoryPersistenceAdapter(
     private val applicationStoryMapper: ApplicationStoryMapper,
     private val applicationStoryRepository: ApplicationStoryRepository
-): ApplicationStoryPort {
+) : ApplicationStoryPort {
 
     override fun save(applicationStory: ApplicationStory) {
         applicationStoryRepository.save(applicationStoryMapper.toEntity(applicationStory))

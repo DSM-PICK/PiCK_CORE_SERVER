@@ -20,7 +20,7 @@ class ApplicationMapper {
             )
         }
 
-    fun toDomain(entity: ApplicationJapEntity)  =
+    fun toDomain(entity: ApplicationJapEntity) =
         entity.run {
             Application(
                 id = id,

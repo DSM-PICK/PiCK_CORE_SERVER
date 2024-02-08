@@ -19,7 +19,7 @@ class ApplicationStoryMapper {
             )
         }
 
-    fun toDomain(entity: ApplicationStoryJpaEntity)  =
+    fun toDomain(entity: ApplicationStoryJpaEntity) =
         entity.run {
             ApplicationStory(
                 id = id,

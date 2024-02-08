@@ -8,7 +8,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity
-class ApplicationStoryJpaEntity (
+class ApplicationStoryJpaEntity(
 
     id: UUID?,
 
@@ -19,11 +19,11 @@ class ApplicationStoryJpaEntity (
     val startTime: LocalTime,
 
     @Column(name = "end_time")
-    val endTime: LocalTime ?= null,
+    val endTime: LocalTime ? = null,
 
     @Column(nullable = false)
     val username: String,
 
     val date: LocalDate
 
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

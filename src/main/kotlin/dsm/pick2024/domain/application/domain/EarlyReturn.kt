@@ -9,7 +9,7 @@ data class EarlyReturn(
     val id: UUID? = null,
     val reason: String,
     val startTime: LocalTime,
-    val date:LocalDate,
+    val date: LocalDate,
     val username: String,
     val status: Status,
     val teacherName: String? = null
