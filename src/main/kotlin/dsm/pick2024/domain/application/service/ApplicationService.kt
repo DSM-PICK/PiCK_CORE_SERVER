@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 class ApplicationService(
     private val existApplicationByUsernamePort: ExistApplicationByUsernamePort,
     private val saveApplicationPort: SaveApplicationPort,
-    private val userFacadeUseCase: UserFacadeUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationUseCase {
     @Transactional
     override fun application(request: ApplicationRequest) {
@@ -31,8 +31,8 @@ class ApplicationService(
                 reason = request.reason,
                 startTime = request.startTime,
                 endTime = request.endTime,
-                status = Status.QUIET,
-            ),
+                status = Status.QUIET
+            )
         )
     }
 }

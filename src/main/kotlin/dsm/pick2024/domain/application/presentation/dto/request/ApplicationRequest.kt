@@ -5,5 +5,5 @@ import java.time.LocalTime
 data class ApplicationRequest(
     val reason: String,
     val startTime: LocalTime,
-    val endTime: LocalTime,
+    val endTime: LocalTime
 )

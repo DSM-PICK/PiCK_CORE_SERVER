@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/application")
 class ApplicationController(
-    private val applicationService: ApplicationService,
+    private val applicationService: ApplicationService
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping()
     fun application(
-        @RequestBody applicationRequest: ApplicationRequest,
+        @RequestBody applicationRequest: ApplicationRequest
     ) = applicationService.application(applicationRequest)
 }
