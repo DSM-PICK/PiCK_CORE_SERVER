@@ -29,7 +29,10 @@ class UserMoveClassroomService(
             username = user.name,
             classroomName = request.classroomName,
             floor = request.floor,
-            move = "${user.grade}-${user.classNum}"
+            move = "${user.grade}-${user.classNum}",
+            grade = user.grade,
+            classNum = user.classNum,
+            num = user.num
         )
         classroomSavePort.save(classroom)
     }

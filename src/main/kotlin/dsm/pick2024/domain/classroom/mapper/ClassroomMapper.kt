@@ -14,7 +14,10 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
             classroomName = classroomName,
             floor = floor,
             username = username,
-            move = move
+            move = move,
+            grade = grade,
+            classNum = classNum,
+            num = num
         )
     }
 
@@ -24,7 +27,10 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
             classroomName = classroomName,
             floor = floor,
             username = username,
-            move = move
+            move = move,
+            grade = grade,
+            classNum = classNum,
+            num = num
         )
     }
 }
