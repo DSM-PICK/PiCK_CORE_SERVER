@@ -11,7 +11,7 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
 
     fun deleteById(id: UUID)
 
-    fun saveAll(entity: List<EarlyReturnJpaEntity>)
+    fun saveAll(entity: Iterable<EarlyReturnJpaEntity>)
 
     fun save(entity: EarlyReturnJpaEntity)
 }
