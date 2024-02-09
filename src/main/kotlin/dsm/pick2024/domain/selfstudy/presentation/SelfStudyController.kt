@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.selfstudy.presentation
 
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryTodaySelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import dsm.pick2024.domain.selfstudy.service.ChangeSelfStudyTeacherService
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/self-study")
 class SelfStudyController(
     private val registrationSelfStudyTeacherUseCase: RegistrationSelfStudyTeacherUseCase,
-    private val changeSelfStudyTeacherService: ChangeSelfStudyTeacherService
+    private val changeSelfStudyTeacherService: ChangeSelfStudyTeacherService,
+    private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase
 ) {
 
     @Operation(summary = "자습감독 선생님 등록 API")
@@ -30,4 +32,9 @@ class SelfStudyController(
         @RequestBody changeSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
     ) =
         changeSelfStudyTeacherService.changeSelfStudyTeacher(changeSelfStudyTeacherRequest)
+
+    @Operation(summary = "당일 자습감독 선생님 조회")
+    @GetMapping("/today")
+    fun queryTodaySelfStudyTeacher() =
+        queryTodaySelfStudyTeacherUseCase.queryTodaySelfStudyTeacher()
 }
