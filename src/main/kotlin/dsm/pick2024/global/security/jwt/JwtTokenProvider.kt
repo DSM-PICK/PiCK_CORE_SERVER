@@ -28,14 +28,6 @@ class JwtTokenProvider(
         private const val REFRESH_KEY = "refresh_token"
     }
 
-    private fun getBody(token: String): Claims {
-        return try {
-            Jwts.parser().setSigningKey(jwtProperties.secretKey).parseClaimsJws(token).body
-        } catch (e: JwtException) {
-            throw InvalidJwtException
-        }
-    }
-
     fun generateToken(userId: String, role: String): TokenResponse {
         val accessToken = generateAccessToken(userId, role, ACCESS_KEY, jwtProperties.accessExp)
         val refreshToken = generateRefreshToken(role, REFRESH_KEY, jwtProperties.refreshExp)
@@ -90,6 +82,8 @@ class JwtTokenProvider(
     private fun isRefreshToken(token: String?): Boolean {
         return REFRESH_KEY == getJws(token!!).header["typ"].toString()
     }
+
+    fun getRole(token: String) = getJws(token).body["role"].toString()
 
     private fun getDetails(body: Claims): UserDetails {
         return if (Role.STU.toString() == body["role"].toString()) {
