@@ -41,7 +41,7 @@ class ApplicationController(
     @Operation(summary = "외출신청 수락, 거절 API")
     @PatchMapping("/status")
     fun statusApplication(
-        @RequestParam(name = "request") statusApplicationRequest: StatusApplicationRequest
+        @RequestBody statusApplicationRequest: StatusApplicationRequest
     ) =
         statusApplicationUseCase.statusOKApplication(statusApplicationRequest)
 

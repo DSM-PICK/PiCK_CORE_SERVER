@@ -28,7 +28,7 @@ class EarlyReturnController(
     @Operation(summary = "조기귀가 신청 상태변경 API")
     @PatchMapping("/status")
     fun statusEarlyReturn(
-        @RequestParam(name = "request") statusEarlyReturnRequest: StatusEarlyReturnRequest
+        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest
     ) =
         statusEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest)
 }
