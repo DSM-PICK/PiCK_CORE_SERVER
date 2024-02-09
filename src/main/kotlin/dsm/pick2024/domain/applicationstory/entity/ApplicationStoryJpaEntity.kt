@@ -10,7 +10,7 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
-@Entity
+@Entity(name = "tbl_application_story")
 class ApplicationStoryJpaEntity(
 
     id: UUID?,
