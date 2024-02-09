@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version PluginVersions.JVM_VERSION
     kotlin("plugin.spring") version PluginVersions.SPRING_PLUGIN_VERSION
     kotlin("plugin.jpa") version PluginVersions.JPA_PLUGIN_VERSION
+    kotlin("kapt") version PluginVersions.KAPT_VERSION
 }
 
 dependencyManagement {
@@ -67,6 +68,10 @@ dependencies {
     implementation(Dependencies.SWAGGER)
 
     implementation(Dependencies.REDIS)
+
+    implementation(Dependencies.QUERYDSL)
+    kapt(Dependencies.QUERYDSL_PROCESSOR)
+    kapt("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 tasks.withType<KotlinCompile> {
