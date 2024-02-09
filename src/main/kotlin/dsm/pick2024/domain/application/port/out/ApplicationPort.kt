@@ -4,4 +4,6 @@ interface ApplicationPort :
     ExistApplicationByUsernamePort,
     SaveApplicationPort,
     FindApplicationByIdPort,
-    DeleteApplicationPort
+    DeleteApplicationPort,
+    QueryFloorApplicationPort,
+    QueryClassApplicationPort

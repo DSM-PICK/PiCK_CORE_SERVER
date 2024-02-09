@@ -33,7 +33,10 @@ class CreateEarlyReturnService(
                 reason = request.reason,
                 startTime = request.startTime,
                 status = Status.QUIET,
-                date = LocalDate.now()
+                date = LocalDate.now(),
+                grade = user.grade,
+                classNum = user.classNum,
+                num = user.num
             )
         )
     }

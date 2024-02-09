@@ -16,7 +16,10 @@ class ApplicationMapper {
                 username = username,
                 status = status,
                 teacherName = teacherName,
-                date = date
+                date = date,
+                grade = grade,
+                classNum = classNum,
+                num = num
             )
         }
 
@@ -30,7 +33,10 @@ class ApplicationMapper {
                 username = username,
                 status = status,
                 teacherName = teacherName,
-                date = date
+                date = date,
+                grade = grade,
+                classNum = classNum,
+                num = num
             )
         }
 }

@@ -26,6 +26,12 @@ class EarlyReturnJpaEntity(
 
     val date: LocalDate,
 
+    val grade: Int,
+
+    val classNum: Int,
+
+    val num: Int,
+
     @Enumerated(value = EnumType.STRING)
     val status: Status
 

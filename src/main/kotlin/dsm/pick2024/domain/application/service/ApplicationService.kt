@@ -33,7 +33,10 @@ class ApplicationService(
                 startTime = request.startTime,
                 endTime = request.endTime,
                 status = Status.QUIET,
-                date = LocalDate.now()
+                date = LocalDate.now(),
+                grade = user.grade,
+                classNum = user.classNum,
+                num = user.num
             )
         )
     }
