@@ -21,16 +21,21 @@ class ApplicationJapEntity(
     @Column(name = "end_time", nullable = false)
     val endTime: LocalTime,
 
+    @Column(name = "user_name", nullable = false)
     val username: String,
 
     val teacherName: String? = null,
 
+    @Column(nullable = false)
     val date: LocalDate,
 
+    @Column(nullable = false)
     val grade: Int,
 
+    @Column(name = "class_num", nullable = false)
     val classNum: Int,
 
+    @Column(nullable = false)
     val num: Int,
 
     @Enumerated(value = EnumType.STRING)

@@ -33,7 +33,7 @@ class StatusEarlyReturnService(
         val earlyReturn = findEarlyReturnByIdPort.findById(id)
         val update = earlyReturn.copy(
             teacherName = admin.name,
-            status = status
+            status = Status.OK
         )
 
         saveEarlyReturnPort.save(update)

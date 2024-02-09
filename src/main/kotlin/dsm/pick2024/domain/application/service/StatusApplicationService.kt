@@ -36,7 +36,7 @@ class StatusApplicationService(
 
         val update = application.copy(
             teacherName = admin.name,
-            status = status,
+            status = Status.OK,
             applicationStatus = ApplicationStatus.NON_RETURN
         )
         saveApplicationPort.save(update)
