@@ -1,9 +1,9 @@
 package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.enums.ApplicationStatus
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -23,7 +23,7 @@ import java.util.UUID
 @RequestMapping("/application")
 class ApplicationController(
     private val applicationUseCase: ApplicationUseCase,
-    private val statusApplicationUseCase: StatusApplicationUseCase,
+    private val statusApplicationUseCase: StatusOKApplicationUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
@@ -41,10 +41,17 @@ class ApplicationController(
     @Operation(summary = "외출신청 수락, 거절 API")
     @PatchMapping("/status")
     fun statusApplication(
-        @RequestParam(name = "status") status: Status,
-        @RequestParam(value = "applicationIds") applicationIds: List<UUID>
+        @RequestParam(name = "request") statusApplicationRequest: StatusApplicationRequest
     ) =
-        statusApplicationUseCase.statusApplication(status, applicationIds)
+        statusApplicationUseCase.statusOKApplication(statusApplicationRequest)
+
+    @Operation(summary = "외출상태 복귀로 변경하기 API")
+    @PatchMapping("/change/{applicationId}")
+    fun statusApplicationChange(
+        @PathVariable(name = "applicationId") applicationId: UUID,
+        @RequestParam(name = "application_status") applicationStatus: ApplicationStatus
+    ) =
+        statusApplicationChangeUseCase.statusApplicationChange(applicationId, applicationStatus)
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
@@ -62,12 +69,4 @@ class ApplicationController(
         @PathVariable(name = "applicationId") applicationId: UUID
     ) =
         queryReasonApplicationUseCase.queryReasonApplication(applicationId)
-
-    @Operation(summary = "외출상태 복귀로 변경하기 API")
-    @PatchMapping("/change/{applicationId}")
-    fun statusApplicationChange(
-        @PathVariable(name = "applicationId") applicationId: UUID,
-        @RequestParam(name = "application_status") applicationStatus: ApplicationStatus
-    ) =
-        statusApplicationChangeUseCase.statusApplicationChange(applicationId, applicationStatus)
 }

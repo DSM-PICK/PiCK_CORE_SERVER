@@ -1,21 +1,20 @@
 package dsm.pick2024.domain.application.presentation
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
+import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @Tag(name = "early API")
 @RestController
 @RequestMapping("/early-return")
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
-    private val statusEarlyReturnUseCase: StatusEarlyReturnUseCase
+    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -29,8 +28,7 @@ class EarlyReturnController(
     @Operation(summary = "조기귀가 신청 상태변경 API")
     @PatchMapping("/status")
     fun statusEarlyReturn(
-        @RequestParam(name = "status") status: Status,
-        @RequestParam(value = "earlyReturnIds") earlyReturnIds: List<UUID>
+        @RequestParam(name = "request") statusEarlyReturnRequest: StatusEarlyReturnRequest
     ) =
-        statusEarlyReturnUseCase.statusEarlyReturn(status, earlyReturnIds)
+        statusEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest)
 }
