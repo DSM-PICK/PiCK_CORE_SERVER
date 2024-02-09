@@ -10,7 +10,7 @@ import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 
 @Component
-class ClassroomPersistence(
+class ClassroomPersistenceAdapter(
     private val classroomMapper: ClassroomMapper,
     private val classroomRepository: ClassroomRepository,
     private val jpaQueryFactory: JPAQueryFactory
@@ -30,7 +30,7 @@ class ClassroomPersistence(
         return classroomRepository.existsByUsername(username)
     }
 
-    override fun queryFloorClassroom(floor: Int)  =
+    override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
             .select(QClassroomJpaEntity.classroomJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -43,8 +43,8 @@ class ClassroomPersistence(
                         2 -> 3
                         else -> throw IllegalArgumentException("Invalid floor number")
                     }
-                ),
+                )
             )
             .fetch()
-            .map { classroomMapper.toDomain(it) }
+            .map { classroomMapper.toDomain(it)!! }
 }
