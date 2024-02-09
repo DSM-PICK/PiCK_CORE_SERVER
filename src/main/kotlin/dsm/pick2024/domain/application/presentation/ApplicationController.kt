@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.presentation
 
+import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
@@ -25,14 +26,17 @@ class ApplicationController(
     private val statusApplicationUseCase: StatusApplicationUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
-    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase
+    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
+    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase
 ) {
+
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     fun application(
         @RequestBody applicationRequest: ApplicationRequest
-    ) = applicationUseCase.application(applicationRequest)
+    ) =
+        applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락, 거절 API")
     @PatchMapping("/status/{applicationId}")
@@ -58,4 +62,12 @@ class ApplicationController(
         @PathVariable(name = "applicationId") applicationId: UUID
     ) =
         queryReasonApplicationUseCase.queryReasonApplication(applicationId)
+
+    @Operation(summary = "외출상태 복귀로 변경하기 API")
+    @PatchMapping("/change/{applicationId}")
+    fun statusApplicationChange(
+        @PathVariable(name = "applicationId") applicationId: UUID,
+        @RequestParam(name = "application_status") applicationStatus: ApplicationStatus
+    ) =
+        statusApplicationChangeUseCase.statusApplicationChange(applicationId, applicationStatus)
 }
