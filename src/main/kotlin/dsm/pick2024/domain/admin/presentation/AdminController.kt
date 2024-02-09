@@ -17,7 +17,7 @@ class AdminController(
     private val adminLoginUseCase: AdminLoginUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
-    @PostMapping
+    @PostMapping("/login")
     fun login(@RequestBody adminLoginRequest: AdminLoginRequest): TokenResponse =
         adminLoginUseCase.adminLogin(adminLoginRequest)
 }

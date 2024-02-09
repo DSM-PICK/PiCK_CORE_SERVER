@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ApplicationMapper {
-    fun toEntity(domain: Application): ApplicationJapEntity =
+    fun toEntity(domain: Application) =
         domain.run {
             ApplicationJapEntity(
                 id = id,
@@ -15,11 +15,12 @@ class ApplicationMapper {
                 endTime = endTime,
                 username = username,
                 status = status,
-                teacherName = teacherName
+                teacherName = teacherName,
+                date = date
             )
         }
 
-    fun toDomain(entity: ApplicationJapEntity): Application =
+    fun toDomain(entity: ApplicationJapEntity) =
         entity.run {
             Application(
                 id = id,
@@ -28,7 +29,8 @@ class ApplicationMapper {
                 endTime = endTime,
                 username = username,
                 status = status,
-                teacherName = teacherName
+                teacherName = teacherName,
+                date = date
             )
         }
 }

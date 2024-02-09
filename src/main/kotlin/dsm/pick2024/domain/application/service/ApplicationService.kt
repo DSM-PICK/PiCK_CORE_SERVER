@@ -10,6 +10,7 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationReque
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @Service
 class ApplicationService(
@@ -31,7 +32,8 @@ class ApplicationService(
                 reason = request.reason,
                 startTime = request.startTime,
                 endTime = request.endTime,
-                status = Status.QUIET
+                status = Status.QUIET,
+                date = LocalDate.now()
             )
         )
     }
