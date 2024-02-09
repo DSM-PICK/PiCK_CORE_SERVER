@@ -23,5 +23,5 @@ class ClassroomJpaEntity(
     @Column(name = "class_num")
     val classNum: Int,
 
-    val num: Int,
+    val num: Int
 ) : BaseUUIDEntity(id)

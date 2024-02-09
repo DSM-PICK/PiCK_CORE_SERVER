@@ -10,5 +10,5 @@ data class Classroom(
     val move: String,
     val grade: Int,
     val classNum: Int,
-    val num: Int,
+    val num: Int
 )

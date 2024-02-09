@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryFloorClassroomService(
     private val queryFloorClassroomPort: QueryFloorClassroomPort
-): QueryFloorClassroomUseCase{
+) : QueryFloorClassroomUseCase {
 
     @Transactional(readOnly = true)
     override fun queryFloorClassroom(floor: Int) =
         queryFloorClassroomPort.queryFloorClassroom(floor)
             .map {
-                it ->
+                    it ->
                 QueryFloorClassroomResponse(
                     it.classroomName,
                     it.username,
