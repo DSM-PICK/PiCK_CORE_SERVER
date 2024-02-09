@@ -39,10 +39,10 @@ class ApplicationController(
         applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락, 거절 API")
-    @PatchMapping("/status/{applicationIds}")
+    @PatchMapping("/status")
     fun statusApplication(
         @RequestParam(name = "status") status: Status,
-        @PathVariable(value = "applicationIds") applicationIds: List<UUID>
+        @RequestParam(value = "applicationIds") applicationIds: List<UUID>
     ) =
         statusApplicationUseCase.statusApplication(status, applicationIds)
 
