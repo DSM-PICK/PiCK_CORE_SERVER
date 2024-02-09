@@ -13,16 +13,24 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
             id = id,
             classroomName = classroomName,
             floor = floor,
-            username = username
+            username = username,
+            move = move,
+            grade = grade,
+            classNum = classNum,
+            num = num
         )
     }
 
-    override fun toDomain(entity: ClassroomJpaEntity?) = entity?.run {
+    override fun toDomain(entity: ClassroomJpaEntity) = entity.run {
         Classroom(
             id = id,
             classroomName = classroomName,
             floor = floor,
-            username = username
+            username = username,
+            move = move,
+            grade = grade,
+            classNum = classNum,
+            num = num
         )
     }
 }

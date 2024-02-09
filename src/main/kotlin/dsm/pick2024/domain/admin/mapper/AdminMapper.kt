@@ -18,7 +18,7 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
         )
     }
 
-    override fun toDomain(entity: AdminJpaEntity?) = entity?.run {
+    override fun toDomain(entity: AdminJpaEntity) = entity.run {
         Admin(
             id = id,
             name = name,
