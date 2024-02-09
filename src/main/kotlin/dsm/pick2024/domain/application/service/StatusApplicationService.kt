@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
@@ -35,7 +36,8 @@ class StatusApplicationService(
 
         val update = application.copy(
             teacherName = admin.name,
-            status = status
+            status = status,
+            applicationStatus = ApplicationStatus.NON_RETURN
         )
         saveApplicationPort.save(update)
 

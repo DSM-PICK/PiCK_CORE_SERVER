@@ -19,7 +19,8 @@ class ApplicationMapper {
                 date = date,
                 grade = grade,
                 classNum = classNum,
-                num = num
+                num = num,
+                applicationStatus = applicationStatus
             )
         }
 
@@ -36,7 +37,8 @@ class ApplicationMapper {
                 date = date,
                 grade = grade,
                 classNum = classNum,
-                num = num
+                num = num,
+                applicationStatus = applicationStatus!!
             )
         }
 }
