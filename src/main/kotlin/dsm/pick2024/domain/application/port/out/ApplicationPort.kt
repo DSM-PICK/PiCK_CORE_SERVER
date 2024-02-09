@@ -5,4 +5,5 @@ interface ApplicationPort :
     SaveApplicationPort,
     FindApplicationByIdPort,
     DeleteApplicationPort,
-    QueryFloorApplicationPort
+    QueryFloorApplicationPort,
+    QueryClassApplicationPort
