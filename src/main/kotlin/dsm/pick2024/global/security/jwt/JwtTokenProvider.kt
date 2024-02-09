@@ -79,12 +79,6 @@ class JwtTokenProvider(
         }
     }
 
-    private fun isRefreshToken(token: String?): Boolean {
-        return REFRESH_KEY == getJws(token!!).header["typ"].toString()
-    }
-
-    fun getRole(token: String) = getJws(token).body["role"].toString()
-
     private fun getDetails(body: Claims): UserDetails {
         return if (Role.STU.toString() == body["role"].toString()) {
             authDetailsService.loadUserByUsername(body.subject)
