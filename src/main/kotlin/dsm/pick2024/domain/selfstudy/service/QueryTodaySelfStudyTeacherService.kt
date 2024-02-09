@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryTodaySelfStudyTeacherService(
     private val findByTodaySelfStudyTeacherPort: FindByTodaySelfStudyTeacherPort
-): QueryTodaySelfStudyTeacherUseCase {
+) : QueryTodaySelfStudyTeacherUseCase {
 
     @Transactional(readOnly = true)
     override fun queryTodaySelfStudyTeacher() =
-         findByTodaySelfStudyTeacherPort.findByTodaySelfStudy().map {
-            it -> QueryTodaySelfStudyTeacherResponse(it.floor, it.teacher)
-    }
+        findByTodaySelfStudyTeacherPort.findByTodaySelfStudy().map {
+                it ->
+            QueryTodaySelfStudyTeacherResponse(it.floor, it.teacher)
+        }
 }

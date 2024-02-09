@@ -13,7 +13,7 @@ import java.time.LocalDate
 class SelfStudyPersistenceAdapter(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyMapper: SelfStudyMapper,
-    private val jpaQueryFactory: JPAQueryFactory,
+    private val jpaQueryFactory: JPAQueryFactory
 ) : SelfStudyPort {
 
     override fun save(selfStudy: SelfStudy) {
@@ -33,6 +33,6 @@ class SelfStudyPersistenceAdapter(
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(today))
             .fetch()
-            .map{ selfStudyMapper.toDomain(it)!! }
+            .map { selfStudyMapper.toDomain(it)!! }
     }
 }
