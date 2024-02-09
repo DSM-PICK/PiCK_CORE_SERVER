@@ -1,10 +1,7 @@
 package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryFloorApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -27,7 +24,8 @@ class ApplicationController(
     private val applicationUseCase: ApplicationUseCase,
     private val statusApplicationUseCase: StatusApplicationUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
-    private val queryClassApplicationUseCase: QueryClassApplicationUseCase
+    private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
+    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -44,13 +42,20 @@ class ApplicationController(
     ) =
         statusApplicationUseCase.statusApplication(status, id)
 
-    @Operation(summary = "층별로 외출신청자 조회")
+    @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorApplication(@RequestParam floor: Int) =
         queryFloorApplicationUseCase.queryFloorApplication(floor)
 
-    @Operation(summary = "반별로 외출신청자 조회")
+    @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
     fun queryClassApplication(@RequestParam grade: Int, classNum: Int) =
         queryClassApplicationUseCase.queryClassApplication(grade, classNum)
+
+    @Operation(summary = "외출사유 확인하기 API")
+    @GetMapping("/reason/{applicationId}")
+    fun queryReasonApplication(
+        @PathVariable(name = "applicationId") applicationId: UUID
+    ) =
+        queryReasonApplicationUseCase.queryReasonApplication(applicationId)
 }
