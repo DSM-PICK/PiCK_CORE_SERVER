@@ -34,4 +34,6 @@ auth:
         header: ${JWT_HEADER}
         prefix: ${JWT_PREFIX}
 
-
+server:
+    servlet:
+        context-path: /dsm-pick
