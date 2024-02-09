@@ -39,12 +39,12 @@ class ApplicationController(
         applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락, 거절 API")
-    @PatchMapping("/status/{applicationId}")
+    @PatchMapping("/status/{applicationIds}")
     fun statusApplication(
         @RequestParam(name = "status") status: Status,
-        @PathVariable(value = "applicationId") id: UUID
+        @PathVariable(value = "applicationIds") applicationIds: List<UUID>
     ) =
-        statusApplicationUseCase.statusApplication(status, id)
+        statusApplicationUseCase.statusApplication(status, applicationIds)
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")

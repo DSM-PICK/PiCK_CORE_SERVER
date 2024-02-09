@@ -1,7 +1,9 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.application.domain.EarlyReturn
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.DeleteEarlyReturnApplicationPort
@@ -23,29 +25,38 @@ class StatusEarlyReturnService(
 ) : StatusEarlyReturnUseCase {
 
     @Transactional
-    override fun statusEarlyReturn(status: Status, id: UUID) {
+    override fun statusEarlyReturn(status: Status, earlyReturnIds: List<UUID>) {
         val admin = adminFacadeUseCase.currentUser()
 
-        if (Status.NO == status) {
-            deleteEarlyReturnApplicationPort.deleteById(id)
-        }
+        val earlyReturnsUpdate = mutableListOf<EarlyReturn>()
+        val applicationStory = mutableListOf<ApplicationStory>()
 
-        val earlyReturn = findEarlyReturnByIdPort.findById(id)
-        val update = earlyReturn.copy(
-            teacherName = admin.name,
-            status = Status.OK
-        )
+        for (earlyReturnId in earlyReturnIds) {
+            if (Status.NO == status) {
+                deleteEarlyReturnApplicationPort.deleteById(earlyReturnId)
+                continue
+            }
 
-        saveEarlyReturnPort.save(update)
+            val earlyReturn = findEarlyReturnByIdPort.findById(earlyReturnId)
+                ?: throw EarlyReturnApplicationNotFoundException
 
-        applicationStorySavePort.save(
-            ApplicationStory(
+            val updateEarlyReturn = earlyReturn.copy(
+                teacherName = admin.name,
+                status = Status.OK
+            )
+            earlyReturnsUpdate.add(updateEarlyReturn)
+
+            val applicationStorySave = ApplicationStory(
                 reason = earlyReturn.reason,
                 username = earlyReturn.username,
                 startTime = earlyReturn.startTime,
                 date = earlyReturn.date,
-                type = Type.EARLY_RETURN
+                type = Type.APPLICATION
             )
-        )
+            applicationStory.add(applicationStorySave)
+        }
+
+        saveEarlyReturnPort.saveAll(earlyReturnsUpdate)
+        applicationStorySavePort.saveAll(applicationStory)
     }
 }

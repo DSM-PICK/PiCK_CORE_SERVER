@@ -7,7 +7,7 @@ import java.util.*
 interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun existsByUsername(username: String): Boolean
 
-    fun findById(id: UUID): EarlyReturnJpaEntity
+    fun findById(earlyReturnId: UUID): EarlyReturnJpaEntity
 
     fun deleteById(id: UUID)
 

@@ -17,7 +17,6 @@ class ApplicationStoryPersistenceAdapter(
         applicationStoryRepository.saveAll(entities)
     }
 
-
     override fun findByUsername(username: String) =
         applicationStoryRepository.findByUsername(username).map { applicationStoryMapper.toDomain(it) }
 }

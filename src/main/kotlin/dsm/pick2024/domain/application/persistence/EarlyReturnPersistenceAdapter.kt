@@ -21,8 +21,8 @@ class EarlyReturnPersistenceAdapter(
     override fun existsByUsername(username: String) =
         earlyReturnRepository.existsByUsername(username)
 
-    override fun findById(id: UUID) =
-        earlyReturnRepository.findById(id).let { earlyReturnMapper.toDomain(it) }
+    override fun findById(earlyReturnId: UUID) =
+        earlyReturnRepository.findById(earlyReturnId).let { earlyReturnMapper.toDomain(it) }
 
     override fun deleteById(id: UUID) {
         earlyReturnRepository.deleteById(id)

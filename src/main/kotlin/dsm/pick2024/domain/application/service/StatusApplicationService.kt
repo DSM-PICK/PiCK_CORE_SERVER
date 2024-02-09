@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.applicationstory.enums.Type
@@ -14,6 +15,7 @@ import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
+import kotlin.collections.List
 
 @Service
 class StatusApplicationService(
@@ -25,31 +27,39 @@ class StatusApplicationService(
 ) : StatusApplicationUseCase {
 
     @Transactional
-    override fun statusApplication(status: Status, applicationId: UUID) {
+    override fun statusApplication(status: Status, applicationIds: List<UUID>) {
         val admin = adminFacadeUseCase.currentUser()
 
-        if (Status.NO == status) {
-            deleteApplicationPort.deleteById(applicationId)
-        }
+        val applicationsToUpdate = mutableListOf<Application>()
+        val applicationStoriesToAdd = mutableListOf<ApplicationStory>()
 
-        val application = findApplicationByIdPort.findById(applicationId) ?: throw ApplicationNotFoundException
+        for (applicationId in applicationIds) {
+            if (Status.NO == status) {
+                deleteApplicationPort.deleteById(applicationId)
+                continue
+            }
 
-        val update = application.copy(
-            teacherName = admin.name,
-            status = Status.OK,
-            applicationStatus = ApplicationStatus.NON_RETURN
-        )
-        saveApplicationPort.save(update)
+            val application = findApplicationByIdPort.findById(applicationId) ?: throw ApplicationNotFoundException
 
-        applicationStorySavePort.save(
-            ApplicationStory(
-                reason = application.reason,
-                username = application.username,
-                startTime = application.startTime,
-                endTime = application.endTime,
-                date = application.date,
+            val updatedApplication = application.copy(
+                teacherName = admin.name,
+                status = Status.OK,
+                applicationStatus = ApplicationStatus.NON_RETURN
+            )
+            applicationsToUpdate.add(updatedApplication)
+
+            val applicationStory = ApplicationStory(
+                reason = updatedApplication.reason,
+                username = updatedApplication.username,
+                startTime = updatedApplication.startTime,
+                endTime = updatedApplication.endTime,
+                date = updatedApplication.date,
                 type = Type.APPLICATION
             )
-        )
+            applicationStoriesToAdd.add(applicationStory)
+        }
+
+        saveApplicationPort.saveAll(applicationsToUpdate)
+        applicationStorySavePort.saveAll(applicationStoriesToAdd)
     }
 }
