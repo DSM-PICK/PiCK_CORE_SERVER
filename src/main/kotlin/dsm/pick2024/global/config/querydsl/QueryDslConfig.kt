@@ -8,9 +8,9 @@ import javax.persistence.PersistenceContext
 
 @Configuration
 class QueryDslConfig(
-  private val entityManager: EntityManager
+    @PersistenceContext
+    private val entityManager: EntityManager
 ) {
-
     @Bean
     fun jpaQueryFactory(): JPAQueryFactory {
         return JPAQueryFactory(entityManager)
