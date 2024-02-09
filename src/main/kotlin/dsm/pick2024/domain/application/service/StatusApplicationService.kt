@@ -9,7 +9,7 @@ import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
-import dsm.pick2024.domain.application.port.out.SaveApplicationPort
+import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
@@ -22,16 +22,16 @@ class StatusApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val deleteApplicationPort: DeleteApplicationPort,
-    private val saveApplicationPort: SaveApplicationPort,
-    private val applicationStorySavePort: ApplicationStorySavePort
+    private val saveAllApplicationPort: SaveAllApplicationPort,
+    private val applicationStorySaveAllPort: ApplicationStorySavePort
 ) : StatusApplicationUseCase {
 
     @Transactional
     override fun statusApplication(status: Status, applicationIds: List<UUID>) {
         val admin = adminFacadeUseCase.currentUser()
 
-        val applicationsToUpdate = mutableListOf<Application>()
-        val applicationStoriesToAdd = mutableListOf<ApplicationStory>()
+        val applicationsUpdate = mutableListOf<Application>()
+        val applicationStory = mutableListOf<ApplicationStory>()
 
         for (applicationId in applicationIds) {
             if (Status.NO == status) {
@@ -46,9 +46,9 @@ class StatusApplicationService(
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN
             )
-            applicationsToUpdate.add(updatedApplication)
+            applicationsUpdate.add(updatedApplication)
 
-            val applicationStory = ApplicationStory(
+            val applicationStorySave = ApplicationStory(
                 reason = updatedApplication.reason,
                 username = updatedApplication.username,
                 startTime = updatedApplication.startTime,
@@ -56,10 +56,10 @@ class StatusApplicationService(
                 date = updatedApplication.date,
                 type = Type.APPLICATION
             )
-            applicationStoriesToAdd.add(applicationStory)
+            applicationStory.add(applicationStorySave)
         }
 
-        saveApplicationPort.saveAll(applicationsToUpdate)
-        applicationStorySavePort.saveAll(applicationStoriesToAdd)
+        saveAllApplicationPort.saveAll(applicationsUpdate)
+        applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

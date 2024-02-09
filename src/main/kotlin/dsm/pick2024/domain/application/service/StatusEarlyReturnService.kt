@@ -8,7 +8,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.DeleteEarlyReturnApplicationPort
 import dsm.pick2024.domain.application.port.out.FindEarlyReturnByIdPort
-import dsm.pick2024.domain.application.port.out.SaveEarlyReturnPort
+import dsm.pick2024.domain.application.port.out.SaveAllEarlyReturnPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
@@ -18,10 +18,10 @@ import java.util.UUID
 @Service
 class StatusEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val saveEarlyReturnPort: SaveEarlyReturnPort,
+    private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
     private val deleteEarlyReturnApplicationPort: DeleteEarlyReturnApplicationPort,
-    private val applicationStorySavePort: ApplicationStorySavePort
+    private val applicationStorySaveAllPort: ApplicationStorySavePort
 ) : StatusEarlyReturnUseCase {
 
     @Transactional
@@ -56,7 +56,7 @@ class StatusEarlyReturnService(
             applicationStory.add(applicationStorySave)
         }
 
-        saveEarlyReturnPort.saveAll(earlyReturnsUpdate)
-        applicationStorySavePort.saveAll(applicationStory)
+        saveAllEarlyReturnPort.saveAll(earlyReturnsUpdate)
+        applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

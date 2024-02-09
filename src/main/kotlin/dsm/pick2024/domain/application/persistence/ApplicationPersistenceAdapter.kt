@@ -31,6 +31,9 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteById(applicationId)
     }
 
+    override fun save(application: Application) =
+        applicationRepository.save(applicationMapper.toEntity(application))
+
     override fun findByFloor(floor: Int) =
         jpaQueryFactory
             .select(QApplicationJapEntity.applicationJapEntity)

@@ -18,6 +18,9 @@ class EarlyReturnPersistenceAdapter(
         earlyReturnRepository.saveAll(entities)
     }
 
+    override fun save(earlyReturn: EarlyReturn) =
+        earlyReturnRepository.save(earlyReturnMapper.toEntity(earlyReturn))
+
     override fun existsByUsername(username: String) =
         earlyReturnRepository.existsByUsername(username)
 
