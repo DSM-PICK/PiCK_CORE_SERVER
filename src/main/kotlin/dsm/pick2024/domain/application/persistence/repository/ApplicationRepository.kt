@@ -7,7 +7,7 @@ import java.util.UUID
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun existsByUsername(username: String): Boolean
 
-    fun save(entity: ApplicationJapEntity)
+    fun saveAll(entity: List<ApplicationJapEntity>)
 
     fun findById(id: UUID): ApplicationJapEntity
 

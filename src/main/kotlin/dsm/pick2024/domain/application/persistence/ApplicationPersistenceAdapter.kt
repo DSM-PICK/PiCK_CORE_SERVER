@@ -17,8 +17,9 @@ class ApplicationPersistenceAdapter(
     private val applicationMapper: ApplicationMapper,
     private val jpaQueryFactory: JPAQueryFactory
 ) : ApplicationPort {
-    override fun save(application: Application) {
-        applicationRepository.save(applicationMapper.toEntity(application))
+    override fun saveAll(application: List<Application>) {
+        val entities = application.map { applicationMapper.toEntity(it) }
+        applicationRepository.saveAll(entities)
     }
 
     override fun existsByUsername(username: String) = applicationRepository.existsByUsername(username)

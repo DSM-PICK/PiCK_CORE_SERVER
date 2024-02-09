@@ -13,8 +13,9 @@ class EarlyReturnPersistenceAdapter(
     private val earlyReturnRepository: EarlyReturnRepository
 ) : EarlyReturnPort {
 
-    override fun save(earlyReturn: EarlyReturn) {
-        earlyReturnRepository.save(earlyReturnMapper.toEntity(earlyReturn))
+    override fun saveAll(earlyReturn: List<EarlyReturn>) {
+        val entities = earlyReturn.map { earlyReturnMapper.toEntity(it) }
+        earlyReturnRepository.saveAll(entities)
     }
 
     override fun existsByUsername(username: String) =
