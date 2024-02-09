@@ -47,4 +47,16 @@ class ClassroomPersistenceAdapter(
             )
             .fetch()
             .map { classroomMapper.toDomain(it)!! }
+
+    override fun queryGradeClassroom(grade: Int, classNum: Int) =
+        jpaQueryFactory
+            .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
+            .innerJoin(QUserJpaEntity.userJpaEntity)
+            .on(QClassroomJpaEntity.classroomJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .where(
+                QUserJpaEntity.userJpaEntity.grade.eq(grade),
+                QUserJpaEntity.userJpaEntity.classNum.eq(classNum)
+            )
+            .fetch()
+            .map { classroomMapper.toDomain(it) }
 }

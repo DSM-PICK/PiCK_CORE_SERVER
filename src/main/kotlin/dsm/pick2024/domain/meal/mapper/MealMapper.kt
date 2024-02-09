@@ -17,7 +17,7 @@ class MealMapper : GenericMapper<MealJpaEntity, Meal> {
         )
     }
 
-    override fun toDomain(entity: MealJpaEntity?) = entity?.run {
+    override fun toDomain(entity: MealJpaEntity) = entity.run {
         Meal(
             id = id,
             mealDate = mealDate,
