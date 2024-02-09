@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.domain
 
+import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import java.time.LocalDate
 import java.time.LocalTime
@@ -16,5 +17,6 @@ data class Application(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val status: Status
+    val status: Status,
+    val applicationStatus: ApplicationStatus
 )
