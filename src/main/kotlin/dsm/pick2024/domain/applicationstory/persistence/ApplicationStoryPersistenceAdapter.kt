@@ -12,8 +12,9 @@ class ApplicationStoryPersistenceAdapter(
     private val applicationStoryRepository: ApplicationStoryRepository
 ) : ApplicationStoryPort {
 
-    override fun save(applicationStory: ApplicationStory) {
-        applicationStoryRepository.save(applicationStoryMapper.toEntity(applicationStory))
+    override fun saveAll(applicationStory: List<ApplicationStory>) {
+        val entities = applicationStory.map { applicationStoryMapper.toEntity(it) }
+        applicationStoryRepository.saveAll(entities)
     }
 
     override fun findByUsername(username: String) =

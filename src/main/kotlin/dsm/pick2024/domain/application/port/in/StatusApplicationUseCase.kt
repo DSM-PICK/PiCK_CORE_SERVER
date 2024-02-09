@@ -4,5 +4,5 @@ import dsm.pick2024.domain.application.enums.Status
 import java.util.UUID
 
 interface StatusApplicationUseCase {
-    fun statusApplication(status: Status, applicationId: UUID)
+    fun statusApplication(status: Status, applicationId: List<UUID>)
 }

@@ -27,10 +27,10 @@ class EarlyReturnController(
         createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
     @Operation(summary = "조기귀가 신청 상태변경 API")
-    @PatchMapping("/status/{earlyReturnId}")
+    @PatchMapping("/status/{earlyReturnIds}")
     fun statusEarlyReturn(
-        @RequestParam status: Status,
-        @PathVariable(value = "earlyReturnId") id: UUID
+        @RequestParam(name = "status") status: Status,
+        @PathVariable(value = "earlyReturnIds") earlyReturnIds: List<UUID>
     ) =
-        statusEarlyReturnUseCase.statusEarlyReturn(status, id)
+        statusEarlyReturnUseCase.statusEarlyReturn(status, earlyReturnIds)
 }
