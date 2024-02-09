@@ -17,6 +17,7 @@ class QueryFloorApplicationService(
             .map {
                     it ->
                 QueryApplicationResponse(
+                    it.id!!,
                     it.username,
                     it.startTime,
                     it.endTime,
