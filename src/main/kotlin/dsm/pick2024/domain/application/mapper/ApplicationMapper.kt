@@ -34,7 +34,7 @@ class ApplicationMapper {
                 status = status,
                 teacherName = teacherName,
                 date = date ,
-                    grade = grade,
+                grade = grade,
                 classNum = classNum,
                 num = num
             )
