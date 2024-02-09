@@ -6,5 +6,6 @@ data class Classroom(
     val id: UUID? = null,
     val classroomName: String,
     val floor: Int,
-    val username: String
+    val username: String,
+    val move: String
 )

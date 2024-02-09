@@ -14,5 +14,7 @@ class ClassroomJpaEntity(
     @Column(name = "floor", nullable = false)
     val floor: Int,
 
-    val username: String
+    val username: String,
+
+    val move: String
 ) : BaseUUIDEntity(id)
