@@ -9,3 +9,4 @@ interface ApplicationPort :
     QueryClassApplicationPort,
     SaveApplicationPort,
     DeleteAllApplicationPort
+    QueryAllApplicationPort

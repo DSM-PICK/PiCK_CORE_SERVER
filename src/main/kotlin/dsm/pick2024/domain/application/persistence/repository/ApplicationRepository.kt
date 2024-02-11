@@ -17,4 +17,6 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun deleteAll(entity: Iterable<Application>)
 
     fun save(entity: ApplicationJapEntity)
+
+    fun findAll(): List<ApplicationJapEntity>
 }

@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusNOEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryAllREarlyEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
@@ -17,6 +18,8 @@ class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
     private val statusOKEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
     private val statusNOEarlyReturnUseCase: StatusNOEarlyReturnUseCase
+    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
+    private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -40,4 +43,10 @@ class EarlyReturnController(
         @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest?
     ) =
         statusNOEarlyReturnUseCase.statusNOEarlyReturn(statusEarlyReturnRequest!!)
+        statusEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest!!)
+
+    @Operation(summary = "조기귀가 신청자 사유 전체확인 API")
+    @GetMapping("/reason/all")
+    fun queryAllReasonEarlyReturn() =
+        queryAllREarlyEarlyReturnUseCase.queryAllReasonEarlyReturn()
 }

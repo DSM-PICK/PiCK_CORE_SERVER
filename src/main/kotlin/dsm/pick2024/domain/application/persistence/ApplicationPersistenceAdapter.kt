@@ -35,6 +35,9 @@ class ApplicationPersistenceAdapter(
         val entities: List<Application> = application
         applicationRepository.deleteAll(entities)
     }
+    
+    override fun findAll() =
+        applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 
     override fun save(application: Application) =
         applicationRepository.save(applicationMapper.toEntity(application))
