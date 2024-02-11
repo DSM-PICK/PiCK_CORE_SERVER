@@ -1,11 +1,6 @@
 package dsm.pick2024.domain.application.presentation
 
-import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryClassEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryFloorEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusNOEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryAllREarlyEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -22,7 +17,8 @@ class EarlyReturnController(
     private val statusNOEarlyReturnUseCase: StatusNOEarlyReturnUseCase,
     private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
-    private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase
+    private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
+    private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -66,4 +62,9 @@ class EarlyReturnController(
     @GetMapping("/reason/all")
     fun queryAllReasonEarlyReturn() =
         queryAllREarlyEarlyReturnUseCase.queryAllReasonEarlyReturn()
+
+    @Operation(summary = "내 조기귀가증 확인 API")
+    @GetMapping("/my")
+    fun queryMyEarlyReturn() =
+        queryMyEarlyReturnUseCase.queryMyEarlyReturn()
 }
