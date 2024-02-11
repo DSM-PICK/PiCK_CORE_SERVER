@@ -30,7 +30,7 @@ class StatusOKApplicationService(
         val applicationsUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (applicationId in request.applicationIds) {
+        for (applicationId in request.applicationIds!!) {
             val application = findApplicationByIdPort.findById(applicationId) ?: throw ApplicationNotFoundException
 
             val updatedApplication = application.copy(

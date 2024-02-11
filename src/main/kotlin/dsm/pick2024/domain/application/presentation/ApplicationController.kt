@@ -41,9 +41,9 @@ class ApplicationController(
     @Operation(summary = "외출신청 수락, 거절 API")
     @PatchMapping("/status")
     fun statusApplication(
-        @RequestBody statusApplicationRequest: StatusApplicationRequest
+        @RequestBody statusApplicationRequest: StatusApplicationRequest?
     ) =
-        statusApplicationUseCase.statusOKApplication(statusApplicationRequest)
+        statusApplicationUseCase.statusOKApplication(statusApplicationRequest!!)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")
