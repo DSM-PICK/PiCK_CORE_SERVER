@@ -31,6 +31,11 @@ class EarlyReturnPersistenceAdapter(
         earlyReturnRepository.deleteById(id)
     }
 
+    override fun deleteAll(earlyReturn: List<EarlyReturn>) {
+        val entities: List<EarlyReturn> = earlyReturn
+        earlyReturnRepository.deleteAll(entities)
+    }
+    
     override fun findAll() =
         earlyReturnRepository.findAll().map { earlyReturnMapper.toDomain(it) }
 }

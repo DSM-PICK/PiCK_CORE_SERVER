@@ -26,7 +26,7 @@ class StatusOKEarlyReturnService(
     override fun statusOKEarlyReturn(request: StatusEarlyReturnRequest?) {
         val admin = adminFacadeUseCase.currentUser()
 
-        val earlyReturnsUpdate = mutableListOf<EarlyReturn>()
+        val earlyReturnUpdate = mutableListOf<EarlyReturn>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
         for (earlyReturnId in request!!.earlyReturnIds) {
@@ -37,7 +37,7 @@ class StatusOKEarlyReturnService(
                 teacherName = admin.name,
                 status = Status.OK
             )
-            earlyReturnsUpdate.add(updateEarlyReturn)
+            earlyReturnUpdate.add(updateEarlyReturn)
 
             val applicationStorySave = ApplicationStory(
                 reason = earlyReturn.reason,
@@ -49,7 +49,7 @@ class StatusOKEarlyReturnService(
             applicationStory.add(applicationStorySave)
         }
 
-        saveAllEarlyReturnPort.saveAll(earlyReturnsUpdate)
+        saveAllEarlyReturnPort.saveAll(earlyReturnUpdate)
         applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

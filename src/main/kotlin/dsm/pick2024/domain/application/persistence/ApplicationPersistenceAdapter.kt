@@ -31,6 +31,11 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteById(applicationId)
     }
 
+    override fun deleteAll(application: List<Application>) {
+        val entities: List<Application> = application
+        applicationRepository.deleteAll(entities)
+    }
+    
     override fun findAll() =
         applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 
