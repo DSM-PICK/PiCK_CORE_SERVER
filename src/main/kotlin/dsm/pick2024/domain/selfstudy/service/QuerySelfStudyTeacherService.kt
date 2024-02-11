@@ -8,15 +8,15 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 
 @Service
-class QuerySelfStudyTeacherService (
+class QuerySelfStudyTeacherService(
     private val findByMonthSelfStudyTeacherPort: FindByMonthSelfStudyTeacherPort
-): QueryMonthSelfStudyTeacherUseCase {
+) : QueryMonthSelfStudyTeacherUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMonthSelfStudyTeacher(date: LocalDate) =
         findByMonthSelfStudyTeacherPort.findByMonthSelfStudyTeacher(date)
             .map {
-                it ->
+                    it ->
                 QuerySelfStudyTeacherResponse(
                     it.floor,
                     it.teacher,
