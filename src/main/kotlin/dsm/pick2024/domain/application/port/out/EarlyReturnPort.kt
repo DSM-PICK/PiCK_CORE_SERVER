@@ -9,4 +9,5 @@ interface EarlyReturnPort :
     QueryClassEarlyReturnPort,
     QueryFloorEarlyReturnPort,
     DeleteAllEarlyReturnPort,
-    QueryAllEarlyReturnPort
+    QueryAllEarlyReturnPort,
+    FindEarlyReturnByNamePort

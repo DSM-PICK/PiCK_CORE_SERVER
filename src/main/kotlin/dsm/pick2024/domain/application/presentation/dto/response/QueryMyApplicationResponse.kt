@@ -1,16 +1,15 @@
-package dsm.pick2024.infrastructure.zxing.entity
+package dsm.pick2024.domain.application.presentation.dto.response
 
-import org.springframework.data.annotation.Id
-import org.springframework.data.redis.core.RedisHash
 import java.time.LocalTime
 
-@RedisHash
-class ApplicationQRCode(
-    @Id
+data class QueryMyApplicationResponse (
     val username: String,
     val teacherName: String,
     val startTime: LocalTime,
     val endTime: LocalTime,
     val reason: String,
+    val grade: Int,
+    val classNum: Int,
+    val num: Int,
     val image: ByteArray
 )

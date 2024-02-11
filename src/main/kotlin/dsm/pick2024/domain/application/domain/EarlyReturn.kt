@@ -15,5 +15,6 @@ data class EarlyReturn(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val teacherName: String? = null
+    val teacherName: String? = null,
+    val image: ByteArray? = null
 )

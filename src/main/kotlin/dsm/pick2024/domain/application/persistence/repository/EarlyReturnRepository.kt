@@ -19,4 +19,6 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun save(entity: EarlyReturnJpaEntity)
 
     fun findAll(): List<EarlyReturnJpaEntity>
+
+    fun findByUsername(username: String): EarlyReturnJpaEntity
 }
