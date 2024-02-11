@@ -33,5 +33,4 @@ class EarlyReturnPersistenceAdapter(
 
     override fun findAll() =
         earlyReturnRepository.findAll().map { earlyReturnMapper.toDomain(it) }
-
 }

@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryAllReasonApplicationService(
     private val queryAllApplicationPort: QueryAllApplicationPort
-): QueryAllReasonApplicationUseCase {
+) : QueryAllReasonApplicationUseCase {
 
     @Transactional(readOnly = true)
     override fun queryAllReasonApplication() =
         queryAllApplicationPort.findAll()
             .map {
-                it ->
+                    it ->
                 QueryApplicationReasonResponse(
                     it.username,
                     it.startTime,
@@ -25,5 +25,5 @@ class QueryAllReasonApplicationService(
                     it.num,
                     it.reason
                 )
-        }
+            }
 }
