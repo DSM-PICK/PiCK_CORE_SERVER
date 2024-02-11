@@ -23,13 +23,13 @@ class StatusOKEarlyReturnService(
 ) : StatusOKEarlyReturnUseCase {
 
     @Transactional
-    override fun statusOKEarlyReturn(request: StatusEarlyReturnRequest) {
+    override fun statusOKEarlyReturn(request: StatusEarlyReturnRequest?) {
         val admin = adminFacadeUseCase.currentUser()
 
         val earlyReturnsUpdate = mutableListOf<EarlyReturn>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (earlyReturnId in request.earlyReturnIds) {
+        for (earlyReturnId in request!!.earlyReturnIds) {
             val earlyReturn = findEarlyReturnByIdPort.findById(earlyReturnId)
                 ?: throw EarlyReturnApplicationNotFoundException
 
