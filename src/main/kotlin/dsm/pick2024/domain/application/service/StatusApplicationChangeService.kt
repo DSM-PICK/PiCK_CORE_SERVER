@@ -16,11 +16,11 @@ class StatusApplicationChangeService(
 ) : StatusApplicationChangeUseCase {
 
     @Transactional
-    override fun statusApplicationChange(applicationId: UUID, applicationStatus: ApplicationStatus) {
+    override fun statusApplicationChange(applicationId: UUID) {
         val application = findApplicationByIdPort.findById(applicationId) ?: throw ApplicationNotFoundException
 
         val update = application.copy(
-            applicationStatus = applicationStatus
+            applicationStatus = ApplicationStatus.RETURN
         )
         saveApplicationPort.save(update)
     }
