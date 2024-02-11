@@ -5,4 +5,5 @@ interface EarlyReturnPort :
     ExistsEarlyReturnByUsernamePort,
     FindEarlyReturnByIdPort,
     DeleteEarlyReturnApplicationPort,
-    SaveEarlyReturnPort
+    SaveEarlyReturnPort,
+    QueryAllReasonEarlyReturnPort

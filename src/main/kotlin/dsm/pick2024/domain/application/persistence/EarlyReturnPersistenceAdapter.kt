@@ -30,4 +30,8 @@ class EarlyReturnPersistenceAdapter(
     override fun deleteById(id: UUID) {
         earlyReturnRepository.deleteById(id)
     }
+
+    override fun findAll() =
+        earlyReturnRepository.findAll().map { earlyReturnMapper.toDomain(it) }
+
 }
