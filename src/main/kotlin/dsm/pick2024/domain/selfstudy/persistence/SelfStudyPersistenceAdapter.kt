@@ -37,7 +37,7 @@ class SelfStudyPersistenceAdapter(
             .map { selfStudyMapper.toDomain(it) }
     }
 
-    override fun findBySelfStudyTeacher(date: LocalDate): List<SelfStudy> {
+    override fun findByMonthSelfStudyTeacher(date: LocalDate): List<SelfStudy> {
         val month = YearMonth.from(date)
         val startDay = month.atDay(1)
         val endDay = month.atEndOfMonth()
