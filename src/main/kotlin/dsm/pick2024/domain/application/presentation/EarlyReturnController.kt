@@ -2,7 +2,9 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryClassEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryFloorEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.out.QueryFloorEarlyReturnPort
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.*
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
     private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
-    private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase
+    private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
+    private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -37,8 +40,15 @@ class EarlyReturnController(
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")
     fun queryClassEarlyReturn(
-        @RequestParam grade: Int,
-        @RequestParam classNum: Int
+        @RequestParam(name = "grade") grade: Int,
+        @RequestParam(name = "class_num") classNum: Int
     ) =
         queryClassEarlyReturnUseCase.queryClassApplication(grade, classNum)
+
+    @Operation(summary = "층별로 조기귀가 신청자 조회 API")
+    @GetMapping("/floor")
+    fun queryFloorEarlyReturn(
+        @RequestParam(name = "floor") floor: Int
+    ) =
+        queryFloorEarlyReturnUseCase.queryFloorApplication(floor)
 }
