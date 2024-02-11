@@ -2,7 +2,6 @@ package dsm.pick2024.domain.application.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.application.domain.EarlyReturn
-import dsm.pick2024.domain.application.entity.QApplicationJapEntity
 import dsm.pick2024.domain.application.entity.QEarlyReturnJpaEntity
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.EarlyReturnMapper
@@ -36,6 +35,25 @@ class EarlyReturnPersistenceAdapter(
     override fun deleteById(id: UUID) {
         earlyReturnRepository.deleteById(id)
     }
+
+    override fun findByFloor(floor: Int) =
+        jpaQueryFactory
+            .select(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
+            .innerJoin(QUserJpaEntity.userJpaEntity)
+            .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .where(
+                QUserJpaEntity.userJpaEntity.grade.eq(
+                    when (floor) {
+                        4 -> 1
+                        3 -> 2
+                        2 -> 3
+                        else -> throw IllegalArgumentException("Invalid floor number")
+                    }
+                ),
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.status.eq(Status.QUIET)
+            )
+            .fetch()
+            .map { earlyReturnMapper.toDomain(it) }
 
     override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
         jpaQueryFactory
