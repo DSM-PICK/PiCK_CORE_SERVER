@@ -27,7 +27,7 @@ class StatusOKApplicationService(
     override fun statusOKApplication(request: StatusApplicationRequest?) {
         val admin = adminFacadeUseCase.currentUser()
 
-        val applicationsUpdate = mutableListOf<Application>()
+        val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
         for (id in request!!.ids) {
@@ -38,7 +38,7 @@ class StatusOKApplicationService(
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN
             )
-            applicationsUpdate.add(updatedApplication)
+            applicationUpdate.add(updatedApplication)
 
             val applicationStorySave = ApplicationStory(
                 reason = updatedApplication.reason,
@@ -51,7 +51,7 @@ class StatusOKApplicationService(
             applicationStory.add(applicationStorySave)
         }
 
-        saveAllApplicationPort.saveAll(applicationsUpdate)
+        saveAllApplicationPort.saveAll(applicationUpdate)
         applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

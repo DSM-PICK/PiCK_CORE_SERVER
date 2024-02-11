@@ -8,3 +8,5 @@ interface EarlyReturnPort :
     SaveEarlyReturnPort,
     QueryClassEarlyReturnPort,
     QueryFloorEarlyReturnPort
+    DeleteAllEarlyReturnPort
+    QueryAllEarlyReturnPort
