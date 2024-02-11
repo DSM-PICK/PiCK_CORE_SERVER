@@ -4,29 +4,25 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.client.j2se.MatrixToImageWriter
 import com.google.zxing.qrcode.QRCodeWriter
-import dsm.pick2024.infrastructure.zxing.entity.QRCode
-import dsm.pick2024.infrastructure.zxing.repository.QRCodeRepository
+import dsm.pick2024.infrastructure.zxing.entity.ApplicationQRCode
+import dsm.pick2024.infrastructure.zxing.repository.ApplicationQRCodeRepository
 import org.springframework.stereotype.Service
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
-import java.util.*
 import javax.imageio.ImageIO
 
 @Service
-class QRCodeService(
-    private val qrCodeRepository: QRCodeRepository
-) {
+class ApplicationQRCodeService(
+    private val applicationQRCodeRepository: ApplicationQRCodeRepository
+): GenerateApplicationQRCodeUseCase {
 
-    fun generateQRCode(username: String, teacherName: String, startTime: LocalTime, endTime: LocalTime?) {
+    override fun generateApplicationQRCode(username: String, teacherName: String, startTime: LocalTime, endTime: LocalTime, reason: String) {
         val width = 200
         val height = 200
 
         val byteArrayOutputStream = ByteArrayOutputStream()
 
-        var message = "username=$username&teacherName=$teacherName&startTime=$startTime"
-        if (endTime != null) {
-            message += "&endTime=$endTime"
-        }
+        val message = "username=$username&teacherName=$teacherName&startTime=$startTime"
 
         val code = QRCodeWriter().encode(
             message,
@@ -38,9 +34,7 @@ class QRCodeService(
 
         ImageIO.write(MatrixToImageWriter.toBufferedImage(code), "png", byteArrayOutputStream)
 
-
-        val id = UUID.randomUUID()
-        val qrCode = QRCode(id, username, teacherName, startTime, endTime, byteArrayOutputStream.toByteArray())
-        qrCodeRepository.save(qrCode)
+        val qrCode = ApplicationQRCode(username, teacherName, startTime, endTime, reason, byteArrayOutputStream.toByteArray())
+        applicationQRCodeRepository.save(qrCode)
     }
 }

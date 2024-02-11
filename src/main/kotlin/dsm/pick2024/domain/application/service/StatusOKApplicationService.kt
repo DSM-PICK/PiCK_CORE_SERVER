@@ -12,6 +12,7 @@ import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
+import dsm.pick2024.infrastructure.zxing.service.GenerateApplicationQRCodeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,7 +21,8 @@ class StatusOKApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val saveAllApplicationPort: SaveAllApplicationPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort
+    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val qrCodeUseCase: GenerateApplicationQRCodeUseCase,
 ) : StatusOKApplicationUseCase {
 
     @Transactional
@@ -49,6 +51,14 @@ class StatusOKApplicationService(
                 type = Type.APPLICATION
             )
             applicationStory.add(applicationStorySave)
+
+            qrCodeUseCase.generateApplicationQRCode(
+                application.username,
+                application.teacherName!!,
+                application.startTime,
+                application.endTime,
+                application.reason
+            )
         }
 
         saveAllApplicationPort.saveAll(applicationUpdate)

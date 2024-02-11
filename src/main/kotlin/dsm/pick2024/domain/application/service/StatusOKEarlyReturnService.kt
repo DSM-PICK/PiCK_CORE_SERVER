@@ -11,6 +11,8 @@ import dsm.pick2024.domain.application.port.out.SaveAllEarlyReturnPort
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
+import dsm.pick2024.infrastructure.zxing.service.GenerateApplicationQRCodeUseCase
+import dsm.pick2024.infrastructure.zxing.service.GenerateEarlyReturnQRCodeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +21,8 @@ class StatusOKEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort
+    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val qrCodeUseCase: GenerateEarlyReturnQRCodeUseCase,
 ) : StatusOKEarlyReturnUseCase {
 
     @Transactional
@@ -47,6 +50,12 @@ class StatusOKEarlyReturnService(
                 type = Type.APPLICATION
             )
             applicationStory.add(applicationStorySave)
+            qrCodeUseCase.generateEarlyReturnQRCode(
+                earlyReturn.username,
+                earlyReturn.teacherName!!,
+                earlyReturn.startTime,
+                earlyReturn.reason
+            )
         }
 
         saveAllEarlyReturnPort.saveAll(earlyReturnUpdate)
