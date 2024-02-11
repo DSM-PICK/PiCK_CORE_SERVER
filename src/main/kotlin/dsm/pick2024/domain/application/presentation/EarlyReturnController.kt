@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/early-return")
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
-    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase
+    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
+    private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -31,4 +33,12 @@ class EarlyReturnController(
         @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest?
     ) =
         statusEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest!!)
+
+    @Operation(summary = "반별로 조기귀가 신청자 조회 API")
+    @GetMapping("/grade")
+    fun queryClassEarlyReturn(
+        @RequestParam grade: Int,
+        @RequestParam classNum: Int
+    ) =
+        queryClassEarlyReturnUseCase.queryClassApplication(grade, classNum)
 }

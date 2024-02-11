@@ -60,7 +60,10 @@ class ApplicationController(
 
     @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
-    fun queryClassApplication(@RequestParam grade: Int, classNum: Int) =
+    fun queryClassApplication(
+        @RequestParam grade: Int,
+        @RequestParam classNum: Int
+    ) =
         queryClassApplicationUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "외출사유 확인하기 API")
