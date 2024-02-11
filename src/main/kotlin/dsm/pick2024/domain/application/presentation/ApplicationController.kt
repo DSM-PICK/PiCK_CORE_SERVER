@@ -68,12 +68,17 @@ class ApplicationController(
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
-    fun queryFloorApplication(@RequestParam floor: Int) =
+    fun queryFloorApplication(
+        @RequestParam(name = "floor") floor: Int
+    ) =
         queryFloorApplicationUseCase.queryFloorApplication(floor)
 
     @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
-    fun queryClassApplication(@RequestParam grade: Int, classNum: Int) =
+    fun queryClassApplication(
+        @RequestParam(name = "grade") grade: Int,
+        @RequestParam(name = "class_num") classNum: Int
+    ) =
         queryClassApplicationUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "외출사유 확인하기 API")
