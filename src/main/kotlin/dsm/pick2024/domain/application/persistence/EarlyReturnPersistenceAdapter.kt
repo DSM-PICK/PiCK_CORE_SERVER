@@ -67,5 +67,4 @@ class EarlyReturnPersistenceAdapter(
             )
             .fetch()
             .map { earlyReturnMapper.toDomain(it) }
-
 }

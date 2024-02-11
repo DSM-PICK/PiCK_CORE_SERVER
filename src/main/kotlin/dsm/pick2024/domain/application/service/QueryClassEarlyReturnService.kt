@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClassEarlyReturnService(
     private val queryClassEarlyReturnPort: QueryClassEarlyReturnPort
-): QueryClassEarlyReturnUseCase {
+) : QueryClassEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
     override fun queryClassApplication(grade: Int, classNum: Int) =
         queryClassEarlyReturnPort.findByGradeAndClassNum(grade, classNum)
             .map {
-                it ->
+                    it ->
                 QueryEarlyReturnResponse(
                     it.id!!,
                     it.username,

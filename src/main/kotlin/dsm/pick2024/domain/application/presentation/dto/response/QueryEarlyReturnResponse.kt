@@ -3,7 +3,7 @@ package dsm.pick2024.domain.application.presentation.dto.response
 import java.time.LocalTime
 import java.util.*
 
-data class QueryEarlyReturnResponse (
+data class QueryEarlyReturnResponse(
     val id: UUID,
     val username: String,
     val startTime: LocalTime,

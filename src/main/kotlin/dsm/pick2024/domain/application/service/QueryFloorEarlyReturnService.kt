@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryFloorEarlyReturnService(
     private val queryFloorEarlyReturnPort: QueryFloorEarlyReturnPort
-): QueryFloorEarlyReturnUseCase {
+) : QueryFloorEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
     override fun queryFloorApplication(floor: Int) =

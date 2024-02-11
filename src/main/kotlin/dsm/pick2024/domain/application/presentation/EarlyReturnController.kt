@@ -4,7 +4,6 @@ import dsm.pick2024.domain.application.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryFloorEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusOKEarlyReturnUseCase
-import dsm.pick2024.domain.application.port.out.QueryFloorEarlyReturnPort
 import dsm.pick2024.domain.application.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
