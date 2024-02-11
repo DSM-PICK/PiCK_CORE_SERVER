@@ -32,7 +32,7 @@ spring:
                 accessKey: ${AWS_ACCESS_KEY}
                 secretKey: ${AWS_SECRET_KEY}
             s3:
-                bucket: onepiecee
+                bucket: PICK
             region:
                 static: ap-northeast-2
             stack:
