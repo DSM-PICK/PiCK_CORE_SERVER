@@ -44,4 +44,8 @@ object Dependencies {
     //QueryDSL
     const val QUERYDSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERYDSL}"
     const val QUERYDSL_PROCESSOR = "com.querydsl:querydsl-apt:${DependencyVersions.QUERYDSL}:jpa"
+
+    //Zxing
+    const val ZXING = "com.google.zxing:javase:${DependencyVersions.ZXING}"
+    const val ZXING_CORE = "com.google.zxing:core:${DependencyVersions.ZXING}"
 }
