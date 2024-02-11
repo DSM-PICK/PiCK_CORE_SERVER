@@ -7,6 +7,6 @@ interface EarlyReturnPort :
     DeleteEarlyReturnApplicationPort,
     SaveEarlyReturnPort,
     QueryClassEarlyReturnPort,
-    QueryFloorEarlyReturnPort
-    DeleteAllEarlyReturnPort
+    QueryFloorEarlyReturnPort,
+    DeleteAllEarlyReturnPort,
     QueryAllEarlyReturnPort

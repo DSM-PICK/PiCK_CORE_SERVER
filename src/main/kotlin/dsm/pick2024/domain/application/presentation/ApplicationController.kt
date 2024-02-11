@@ -29,9 +29,6 @@ class ApplicationController(
     private val statusNOApplicationUseCase: StatusNOApplicationUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
-    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase
-    private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
-    private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase
 ) {

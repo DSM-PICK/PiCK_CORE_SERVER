@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/early-return")
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
-    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
-    private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
-    private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase
     private val statusOKEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
-    private val statusNOEarlyReturnUseCase: StatusNOEarlyReturnUseCase
-    private val statusEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
+    private val statusNOEarlyReturnUseCase: StatusNOEarlyReturnUseCase,
+    private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
+    private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase
 ) {
 
@@ -48,7 +46,6 @@ class EarlyReturnController(
         @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest?
     ) =
         statusNOEarlyReturnUseCase.statusNOEarlyReturn(statusEarlyReturnRequest!!)
-        statusEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest!!)
 
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")
@@ -64,7 +61,7 @@ class EarlyReturnController(
         @RequestParam(name = "floor") floor: Int
     ) =
         queryFloorEarlyReturnUseCase.queryFloorApplication(floor)
-        
+
     @Operation(summary = "조기귀가 신청자 사유 전체확인 API")
     @GetMapping("/reason/all")
     fun queryAllReasonEarlyReturn() =
