@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.FindApplicationByNamePort
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findApplicationByNamePort: FindApplicationByNamePort
-): QueryMyApplicationUseCase {
+) : QueryMyApplicationUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {

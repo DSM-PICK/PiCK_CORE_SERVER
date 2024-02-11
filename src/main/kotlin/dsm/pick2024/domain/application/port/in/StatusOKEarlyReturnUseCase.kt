@@ -6,6 +6,10 @@ import java.time.LocalTime
 interface StatusOKEarlyReturnUseCase {
     fun statusOKEarlyReturn(request: StatusEarlyReturnRequest?)
 
-    fun generateEarlyReturnQRCode(username: String, teacherName: String, startTime: LocalTime, reason: String): ByteArray
-
+    fun generateEarlyReturnQRCode(
+        username: String,
+        teacherName: String,
+        startTime: LocalTime,
+        reason: String
+    ): ByteArray
 }

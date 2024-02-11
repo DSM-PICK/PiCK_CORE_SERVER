@@ -27,7 +27,7 @@ class StatusOKApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val saveAllApplicationPort: SaveAllApplicationPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val applicationStorySaveAllPort: ApplicationStorySavePort
 ) : StatusOKApplicationUseCase {
 
     @Transactional
@@ -40,7 +40,7 @@ class StatusOKApplicationService(
         for (id in request!!.ids) {
             val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
-            val image =generateApplicationQRCode(
+            val image = generateApplicationQRCode(
                 application.username,
                 application.teacherName!!,
                 application.startTime,

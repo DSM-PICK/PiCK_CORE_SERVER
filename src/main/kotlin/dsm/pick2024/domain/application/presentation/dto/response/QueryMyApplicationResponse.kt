@@ -2,7 +2,7 @@ package dsm.pick2024.domain.application.presentation.dto.response
 
 import java.time.LocalTime
 
-data class QueryMyApplicationResponse (
+data class QueryMyApplicationResponse(
     val username: String,
     val teacherName: String,
     val startTime: LocalTime,

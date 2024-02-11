@@ -6,5 +6,11 @@ import java.time.LocalTime
 interface StatusOKApplicationUseCase {
     fun statusOKApplication(request: StatusApplicationRequest?)
 
-    fun generateApplicationQRCode(username: String, teacherName: String, startTime: LocalTime, endTime: LocalTime, reason: String): ByteArray
+    fun generateApplicationQRCode(
+        username: String,
+        teacherName: String,
+        startTime: LocalTime,
+        endTime: LocalTime,
+        reason: String
+    ): ByteArray
 }

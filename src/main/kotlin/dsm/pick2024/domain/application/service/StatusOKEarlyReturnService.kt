@@ -26,7 +26,7 @@ class StatusOKEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val applicationStorySaveAllPort: ApplicationStorySavePort
 ) : StatusOKEarlyReturnUseCase {
 
     @Transactional
@@ -54,13 +54,12 @@ class StatusOKEarlyReturnService(
             )
             earlyReturnUpdate.add(updateEarlyReturn)
 
-
             val applicationStorySave = ApplicationStory(
                 reason = earlyReturn.reason,
                 username = earlyReturn.username,
                 startTime = earlyReturn.startTime,
                 date = earlyReturn.date,
-                type = Type.APPLICATION,
+                type = Type.APPLICATION
             )
             applicationStory.add(applicationStorySave)
         }

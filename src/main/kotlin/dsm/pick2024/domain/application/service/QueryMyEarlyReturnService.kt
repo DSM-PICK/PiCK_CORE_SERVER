@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.application.domain.EarlyReturn
 import dsm.pick2024.domain.application.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyEarlyReturnUseCase
 import dsm.pick2024.domain.application.port.out.FindEarlyReturnByNamePort
@@ -13,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryMyEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findEarlyReturnByNamePort: FindEarlyReturnByNamePort
-): QueryMyEarlyReturnUseCase {
+) : QueryMyEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {

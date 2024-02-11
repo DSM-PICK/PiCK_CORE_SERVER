@@ -16,7 +16,7 @@ class S3Utils(
         const val PATH: String = "QRCODE/"
     }
     fun generateObjectUrl(fileName: String) =
-         amazonS3.generatePresignedUrl(
+        amazonS3.generatePresignedUrl(
             GeneratePresignedUrlRequest(
                 bucketName,
                 "${PATH}$fileName"
