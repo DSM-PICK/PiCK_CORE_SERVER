@@ -8,4 +8,4 @@ interface ApplicationPort :
     QueryFloorApplicationPort,
     QueryClassApplicationPort,
     SaveApplicationPort,
-    QueryAllReasonApplicationPort
+    QueryAllApplicationPort
