@@ -36,6 +36,10 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteAll(entities)
     }
 
+    override fun deleteAll() {
+        applicationRepository.deleteAll()
+    }
+
     override fun findAll() =
         applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 

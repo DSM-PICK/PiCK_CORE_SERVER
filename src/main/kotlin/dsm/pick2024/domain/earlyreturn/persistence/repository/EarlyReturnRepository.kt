@@ -21,4 +21,6 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun findAll(): List<EarlyReturnJpaEntity>
 
     fun findByUsername(username: String): EarlyReturnJpaEntity
+
+    fun deleteAll()
 }

@@ -39,6 +39,10 @@ class EarlyReturnPersistenceAdapter(
         earlyReturnRepository.deleteById(id)
     }
 
+    override fun deleteAll() {
+        earlyReturnRepository.deleteAll()
+    }
+
     override fun findByFloor(floor: Int) =
         jpaQueryFactory
             .select(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
