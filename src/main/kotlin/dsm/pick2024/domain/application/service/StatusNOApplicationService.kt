@@ -24,7 +24,7 @@ class StatusNOApplicationService(
         for (id in request!!.ids) {
             val application = findByApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
-            val updatedApplication = application.copy()
+            val updatedApplication = application
             applicationUpdate.add(updatedApplication)
         }
         deleteAllApplicationPort.deleteAll(applicationUpdate)
