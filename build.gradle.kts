@@ -74,6 +74,8 @@ dependencies {
 
     implementation(Dependencies.ZXING)
     implementation(Dependencies.ZXING_CORE)
+
+    implementation(Dependencies.AWS)
 }
 
 tasks.withType<KotlinCompile> {

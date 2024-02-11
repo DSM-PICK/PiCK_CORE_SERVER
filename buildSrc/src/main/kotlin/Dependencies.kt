@@ -36,6 +36,8 @@ object Dependencies {
     // Cloud Config
     const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"
 
+    const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
+
     // cloud
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
 

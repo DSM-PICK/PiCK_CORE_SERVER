@@ -9,4 +9,5 @@ object DependencyVersions {
     const val SWAGGER_VERSION = "1.6.11"
     const val QUERYDSL = "5.0.0"
     const val ZXING = "3.5.3"
+    const val AWS = "1.12.281"
 }
