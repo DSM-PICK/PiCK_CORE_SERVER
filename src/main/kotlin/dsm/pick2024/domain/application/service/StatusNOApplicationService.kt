@@ -1,8 +1,6 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.enums.ApplicationStatus
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusNOApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteAllApplicationPort
@@ -15,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class StatusNOApplicationService(
     private val findByApplicationByIdPort: FindApplicationByIdPort,
     private val deleteAllApplicationPort: DeleteAllApplicationPort
-): StatusNOApplicationUseCase {
+) : StatusNOApplicationUseCase {
 
     @Transactional
     override fun statusNOApplication(request: StatusApplicationRequest?) {
