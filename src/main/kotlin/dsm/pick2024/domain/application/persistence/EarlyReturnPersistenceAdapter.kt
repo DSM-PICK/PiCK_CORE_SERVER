@@ -30,4 +30,9 @@ class EarlyReturnPersistenceAdapter(
     override fun deleteById(id: UUID) {
         earlyReturnRepository.deleteById(id)
     }
+
+    override fun deleteAll(earlyReturn: List<EarlyReturn>) {
+        val entities: List<EarlyReturn> = earlyReturn
+        earlyReturnRepository.deleteAll(entities)
+    }
 }
