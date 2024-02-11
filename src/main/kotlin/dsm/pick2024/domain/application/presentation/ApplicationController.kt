@@ -24,10 +24,11 @@ import java.util.UUID
 class ApplicationController(
     private val applicationUseCase: ApplicationUseCase,
     private val statusApplicationUseCase: StatusOKApplicationUseCase,
+    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
-    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase
+    private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")
@@ -69,4 +70,9 @@ class ApplicationController(
         @PathVariable(name = "applicationId") applicationId: UUID
     ) =
         queryReasonApplicationUseCase.queryReasonApplication(applicationId)
+
+    @Operation(summary = "외출자 전체 사유 확인하기 API")
+    @GetMapping("reason/all")
+    fun queryAllReasonApplication() =
+        queryAllReasonApplicationUseCase.queryAllReasonApplication()
 }
