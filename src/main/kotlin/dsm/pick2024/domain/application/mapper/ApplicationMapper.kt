@@ -20,7 +20,8 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                applicationStatus = applicationStatus
+                applicationStatus = applicationStatus,
+                image = image
             )
         }
 
@@ -38,7 +39,8 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                applicationStatus = applicationStatus
+                applicationStatus = applicationStatus,
+                image = image
             )
         }
 }

@@ -30,6 +30,10 @@ class ClassroomPersistenceAdapter(
         return classroomRepository.existsByUsername(username)
     }
 
+    override fun deleteAll() {
+        classroomRepository.deleteAll()
+    }
+
     override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
             .select(QClassroomJpaEntity.classroomJpaEntity)

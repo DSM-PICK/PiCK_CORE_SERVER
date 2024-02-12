@@ -19,4 +19,8 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun save(entity: ApplicationJapEntity)
 
     fun findAll(): List<ApplicationJapEntity>
+
+    fun findByUsername(username: String): ApplicationJapEntity
+
+    fun deleteAll()
 }

@@ -42,6 +42,8 @@ class ApplicationJapEntity(
     val status: Status,
 
     @Enumerated(value = EnumType.STRING)
-    val applicationStatus: ApplicationStatus? = null
+    val applicationStatus: ApplicationStatus? = null,
+
+    val image: ByteArray? = null
 
 ) : BaseUUIDEntity(id)

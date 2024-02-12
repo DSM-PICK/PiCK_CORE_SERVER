@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.presentation
 
-import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
@@ -30,7 +29,8 @@ class ApplicationController(
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
-    private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase
+    private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
+    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")
@@ -58,10 +58,9 @@ class ApplicationController(
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")
     fun statusApplicationChange(
-        @PathVariable(name = "applicationId") applicationId: UUID,
-        @RequestParam(name = "application_status") applicationStatus: ApplicationStatus
+        @PathVariable(name = "applicationId") applicationId: UUID
     ) =
-        statusApplicationChangeUseCase.statusApplicationChange(applicationId, applicationStatus)
+        statusApplicationChangeUseCase.statusApplicationChange(applicationId)
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
@@ -89,4 +88,9 @@ class ApplicationController(
     @GetMapping("reason/all")
     fun queryAllReasonApplication() =
         queryAllReasonApplicationUseCase.queryAllReasonApplication()
+
+    @Operation(summary = "내 외출증 조회 API")
+    @GetMapping("/my")
+    fun queryMyApplication() =
+        queryMyApplicationUseCase.queryMyApplication()
 }
