@@ -10,6 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 class Pick2024ServerApplication
 
+internal const val BASE_PACKAGE = "dsm.pick2024"
+
 fun main(args: Array<String>) {
     runApplication<Pick2024ServerApplication>(*args)
 }
