@@ -8,6 +8,7 @@ import dsm.pick2024.domain.selfstudy.persistence.repository.SelfStudyRepository
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.YearMonth
 
 @Component
 class SelfStudyPersistenceAdapter(
@@ -33,6 +34,20 @@ class SelfStudyPersistenceAdapter(
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(today))
             .fetch()
-            .map { selfStudyMapper.toDomain(it)!! }
+            .map { selfStudyMapper.toDomain(it) }
+    }
+
+    override fun findByMonthSelfStudyTeacher(date: LocalDate): List<SelfStudy> {
+        val month = YearMonth.from(date)
+        val startDay = month.atDay(1)
+        val endDay = month.atEndOfMonth()
+
+        return jpaQueryFactory
+            .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
+            .where(
+                QSelfStudyJpaEntity.selfStudyJpaEntity.date.between(startDay, endDay)
+            )
+            .fetch()
+            .map { selfStudyMapper.toDomain(it) }
     }
 }

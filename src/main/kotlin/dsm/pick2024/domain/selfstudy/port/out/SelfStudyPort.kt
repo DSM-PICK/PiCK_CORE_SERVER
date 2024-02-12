@@ -4,4 +4,5 @@ interface SelfStudyPort :
     SelfStudySavePort,
     SelfStudyByDateAndFloor,
     ExistsByDateAndFloor,
-    FindByTodaySelfStudyTeacherPort
+    FindByTodaySelfStudyTeacherPort,
+    FindByMonthSelfStudyTeacherPort
