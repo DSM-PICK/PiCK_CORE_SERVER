@@ -2,8 +2,8 @@ package dsm.pick2024.domain.earlyreturn.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
-import dsm.pick2024.domain.application.entity.QEarlyReturnJpaEntity
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.earlyreturn.entity.QEarlyReturnJpaEntity
 import dsm.pick2024.domain.earlyreturn.mapper.EarlyReturnMapper
 import dsm.pick2024.domain.earlyreturn.persistence.repository.EarlyReturnRepository
 import dsm.pick2024.domain.earlyreturn.port.out.EarlyReturnPort
