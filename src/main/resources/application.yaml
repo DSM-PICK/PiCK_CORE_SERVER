@@ -26,23 +26,6 @@ spring:
     jackson:
         property-naming-strategy : SNAKE_CASE
 
-    cloud:
-        aws:
-            credentials:
-                accessKey: ${AWS_ACCESS_KEY}
-                secretKey: ${AWS_SECRET_KEY}
-            s3:
-                bucket: PICK
-            region:
-                static: ap-northeast-2
-            stack:
-                auto: false
-
-    servlet:
-        multipart:
-            max-file-size: 10MB
-            max-request-size: 10MB
-
 auth:
     jwt:
         secretKey: ${JWT_SECRET_KEY}
