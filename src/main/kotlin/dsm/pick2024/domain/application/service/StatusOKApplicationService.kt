@@ -52,7 +52,8 @@ class StatusOKApplicationService(
                 teacherName = admin.name,
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN,
-                image = image
+                image = image,
+                type = Type.APPLICATION
             )
             applicationUpdate.add(updatedApplication)
 

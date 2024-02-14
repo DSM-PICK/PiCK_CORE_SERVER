@@ -28,7 +28,8 @@ class QueryMyEarlyReturnService(
             earlyReturn.grade,
             earlyReturn.classNum,
             earlyReturn.num,
-            earlyReturn.image!!
+            earlyReturn.image!!,
+            earlyReturn.type!!
         )
     }
 }

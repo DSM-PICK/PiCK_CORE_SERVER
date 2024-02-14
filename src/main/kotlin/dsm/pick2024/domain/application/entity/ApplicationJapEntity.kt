@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.entity
 
 import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.time.LocalTime
@@ -43,6 +44,9 @@ class ApplicationJapEntity(
 
     @Enumerated(value = EnumType.STRING)
     val applicationStatus: ApplicationStatus? = null,
+
+    @Enumerated(value = EnumType.STRING)
+    val type: Type? = null,
 
     val image: ByteArray? = null
 

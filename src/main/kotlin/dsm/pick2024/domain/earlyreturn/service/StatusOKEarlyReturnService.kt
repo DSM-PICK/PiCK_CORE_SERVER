@@ -50,7 +50,8 @@ class StatusOKEarlyReturnService(
             val updateEarlyReturn = earlyReturn.copy(
                 teacherName = admin.name,
                 status = Status.OK,
-                image = image
+                image = image,
+                type = Type.EARLY_RETURN
             )
             earlyReturnUpdate.add(updateEarlyReturn)
 
