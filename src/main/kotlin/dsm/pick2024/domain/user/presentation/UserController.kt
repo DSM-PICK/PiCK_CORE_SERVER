@@ -32,7 +32,7 @@ class UserController(
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun userTokenRefresh(token: String): TokenResponse =
+    fun userTokenRefresh(token: String) =
         userTokenRefreshUseCase.userTokenRefresh(token)
 
     @Operation(summary = "내 정보 간편조회 API")
