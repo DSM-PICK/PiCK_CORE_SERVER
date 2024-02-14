@@ -15,4 +15,9 @@ class RefreshToken(
 
     @TimeToLive
     var ttl: Long
-)
+) {
+    fun update(token: String?, ttl: Long) {
+        this.token = token!!
+        this.ttl = ttl
+    }
+}
