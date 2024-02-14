@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserTokenRefreshService(
     private val jwtTokenProvider: JwtTokenProvider
-): UserTokenRefreshUseCase {
+) : UserTokenRefreshUseCase {
 
     @Transactional
     override fun userTokenRefresh(token: String): TokenResponse =

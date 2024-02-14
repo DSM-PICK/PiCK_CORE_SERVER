@@ -30,7 +30,6 @@ class UserController(
     fun login(@RequestBody userLoginRequest: UserLoginRequest): TokenResponse =
         loginUseCase.login(userLoginRequest)
 
-
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
     fun userTokenRefresh(token: String): TokenResponse =
