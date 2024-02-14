@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.admin
+package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.port.`in`.AdminLoginUseCase
