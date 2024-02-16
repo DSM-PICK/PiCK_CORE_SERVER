@@ -18,6 +18,7 @@ class AdminJpaEntity(
     @Column(name = "admin_id", nullable = false)
     val adminId: String,
 
-    @Column(name = "class_rom")
-    val classRoom: String? = null
+    val grade: Int? = null,
+
+    val classNum: Int? = null,
 ) : BaseUUIDEntity(id)

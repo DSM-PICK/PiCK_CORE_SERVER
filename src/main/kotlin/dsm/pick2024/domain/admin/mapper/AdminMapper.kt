@@ -13,7 +13,8 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             id = id,
             name = name,
             password = password,
-            classRoom = classRoom,
+            grade = grade,
+            classNum = classNum,
             adminId = adminId
         )
     }
@@ -23,7 +24,8 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             id = id,
             name = name,
             password = password,
-            classRoom = classRoom,
+            grade = grade,
+            classNum = classNum,
             adminId = adminId
         )
     }
