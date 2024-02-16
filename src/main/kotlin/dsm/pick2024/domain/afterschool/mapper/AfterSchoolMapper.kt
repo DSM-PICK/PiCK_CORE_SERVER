@@ -11,10 +11,10 @@ class AfterSchoolMapper : GenericMapper<AfterSchoolJpaEntity, AfterSchool>{
         domain.run {
         AfterSchoolJpaEntity(
             id = id,
-            name = name,
             grade = grade,
             classNum = classNum,
             num = num,
+            name = name,
         )
     }
 
@@ -22,10 +22,10 @@ class AfterSchoolMapper : GenericMapper<AfterSchoolJpaEntity, AfterSchool>{
         entity.run {
         AfterSchool(
             id = id,
-            name = name,
             grade = grade,
             classNum = classNum,
             num = num,
+            name = name,
         )
     }
 }
