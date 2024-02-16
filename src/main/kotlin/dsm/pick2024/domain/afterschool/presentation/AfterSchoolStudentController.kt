@@ -24,8 +24,8 @@ class AfterSchoolStudentController(
         saveAfterSchoolUseCase.saveAfterSchoolStudentUseCase(saveAfterSchoolStudentRequest)
 
     @Operation(summary = "학생제거 API")
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    fun deleteAfterSchoolStudent(@PathVariable id: UUID) =
+    fun deleteAfterSchoolStudent(@RequestBody id: UUID) =
         deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
 }

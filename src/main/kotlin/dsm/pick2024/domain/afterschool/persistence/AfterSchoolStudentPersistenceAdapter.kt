@@ -20,4 +20,7 @@ class AfterSchoolStudentPersistenceAdapter(
     override fun deleteById(id: UUID) {
         afterSchoolStudentRepository.deleteById(id)
     }
+
+    override fun findByAll() =
+        afterSchoolStudentRepository.findAll().map { afterSchoolStudentMapper.toDomain(it) }
 }
