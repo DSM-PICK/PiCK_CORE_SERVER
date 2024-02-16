@@ -3,9 +3,12 @@ package dsm.pick2024.domain.afterschool.mapper
 import dsm.pick2024.domain.afterschool.domain.AfterSchool
 import dsm.pick2024.domain.afterschool.entity.AfterSchoolJpaEntity
 import dsm.pick2024.global.base.GenericMapper
+import org.springframework.stereotype.Component
 
+@Component
 class AfterSchoolMapper : GenericMapper<AfterSchoolJpaEntity, AfterSchool>{
-    override fun toEntity(domain: AfterSchool) = domain.run {
+    override fun toEntity(domain: AfterSchool) =
+        domain.run {
         AfterSchoolJpaEntity(
             id = id,
             name = name,
@@ -15,7 +18,8 @@ class AfterSchoolMapper : GenericMapper<AfterSchoolJpaEntity, AfterSchool>{
         )
     }
 
-    override fun toDomain(entity: AfterSchoolJpaEntity) = entity.run {
+    override fun toDomain(entity: AfterSchoolJpaEntity) =
+        entity.run {
         AfterSchool(
             id = id,
             name = name,
