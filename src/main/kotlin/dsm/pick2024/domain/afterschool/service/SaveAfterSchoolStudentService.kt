@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.afterschool.service
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
+import dsm.pick2024.domain.afterschool.enum.Status
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
@@ -19,7 +20,8 @@ class SaveAfterSchoolStudentService(
                 grade = request.grade,
                 classNum = request.classNum,
                 num = request.num,
-                name = request.name
+                name = request.name,
+                status = Status.CHECK
             )
         )
     }

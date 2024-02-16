@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.afterschool.presentation
 
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
+import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -14,7 +15,8 @@ import java.util.UUID
 @RequestMapping("/after")
 class AfterSchoolStudentController(
     private val saveAfterSchoolUseCase: SaveAfterSchoolStudentUseCase,
-    private val deleteAfterSchoolStudentUseCase: DeleteAfterSchoolStudentUseCase
+    private val deleteAfterSchoolStudentUseCase: DeleteAfterSchoolStudentUseCase,
+    private val queryAfterSchoolStudentAllUseCase: QueryAfterSchoolStudentAllUseCase
 ) {
 
     @Operation(summary = "학생등록 API")
@@ -28,4 +30,9 @@ class AfterSchoolStudentController(
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteAfterSchoolStudent(@RequestBody id: UUID) =
         deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
+
+    @Operation(summary = "방과후 학생 전체 조회 API")
+    @GetMapping("/all")
+    fun queryAfterSchoolAll() =
+        queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
 }

@@ -1,10 +1,8 @@
-package dsm.pick2024.domain.afterschool.domain
+package dsm.pick2024.domain.afterschool.presentation.dto.response
 
 import dsm.pick2024.domain.afterschool.enum.Status
-import java.util.UUID
 
-data class AfterSchoolStudent(
-    val id: UUID? = null,
+data class QueryAfterSchoolStudentAllResponse (
     val grade: Int,
     val classNum: Int,
     val num: Int,
