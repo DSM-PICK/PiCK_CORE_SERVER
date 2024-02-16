@@ -11,11 +11,15 @@ import java.util.*
 class AfterSchoolStudentPersistenceAdapter(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository
-): AfterSchoolStudentPort {
+) : AfterSchoolStudentPort {
 
-    override fun save(afterSchool: AfterSchoolStudent) {
-        afterSchoolStudentRepository.save(afterSchoolStudentMapper.toEntity(afterSchool))
+    override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
+        val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
+        afterSchoolStudentRepository.saveAll(entities)
     }
+
+    override fun findById(id: UUID) =
+        afterSchoolStudentRepository.findById(id).let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun deleteById(id: UUID) {
         afterSchoolStudentRepository.deleteById(id)

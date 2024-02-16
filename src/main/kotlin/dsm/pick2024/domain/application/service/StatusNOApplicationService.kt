@@ -5,9 +5,9 @@ import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusNOApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteAllApplicationListPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
-import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class StatusNOApplicationService(
@@ -16,14 +16,13 @@ class StatusNOApplicationService(
 ) : StatusNOApplicationUseCase {
 
     @Transactional
-    override fun statusNOApplication(request: StatusApplicationRequest?) {
+    override fun statusNOApplication(ids: List<UUID>) {
         val applicationUpdate = mutableListOf<Application>()
 
-        for (id in request!!.ids) {
+        for (id in ids) {
             val application = findByApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
-            val updatedApplication = application
-            applicationUpdate.add(updatedApplication)
+            applicationUpdate.add(application)
         }
         deleteAllApplicationPort.deleteAll(applicationUpdate)
     }

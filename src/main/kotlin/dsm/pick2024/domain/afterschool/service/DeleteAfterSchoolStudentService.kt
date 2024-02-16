@@ -9,7 +9,7 @@ import java.util.*
 @Service
 class DeleteAfterSchoolStudentService(
     private val deleteAfterSchoolStudentPort: AfterSchoolStudentPort
-): DeleteAfterSchoolStudentUseCase {
+) : DeleteAfterSchoolStudentUseCase {
 
     @Transactional
     override fun deleteAfterSchoolStudent(id: UUID) =

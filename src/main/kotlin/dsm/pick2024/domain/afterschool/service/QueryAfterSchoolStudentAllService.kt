@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryAfterSchoolStudentAllService(
     private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort
-): QueryAfterSchoolStudentAllUseCase {
+) : QueryAfterSchoolStudentAllUseCase {
 
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =
         queryAfterSchoolStudentAllPort.findByAll()
             .map {
-                it ->
+                    it ->
                 QueryAfterSchoolStudentAllResponse(
                     it.grade,
                     it.classNum,
@@ -24,5 +24,4 @@ class QueryAfterSchoolStudentAllService(
                     it.status
                 )
             }
-
 }

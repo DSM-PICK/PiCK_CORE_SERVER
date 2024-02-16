@@ -27,4 +27,4 @@ class AfterSchoolStudentJpaEntity(
 
     @Enumerated(value = EnumType.STRING)
     val status: Status
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

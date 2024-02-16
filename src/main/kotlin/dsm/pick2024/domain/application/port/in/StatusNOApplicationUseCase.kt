@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.application.port.`in`
 
-import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
+import java.util.UUID
 
 interface StatusNOApplicationUseCase {
-    fun statusNOApplication(request: StatusApplicationRequest?)
+    fun statusNOApplication(ids: List<UUID>)
 }

@@ -2,7 +2,6 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
-import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -44,16 +43,16 @@ class ApplicationController(
     @Operation(summary = "외출신청 수락 API")
     @PatchMapping("/status/ok")
     fun statusOKApplication(
-        @RequestBody statusApplicationRequest: StatusApplicationRequest?
+        @RequestParam ids: List<UUID>
     ) =
-        statusApplicationUseCase.statusOKApplication(statusApplicationRequest!!)
+        statusApplicationUseCase.statusOKApplication(ids)
 
     @Operation(summary = "외출신청 거절 API")
     @DeleteMapping("status/no")
     fun statusNOApplication(
-        @RequestBody statusApplicationRequest: StatusApplicationRequest?
+        @RequestParam ids: List<UUID>
     ) =
-        statusNOApplicationUseCase.statusNOApplication(statusApplicationRequest!!)
+        statusNOApplicationUseCase.statusNOApplication(ids)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")

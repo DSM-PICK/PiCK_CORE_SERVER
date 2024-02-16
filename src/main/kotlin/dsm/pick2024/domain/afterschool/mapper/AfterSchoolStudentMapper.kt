@@ -6,28 +6,28 @@ import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, AfterSchoolStudent>{
+class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, AfterSchoolStudent> {
     override fun toEntity(domain: AfterSchoolStudent) =
         domain.run {
-        AfterSchoolStudentJpaEntity(
-            id = id,
-            grade = grade,
-            classNum = classNum,
-            num = num,
-            name = name,
-            status = status
-        )
-    }
+            AfterSchoolStudentJpaEntity(
+                id = id,
+                grade = grade,
+                classNum = classNum,
+                num = num,
+                name = name,
+                status = status
+            )
+        }
 
     override fun toDomain(entity: AfterSchoolStudentJpaEntity) =
         entity.run {
-        AfterSchoolStudent(
-            id = id,
-            grade = grade,
-            classNum = classNum,
-            num = num,
-            name = name,
-            status = status
-        )
-    }
+            AfterSchoolStudent(
+                id = id,
+                grade = grade,
+                classNum = classNum,
+                num = num,
+                name = name,
+                status = status
+            )
+        }
 }
