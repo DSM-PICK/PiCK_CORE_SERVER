@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.earlyreturn.port.`in`
 
-import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import java.time.LocalTime
+import java.util.UUID
 
 interface StatusOKEarlyReturnUseCase {
-    fun statusOKEarlyReturn(request: StatusEarlyReturnRequest?)
+    fun statusOKEarlyReturn(ids: List<UUID>)
 
     fun generateEarlyReturnQRCode(
         username: String,

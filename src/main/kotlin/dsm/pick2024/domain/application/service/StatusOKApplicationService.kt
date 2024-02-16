@@ -13,13 +13,13 @@ import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusOKApplicationUseCase
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
 import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
-import dsm.pick2024.domain.application.presentation.dto.request.StatusApplicationRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
+import java.util.UUID
 import javax.imageio.ImageIO
 
 @Service
@@ -31,13 +31,13 @@ class StatusOKApplicationService(
 ) : StatusOKApplicationUseCase {
 
     @Transactional
-    override fun statusOKApplication(request: StatusApplicationRequest?) {
+    override fun statusOKApplication(ids: List<UUID>) {
         val admin = adminFacadeUseCase.currentUser()
 
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (id in request!!.ids) {
+        for (id in ids) {
             val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
             val image = generateApplicationQRCode(

@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.earlyreturn.port.`in`
 
-import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
+import java.util.UUID
 
 interface StatusNOEarlyReturnUseCase {
-    fun statusNOEarlyReturn(request: StatusEarlyReturnRequest?)
+    fun statusNOEarlyReturn(ids: List<UUID>)
 }

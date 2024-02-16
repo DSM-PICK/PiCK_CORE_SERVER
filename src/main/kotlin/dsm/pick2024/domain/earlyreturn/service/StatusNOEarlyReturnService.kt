@@ -5,9 +5,9 @@ import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundE
 import dsm.pick2024.domain.earlyreturn.port.`in`.StatusNOEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.DeleteAllEarlyReturnListPort
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByIdPort
-import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class StatusNOEarlyReturnService(
@@ -16,15 +16,14 @@ class StatusNOEarlyReturnService(
 ) : StatusNOEarlyReturnUseCase {
 
     @Transactional
-    override fun statusNOEarlyReturn(request: StatusEarlyReturnRequest?) {
+    override fun statusNOEarlyReturn(ids: List<UUID>) {
         val earlyReturnUpdate = mutableListOf<EarlyReturn>()
 
-        for (earlyReturnId in request!!.earlyReturnIds) {
+        for (earlyReturnId in ids) {
             val earlyReturn = findEarlyReturnByIdPort.findById(earlyReturnId)
                 ?: throw EarlyReturnApplicationNotFoundException
 
-            val updateEarlyReturn = earlyReturn
-            earlyReturnUpdate.add(updateEarlyReturn)
+            earlyReturnUpdate.add(earlyReturn)
         }
         deleteAllEarlyReturnPort.deleteAll(earlyReturnUpdate)
     }

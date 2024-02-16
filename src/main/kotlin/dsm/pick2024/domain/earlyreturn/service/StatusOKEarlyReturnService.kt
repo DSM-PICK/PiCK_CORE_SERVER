@@ -12,13 +12,13 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.earlyreturn.port.`in`.StatusOKEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByIdPort
 import dsm.pick2024.domain.earlyreturn.port.out.SaveAllEarlyReturnPort
-import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
+import java.util.UUID
 import javax.imageio.ImageIO
 
 @Service
@@ -30,13 +30,13 @@ class StatusOKEarlyReturnService(
 ) : StatusOKEarlyReturnUseCase {
 
     @Transactional
-    override fun statusOKEarlyReturn(request: StatusEarlyReturnRequest?) {
+    override fun statusOKEarlyReturn(ids: List<UUID>) {
         val admin = adminFacadeUseCase.currentUser()
 
         val earlyReturnUpdate = mutableListOf<EarlyReturn>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (earlyReturnId in request!!.earlyReturnIds) {
+        for (earlyReturnId in ids) {
             val earlyReturn = findEarlyReturnByIdPort.findById(earlyReturnId)
                 ?: throw EarlyReturnApplicationNotFoundException
 

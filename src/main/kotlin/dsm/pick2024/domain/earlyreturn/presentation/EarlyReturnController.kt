@@ -3,11 +3,11 @@ package dsm.pick2024.domain.earlyreturn.presentation
 import dsm.pick2024.domain.earlyreturn.port.`in`.*
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
-import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 @Tag(name = "early API")
 @RestController
@@ -33,16 +33,16 @@ class EarlyReturnController(
     @Operation(summary = "조기귀가 신청 수락 API")
     @PatchMapping("/status/ok")
     fun statusNOEarlyReturn(
-        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest?
+        @RequestParam ids: List<UUID>
     ) =
-        statusOKEarlyReturnUseCase.statusOKEarlyReturn(statusEarlyReturnRequest!!)
+        statusOKEarlyReturnUseCase.statusOKEarlyReturn(ids)
 
     @Operation(summary = "조기귀가 신청 거절 API")
     @DeleteMapping("/status/no")
     fun statusEarlyReturn(
-        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest?
+        @RequestParam ids: List<UUID>
     ) =
-        statusNOEarlyReturnUseCase.statusNOEarlyReturn(statusEarlyReturnRequest!!)
+        statusNOEarlyReturnUseCase.statusNOEarlyReturn(ids)
 
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")
