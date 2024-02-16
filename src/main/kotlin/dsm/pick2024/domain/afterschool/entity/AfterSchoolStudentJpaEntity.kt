@@ -6,7 +6,7 @@ import javax.persistence.Column
 import javax.persistence.Entity
 
 @Entity(name = "tbl_after_school")
-class AfterSchoolJpaEntity(
+class AfterSchoolStudentJpaEntity(
 
     id: UUID?,
 
