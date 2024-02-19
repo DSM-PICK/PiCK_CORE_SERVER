@@ -15,4 +15,3 @@ internal const val BASE_PACKAGE = "dsm.pick2024"
 fun main(args: Array<String>) {
     runApplication<Pick2024ServerApplication>(*args)
 }
-
