@@ -20,5 +20,5 @@ class AdminJpaEntity(
 
     val grade: Int? = null,
 
-    val classNum: Int? = null,
+    val classNum: Int? = null
 ) : BaseUUIDEntity(id)
