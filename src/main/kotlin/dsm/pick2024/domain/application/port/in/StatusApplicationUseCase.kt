@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.application.port.`in`
 
+import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import java.time.LocalTime
-import java.util.UUID
 
-interface StatusOKApplicationUseCase {
-    fun statusOKApplication(ids: List<UUID>)
+interface StatusApplicationUseCase {
+    fun statusApplication(request: ApplicationStatusRequest)
 
     fun generateApplicationQRCode(
         username: String,

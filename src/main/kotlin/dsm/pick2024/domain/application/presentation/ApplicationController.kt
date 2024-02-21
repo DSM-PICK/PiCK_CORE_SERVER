@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -21,15 +22,14 @@ import java.util.UUID
 @RestController
 @RequestMapping("/application")
 class ApplicationController(
-    private val applicationUseCase: ApplicationUseCase,
-    private val statusApplicationUseCase: StatusOKApplicationUseCase,
-    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
-    private val statusNOApplicationUseCase: StatusNOApplicationUseCase,
-    private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
-    private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
-    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
-    private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
-    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
+        private val applicationUseCase: ApplicationUseCase,
+        private val statusApplicationUseCase: StatusApplicationUseCase,
+        private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
+        private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
+        private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
+        private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
+        private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
+        private val queryMyApplicationUseCase: QueryMyApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")
@@ -40,19 +40,12 @@ class ApplicationController(
     ) =
         applicationUseCase.application(applicationRequest)
 
-    @Operation(summary = "외출신청 수락 API")
+    @Operation(summary = "외출신청 수락또는 거절 API")
     @PatchMapping("/status/ok")
     fun statusOKApplication(
-        @RequestParam ids: List<UUID>
+        @RequestBody applicationStatusRequest: ApplicationStatusRequest
     ) =
-        statusApplicationUseCase.statusOKApplication(ids)
-
-    @Operation(summary = "외출신청 거절 API")
-    @DeleteMapping("status/no")
-    fun statusNOApplication(
-        @RequestParam ids: List<UUID>
-    ) =
-        statusNOApplicationUseCase.statusNOApplication(ids)
+        statusApplicationUseCase.statusApplication(applicationStatusRequest)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")

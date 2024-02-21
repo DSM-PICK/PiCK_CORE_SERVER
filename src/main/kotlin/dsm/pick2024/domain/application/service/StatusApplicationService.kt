@@ -10,34 +10,44 @@ import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
-import dsm.pick2024.domain.application.port.`in`.StatusOKApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
+import dsm.pick2024.domain.application.port.out.DeleteAllApplicationListPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
 import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
+import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
-import java.util.UUID
 import javax.imageio.ImageIO
 
 @Service
-class StatusOKApplicationService(
+class StatusApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val saveAllApplicationPort: SaveAllApplicationPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort
-) : StatusOKApplicationUseCase {
+    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val deleteAllApplicationListPort: DeleteAllApplicationListPort
+) : StatusApplicationUseCase {
 
     @Transactional
-    override fun statusOKApplication(ids: List<UUID>) {
+    override fun statusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentUser()
 
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (id in ids) {
+        if (request.status == Status.NO) {
+            for (id in request.ids) {
+                val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
+                applicationUpdate.add(application)
+            }
+            deleteAllApplicationListPort.deleteAll(applicationUpdate)
+        }
+
+        for (id in request.ids) {
             val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
             val image = generateApplicationQRCode(
