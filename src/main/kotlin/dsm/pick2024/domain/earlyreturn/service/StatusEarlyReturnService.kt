@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
-import java.util.UUID
 import javax.imageio.ImageIO
 
 @Service
@@ -62,7 +61,7 @@ class StatusEarlyReturnService(
             val updateEarlyReturn = earlyReturn.copy(
                 teacherName = admin.name,
                 status = Status.OK,
-                image = image,
+                image = image
             )
             earlyReturnUpdate.add(updateEarlyReturn)
 

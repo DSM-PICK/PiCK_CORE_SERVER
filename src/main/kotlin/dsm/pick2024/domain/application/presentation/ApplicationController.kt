@@ -6,7 +6,6 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatu
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -22,14 +21,14 @@ import java.util.UUID
 @RestController
 @RequestMapping("/application")
 class ApplicationController(
-        private val applicationUseCase: ApplicationUseCase,
-        private val statusApplicationUseCase: StatusApplicationUseCase,
-        private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
-        private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
-        private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
-        private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
-        private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
-        private val queryMyApplicationUseCase: QueryMyApplicationUseCase
+    private val applicationUseCase: ApplicationUseCase,
+    private val statusApplicationUseCase: StatusApplicationUseCase,
+    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
+    private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
+    private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
+    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
+    private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
+    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")
