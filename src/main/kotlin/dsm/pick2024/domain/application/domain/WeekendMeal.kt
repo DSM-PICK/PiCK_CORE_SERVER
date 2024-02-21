@@ -6,6 +6,7 @@ import java.util.UUID
 data class WeekendMeal(
     val id: UUID? = null,
     val username: String,
-    val status: Status,
-    val isCheck: Boolean,
+    val grade: Int,
+    val classNum: Int,
+    val status: Status = Status.QUIET,
 )

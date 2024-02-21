@@ -11,7 +11,8 @@ import javax.persistence.Enumerated
 class WeekendMealJpaEntity(
     id: UUID?,
     val username: String,
+    val grade: Int,
+    val classNum: Int,
     @Enumerated(value = EnumType.STRING)
-    val status: Status = Status.NO,
-    val isCheck: Boolean = false,
+    val status: Status = Status.QUIET,
 ) : BaseUUIDEntity(id)

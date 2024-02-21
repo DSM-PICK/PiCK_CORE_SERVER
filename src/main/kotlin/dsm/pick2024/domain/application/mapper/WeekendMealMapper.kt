@@ -11,8 +11,9 @@ class WeekendMealMapper {
             WeekendMealJpaEntity(
                 id = id,
                 username = username,
+                grade = grade,
+                classNum = classNum,
                 status = status,
-                isCheck = isCheck,
             )
         }
 
@@ -21,8 +22,9 @@ class WeekendMealMapper {
             WeekendMeal(
                 id = id,
                 username = username,
+                grade = grade,
+                classNum = classNum,
                 status = status,
-                isCheck = isCheck,
             )
         }
 }
