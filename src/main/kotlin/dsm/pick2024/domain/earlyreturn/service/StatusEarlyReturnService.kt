@@ -9,11 +9,13 @@ import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.applicationstory.enums.Type
-import dsm.pick2024.domain.earlyreturn.port.`in`.StatusOKEarlyReturnUseCase
+import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByIdPort
 import dsm.pick2024.domain.earlyreturn.port.out.SaveAllEarlyReturnPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
+import dsm.pick2024.domain.earlyreturn.port.out.DeleteAllEarlyReturnListPort
+import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
@@ -22,21 +24,31 @@ import java.util.UUID
 import javax.imageio.ImageIO
 
 @Service
-class StatusOKEarlyReturnService(
+class StatusEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort
-) : StatusOKEarlyReturnUseCase {
+    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val deleteAllEarlyReturnListPort: DeleteAllEarlyReturnListPort
+) : StatusEarlyReturnUseCase {
 
     @Transactional
-    override fun statusOKEarlyReturn(ids: List<UUID>) {
+    override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentUser()
 
         val earlyReturnUpdate = mutableListOf<EarlyReturn>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        for (earlyReturnId in ids) {
+        if (request.status == Status.NO) {
+            for (id in request.ids) {
+                val earlyReturn = findEarlyReturnByIdPort.findById(id)
+                    ?: throw EarlyReturnApplicationNotFoundException
+                earlyReturnUpdate.add(earlyReturn)
+            }
+            deleteAllEarlyReturnListPort.deleteAll(earlyReturnUpdate)
+        }
+
+        for (earlyReturnId in request.ids) {
             val earlyReturn = findEarlyReturnByIdPort.findById(earlyReturnId)
                 ?: throw EarlyReturnApplicationNotFoundException
 
@@ -51,7 +63,6 @@ class StatusOKEarlyReturnService(
                 teacherName = admin.name,
                 status = Status.OK,
                 image = image,
-                type = Type.EARLY_RETURN
             )
             earlyReturnUpdate.add(updateEarlyReturn)
 
@@ -60,7 +71,7 @@ class StatusOKEarlyReturnService(
                 username = earlyReturn.username,
                 startTime = earlyReturn.startTime,
                 date = earlyReturn.date,
-                type = Type.APPLICATION
+                type = Type.EARLY_RETURN
             )
             applicationStory.add(applicationStorySave)
         }

@@ -3,6 +3,7 @@ package dsm.pick2024.domain.earlyreturn.presentation
 import dsm.pick2024.domain.earlyreturn.port.`in`.*
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
+import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -14,8 +15,7 @@ import java.util.UUID
 @RequestMapping("/early-return")
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
-    private val statusOKEarlyReturnUseCase: StatusOKEarlyReturnUseCase,
-    private val statusNOEarlyReturnUseCase: StatusNOEarlyReturnUseCase,
+    private val statusEarlyReturnUseCase: StatusEarlyReturnUseCase,
     private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
@@ -30,19 +30,12 @@ class EarlyReturnController(
     ) =
         createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
-    @Operation(summary = "조기귀가 신청 수락 API")
+    @Operation(summary = "조기귀가 신청 수락또는 거절 API")
     @PatchMapping("/status/ok")
     fun statusNOEarlyReturn(
-        @RequestParam ids: List<UUID>
+        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest
     ) =
-        statusOKEarlyReturnUseCase.statusOKEarlyReturn(ids)
-
-    @Operation(summary = "조기귀가 신청 거절 API")
-    @DeleteMapping("/status/no")
-    fun statusEarlyReturn(
-        @RequestParam ids: List<UUID>
-    ) =
-        statusNOEarlyReturnUseCase.statusNOEarlyReturn(ids)
+        statusEarlyReturnUseCase.statusEarlyReturn(statusEarlyReturnRequest)
 
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")
