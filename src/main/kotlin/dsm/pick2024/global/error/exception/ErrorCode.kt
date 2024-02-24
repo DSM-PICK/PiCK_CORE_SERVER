@@ -23,6 +23,8 @@ enum class ErrorCode(
     APPLICATION_NOT_FOUND(404, "Application Not Found"),
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 
+    WEEKEND_MEAL_NOT_FOUND(404, "WeekendMeal Not Found"),
+
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
 
     INVALID_TOKEN(401, "Invalid Token"),
