@@ -10,7 +10,7 @@ class WeekendMealMapper {
         domain.run {
             WeekendMealJpaEntity(
                 id = id,
-                username = username,
+                userId = userId,
                 grade = grade,
                 classNum = classNum,
                 status = status,
@@ -21,7 +21,7 @@ class WeekendMealMapper {
         entity.run {
             WeekendMeal(
                 id = id,
-                username = username,
+                userId = userId,
                 grade = grade,
                 classNum = classNum,
                 status = status,

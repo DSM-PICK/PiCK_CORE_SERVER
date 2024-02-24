@@ -10,7 +10,7 @@ import javax.persistence.Enumerated
 @Entity(name = "tbl_weekend_meal")
 class WeekendMealJpaEntity(
     id: UUID?,
-    val username: String,
+    val userId: UUID,
     val grade: Int,
     val classNum: Int,
     @Enumerated(value = EnumType.STRING)

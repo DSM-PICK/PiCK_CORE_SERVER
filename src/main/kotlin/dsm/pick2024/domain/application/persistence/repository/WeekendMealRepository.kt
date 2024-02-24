@@ -8,5 +8,5 @@ import java.util.UUID
 interface WeekendMealRepository : Repository<WeekendMeal, UUID> {
     fun save(entity: WeekendMealJpaEntity)
 
-    fun findByUsername(id: UUID): WeekendMealJpaEntity
+    fun findByUserId(id: UUID): WeekendMealJpaEntity
 }

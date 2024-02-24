@@ -16,7 +16,7 @@ class WeekendMealPersistenceAdapter(
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
     }
 
-    override fun findById(id: UUID): WeekendMeal? {
-        weekendMealRepository.findByUsername(id).let { weekendMealMapper.toDomain(it) }
+    override fun findByUserId(id: UUID): WeekendMeal? {
+        return weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
     }
 }
