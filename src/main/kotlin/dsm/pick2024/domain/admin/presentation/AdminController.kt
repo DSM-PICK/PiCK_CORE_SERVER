@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -26,6 +27,6 @@ class AdminController(
 
     @Operation(summary = "어드민 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun adminTokenRefresh(token: String): TokenResponse =
+    fun adminTokenRefresh(@RequestHeader(name = "X-Refresh-Token") token: String): TokenResponse =
         adminTokenRefreshUseCase.adminTokenRefresh(token)
 }

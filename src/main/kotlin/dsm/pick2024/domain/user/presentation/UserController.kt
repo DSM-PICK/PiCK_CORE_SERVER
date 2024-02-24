@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -32,7 +33,7 @@ class UserController(
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun userTokenRefresh(token: String) =
+    fun userTokenRefresh(@RequestHeader(name = "X-Refresh-Token") token: String) =
         userTokenRefreshUseCase.userTokenRefresh(token)
 
     @Operation(summary = "내 정보 간편조회 API")
