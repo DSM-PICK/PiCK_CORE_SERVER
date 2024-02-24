@@ -42,8 +42,8 @@ jobs:
                   buildargs: |
                       PROFILE=prod
                       JWT_SECRET_KEY=pickpickpickpickpickpickpickpick
-                      JWT_ACCESS_EXP=3600
-                      JWT_REFRESH_EXP=360000
+                      JWT_ACCESS_EXP=360000
+                      JWT_REFRESH_EXP=36000000
                       JWT_HEADER=Authorization
                       JWT_PREFIX=Bearer
                       DB_URL=${{ secrets.DB_URL }}
