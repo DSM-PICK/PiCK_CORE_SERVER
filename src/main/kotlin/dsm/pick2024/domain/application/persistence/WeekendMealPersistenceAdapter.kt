@@ -10,7 +10,7 @@ import java.util.UUID
 @Component
 class WeekendMealPersistenceAdapter(
     private val weekendMealRepository: WeekendMealRepository,
-    private val weekendMealMapper: WeekendMealMapper,
+    private val weekendMealMapper: WeekendMealMapper
 ) : WeekendMealPort {
     override fun save(weekendMeal: WeekendMeal) {
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))

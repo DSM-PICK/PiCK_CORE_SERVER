@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/weekend-meal")
 class WeekendMealController(
-    private val weekendMealUseCase: CreateWeekendMealUseCase,
+    private val weekendMealUseCase: CreateWeekendMealUseCase
 ) {
     @Operation(summary = "주말급식 상태변경 API")
     @PatchMapping("/status")
     fun changeStatus(
-        @RequestBody status: Status,
+        @RequestBody status: Status
     ) = weekendMealUseCase.changeWeekendMeal(status)
 }

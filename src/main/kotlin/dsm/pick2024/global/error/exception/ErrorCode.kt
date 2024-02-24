@@ -2,7 +2,7 @@ package dsm.pick2024.global.error.exception
 
 enum class ErrorCode(
     val status: Int,
-    val message: String,
+    val message: String
 ) {
     FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
     FEIGN_UNAUTHORIZED(401, "Feign UnAuthorized"),
@@ -31,5 +31,5 @@ enum class ErrorCode(
     EXPIRED_TOKEN(401, "Expired Token"),
 
     // Internal Server Error
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error")
 }

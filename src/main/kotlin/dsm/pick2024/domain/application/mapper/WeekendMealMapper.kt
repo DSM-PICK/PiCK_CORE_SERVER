@@ -13,7 +13,7 @@ class WeekendMealMapper {
                 userId = userId,
                 grade = grade,
                 classNum = classNum,
-                status = status,
+                status = status
             )
         }
 
@@ -24,7 +24,7 @@ class WeekendMealMapper {
                 userId = userId,
                 grade = grade,
                 classNum = classNum,
-                status = status,
+                status = status
             )
         }
 }

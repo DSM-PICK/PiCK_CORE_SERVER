@@ -8,5 +8,5 @@ data class WeekendMeal(
     val userId: UUID,
     val grade: Int,
     val classNum: Int,
-    val status: Status = Status.QUIET,
+    val status: Status = Status.QUIET
 )

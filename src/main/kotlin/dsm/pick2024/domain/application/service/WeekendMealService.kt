@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class WeekendMealService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val weekendMealPort: SaveWeekendMealPort,
-    private val findWeekendMealByUserIdPort: FindWeekendMealByUserIdPort,
+    private val findWeekendMealByUserIdPort: FindWeekendMealByUserIdPort
 ) : CreateWeekendMealUseCase {
     @Transactional
     override fun changeWeekendMeal(status: Status) {
@@ -23,7 +23,7 @@ class WeekendMealService(
 
         val update =
             weekendMeal.copy(
-                status = status,
+                status = status
             )
 
         weekendMealPort.save(update)
