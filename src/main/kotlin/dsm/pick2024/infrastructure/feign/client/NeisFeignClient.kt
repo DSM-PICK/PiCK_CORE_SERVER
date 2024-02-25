@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 
-@FeignClient(name = "neis-feign-client", url = "https://open.neis.go.kr/hub")
+@FeignClient(name = "neis-feign-client", url = "\${url.neis}")
 interface NeisFeignClient {
 
     @GetMapping("/mealServiceDietInfo")
