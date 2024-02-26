@@ -40,7 +40,7 @@ class ApplicationController(
         applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락또는 거절 API")
-    @PatchMapping("/status/ok")
+    @PatchMapping("/status")
     fun statusOKApplication(
         @RequestBody applicationStatusRequest: ApplicationStatusRequest
     ) =
