@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatu
 import java.time.LocalTime
 
 interface StatusApplicationUseCase {
-    fun statusApplication(request: ApplicationStatusRequest)
+    fun statusApplication(request: ApplicationStatusRequest?)
 
     fun generateApplicationQRCode(
         username: String,

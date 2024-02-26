@@ -33,13 +33,13 @@ class StatusApplicationService(
 ) : StatusApplicationUseCase {
 
     @Transactional
-    override fun statusApplication(request: ApplicationStatusRequest) {
+    override fun statusApplication(request: ApplicationStatusRequest?) {
         val admin = adminFacadeUseCase.currentUser()
 
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        if (request.status == Status.NO) {
+        if (request!!.status == Status.NO) {
             for (id in request.ids) {
                 val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
                 applicationUpdate.add(application)
