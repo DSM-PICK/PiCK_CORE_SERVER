@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.weekendmeal.service
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.weekendmeal.exception.WeekendMealNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealByUserIdPort
 import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort

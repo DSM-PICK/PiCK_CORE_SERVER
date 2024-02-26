@@ -68,8 +68,8 @@ class EarlyReturnPersistenceAdapter(
             .innerJoin(QUserJpaEntity.userJpaEntity)
             .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
             .where(
-                QUserJpaEntity.userJpaEntity.grade.eq(grade),
-                QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(grade),
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(classNum),
                 QEarlyReturnJpaEntity.earlyReturnJpaEntity.status.eq(Status.QUIET)
             )
             .fetch()
