@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.weekendmeal.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.entity.QWeekendMealJpaEntity
+import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealMapper
 import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealRepository
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPort
