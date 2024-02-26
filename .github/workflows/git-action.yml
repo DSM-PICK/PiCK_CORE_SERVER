@@ -52,4 +52,4 @@ jobs:
                       REDIS_HOST=${{ secrets.REDIS_HOST }}
                       REDIS_PORT=${{ secrets.REDIS_PORT }}
                       DAE_URL=${{ secrets.DAE_URL }}
-                      NEIS_URL={{ secrets.NEIS_URL }}
+                      NEIS_URL=${{ secrets.NEIS_URL }}
