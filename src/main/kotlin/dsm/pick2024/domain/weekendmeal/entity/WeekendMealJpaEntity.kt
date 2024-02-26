@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.application.entity
+package dsm.pick2024.domain.weekendmeal.entity
 
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
@@ -14,5 +14,5 @@ class WeekendMealJpaEntity(
     val grade: Int,
     val classNum: Int,
     @Enumerated(value = EnumType.STRING)
-    val status: Status = Status.QUIET
+    val status: Status
 ) : BaseUUIDEntity(id)

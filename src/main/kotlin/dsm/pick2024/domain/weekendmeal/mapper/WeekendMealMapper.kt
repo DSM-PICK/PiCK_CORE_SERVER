@@ -1,7 +1,7 @@
-package dsm.pick2024.domain.application.mapper
+package dsm.pick2024.domain.weekendmeal.mapper
 
-import dsm.pick2024.domain.application.domain.WeekendMeal
-import dsm.pick2024.domain.application.entity.WeekendMealJpaEntity
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
+import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import org.springframework.stereotype.Component
 
 @Component

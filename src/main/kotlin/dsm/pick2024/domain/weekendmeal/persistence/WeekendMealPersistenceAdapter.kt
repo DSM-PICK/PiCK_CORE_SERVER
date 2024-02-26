@@ -1,9 +1,9 @@
-package dsm.pick2024.domain.application.persistence
+package dsm.pick2024.domain.weekendmeal.persistence
 
-import dsm.pick2024.domain.application.domain.WeekendMeal
-import dsm.pick2024.domain.application.mapper.WeekendMealMapper
-import dsm.pick2024.domain.application.persistence.repository.WeekendMealRepository
-import dsm.pick2024.domain.application.port.out.WeekendMealPort
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
+import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealMapper
+import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealRepository
+import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPort
 import org.springframework.stereotype.Component
 import java.util.UUID
 

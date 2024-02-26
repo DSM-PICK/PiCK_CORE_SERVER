@@ -1,7 +1,7 @@
-package dsm.pick2024.domain.application.presentation
+package dsm.pick2024.domain.weekendmeal.presentation
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.port.`in`.CreateWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.PatchMapping

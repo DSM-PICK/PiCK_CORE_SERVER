@@ -1,11 +1,11 @@
-package dsm.pick2024.domain.application.service
+package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.exception.WeekendMealNotFoundException
-import dsm.pick2024.domain.application.port.`in`.CreateWeekendMealUseCase
-import dsm.pick2024.domain.application.port.out.FindWeekendMealByUserIdPort
-import dsm.pick2024.domain.application.port.out.SaveWeekendMealPort
+import dsm.pick2024.domain.weekendmeal.exception.WeekendMealNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealByUserIdPort
+import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

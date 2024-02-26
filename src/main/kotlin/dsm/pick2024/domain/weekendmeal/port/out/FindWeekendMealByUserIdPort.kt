@@ -1,6 +1,6 @@
-package dsm.pick2024.domain.application.port.out
+package dsm.pick2024.domain.weekendmeal.port.out
 
-import dsm.pick2024.domain.application.domain.WeekendMeal
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import java.util.UUID
 
 interface FindWeekendMealByUserIdPort {

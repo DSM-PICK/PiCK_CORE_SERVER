@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.application.exception
+package dsm.pick2024.domain.weekendmeal.exception
 
 import dsm.pick2024.global.error.exception.ErrorCode
 import dsm.pick2024.global.error.exception.PickException
