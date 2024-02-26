@@ -25,7 +25,7 @@ class WeekendMealPersistenceAdapter(
         return weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
     }
 
-   override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
+    override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
         jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -38,7 +38,6 @@ class WeekendMealPersistenceAdapter(
             )
             .fetch()
             .map { weekendMealMapper.toDomain(it) }
-
 
     override fun findQuitByGradeAndClassNum(grade: Int, classNum: Int) =
         jpaQueryFactory

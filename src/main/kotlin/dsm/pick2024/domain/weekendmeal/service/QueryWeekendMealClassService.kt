@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional
 class QueryWeekendMealClassService(
     private val findWeekendMealClassPort: FindWeekendMealClassPort,
     private val findWeekendMealQuitClassPort: FindWeekendMealQuitClassPort
-): QueryWeekendMealClassUseCase {
+) : QueryWeekendMealClassUseCase {
 
     override fun queryWeekendMealClass(grade: Int, classNum: Int) =
         findWeekendMealClassPort.findByGradeAndClassNum(grade, classNum)
             .map {
-                it ->
+                    it ->
                 QueryWeekendMealResponse(
                     it.id!!,
                     it.username,
@@ -30,7 +30,7 @@ class QueryWeekendMealClassService(
     override fun queryWeekendMealQuitClass(grade: Int, classNum: Int) =
         findWeekendMealQuitClassPort.findQuitByGradeAndClassNum(grade, classNum)
             .map {
-                it ->
+                    it ->
                 QueryWeekendMealResponse(
                     it.id!!,
                     it.username,
