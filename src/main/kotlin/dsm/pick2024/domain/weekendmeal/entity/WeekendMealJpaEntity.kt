@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.weekendmeal.entity
 
-import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
 import javax.persistence.Entity
@@ -11,6 +11,7 @@ import javax.persistence.Enumerated
 class WeekendMealJpaEntity(
     id: UUID?,
     val userId: UUID,
+    val username: String,
     val grade: Int,
     val classNum: Int,
     @Enumerated(value = EnumType.STRING)
