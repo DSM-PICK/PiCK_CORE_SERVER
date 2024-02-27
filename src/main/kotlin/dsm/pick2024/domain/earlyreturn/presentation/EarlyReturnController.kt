@@ -30,7 +30,7 @@ class EarlyReturnController(
         createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
     @Operation(summary = "조기귀가 신청 수락또는 거절 API")
-    @PatchMapping("/status/ok")
+    @PatchMapping("/status")
     fun statusNOEarlyReturn(
         @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest
     ) =
