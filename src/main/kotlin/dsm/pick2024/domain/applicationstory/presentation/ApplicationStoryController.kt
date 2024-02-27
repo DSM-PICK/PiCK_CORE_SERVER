@@ -17,6 +17,6 @@ class ApplicationStoryController(
 
     @Operation(summary = "외출기록 조회 기능")
     @GetMapping("/query")
-    fun queryUserApplicationStory(@RequestParam name: String) =
+    fun queryUserApplicationStory(@RequestParam(name = "name") name: String) =
         queryUserApplicationUseCase.queryUserApplicationStory(name)
 }

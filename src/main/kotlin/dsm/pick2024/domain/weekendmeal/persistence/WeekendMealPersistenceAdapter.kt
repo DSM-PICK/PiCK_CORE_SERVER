@@ -22,7 +22,7 @@ class WeekendMealPersistenceAdapter(
     }
 
     override fun findByUserId(id: UUID?): WeekendMeal? {
-        return weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
+        return weekendMealRepository.findByUserId(id!!).let { weekendMealMapper.toDomain(it) }
     }
 
     override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
