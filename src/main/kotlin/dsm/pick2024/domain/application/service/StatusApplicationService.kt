@@ -52,7 +52,7 @@ class StatusApplicationService(
 
             val image = generateApplicationQRCode(
                 application.username,
-                application.teacherName!!,
+                admin.name,
                 application.startTime,
                 application.endTime,
                 application.reason
@@ -62,7 +62,7 @@ class StatusApplicationService(
                 teacherName = admin.name,
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN,
-                image = image,
+                image = image.toString(),
                 type = Type.APPLICATION
             )
             applicationUpdate.add(updatedApplication)
