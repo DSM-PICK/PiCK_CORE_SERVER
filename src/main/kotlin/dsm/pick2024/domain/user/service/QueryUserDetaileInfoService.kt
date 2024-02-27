@@ -15,7 +15,7 @@ class QueryUserDetaileInfoService(
     override fun queryUserDetailsInfo(): QueryUserDetailsInfoResponse {
         val user = userFacadeUseCase.currentUser()
         return QueryUserDetailsInfoResponse(
-            user.profile,
+            user.profile!!,
             user.name,
             user.birthDay,
             user.grade,

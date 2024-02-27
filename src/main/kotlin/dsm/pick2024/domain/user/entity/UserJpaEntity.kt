@@ -36,7 +36,7 @@ class UserJpaEntity(
     val birthDay: LocalDate,
 
     @Column(name = "profile_file_name")
-    val profile: String,
+    val profile: String ?= null,
 
     @Column(name = "role", nullable = false)
     @Enumerated(value = EnumType.STRING)

@@ -13,6 +13,6 @@ data class User(
     val classNum: Int,
     val num: Int,
     val birthDay: LocalDate,
-    val profile: String,
+    val profile: String ?= null,
     val role: Role
 )
