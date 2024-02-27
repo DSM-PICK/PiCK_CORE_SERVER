@@ -2,7 +2,8 @@ package dsm.pick2024.domain.weekendmeal.presentation
 
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
-import dsm.pick2024.domain.weekendmeal.service.QueryWeekendMealClassService
+import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/weekend-meal")
 class WeekendMealController(
     private val weekendMealUseCase: CreateWeekendMealUseCase,
-    private val queryWeekendMealClassService: QueryWeekendMealClassService
+    private val queryWeekendMealClassUseCase: QueryWeekendMealClassUseCase,
+    private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase
 ) {
     @Operation(summary = "주말급식 상태변경 API")
     @PatchMapping("/status")
@@ -31,7 +33,7 @@ class WeekendMealController(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "class_num") classNum: Int
     ) =
-        queryWeekendMealClassService.queryWeekendMealClass(grade, classNum)
+        queryWeekendMealClassUseCase.queryWeekendMealClass(grade, classNum)
 
     @Operation(summary = "주말급식 미응답자 반별로 조회 API")
     @GetMapping("/quit")
@@ -39,5 +41,10 @@ class WeekendMealController(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "class_num") classNum: Int
     ) =
-        queryWeekendMealClassService.queryWeekendMealQuitClass(grade, classNum)
+        queryWeekendMealClassUseCase.queryWeekendMealQuitClass(grade, classNum)
+
+    @Operation(summary = "내 주말급식 신청상태 조회 API")
+    @GetMapping("/my")
+    fun queryMyWeekendMealStatus() =
+        queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()
 }
