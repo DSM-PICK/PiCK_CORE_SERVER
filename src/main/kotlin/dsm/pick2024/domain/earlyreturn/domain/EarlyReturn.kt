@@ -17,6 +17,6 @@ data class EarlyReturn(
     val classNum: Int,
     val num: Int,
     val teacherName: String? = null,
-    val image: ByteArray? = null,
+    val image: String? = null,
     val type: Type? = null
 )

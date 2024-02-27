@@ -39,5 +39,5 @@ class EarlyReturnJpaEntity(
     @Enumerated(value = EnumType.STRING)
     val type: Type? = null,
 
-    val image: ByteArray? = null
+    val image: String? = null
 ) : BaseUUIDEntity(id)

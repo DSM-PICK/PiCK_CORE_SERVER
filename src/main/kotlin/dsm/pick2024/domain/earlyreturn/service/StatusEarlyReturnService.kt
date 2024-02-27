@@ -53,7 +53,7 @@ class StatusEarlyReturnService(
 
             val image = generateEarlyReturnQRCode(
                 earlyReturn.username,
-                earlyReturn.teacherName!!,
+                admin.name,
                 earlyReturn.startTime,
                 earlyReturn.reason
             )
@@ -61,7 +61,7 @@ class StatusEarlyReturnService(
             val updateEarlyReturn = earlyReturn.copy(
                 teacherName = admin.name,
                 status = Status.OK,
-                image = image
+                image = image.toString()
             )
             earlyReturnUpdate.add(updateEarlyReturn)
 
