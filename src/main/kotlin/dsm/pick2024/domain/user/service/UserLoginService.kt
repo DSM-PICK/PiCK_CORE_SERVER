@@ -22,7 +22,7 @@ class UserLoginService(
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId) ?: throw UserNotFoundException
-        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
+        if ((userLoginRequest.password != user.password)) {
             throw PasswordMissMatchException
         }
         val token = jwtTokenProvider.generateToken(user.name, Role.STU.toString())
