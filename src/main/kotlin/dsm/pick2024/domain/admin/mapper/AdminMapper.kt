@@ -15,7 +15,8 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             password = password,
             grade = grade,
             classNum = classNum,
-            adminId = adminId
+            adminId = adminId,
+            role = role
         )
     }
 
@@ -26,7 +27,8 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             password = password,
             grade = grade,
             classNum = classNum,
-            adminId = adminId
+            adminId = adminId,
+            role = role
         )
     }
 }
