@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryFloorApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryFloorApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
@@ -14,8 +15,8 @@ class QueryFloorApplicationService(
     @Transactional(readOnly = true)
     override fun queryFloorApplication(floor: Int) =
         queryFloorApplicationPort.findByFloor(floor)
-            .map {
-                    it ->
+            .filter { it.status == Status.QUIET }
+            .map { it ->
                 QueryApplicationResponse(
                     it.id!!,
                     it.username,

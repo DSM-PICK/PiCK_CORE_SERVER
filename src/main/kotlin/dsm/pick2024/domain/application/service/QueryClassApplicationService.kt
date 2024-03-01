@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryClassApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
@@ -14,8 +15,8 @@ class QueryClassApplicationService(
     @Transactional(readOnly = true)
     override fun queryClassApplication(grade: Int, classNum: Int) =
         queryClassApplicationPort.findByGradeAndClassNum(grade, classNum)
-            .map {
-                    it ->
+            .filter { it.status == Status.QUIET }
+            .map { it ->
                 QueryApplicationResponse(
                     it.id!!,
                     it.username,

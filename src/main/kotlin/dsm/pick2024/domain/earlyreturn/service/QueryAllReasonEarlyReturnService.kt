@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryAllREarlyEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.QueryAllEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryEarlyReturnReasonResponse
@@ -14,8 +15,8 @@ class QueryAllReasonEarlyReturnService(
     @Transactional(readOnly = true)
     override fun queryAllReasonEarlyReturn() =
         queryAllEarlyReturnPort.findAll()
-            .map {
-                    it ->
+            .filter { it.status == Status.OK }
+            .map { it ->
                 QueryEarlyReturnReasonResponse(
                     it.username,
                     it.startTime,
