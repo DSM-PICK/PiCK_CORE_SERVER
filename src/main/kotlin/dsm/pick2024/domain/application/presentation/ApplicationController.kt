@@ -27,7 +27,7 @@ class ApplicationController(
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
-    private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
+    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")

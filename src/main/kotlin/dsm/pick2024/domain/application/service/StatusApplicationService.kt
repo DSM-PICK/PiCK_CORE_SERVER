@@ -62,7 +62,7 @@ class StatusApplicationService(
                 teacherName = admin.name,
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN,
-                image = image.toString(),
+                image = image.toString()
             )
             applicationUpdate.add(updatedApplication)
 
