@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.presentation
 
+import dsm.pick2024.domain.application.port.`in`.QueryAllOKApplicationUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.*
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
@@ -18,7 +19,8 @@ class EarlyReturnController(
     private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
-    private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase
+    private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase,
+    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase
 ) {
 
     @Operation(summary = "조기귀가 신청 API")
@@ -60,4 +62,9 @@ class EarlyReturnController(
     @GetMapping("/my")
     fun queryMyEarlyReturn() =
         queryMyEarlyReturnUseCase.queryMyEarlyReturn()
+
+    @Operation(summary = "조귀귀가중인 학생 조회 API")
+    @GetMapping("/ok")
+    fun queryOKEarlyReturn() =
+        queryAllOKApplicationUseCase.queryAllOKApplication()
 }

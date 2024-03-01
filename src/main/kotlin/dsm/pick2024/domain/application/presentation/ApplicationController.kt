@@ -27,7 +27,8 @@ class ApplicationController(
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
-    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
+    private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
+    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase
 ) {
 
     @Operation(summary = "외출 신청 API")
@@ -76,4 +77,9 @@ class ApplicationController(
     @GetMapping("/my")
     fun queryMyApplication() =
         queryMyApplicationUseCase.queryMyApplication()
+
+    @Operation(summary = "외출중인 학생 조회 API")
+    @GetMapping("/OK")
+    fun queryOKApplication() =
+        queryAllOKApplicationUseCase.queryAllOKApplication()
 }
