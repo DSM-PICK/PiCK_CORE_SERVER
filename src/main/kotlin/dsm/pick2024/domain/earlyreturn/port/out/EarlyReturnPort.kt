@@ -2,7 +2,7 @@ package dsm.pick2024.domain.earlyreturn.port.out
 
 interface EarlyReturnPort :
     SaveAllEarlyReturnPort,
-    ExistsEarlyReturnByUsernamePort,
+    ExistsEarlyReturnByUserIdPort,
     FindEarlyReturnByIdPort,
     DeleteEarlyReturnApplicationPort,
     SaveEarlyReturnPort,
@@ -10,5 +10,5 @@ interface EarlyReturnPort :
     QueryFloorEarlyReturnPort,
     DeleteAllEarlyReturnListPort,
     QueryAllEarlyReturnPort,
-    FindEarlyReturnByNamePort,
+    FindEarlyReturnByUserIdPort,
     DeleteAllEarlyReturnPort

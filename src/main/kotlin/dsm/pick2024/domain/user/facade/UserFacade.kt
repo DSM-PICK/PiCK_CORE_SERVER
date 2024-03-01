@@ -3,20 +3,21 @@ package dsm.pick2024.domain.user.facade
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.user.port.out.FindByNamePort
+import dsm.pick2024.domain.user.port.out.FindByAccountIdPort
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class UserFacade(
-    private val findByNamePort: FindByNamePort
+    private val findByAccountIdPort: FindByAccountIdPort
 ) : UserFacadeUseCase {
 
     override fun currentUser(): User {
-        val name = SecurityContextHolder.getContext().authentication.name
-        return getUserByName(name)
+        val accountId = SecurityContextHolder.getContext().authentication.name
+        return getUserByAccountId(accountId)
     }
 
-    override fun getUserByName(name: String) =
-        findByNamePort.findByName(name) ?: throw UserNotFoundException
+    override fun getUserByAccountId(accountId: String) =
+        findByAccountIdPort.findByAccountId(accountId)?: throw UserNotFoundException
 }
