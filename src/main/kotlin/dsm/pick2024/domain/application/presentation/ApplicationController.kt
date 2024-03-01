@@ -26,7 +26,6 @@ class ApplicationController(
     private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
-    private val queryReasonApplicationUseCase: QueryReasonApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase
 ) {
@@ -67,13 +66,6 @@ class ApplicationController(
         @RequestParam(name = "class_num") classNum: Int
     ) =
         queryClassApplicationUseCase.queryClassApplication(grade, classNum)
-
-    @Operation(summary = "외출사유 확인하기 API")
-    @GetMapping("/reason/{applicationId}")
-    fun queryReasonApplication(
-        @PathVariable(name = "applicationId") applicationId: UUID
-    ) =
-        queryReasonApplicationUseCase.queryReasonApplication(applicationId)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
     @GetMapping("reason/all")

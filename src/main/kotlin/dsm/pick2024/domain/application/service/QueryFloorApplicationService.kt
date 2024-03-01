@@ -23,7 +23,8 @@ class QueryFloorApplicationService(
                     it.endTime,
                     it.grade,
                     it.classNum,
-                    it.num
+                    it.num,
+                    it.reason
                 )
             }
 }

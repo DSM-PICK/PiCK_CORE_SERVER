@@ -10,5 +10,6 @@ data class QueryApplicationResponse(
     val endTime: LocalTime,
     val grade: Int,
     val classNum: Int,
-    val num: Int
+    val num: Int,
+    val reason: String
 )
