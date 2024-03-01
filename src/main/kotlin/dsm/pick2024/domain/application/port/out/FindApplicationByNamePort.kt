@@ -1,7 +1,8 @@
 package dsm.pick2024.domain.application.port.out
 
 import dsm.pick2024.domain.application.domain.Application
+import java.util.UUID
 
 interface FindApplicationByNamePort {
-    fun findByUsername(username: String): Application?
+    fun findByUserId(userId: UUID): Application?
 }

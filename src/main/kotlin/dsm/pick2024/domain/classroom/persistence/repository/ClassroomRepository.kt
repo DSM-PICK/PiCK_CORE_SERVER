@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
-    fun findByUsername(username: String): ClassroomJpaEntity
+    fun findByUserId(userId: UUID): ClassroomJpaEntity
 
-    fun existsByUsername(username: String): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
-    fun deleteByUsername(username: String)
+    fun deleteByUserId(userId: UUID)
 }

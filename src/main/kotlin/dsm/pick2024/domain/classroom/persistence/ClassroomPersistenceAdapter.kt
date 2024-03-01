@@ -8,6 +8,7 @@ import dsm.pick2024.domain.classroom.persistence.repository.ClassroomRepository
 import dsm.pick2024.domain.classroom.port.out.ClassroomPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
+import java.util.UUID
 
 @Component
 class ClassroomPersistenceAdapter(
@@ -19,15 +20,15 @@ class ClassroomPersistenceAdapter(
         classroomRepository.save(classroomMapper.toEntity(classroom))
     }
 
-    override fun deleteByUsername(username: String) {
-        classroomRepository.deleteByUsername(username)
+    override fun deleteByUserId(userId: UUID) {
+        classroomRepository.deleteByUserId(userId)
     }
 
-    override fun findByUsername(username: String) =
-        classroomRepository.findByUsername(username).let { classroomMapper.toDomain(it) }
+    override fun findByUserId(userId: UUID) =
+        classroomRepository.findByUserId(userId).let { classroomMapper.toDomain(it) }
 
-    override fun existsByUsername(username: String): Boolean? {
-        return classroomRepository.existsByUsername(username)
+    override fun existsByUserId(userId: UUID): Boolean? {
+        return classroomRepository.existsByUserId(userId)
     }
 
     override fun deleteAll() {

@@ -18,6 +18,8 @@ class QueryAllReasonApplicationService(
             .filter { it.status == Status.OK }
             .map { it ->
                 QueryApplicationReasonResponse(
+                    it.id!!,
+                    it.userId,
                     it.username,
                     it.startTime,
                     it.endTime,

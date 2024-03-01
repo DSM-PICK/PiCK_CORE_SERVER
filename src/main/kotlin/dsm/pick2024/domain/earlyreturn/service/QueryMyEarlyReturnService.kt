@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service
 
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByNamePort
@@ -29,7 +30,7 @@ class QueryMyEarlyReturnService(
             earlyReturn.classNum,
             earlyReturn.num,
             earlyReturn.image!!,
-            earlyReturn.type!!
+            type = Type.EARLY_RETURN
         )
     }
 }

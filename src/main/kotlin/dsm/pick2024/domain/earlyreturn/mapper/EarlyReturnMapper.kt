@@ -18,7 +18,6 @@ class EarlyReturnMapper {
             grade = grade,
             classNum = classNum,
             num = num,
-            type = type
         )
     }
 
@@ -33,7 +32,6 @@ class EarlyReturnMapper {
             date = date, grade = grade,
             classNum = classNum,
             num = num,
-            type = type
         )
     }
 }

@@ -9,6 +9,7 @@ import java.util.UUID
 
 data class Application(
     val id: UUID? = null,
+    val userId: UUID,
     val reason: String,
     val date: LocalDate,
     val startTime: LocalTime,
@@ -21,5 +22,4 @@ data class Application(
     val status: Status,
     val applicationStatus: ApplicationStatus? = null,
     val image: String? = null,
-    val type: Type? = null
 )

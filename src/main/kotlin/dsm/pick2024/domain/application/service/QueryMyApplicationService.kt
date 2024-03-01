@@ -4,6 +4,7 @@ import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.FindApplicationByNamePort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,11 +17,12 @@ class QueryMyApplicationService(
 
     @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {
-        val username = userFacadeUseCase.currentUser().name
-        val application = findApplicationByNamePort.findByUsername(username)
+        val user = userFacadeUseCase.currentUser()
+        val application = findApplicationByNamePort.findByUserId(user.id!!)
             ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
+            application.userId,
             application.username,
             application.teacherName!!,
             application.startTime,
@@ -30,7 +32,7 @@ class QueryMyApplicationService(
             application.classNum,
             application.num,
             application.image!!,
-            application.type!!
+            type = Type.APPLICATION
         )
     }
 }

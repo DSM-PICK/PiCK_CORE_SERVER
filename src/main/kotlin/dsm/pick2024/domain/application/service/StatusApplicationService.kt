@@ -63,7 +63,6 @@ class StatusApplicationService(
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN,
                 image = image.toString(),
-                type = Type.APPLICATION
             )
             applicationUpdate.add(updatedApplication)
 

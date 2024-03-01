@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
-    fun existsByUsername(username: String): Boolean
+    fun existsByUserId(username: String): Boolean
 
     fun saveAll(entity: Iterable<ApplicationJapEntity>)
 

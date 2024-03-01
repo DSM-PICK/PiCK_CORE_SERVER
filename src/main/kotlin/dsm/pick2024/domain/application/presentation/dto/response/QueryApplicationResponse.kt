@@ -5,6 +5,7 @@ import java.util.UUID
 
 data class QueryApplicationResponse(
     val id: UUID,
+    val userId: UUID,
     val username: String,
     val startTime: LocalTime,
     val endTime: LocalTime,

@@ -13,6 +13,8 @@ import javax.persistence.*
 class ApplicationJapEntity(
     id: UUID?,
 
+    val userId: UUID,
+
     @Column(name = "reason", nullable = false)
     val reason: String,
 
@@ -44,9 +46,6 @@ class ApplicationJapEntity(
 
     @Enumerated(value = EnumType.STRING)
     val applicationStatus: ApplicationStatus? = null,
-
-    @Enumerated(value = EnumType.STRING)
-    val type: Type? = null,
 
     val image: String? = null
 

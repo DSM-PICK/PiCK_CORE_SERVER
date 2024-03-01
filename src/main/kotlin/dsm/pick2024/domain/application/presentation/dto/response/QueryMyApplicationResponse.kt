@@ -2,8 +2,10 @@ package dsm.pick2024.domain.application.presentation.dto.response
 
 import dsm.pick2024.domain.applicationstory.enums.Type
 import java.time.LocalTime
+import java.util.UUID
 
 data class QueryMyApplicationResponse(
+    val userId: UUID,
     val username: String,
     val teacherName: String,
     val startTime: LocalTime,

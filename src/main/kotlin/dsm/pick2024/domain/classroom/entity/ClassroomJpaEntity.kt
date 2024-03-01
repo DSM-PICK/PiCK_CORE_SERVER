@@ -8,6 +8,8 @@ import javax.persistence.Entity
 @Entity(name = "tbl_classroom")
 class ClassroomJpaEntity(
     id: UUID?,
+
+    val userId: UUID,
     @Column(name = "classroom", nullable = false)
     val classroomName: String,
 
@@ -16,12 +18,12 @@ class ClassroomJpaEntity(
 
     val username: String,
 
-    val move: String,
-
     val grade: Int,
 
     @Column(name = "class_num")
     val classNum: Int,
 
-    val num: Int
+    val num: Int,
+
+    val people: Int = 0
 ) : BaseUUIDEntity(id)

@@ -19,7 +19,7 @@ class QueryFloorClassroomService(
                 QueryClassroomResponse(
                     it.classroomName,
                     it.username,
-                    it.move,
+                    move = "${it.grade}-${it.classNum}",
                     it.grade,
                     it.classNum,
                     it.num

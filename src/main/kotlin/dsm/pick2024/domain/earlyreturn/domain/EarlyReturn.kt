@@ -18,5 +18,4 @@ data class EarlyReturn(
     val num: Int,
     val teacherName: String? = null,
     val image: String? = null,
-    val type: Type? = null
 )

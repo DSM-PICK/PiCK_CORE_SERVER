@@ -22,7 +22,7 @@ class ApplicationMapper {
                 num = num,
                 applicationStatus = applicationStatus,
                 image = image,
-                type = type
+                userId = userId
             )
         }
 
@@ -42,7 +42,7 @@ class ApplicationMapper {
                 num = num,
                 applicationStatus = applicationStatus,
                 image = image,
-                type = type
+                userId = userId
             )
         }
 }

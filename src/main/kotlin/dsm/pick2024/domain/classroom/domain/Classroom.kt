@@ -4,11 +4,12 @@ import java.util.UUID
 
 data class Classroom(
     val id: UUID? = null,
+    val userId: UUID,
     val classroomName: String,
     val floor: Int,
     val username: String,
-    val move: String,
     val grade: Int,
     val classNum: Int,
-    val num: Int
+    val num: Int,
+    val people: Int
 )
