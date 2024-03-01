@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
-    fun existsByUserId(username: String): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
     fun saveAll(entity: Iterable<ApplicationJapEntity>)
 
@@ -20,7 +20,7 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
 
     fun findAll(): List<ApplicationJapEntity>
 
-    fun findByUsername(username: String): ApplicationJapEntity
+    fun findByUserId(userId: UUID): ApplicationJapEntity
 
     fun deleteAll()
 }

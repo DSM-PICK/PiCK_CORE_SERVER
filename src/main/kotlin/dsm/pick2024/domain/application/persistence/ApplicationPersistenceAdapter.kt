@@ -22,7 +22,7 @@ class ApplicationPersistenceAdapter(
         applicationRepository.saveAll(entities)
     }
 
-    override fun existsByUsername(username: String) = applicationRepository.existsByUsername(username)
+    override fun existsByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
     override fun findById(id: UUID) =
         applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
@@ -43,8 +43,8 @@ class ApplicationPersistenceAdapter(
     override fun findAll() =
         applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 
-    override fun findByUsername(username: String) =
-        applicationRepository.findByUsername(username).let { applicationMapper.toDomain(it) }
+    override fun findByUserId(userId: UUID) =
+        applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
 
     override fun save(application: Application) =
         applicationRepository.save(applicationMapper.toEntity(application))

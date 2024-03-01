@@ -20,7 +20,6 @@ class QueryAllOKApplicationService(
                 QueryOKApplicationResponse(
                     it.id!!,
                     it.username,
-                    it.startTime,
                     it.endTime,
                     it.grade,
                     it.classNum,
