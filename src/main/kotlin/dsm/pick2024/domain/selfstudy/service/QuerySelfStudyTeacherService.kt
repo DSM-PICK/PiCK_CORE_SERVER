@@ -6,6 +6,8 @@ import dsm.pick2024.domain.selfstudy.presentation.dto.response.QuerySelfStudyTea
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.Month
+import java.time.Year
 
 @Service
 class QuerySelfStudyTeacherService(
@@ -13,8 +15,8 @@ class QuerySelfStudyTeacherService(
 ) : QueryMonthSelfStudyTeacherUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryMonthSelfStudyTeacher(date: LocalDate) =
-        findByMonthSelfStudyTeacherPort.findByMonthSelfStudyTeacher(date)
+    override fun queryMonthSelfStudyTeacher(year: Year, month:  Month) =
+        findByMonthSelfStudyTeacherPort.findByMonthSelfStudyTeacher(year, month)
             .map {
                     it ->
                 QuerySelfStudyTeacherResponse(

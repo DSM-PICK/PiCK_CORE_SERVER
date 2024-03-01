@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
+import java.time.Month
+import java.time.Year
 
 @Tag(name = "selfStudy API")
 @RestController
@@ -43,6 +45,11 @@ class SelfStudyController(
 
     @Operation(summary = "한달 자습감독 선생님 조회")
     @GetMapping("/month")
-    fun queryMonthSelfStudyTeacher(date: LocalDate) =
-        querySelfStudyTeacherUseCase.queryMonthSelfStudyTeacher(date)
+    fun queryMonthSelfStudyTeacher(
+        @RequestParam(name = "year")
+        year: Year,
+        @RequestParam(name = "month")
+        month: Month
+    ) =
+        querySelfStudyTeacherUseCase.queryMonthSelfStudyTeacher(year, month)
 }
