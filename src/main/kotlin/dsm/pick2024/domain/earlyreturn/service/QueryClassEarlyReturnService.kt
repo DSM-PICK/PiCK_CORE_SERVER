@@ -22,7 +22,8 @@ class QueryClassEarlyReturnService(
                     it.startTime,
                     it.grade,
                     it.classNum,
-                    it.num
+                    it.num,
+                    it.reason
                 )
             }
 }
