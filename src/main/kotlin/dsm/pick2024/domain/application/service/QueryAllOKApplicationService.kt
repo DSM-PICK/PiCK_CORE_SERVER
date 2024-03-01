@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryAllOKApplicationService(
     private val queryAllApplicationPort: QueryAllApplicationPort
-): QueryAllOKApplicationUseCase {
+) : QueryAllOKApplicationUseCase {
 
     @Transactional(readOnly = true)
     override fun queryAllOKApplication() =

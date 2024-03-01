@@ -17,14 +17,14 @@ class QueryFloorEarlyReturnService(
         queryFloorEarlyReturnPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
             .map { it ->
-                    QueryEarlyReturnResponse(
-                        it.id!!,
-                        it.username,
-                        it.startTime,
-                        it.grade,
-                        it.classNum,
-                        it.num,
-                        it.reason
-                    )
+                QueryEarlyReturnResponse(
+                    it.id!!,
+                    it.username,
+                    it.startTime,
+                    it.grade,
+                    it.classNum,
+                    it.num,
+                    it.reason
+                )
             }
 }
