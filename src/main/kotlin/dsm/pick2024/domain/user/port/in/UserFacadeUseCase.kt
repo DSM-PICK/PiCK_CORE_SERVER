@@ -5,5 +5,5 @@ import dsm.pick2024.domain.user.domain.User
 interface UserFacadeUseCase {
     fun currentUser(): User
 
-    fun getUserByAccountId(accountId: String): User
+    fun getUserByName(name: String): User
 }
