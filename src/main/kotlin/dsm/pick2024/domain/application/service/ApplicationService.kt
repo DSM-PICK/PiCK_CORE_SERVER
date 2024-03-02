@@ -18,6 +18,7 @@ class ApplicationService(
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationUseCase {
+
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()

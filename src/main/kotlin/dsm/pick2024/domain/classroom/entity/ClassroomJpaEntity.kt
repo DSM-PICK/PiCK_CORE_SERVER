@@ -9,7 +9,9 @@ import javax.persistence.Entity
 class ClassroomJpaEntity(
     id: UUID?,
 
+    @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
+
     @Column(name = "classroom", nullable = false)
     val classroomName: String,
 

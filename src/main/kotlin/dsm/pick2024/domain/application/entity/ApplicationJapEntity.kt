@@ -12,6 +12,7 @@ import javax.persistence.*
 class ApplicationJapEntity(
     id: UUID?,
 
+    @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
 
     @Column(name = "reason", nullable = false)

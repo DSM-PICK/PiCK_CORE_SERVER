@@ -14,7 +14,8 @@ import javax.persistence.Enumerated
 class EarlyReturnJpaEntity(
     id: UUID?,
 
-    val userId: UUID,
+    @Column(columnDefinition = "BINARY(16)")
+    val userId: UUID?,
 
     @Column(name = "reason", nullable = false)
     val reason: String,
