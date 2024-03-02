@@ -6,7 +6,7 @@ import org.springframework.data.repository.Repository
 import java.util.*
 
 interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
-    fun existsByUsername(username: String): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
     fun findById(earlyReturnId: UUID): EarlyReturnJpaEntity
 
@@ -20,7 +20,7 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
 
     fun findAll(): List<EarlyReturnJpaEntity>
 
-    fun findByUsername(username: String): EarlyReturnJpaEntity
+    fun findByUserId(userId: UUID): EarlyReturnJpaEntity
 
     fun deleteAll()
 }

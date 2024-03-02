@@ -4,7 +4,7 @@ import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUsernamePort
+import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUserIdPort
 import dsm.pick2024.domain.earlyreturn.port.out.SaveEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -15,7 +15,7 @@ import java.time.LocalDate
 @Service
 class CreateEarlyReturnService(
     private val saveEarlyReturnPort: SaveEarlyReturnPort,
-    private val existsEarlyReturnByUsernamePort: ExistsEarlyReturnByUsernamePort,
+    private val existsEarlyReturnByUserIdPort: ExistsEarlyReturnByUserIdPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : CreateEarlyReturnUseCase {
 
@@ -23,7 +23,7 @@ class CreateEarlyReturnService(
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existsEarlyReturnByUsernamePort.existsByUsername(user.name) == true) {
+        if (existsEarlyReturnByUserIdPort.existsByUserId(user.id!!) == true) {
             throw AlreadyApplyingForEarlyReturnException
         }
 
@@ -36,7 +36,8 @@ class CreateEarlyReturnService(
                 date = LocalDate.now(),
                 grade = user.grade,
                 classNum = user.classNum,
-                num = user.num
+                num = user.num,
+                userId = user.id
             )
         )
     }

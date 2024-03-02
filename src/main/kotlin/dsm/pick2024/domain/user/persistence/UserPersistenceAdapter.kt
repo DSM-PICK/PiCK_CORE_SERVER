@@ -11,8 +11,6 @@ class UserPersistenceAdapter(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper
 ) : UserPort {
-    override fun findByName(name: String): User? =
-        userRepository.findByName(name)?.let { userMapper.toDomain(it) }
 
     override fun findByAccountId(accountId: String): User? =
         userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
