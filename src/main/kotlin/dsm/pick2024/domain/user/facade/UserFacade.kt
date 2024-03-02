@@ -6,7 +6,6 @@ import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.domain.user.port.out.FindByAccountIdPort
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
-import java.util.UUID
 
 @Component
 class UserFacade(
@@ -19,5 +18,5 @@ class UserFacade(
     }
 
     override fun getUserByAccountId(accountId: String) =
-        findByAccountIdPort.findByAccountId(accountId)?: throw UserNotFoundException
+        findByAccountIdPort.findByAccountId(accountId) ?: throw UserNotFoundException
 }

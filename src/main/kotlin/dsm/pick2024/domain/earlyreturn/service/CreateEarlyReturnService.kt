@@ -36,7 +36,8 @@ class CreateEarlyReturnService(
                 date = LocalDate.now(),
                 grade = user.grade,
                 classNum = user.classNum,
-                num = user.num
+                num = user.num,
+                userId = user.id
             )
         )
     }
