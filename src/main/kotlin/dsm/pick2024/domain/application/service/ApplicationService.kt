@@ -27,6 +27,7 @@ class ApplicationService(
             throw AlreadyApplyingForPicnicException
         }
 
+        val people = 0
         saveApplicationPort.save(
             Application(
                 username = user.name,
@@ -38,7 +39,8 @@ class ApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.id
+                userId = user.id,
+                people = people + 1
             )
         )
     }
