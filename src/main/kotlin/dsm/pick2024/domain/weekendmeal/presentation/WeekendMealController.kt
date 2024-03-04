@@ -4,6 +4,7 @@ import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
+import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryStatusResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
@@ -44,6 +45,7 @@ class WeekendMealController(
 
     @Operation(summary = "내 주말급식 신청상태 조회 API")
     @GetMapping("/my")
-    fun queryMyWeekendMealStatus() =
+    fun queryMyWeekendMealStatus(): QueryStatusResponse =
         queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()
+
 }
