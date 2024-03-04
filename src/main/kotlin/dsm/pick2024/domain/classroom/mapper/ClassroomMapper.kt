@@ -17,7 +17,6 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
             grade = grade,
             classNum = classNum,
             num = num,
-            people = people,
             userId = userId
         )
     }
@@ -31,7 +30,6 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
             grade = grade,
             classNum = classNum,
             num = num,
-            people = people,
             userId = userId
         )
     }

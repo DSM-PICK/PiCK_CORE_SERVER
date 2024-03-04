@@ -3,6 +3,7 @@ package dsm.pick2024.domain.application.service
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
+import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByNamePort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.application.presentation.dto.response.QuerySimpleMyApplicationResponse
@@ -10,12 +11,14 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalTime
 
 @Service
 @Transactional(readOnly = true)
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findApplicationByNamePort: FindApplicationByNamePort
+    private val findApplicationByNamePort: FindApplicationByNamePort,
+    private val deleteApplicationPort: DeleteApplicationPort
 ) : QueryMyApplicationUseCase {
 
     override fun queryMyApplication(): QueryMyApplicationResponse {
@@ -49,6 +52,10 @@ class QueryMyApplicationService(
 
         if (application.status != Status.OK) {
             throw RuntimeException()
+        }
+
+        if (application.endTime > LocalTime.now()) {
+            deleteApplicationPort.deleteById(application.id!!)
         }
 
         return QuerySimpleMyApplicationResponse(

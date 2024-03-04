@@ -10,6 +10,5 @@ data class Classroom(
     val username: String,
     val grade: Int,
     val classNum: Int,
-    val num: Int,
-    val people: Int
+    val num: Int
 )
