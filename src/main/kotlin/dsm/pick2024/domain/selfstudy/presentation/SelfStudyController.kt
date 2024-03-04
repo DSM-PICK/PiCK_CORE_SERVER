@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.selfstudy.presentation
 
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryDateSelfStudyUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryMonthSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryTodaySelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
@@ -7,8 +8,10 @@ import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfSt
 import dsm.pick2024.domain.selfstudy.service.ChangeSelfStudyTeacherService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 import java.time.Month
 import java.time.Year
 
@@ -19,7 +22,8 @@ class SelfStudyController(
     private val registrationSelfStudyTeacherUseCase: RegistrationSelfStudyTeacherUseCase,
     private val changeSelfStudyTeacherService: ChangeSelfStudyTeacherService,
     private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase,
-    private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase
+    private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase,
+    private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase
 ) {
 
     @Operation(summary = "자습감독 선생님 등록 API")
@@ -51,4 +55,13 @@ class SelfStudyController(
         month: Month
     ) =
         querySelfStudyTeacherUseCase.queryMonthSelfStudyTeacher(year, month)
+
+    @Operation(summary = "특정 날짜 자습감독 선생님 조회")
+    @GetMapping("/date")
+    fun queryDateSelfStudyTeacher(
+        @RequestParam(name = "date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        date: LocalDate
+    ) =
+        queryDateSelfStudyUseCase.queryDateSelfStudy(date)
 }

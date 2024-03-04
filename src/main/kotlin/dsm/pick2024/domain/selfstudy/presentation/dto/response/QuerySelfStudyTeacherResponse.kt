@@ -4,6 +4,6 @@ import java.time.LocalDate
 
 data class QuerySelfStudyTeacherResponse(
     val floor: Int,
-    var teacher: String,
+    val teacher: String,
     val date: LocalDate
 )
