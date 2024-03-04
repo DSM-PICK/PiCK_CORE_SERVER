@@ -4,4 +4,5 @@ interface WeekendMealPort :
     FindWeekendMealByUserIdPort,
     SaveWeekendMealPort,
     FindWeekendMealClassPort,
-    FindWeekendMealQuitClassPort
+    FindWeekendMealQuitClassPort,
+    ExistsByUserId

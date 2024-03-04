@@ -8,4 +8,6 @@ interface WeekendMealRepository : Repository<WeekendMealJpaEntity, UUID> {
     fun save(entity: WeekendMealJpaEntity)
 
     fun findByUserId(id: UUID): WeekendMealJpaEntity
+
+    fun existsByUserId(id: UUID): Boolean
 }

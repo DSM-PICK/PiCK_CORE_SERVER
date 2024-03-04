@@ -21,9 +21,12 @@ class WeekendMealPersistenceAdapter(
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
     }
 
-    override fun findByUserId(id: UUID?): WeekendMeal? {
-        return weekendMealRepository.findByUserId(id!!).let { weekendMealMapper.toDomain(it) }
-    }
+    override fun findByUserId(id: UUID) =
+         weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
+
+    override fun existsByUserId(id: UUID) =
+        weekendMealRepository.existsByUserId(id)
+
 
     override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
         jpaQueryFactory

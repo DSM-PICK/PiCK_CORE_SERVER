@@ -14,5 +14,5 @@ class QueryMyWeekendMealStatusService(
 
     @Transactional(readOnly = true)
     override fun queryMyWeekendMealStatus() =
-        findWeekendMealByUserIdPort.findByUserId(userFacade.currentUser().id)!!.status
+        findWeekendMealByUserIdPort.findByUserId(userFacade.currentUser().id!!).status
 }
