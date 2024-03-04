@@ -1,9 +1,6 @@
 package dsm.pick2024.domain.selfstudy.presentation
 
-import dsm.pick2024.domain.selfstudy.port.`in`.QueryDateSelfStudyUseCase
-import dsm.pick2024.domain.selfstudy.port.`in`.QueryMonthSelfStudyTeacherUseCase
-import dsm.pick2024.domain.selfstudy.port.`in`.QueryTodaySelfStudyTeacherUseCase
-import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.*
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import dsm.pick2024.domain.selfstudy.service.ChangeSelfStudyTeacherService
 import io.swagger.v3.oas.annotations.Operation
@@ -23,7 +20,8 @@ class SelfStudyController(
     private val changeSelfStudyTeacherService: ChangeSelfStudyTeacherService,
     private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase,
     private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase,
-    private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase
+    private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase,
+    private val queryMySelfStudyUseCase: QueryMySelfStudyUseCase
 ) {
 
     @Operation(summary = "자습감독 선생님 등록 API")
@@ -64,4 +62,9 @@ class SelfStudyController(
         date: LocalDate
     ) =
         queryDateSelfStudyUseCase.queryDateSelfStudy(date)
+
+    @Operation(summary = "어드민 자습감독 확인 API")
+    @GetMapping("admin")
+    fun queryMySelfStudy() =
+        queryMySelfStudyUseCase.queryMySelfStudy()
 }
