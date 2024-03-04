@@ -1,12 +1,10 @@
 package dsm.pick2024.domain.notice.entity
 
-import dsm.pick2024.domain.admin.entity.AdminJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDateTime
 import java.util.UUID
+import javax.persistence.Column
 import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
 
 @Entity(name = "tbl_notice")
 class NoticeJpaEntity(
@@ -18,8 +16,9 @@ class NoticeJpaEntity(
 
     val createAt: LocalDateTime,
 
-    @ManyToOne
-    @JoinColumn(name = "admin")
-    val admin: AdminJpaEntity
+    @Column(columnDefinition = "BINARY(16)")
+    val adminId: UUID,
+
+    val teacher: String
 
 ) : BaseUUIDEntity(id)
