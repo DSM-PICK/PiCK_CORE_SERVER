@@ -47,5 +47,4 @@ class WeekendMealController(
     @GetMapping("/my")
     fun queryMyWeekendMealStatus(): QueryStatusResponse =
         queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()
-
 }
