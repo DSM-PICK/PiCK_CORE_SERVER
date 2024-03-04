@@ -24,17 +24,18 @@ class UserMoveClassroomService(
         if (existsByUserIdPort.existsByUserId(user.id!!) == true) {
             throw AleadyApplyingMovementException
         }
-
-        val classroom = Classroom(
-            userId = user.id,
-            username = user.name,
-            classroomName = request.classroomName,
-            floor = request.floor,
-            grade = user.grade,
-            classNum = user.classNum,
-            num = user.num,
-            people = +1
+        val people = 0
+        classroomSavePort.save(
+            Classroom(
+                userId = user.id,
+                username = user.name,
+                classroomName = request.classroomName,
+                floor = request.floor,
+                grade = user.grade,
+                classNum = user.classNum,
+                num = user.num,
+                people = people + 1
+            )
         )
-        classroomSavePort.save(classroom)
     }
 }
