@@ -37,5 +37,4 @@ class WeekendMealService(
             weekendMealPort.save(newWeekendMeal)
         }
     }
-
 }
