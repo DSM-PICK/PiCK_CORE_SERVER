@@ -76,4 +76,9 @@ class ApplicationController(
     @GetMapping("/my")
     fun queryMyApplication() =
         queryMyApplicationUseCase.queryMyApplication()
+
+    @Operation(summary = "내 외출증 간편 조회 API")
+    @GetMapping("/simple")
+    fun querySimpleMyApplication() =
+        queryMyApplicationUseCase.querySimpleMyApplication()
 }
