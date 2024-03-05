@@ -9,4 +9,6 @@ interface QueryAllNoticeUseCase {
     fun queryAllSimpleNotice(): List<QuerySimpleAllNoticeResponse>
 
     fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse
+
+    fun queryTodayNotice(): List<QuerySimpleAllNoticeResponse>
 }

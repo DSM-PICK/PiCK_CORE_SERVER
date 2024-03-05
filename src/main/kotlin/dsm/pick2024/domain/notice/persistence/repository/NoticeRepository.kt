@@ -8,4 +8,6 @@ interface NoticeRepository : Repository<NoticeJpaEntity, UUID> {
     fun save(entity: NoticeJpaEntity)
 
     fun findById(id: UUID): NoticeJpaEntity
+
+    fun deleteById(id: UUID)
 }

@@ -2,6 +2,7 @@ package dsm.pick2024.domain.notice.service
 
 import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.FindByNoticeIdPort
+import dsm.pick2024.domain.notice.port.out.FindByTodayPort
 import dsm.pick2024.domain.notice.port.out.QueryNoticeAllPort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
@@ -13,7 +14,8 @@ import java.util.UUID
 @Transactional(readOnly = true)
 class QueryNoticeService(
     private val queryNoticeAllPort: QueryNoticeAllPort,
-    private val findByNoticeIdPort: FindByNoticeIdPort
+    private val findByNoticeIdPort: FindByNoticeIdPort,
+    private val findByTodayPort: FindByTodayPort
 ) : QueryAllNoticeUseCase {
 
     override fun queryAllSimpleNotice() =
@@ -35,4 +37,14 @@ class QueryNoticeService(
             notice.teacher
         )
     }
+
+    override fun queryTodayNotice() =
+        findByTodayPort.findByToday()
+            .map { it ->
+                QuerySimpleAllNoticeResponse(
+                    it.id!!,
+                    it.title,
+                    it.createAt
+                )
+            }
 }

@@ -4,7 +4,7 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.port.`in`.CreateNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.NoticeSavePort
-import dsm.pick2024.domain.notice.presentation.dto.request.CreateNoticeRequest
+import dsm.pick2024.domain.notice.presentation.dto.request.NoticeRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -16,7 +16,7 @@ class CreateNoticeService(
 ) : CreateNoticeUseCase {
 
     @Transactional
-    override fun createNotice(request: CreateNoticeRequest) {
+    override fun createNotice(request: NoticeRequest) {
         val admin = adminFacadeUseCase.currentUser()
         noticeSavePort.save(
             Notice(

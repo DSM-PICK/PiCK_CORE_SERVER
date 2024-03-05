@@ -1,6 +1,9 @@
 package dsm.pick2024.domain.notice.presentation.dto.request
 
-data class CreateNoticeRequest(
+import java.util.UUID
+
+data class ModifyNoticeRequest(
+    val id: UUID,
     val title: String,
     val content: String
 )
