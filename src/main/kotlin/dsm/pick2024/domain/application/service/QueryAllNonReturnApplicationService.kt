@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class QueryAllOKApplicationService(
+class QueryAllNonReturnApplicationService(
     private val queryAllApplicationPort: QueryAllApplicationPort,
 ) : QueryAllOKApplicationUseCase {
     @Transactional(readOnly = true)
