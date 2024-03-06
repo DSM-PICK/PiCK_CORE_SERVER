@@ -9,9 +9,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryAllOKEarlyReturnService(
-    private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort
+    private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort,
 ) : QueryAllOKEarlyReturnUseCase {
-
     @Transactional(readOnly = true)
     override fun queryAllOKEarlyReturn() =
         queryAllEarlyReturnPort.findAll()
@@ -23,7 +22,7 @@ class QueryAllOKEarlyReturnService(
                     it.startTime,
                     it.grade,
                     it.classNum,
-                    it.num
+                    it.num,
                 )
             }
 }
