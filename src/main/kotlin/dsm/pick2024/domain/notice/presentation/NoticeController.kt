@@ -33,7 +33,7 @@ class NoticeController(
     @Operation(summary = "공지 생성 API")
     @PostMapping("/create")
     @ResponseStatus(value = HttpStatus.CREATED)
-    fun createNotice(noticeRequest: NoticeRequest) =
+    fun createNotice(@RequestBody noticeRequest: NoticeRequest) =
         createNoticeUseCase.createNotice(noticeRequest)
 
     @Operation(summary = "공지 수정 API")
