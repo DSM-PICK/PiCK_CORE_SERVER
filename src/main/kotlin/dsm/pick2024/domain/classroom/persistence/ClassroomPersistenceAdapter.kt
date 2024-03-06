@@ -51,7 +51,7 @@ class ClassroomPersistenceAdapter(
                 )
             )
             .fetch()
-            .map { classroomMapper.toDomain(it)!! }
+            .map { classroomMapper.toDomain(it) }
 
     override fun queryGradeClassroom(grade: Int, classNum: Int) =
         jpaQueryFactory
