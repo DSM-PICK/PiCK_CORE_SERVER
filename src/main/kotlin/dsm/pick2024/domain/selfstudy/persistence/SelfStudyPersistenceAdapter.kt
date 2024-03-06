@@ -32,6 +32,10 @@ class SelfStudyPersistenceAdapter(
     override fun findByDate(date: LocalDate) =
         selfStudyRepository.findByDate(date).let { selfStudyMapper.toDomain(it) }
 
+    override fun saveAll(selfStudy: SelfStudy): List<SelfStudy> {
+        TODO("Not yet implemented")
+    }
+
     override fun findByTodaySelfStudy(): List<SelfStudy> {
         val today = LocalDate.now()
 
