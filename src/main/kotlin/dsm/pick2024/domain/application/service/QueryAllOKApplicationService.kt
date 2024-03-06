@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.port.`in`.QueryAllOKApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryOKApplicationResponse
@@ -9,13 +9,12 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryAllOKApplicationService(
-    private val queryAllApplicationPort: QueryAllApplicationPort
+    private val queryAllApplicationPort: QueryAllApplicationPort,
 ) : QueryAllOKApplicationUseCase {
-
     @Transactional(readOnly = true)
-    override fun queryAllOKApplication() =
+    override fun queryAllNonReturnApplication() =
         queryAllApplicationPort.findAll()
-            .filter { it.status == Status.OK }
+            .filter { it.applicationStatus == ApplicationStatus.NON_RETURN }
             .map { it ->
                 QueryOKApplicationResponse(
                     it.id!!,
@@ -23,7 +22,7 @@ class QueryAllOKApplicationService(
                     it.endTime,
                     it.grade,
                     it.classNum,
-                    it.num
+                    it.num,
                 )
             }
 }

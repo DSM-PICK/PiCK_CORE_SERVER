@@ -27,58 +27,54 @@ class ApplicationController(
     private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
-    private val queryMyApplicationUseCase: QueryMyApplicationUseCase
+    private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
+    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
 ) {
-
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     fun application(
-        @RequestBody applicationRequest: ApplicationRequest
-    ) =
-        applicationUseCase.application(applicationRequest)
+        @RequestBody applicationRequest: ApplicationRequest,
+    ) = applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락또는 거절 API")
     @PatchMapping("/status")
     fun statusOKApplication(
-        @RequestBody applicationStatusRequest: ApplicationStatusRequest
-    ) =
-        statusApplicationUseCase.statusApplication(applicationStatusRequest)
+        @RequestBody applicationStatusRequest: ApplicationStatusRequest,
+    ) = statusApplicationUseCase.statusApplication(applicationStatusRequest)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")
     fun statusApplicationChange(
-        @PathVariable(name = "applicationId") applicationId: UUID
-    ) =
-        statusApplicationChangeUseCase.statusApplicationChange(applicationId)
+        @PathVariable(name = "applicationId") applicationId: UUID,
+    ) = statusApplicationChangeUseCase.statusApplicationChange(applicationId)
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorApplication(
-        @RequestParam(name = "floor") floor: Int
-    ) =
-        queryFloorApplicationUseCase.queryFloorApplication(floor)
+        @RequestParam(name = "floor") floor: Int,
+    ) = queryFloorApplicationUseCase.queryFloorApplication(floor)
 
     @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
     fun queryClassApplication(
         @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "class_num") classNum: Int
-    ) =
-        queryClassApplicationUseCase.queryClassApplication(grade, classNum)
+        @RequestParam(name = "class_num") classNum: Int,
+    ) = queryClassApplicationUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
     @GetMapping("reason/all")
-    fun queryAllReasonApplication() =
-        queryAllReasonApplicationUseCase.queryAllReasonApplication()
+    fun queryAllReasonApplication() = queryAllReasonApplicationUseCase.queryAllReasonApplication()
 
     @Operation(summary = "내 외출증 조회 API")
     @GetMapping("/my")
-    fun queryMyApplication() =
-        queryMyApplicationUseCase.queryMyApplication()
+    fun queryMyApplication() = queryMyApplicationUseCase.queryMyApplication()
 
     @Operation(summary = "내 외출증 간편 조회 API")
     @GetMapping("/simple")
-    fun querySimpleMyApplication() =
-        queryMyApplicationUseCase.querySimpleMyApplication()
+    fun querySimpleMyApplication() = queryMyApplicationUseCase.querySimpleMyApplication()
+
+    @Operation(summary = "외출중인 학생 조회 API")
+    @GetMapping("/non-return")
+    fun queryNonReturnApplication() = queryAllOKApplicationUseCase.queryAllNonReturnApplication()
 }
