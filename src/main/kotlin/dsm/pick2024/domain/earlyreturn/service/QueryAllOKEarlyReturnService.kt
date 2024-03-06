@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 class QueryAllOKEarlyReturnService(
     private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort
 ) : QueryAllOKEarlyReturnUseCase {
-
     @Transactional(readOnly = true)
     override fun queryAllOKEarlyReturn() =
         queryAllEarlyReturnPort.findAll()
