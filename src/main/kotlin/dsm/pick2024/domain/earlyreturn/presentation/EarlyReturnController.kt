@@ -19,32 +19,32 @@ class EarlyReturnController(
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
     private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase,
-    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase,
+    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase
 ) {
     @Operation(summary = "조기귀가 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/create")
     fun createEarlyReturn(
-        @RequestBody createEarlyReturnRequest: CreateEarlyReturnRequest,
+        @RequestBody createEarlyReturnRequest: CreateEarlyReturnRequest
     ) = createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
     @Operation(summary = "조기귀가 신청 수락또는 거절 API")
     @PatchMapping("/status")
     fun statusNOEarlyReturn(
-        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest,
+        @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest
     ) = statusEarlyReturnUseCase.statusEarlyReturn(statusEarlyReturnRequest)
 
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")
     fun queryClassEarlyReturn(
         @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "class_num") classNum: Int,
+        @RequestParam(name = "class_num") classNum: Int
     ) = queryClassEarlyReturnUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "층별로 조기귀가 신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorEarlyReturn(
-        @RequestParam(name = "floor") floor: Int,
+        @RequestParam(name = "floor") floor: Int
     ) = queryFloorEarlyReturnUseCase.queryFloorApplication(floor)
 
     @Operation(summary = "조기귀가 신청자 사유 전체확인 API")

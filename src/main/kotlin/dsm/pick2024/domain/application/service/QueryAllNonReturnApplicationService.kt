@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryAllNonReturnApplicationService(
-    private val queryAllApplicationPort: QueryAllApplicationPort,
+    private val queryAllApplicationPort: QueryAllApplicationPort
 ) : QueryAllOKApplicationUseCase {
     @Transactional(readOnly = true)
     override fun queryAllNonReturnApplication() =
@@ -22,7 +22,7 @@ class QueryAllNonReturnApplicationService(
                     it.endTime,
                     it.grade,
                     it.classNum,
-                    it.num,
+                    it.num
                 )
             }
 }

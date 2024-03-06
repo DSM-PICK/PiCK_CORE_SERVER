@@ -28,38 +28,38 @@ class ApplicationController(
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
-    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
+    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     fun application(
-        @RequestBody applicationRequest: ApplicationRequest,
+        @RequestBody applicationRequest: ApplicationRequest
     ) = applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락또는 거절 API")
     @PatchMapping("/status")
     fun statusOKApplication(
-        @RequestBody applicationStatusRequest: ApplicationStatusRequest,
+        @RequestBody applicationStatusRequest: ApplicationStatusRequest
     ) = statusApplicationUseCase.statusApplication(applicationStatusRequest)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/change/{applicationId}")
     fun statusApplicationChange(
-        @PathVariable(name = "applicationId") applicationId: UUID,
+        @PathVariable(name = "applicationId") applicationId: UUID
     ) = statusApplicationChangeUseCase.statusApplicationChange(applicationId)
 
     @Operation(summary = "층별로 외출신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorApplication(
-        @RequestParam(name = "floor") floor: Int,
+        @RequestParam(name = "floor") floor: Int
     ) = queryFloorApplicationUseCase.queryFloorApplication(floor)
 
     @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
     fun queryClassApplication(
         @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "class_num") classNum: Int,
+        @RequestParam(name = "class_num") classNum: Int
     ) = queryClassApplicationUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
