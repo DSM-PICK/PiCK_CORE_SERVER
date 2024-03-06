@@ -46,10 +46,15 @@ class NoticeController(
     fun deleteNotice(@PathVariable(name = "noticeId") id: UUID) =
         deleteNoticeUseCase.deleteNotice(id)
 
-    @Operation(summary = "공지 제목 조회 API")
-    @GetMapping("/title/{noticeId}")
-    fun queryTitleNotice(@PathVariable noticeId: UUID) =
+    @Operation(summary = "공지 간편 조회 API")
+    @GetMapping("/simple")
+    fun queryTitleNotice() =
         queryAllNoticeUseCase.queryAllSimpleNotice()
+
+    @Operation(summary = "공지 상세 조회 API")
+    @GetMapping("/{noticeId}")
+    fun queryDetailNotice(@PathVariable noticeId: UUID) =
+        queryAllNoticeUseCase.queryAllNotice(noticeId)
 
     @Operation(summary = "오늘 공지 조회 API")
     @GetMapping("/today")
