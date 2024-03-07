@@ -28,7 +28,7 @@ class SelfStudyController(
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/register")
     fun selfStudyTeacherRegister(
-        @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
+        @RequestBody registrationSelfStudyTeacherRequest: List<RegistrationSelfStudyTeacherRequest>
     ) =
         registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
