@@ -9,5 +9,5 @@ data class QueryWeekendMealResponse(
     val status: Status,
     val grade: Int,
     val classNum: Int,
-    val num: Int,
+    val num: Int
 )

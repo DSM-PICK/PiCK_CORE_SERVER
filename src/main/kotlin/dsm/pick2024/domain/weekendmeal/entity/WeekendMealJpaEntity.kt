@@ -18,5 +18,5 @@ class WeekendMealJpaEntity(
     val classNum: Int,
     val num: Int,
     @Enumerated(value = EnumType.STRING)
-    val status: Status,
+    val status: Status
 ) : BaseUUIDEntity(id)

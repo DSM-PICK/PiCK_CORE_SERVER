@@ -10,5 +10,5 @@ data class WeekendMeal(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val status: Status,
+    val status: Status
 )
