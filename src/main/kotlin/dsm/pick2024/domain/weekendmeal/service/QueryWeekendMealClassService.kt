@@ -11,32 +11,37 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class QueryWeekendMealClassService(
     private val findWeekendMealClassPort: FindWeekendMealClassPort,
-    private val findWeekendMealQuitClassPort: FindWeekendMealQuitClassPort
+    private val findWeekendMealQuitClassPort: FindWeekendMealQuitClassPort,
 ) : QueryWeekendMealClassUseCase {
+    override fun queryWeekendMealClass(
+        grade: Int,
+        classNum: Int,
+    ) = findWeekendMealClassPort.findByGradeAndClassNum(grade, classNum)
+        .map {
+                it ->
+            QueryWeekendMealResponse(
+                it.id!!,
+                it.username,
+                it.status,
+                it.grade,
+                it.classNum,
+                it.num,
+            )
+        }
 
-    override fun queryWeekendMealClass(grade: Int, classNum: Int) =
-        findWeekendMealClassPort.findByGradeAndClassNum(grade, classNum)
-            .map {
-                    it ->
-                QueryWeekendMealResponse(
-                    it.id!!,
-                    it.username,
-                    it.status,
-                    it.grade,
-                    it.classNum
-                )
-            }
-
-    override fun queryWeekendMealQuitClass(grade: Int, classNum: Int) =
-        findWeekendMealQuitClassPort.findQuitByGradeAndClassNum(grade, classNum)
-            .map {
-                    it ->
-                QueryWeekendMealResponse(
-                    it.id!!,
-                    it.username,
-                    it.status,
-                    it.grade,
-                    it.classNum
-                )
-            }
+    override fun queryWeekendMealQuitClass(
+        grade: Int,
+        classNum: Int,
+    ) = findWeekendMealQuitClassPort.findQuitByGradeAndClassNum(grade, classNum)
+        .map {
+                it ->
+            QueryWeekendMealResponse(
+                it.id!!,
+                it.username,
+                it.status,
+                it.grade,
+                it.classNum,
+                it.num,
+            )
+        }
 }

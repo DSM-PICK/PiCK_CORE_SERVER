@@ -9,5 +9,6 @@ data class WeekendMeal(
     val username: String,
     val grade: Int,
     val classNum: Int,
-    val status: Status
+    val num: Int,
+    val status: Status,
 )

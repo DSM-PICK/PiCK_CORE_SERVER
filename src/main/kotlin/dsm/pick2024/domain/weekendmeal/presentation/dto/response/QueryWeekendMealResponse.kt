@@ -8,5 +8,6 @@ data class QueryWeekendMealResponse(
     val name: String,
     val status: Status,
     val grade: Int,
-    val classNum: Int
+    val classNum: Int,
+    val num: Int,
 )
