@@ -16,19 +16,19 @@ class RegistrationSelfStudyTeacherService(
 
     @Transactional
     override fun registrationSelfStudyTeacher(request: List<RegistrationSelfStudyTeacherRequest>) {
-
         val teacher = mutableListOf<SelfStudy>()
 
         request.forEach {
-            requests ->
-            if (existsByDateAndFloor.existsByDateAndFloor(requests.date, requests.floor) == true)
+                requests ->
+            if (existsByDateAndFloor.existsByDateAndFloor(requests.date, requests.floor) == true) {
                 throw RuntimeException("자습 감독 선생님이 이미 등록되어 있습니다.")
+            }
 
             teacher.add(
                 SelfStudy(
-                date = requests.date,
-                floor = requests.floor,
-                teacher = requests.teacher
+                    date = requests.date,
+                    floor = requests.floor,
+                    teacher = requests.teacher
                 )
             )
         }

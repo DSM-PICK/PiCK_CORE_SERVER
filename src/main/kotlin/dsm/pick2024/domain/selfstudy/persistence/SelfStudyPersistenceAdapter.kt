@@ -32,7 +32,7 @@ class SelfStudyPersistenceAdapter(
     override fun findByDate(date: LocalDate) =
         selfStudyRepository.findByDate(date).let { selfStudyMapper.toDomain(it) }
 
-    override fun saveAll(selfStudy: List<SelfStudy>){
+    override fun saveAll(selfStudy: List<SelfStudy>) {
         val entities = selfStudy.map { selfStudyMapper.toEntity(it) }
         selfStudyRepository.saveAll(entities)
     }
