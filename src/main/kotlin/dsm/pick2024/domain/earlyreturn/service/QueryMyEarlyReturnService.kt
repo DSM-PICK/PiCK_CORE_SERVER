@@ -29,7 +29,7 @@ class QueryMyEarlyReturnService(
             earlyReturn.grade,
             earlyReturn.classNum,
             earlyReturn.num,
-            earlyReturn.image!!,
+            earlyReturn.image!!.toByteArray(),
             type = Type.EARLY_RETURN
         )
     }
