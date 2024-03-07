@@ -76,6 +76,8 @@ dependencies {
     implementation(Dependencies.ZXING_CORE)
 
     implementation(Dependencies.AWS)
+
+    implementation("org.springframework.boot:spring-boot-starter")
 }
 
 tasks.withType<KotlinCompile> {

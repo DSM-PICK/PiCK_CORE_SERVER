@@ -1,6 +1,7 @@
 package dsm.pick2024.infrastructure.feign.client
 
 import dsm.pick2024.infrastructure.feign.client.property.NeisFeignProperty
+import dsm.pick2024.infrastructure.feign.client.response.ScheduleResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -26,7 +27,7 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.PAGE_SIZE) pageSize: Int,
         @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
         @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String
-    ): String
+    ): ScheduleResponse
 
     @GetMapping("/hisTimetable")
     fun hisTimetable(
