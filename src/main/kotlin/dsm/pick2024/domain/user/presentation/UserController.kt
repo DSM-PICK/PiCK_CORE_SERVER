@@ -1,9 +1,6 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.user.port.`in`.LoginUseCase
-import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
-import dsm.pick2024.domain.user.port.`in`.QueryUserSimpleInfoUseCase
-import dsm.pick2024.domain.user.port.`in`.UserTokenRefreshUseCase
+import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -23,7 +20,8 @@ class UserController(
     private val loginUseCase: LoginUseCase,
     private val userTokenRefreshUseCase: UserTokenRefreshUseCase,
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
-    private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase
+    private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
+    private val queryUserAllUseCase: QueryUserAllUseCase
 ) {
 
     @Operation(summary = "유저 로그인 API")
@@ -45,4 +43,9 @@ class UserController(
     @GetMapping("/details")
     fun queryUserDetailsInfo() =
         queryUserDetailsInfoUseCase.queryUserDetailsInfo()
+
+    @Operation(summary = "유저 전체 불러오기 API")
+    @GetMapping("/all")
+    fun queryUserAll() =
+        queryUserAllUseCase.queryUserAll()
 }
