@@ -11,6 +11,7 @@ import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.ZoneId
 
 @Service
 class ApplicationService(
@@ -34,7 +35,7 @@ class ApplicationService(
                 startTime = request.startTime,
                 endTime = request.endTime,
                 status = Status.QUIET,
-                date = LocalDate.now(),
+                date = LocalDate.now(ZoneId.of("Asia/Seoul")),
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,

@@ -8,6 +8,7 @@ import dsm.pick2024.domain.notice.presentation.dto.request.NoticeRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Service
 class CreateNoticeService(
@@ -22,7 +23,7 @@ class CreateNoticeService(
             Notice(
                 adminId = admin.id!!,
                 teacher = admin.name,
-                createAt = LocalDateTime.now(),
+                createAt = LocalDateTime.now(ZoneId.of("Asia/Seoul")),
                 title = request.title,
                 content = request.content
             )
