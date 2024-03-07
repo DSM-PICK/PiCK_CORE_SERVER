@@ -13,9 +13,6 @@ class ScheduleJpaEntity(
     @Column(name = "event_name")
     val eventName: String,
 
-    @Column(name = "event_content")
-    val eventContent: String,
-
     @Column(name = "is_grade_1_event")
     val isGrade1Event: Boolean,
 
