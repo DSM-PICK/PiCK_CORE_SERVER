@@ -8,9 +8,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryAfterSchoolStudentAllService(
-    private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort
+    private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort,
 ) : QueryAfterSchoolStudentAllUseCase {
-
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =
         queryAfterSchoolStudentAllPort.findByAll()
@@ -21,7 +20,9 @@ class QueryAfterSchoolStudentAllService(
                     it.classNum,
                     it.num,
                     it.name,
-                    it.status
+                    it.status1,
+                    it.status2,
+                    it.status3
                 )
             }
 }
