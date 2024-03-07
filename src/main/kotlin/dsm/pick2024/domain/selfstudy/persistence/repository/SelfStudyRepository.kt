@@ -9,7 +9,7 @@ interface SelfStudyRepository : Repository<SelfStudyJpaEntity, UUID> {
 
     fun save(entity: SelfStudyJpaEntity): SelfStudyJpaEntity
 
-    fun saveAll(entity: List<SelfStudyJpaEntity>)
+    fun saveAll(entity: Iterable<SelfStudyJpaEntity>)
 
     fun findByDateAndFloor(date: LocalDate, floor: Int): SelfStudyJpaEntity
 
