@@ -27,13 +27,15 @@ class WeekendMealService(
             val updatedWeekendMeal = weekendMeal.copy(status = status)
             weekendMealPort.save(updatedWeekendMeal)
         } else {
-            val newWeekendMeal = WeekendMeal(
-                userId = user.id,
-                grade = user.grade,
-                classNum = user.classNum,
-                username = user.name,
-                status = status
-            )
+            val newWeekendMeal =
+                WeekendMeal(
+                    userId = user.id,
+                    grade = user.grade,
+                    classNum = user.classNum,
+                    num = user.num,
+                    username = user.name,
+                    status = status
+                )
             weekendMealPort.save(newWeekendMeal)
         }
     }
