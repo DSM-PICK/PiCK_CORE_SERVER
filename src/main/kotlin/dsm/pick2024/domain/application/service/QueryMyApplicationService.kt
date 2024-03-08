@@ -12,6 +12,7 @@ import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalTime
+import java.time.ZoneId
 
 @Service
 @Transactional(readOnly = true)
@@ -54,7 +55,7 @@ class QueryMyApplicationService(
             throw RuntimeException()
         }
 
-        if (application.endTime > LocalTime.now()) {
+        if (application.endTime > LocalTime.now(ZoneId.of("Asia/Seoul"))) {
             deleteApplicationPort.deleteById(application.id!!)
         }
 
