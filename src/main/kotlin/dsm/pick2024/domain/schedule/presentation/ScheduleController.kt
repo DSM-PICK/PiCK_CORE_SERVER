@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.schedule.presentation
 
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +17,7 @@ class ScheduleController(
     private val scheduleMonthUseCase: ScheduleMonthUseCase
 ) {
 
+    @Operation(summary = "월 별로 학사일정조회 api")
     @GetMapping("/month")
     fun scheduleMonth(
         @RequestParam(name = "year") year: Year,
