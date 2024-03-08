@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.schedule.psersistence.repository
+package dsm.pick2024.domain.schedule.persistence.repository
 
 import dsm.pick2024.domain.schedule.entity.ScheduleJpaEntity
 import org.springframework.data.repository.Repository
