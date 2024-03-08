@@ -13,7 +13,7 @@ class ScheduleService(
     private val deleteAllApplicationPort: DeleteAllApplicationPort
 ) {
 
-    @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 * * * * *", zone = "Asia/Seoul")
     fun deleteTable() {
         deleteAllClassRoomPort.deleteAll()
         deleteAllEarlyReturnPort.deleteAll()
