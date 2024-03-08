@@ -2,7 +2,6 @@ package dsm.pick2024.domain.schedule.entity
 
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
-import java.util.Date
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity

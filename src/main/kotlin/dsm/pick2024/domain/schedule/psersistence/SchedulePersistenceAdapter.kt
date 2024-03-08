@@ -13,7 +13,7 @@ class SchedulePersistenceAdapter(
     private val scheduleMapper: ScheduleMapper,
 //  private val scheduleRepository: ScheduleRepository,
     private val jpaQueryFactory: JPAQueryFactory
-): SchedulePort {
+) : SchedulePort {
 
     override fun scheduleToday() =
         jpaQueryFactory
@@ -21,5 +21,4 @@ class SchedulePersistenceAdapter(
             .where(QScheduleJpaEntity.scheduleJpaEntity.date.eq(LocalDate.now(ZoneId.of("Asia/Seoul"))))
             .fetch()
             .map { scheduleMapper.toDomain(it) }
-
 }
