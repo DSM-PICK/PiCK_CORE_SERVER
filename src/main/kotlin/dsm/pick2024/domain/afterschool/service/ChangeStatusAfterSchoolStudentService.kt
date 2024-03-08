@@ -17,7 +17,7 @@ class ChangeStatusAfterSchoolStudentService(
     override fun changeStatusAfterSchoolStudent(request: List<ChangeAfterSchoolStatusRequest>) {
         val updates =
             request.map { changeRequest ->
-                val student = findAfterSchoolStudentByIdPort.findById(changeRequest.id)
+                val student = findAfterSchoolStudentByIdPort.findById(changeRequest.id) ?: throw RuntimeException()
 
                 val new = changeRequest.statusList
                 student!!.copy(
