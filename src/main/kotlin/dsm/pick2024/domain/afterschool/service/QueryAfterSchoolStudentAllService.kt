@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryAfterSchoolStudentAllService(
-    private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort,
+    private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort
 ) : QueryAfterSchoolStudentAllUseCase {
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =

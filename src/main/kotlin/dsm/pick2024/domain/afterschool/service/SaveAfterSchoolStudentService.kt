@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class SaveAfterSchoolStudentService(
     private val saveAllAfetSchoolStudentPort: SaveAllAfetSchoolStudentPort,
-    private val userFacadeUseCase: UserFacadeUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase
 ) : SaveAfterSchoolStudentUseCase {
     @Transactional
     override fun saveAfterSchoolStudentUseCase(request: List<SaveAfterSchoolStudentRequest>) {

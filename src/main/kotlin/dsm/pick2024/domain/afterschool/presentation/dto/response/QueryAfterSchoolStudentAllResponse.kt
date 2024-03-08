@@ -9,5 +9,5 @@ data class QueryAfterSchoolStudentAllResponse(
     val name: String,
     val status1: Status,
     val status2: Status,
-    val status3: Status,
+    val status3: Status
 )

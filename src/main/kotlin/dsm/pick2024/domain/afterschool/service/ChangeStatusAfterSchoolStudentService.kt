@@ -11,7 +11,7 @@ import kotlin.collections.List
 @Service
 class ChangeStatusAfterSchoolStudentService(
     private val saveAllAfetSchoolStudentPort: SaveAllAfetSchoolStudentPort,
-    private val findAfterSchoolStudentByIdPort: FindAfterSchoolStudentByIdPort,
+    private val findAfterSchoolStudentByIdPort: FindAfterSchoolStudentByIdPort
 ) : ChangeStatusAfterSchoolStudentUseCase {
     @Transactional
     override fun changeStatusAfterSchoolStudent(request: List<ChangeAfterSchoolStatusRequest>) {
@@ -23,7 +23,7 @@ class ChangeStatusAfterSchoolStudentService(
                 student!!.copy(
                     status1 = new.getOrElse(0) { student.status1 },
                     status2 = new.getOrElse(1) { student.status2 },
-                    status3 = new.getOrElse(2) { student.status3 },
+                    status3 = new.getOrElse(2) { student.status3 }
                 )
             }
 
