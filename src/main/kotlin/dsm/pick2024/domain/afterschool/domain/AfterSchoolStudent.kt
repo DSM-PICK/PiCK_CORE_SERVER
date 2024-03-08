@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.afterschool.domain
 
-import dsm.pick2024.domain.afterschool.enum.Status
+import dsm.pick2024.domain.afterschool.enums.Status
 import java.util.UUID
 
 data class AfterSchoolStudent(
@@ -9,5 +9,7 @@ data class AfterSchoolStudent(
     val classNum: Int,
     val num: Int,
     val name: String,
-    val status: Status
+    val status1: Status,
+    val status2: Status,
+    val status3: Status
 )

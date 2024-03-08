@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.afterschool.entity
 
-import dsm.pick2024.domain.afterschool.enum.Status
+import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
 import javax.persistence.Column
@@ -26,5 +26,11 @@ class AfterSchoolStudentJpaEntity(
     val num: Int,
 
     @Enumerated(value = EnumType.STRING)
-    val status: Status
+    val status1: Status,
+
+    @Enumerated(value = EnumType.STRING)
+    val status2: Status,
+
+    @Enumerated(value = EnumType.STRING)
+    val status3: Status
 ) : BaseUUIDEntity(id)
