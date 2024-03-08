@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.schedule.entity
 
 import dsm.pick2024.global.base.BaseUUIDEntity
+import java.time.LocalDate
 import java.util.Date
 import java.util.UUID
 import javax.persistence.Column
@@ -23,5 +24,5 @@ class ScheduleJpaEntity(
     val isGrade3Event: Boolean,
 
     @Column(name = "event_date")
-    val date: Date
+    val date: LocalDate
 ) : BaseUUIDEntity(id)

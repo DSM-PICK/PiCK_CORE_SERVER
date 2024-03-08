@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.schedule.domain
 
+import java.time.LocalDate
 import java.util.*
 
 data class Schedule (
@@ -8,5 +9,5 @@ data class Schedule (
     val isGrade1Event: Boolean,
     val isGrade2Event: Boolean,
     val isGrade3Event: Boolean,
-    val date: Date
+    val date: LocalDate
 )
