@@ -11,9 +11,6 @@ class ScheduleMapper {
             ScheduleJpaEntity(
                 id = id!!,
                 eventName = eventName,
-                isGrade1Event = isGrade1Event,
-                isGrade2Event = isGrade2Event,
-                isGrade3Event = isGrade3Event,
                 date = date
             )
         }
@@ -23,9 +20,6 @@ class ScheduleMapper {
             Schedule(
                 id = id!!,
                 eventName = eventName,
-                isGrade1Event = isGrade1Event,
-                isGrade2Event = isGrade2Event,
-                isGrade3Event = isGrade3Event,
                 date = date
             )
         }

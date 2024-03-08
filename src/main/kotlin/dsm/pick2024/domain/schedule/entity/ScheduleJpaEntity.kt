@@ -14,15 +14,6 @@ class ScheduleJpaEntity(
     @Column(name = "event_name")
     val eventName: String,
 
-    @Column(name = "is_grade_1_event")
-    val isGrade1Event: Boolean,
-
-    @Column(name = "is_grade_2_event")
-    val isGrade2Event: Boolean,
-
-    @Column(name = "is_grade_3_event")
-    val isGrade3Event: Boolean,
-
     @Column(name = "event_date")
     val date: LocalDate
 ) : BaseUUIDEntity(id)
