@@ -53,3 +53,4 @@ jobs:
                       REDIS_PORT=${{ secrets.REDIS_PORT }}
                       DAE_URL=${{ secrets.DAE_URL }}
                       NEIS_URL=${{ secrets.NEIS_URL }}
+                      DSM_LOGIN=${{ secrets.DSM_LOGIN }}

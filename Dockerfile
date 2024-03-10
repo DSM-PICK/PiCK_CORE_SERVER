@@ -39,6 +39,9 @@ ENV NEIS_URL ${NEIS_URL}
 ARG DAE_URL
 ENV DAE_URL ${DAE_URL}
 
+ARG DSM_LOGIN
+ENV DSM_LOGIN ${DSM_LOGIN}
+
 
 ARG JAR_FILE=./build/libs/*.jar
 COPY ${JAR_FILE} application.jar
