@@ -7,7 +7,6 @@ spring:
         username: ${DB_USERNAME}
         password: ${DB_PASSWORD}
         hikari:
-
             maxLifetime: 580000
     jpa:
         hibernate:
@@ -41,3 +40,4 @@ server:
 url:
     neis: ${NEIS_URL}
     daedongyeojido: ${DAE_URL}
+    dsmlogin: ${DSM_LOGIN}
