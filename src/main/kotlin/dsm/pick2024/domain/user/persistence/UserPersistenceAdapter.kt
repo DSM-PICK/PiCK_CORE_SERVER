@@ -20,4 +20,11 @@ class UserPersistenceAdapter(
 
     override fun userAll() =
         userRepository.findAll().map { userMapper.toDomain(it) }
+
+    override fun existsByAccountId(accountId: String) =
+        userRepository.existsByAccountId(accountId)
+
+    override fun save(user: User) {
+        userRepository.save(userMapper.toEntity(user))
+    }
 }
