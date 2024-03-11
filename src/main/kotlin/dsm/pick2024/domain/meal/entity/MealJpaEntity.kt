@@ -14,12 +14,12 @@ class MealJpaEntity(
     val mealDate: LocalDate,
 
     @Column(columnDefinition = "VARCHAR(255)")
-    val breakfast: String,
+    val breakfast: String?,
 
     @Column(columnDefinition = "VARCHAR(255)")
-    val lunch: String,
+    val lunch: String?,
 
     @Column(columnDefinition = "VARCHAR(255)")
-    val dinner: String
+    val dinner: String?
 
 ) : BaseUUIDEntity(id)

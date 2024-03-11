@@ -77,6 +77,8 @@ dependencies {
 
     implementation(Dependencies.AWS)
 
+    implementation(Dependencies.GSON)
+
     implementation("org.springframework.boot:spring-boot-starter")
 }
 

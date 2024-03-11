@@ -10,4 +10,5 @@ object DependencyVersions {
     const val QUERYDSL = "5.0.0"
     const val ZXING = "3.5.3"
     const val AWS = "1.12.281"
+    const val GSON = "2.8.7"
 }

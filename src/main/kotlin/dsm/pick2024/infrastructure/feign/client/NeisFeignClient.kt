@@ -14,8 +14,10 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.TYPE) type: String,
         @RequestParam(name = NeisFeignProperty.PAGE_INDEX) pageIndex: Int,
         @RequestParam(name = NeisFeignProperty.PAGE_SIZE) pageSize: Int,
-        @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
-        @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String
+        @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE) sdSchoolCode: String,
+        @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String,
+        @RequestParam(name = NeisFeignProperty.STARTED_YMD) startedYmd: String,
+        @RequestParam(name = NeisFeignProperty.ENDED_YMD) endedYmd: String
     ): String
 
     @GetMapping("/hisTimetable")
