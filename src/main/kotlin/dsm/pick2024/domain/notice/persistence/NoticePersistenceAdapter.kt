@@ -7,7 +7,8 @@ import dsm.pick2024.domain.notice.mapper.NoticeMapper
 import dsm.pick2024.domain.notice.persistence.repository.NoticeRepository
 import dsm.pick2024.domain.notice.port.out.NoticePort
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
+import java.time.LocalDate
+import java.time.ZoneId
 import java.util.*
 
 @Component
@@ -27,7 +28,7 @@ class NoticePersistenceAdapter(
         noticeRepository.deleteById(id)
 
     override fun findByToday(): List<Notice> {
-        val today = LocalDateTime.now()
+        val today = LocalDate.now(ZoneId.of("Asia/Seoul"))
 
         return jpaQueryFactory
             .selectFrom(QNoticeJpaEntity.noticeJpaEntity)

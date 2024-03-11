@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.notice.presentation.dto.response
 
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 data class QueryAllNoticeResponse(
     val title: String,
     val content: String,
-    val createAt: LocalDateTime,
+    val createAt: LocalDate,
     val teacher: String
 )

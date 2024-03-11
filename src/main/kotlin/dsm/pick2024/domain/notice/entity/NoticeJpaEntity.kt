@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.notice.entity
 
 import dsm.pick2024.global.base.BaseUUIDEntity
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -14,7 +14,7 @@ class NoticeJpaEntity(
 
     val content: String,
 
-    val createAt: LocalDateTime,
+    val createAt: LocalDate,
 
     @Column(columnDefinition = "BINARY(16)")
     val adminId: UUID,
