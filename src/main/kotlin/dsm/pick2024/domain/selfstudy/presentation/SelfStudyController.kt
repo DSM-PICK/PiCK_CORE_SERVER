@@ -64,7 +64,7 @@ class SelfStudyController(
         queryDateSelfStudyUseCase.queryDateSelfStudy(date)
 
     @Operation(summary = "어드민 자습감독 확인 API")
-    @GetMapping("admin")
+    @GetMapping("/admin")
     fun queryMySelfStudy() =
         queryMySelfStudyUseCase.queryMySelfStudy()
 }
