@@ -50,4 +50,6 @@ object Dependencies {
     //Zxing
     const val ZXING = "com.google.zxing:javase:${DependencyVersions.ZXING}"
     const val ZXING_CORE = "com.google.zxing:core:${DependencyVersions.ZXING}"
+
+    const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
 }

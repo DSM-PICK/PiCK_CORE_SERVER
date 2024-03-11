@@ -78,6 +78,8 @@ dependencies {
     implementation(Dependencies.AWS)
 
     implementation("org.springframework.boot:spring-boot-starter")
+
+    implementation("com.google.code.gson:gson:2.8.7")
 }
 
 tasks.withType<KotlinCompile> {
