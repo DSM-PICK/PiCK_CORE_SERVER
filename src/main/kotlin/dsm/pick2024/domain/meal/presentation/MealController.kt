@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.meal.presentation.dto
+package dsm.pick2024.domain.meal.presentation
 
 import dsm.pick2024.domain.meal.presentation.dto.response.MealListResponse
 import dsm.pick2024.domain.meal.service.QueryTodayMealSearvice
