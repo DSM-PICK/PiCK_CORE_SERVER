@@ -4,6 +4,7 @@ import dsm.pick2024.domain.meal.entity.MealJpaEntity
 import dsm.pick2024.domain.meal.port.out.SaveMealPort
 import dsm.pick2024.infrastructure.feign.NeisMealFeignClientService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MealService(
@@ -11,6 +12,7 @@ class MealService(
     private val neisMealFeignClientService: NeisMealFeignClientService
 ) {
 
+    @Transactional
     fun saveNeisInfoToDatabase() {
         val mealForSave = neisMealFeignClientService.getNeisInfoToEntity()
 
