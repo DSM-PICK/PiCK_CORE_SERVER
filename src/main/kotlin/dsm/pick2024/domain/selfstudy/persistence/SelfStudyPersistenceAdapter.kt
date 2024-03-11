@@ -26,9 +26,6 @@ class SelfStudyPersistenceAdapter(
     override fun findByDate(date: LocalDate, floor: Int) =
         selfStudyRepository.findByDateAndFloor(date, floor).let { selfStudyMapper.toDomain(it) }
 
-    override fun existsByDateAndFloor(date: LocalDate, floor: Int) =
-        selfStudyRepository.existsByDateAndFloor(date, floor)
-
     override fun findByDate(date: LocalDate) =
         selfStudyRepository.findByDate(date).let { selfStudyMapper.toDomain(it) }
 
