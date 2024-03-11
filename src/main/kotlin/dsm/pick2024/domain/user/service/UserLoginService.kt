@@ -53,6 +53,6 @@ class UserLoginService(
             throw PasswordMissMatchException
         }
 
-        return jwtTokenProvider.generateToken(user.name, Role.STU.toString())
+        return jwtTokenProvider.generateToken(user.accountId, Role.STU.toString())
     }
 }
