@@ -17,9 +17,6 @@ class UserJpaEntity(
     @Column(name = "account_id", nullable = false, unique = true)
     val accountId: String,
 
-    @Column(columnDefinition = "BINARY(16)", nullable = false)
-    val xquareId: UUID,
-
     @Column(name = "password", nullable = false)
     val password: String,
 

@@ -2,6 +2,7 @@ package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
+import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.LoginUseCase
 import dsm.pick2024.domain.user.port.out.ExistsByAccountIdPort
@@ -27,9 +28,8 @@ class UserLoginService(
 
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
-        val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
-
-        if (existsByAccountIdPort.existsByAccountId(xquareUser.accountId) == false) {
+        if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
+            val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
             userSavePort.save(
                 User(
                     id = xquareUser.id,
@@ -49,6 +49,10 @@ class UserLoginService(
 
         val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)
             ?: throw UserNotFoundException
+
+        if (passwordEncoder.matches(userLoginRequest.password, user.password)) {
+            throw PasswordMissMatchException
+        }
 
         return jwtTokenProvider.generateToken(user.name, Role.STU.toString())
     }
