@@ -11,4 +11,14 @@ object NeisFeignProperty {
     const val ALL_TI_YMD = "ALL_TI_YMD"
     const val DDDEP_NM = "DDDEP_NM"
     const val GRADE = "GRADE"
+    const val STARTED_YMD = "MLSV_FROM_YMD"
+    const val ENDED_YMD = "MLSV_TO_YMD"
+}
+
+object NeisFeignClientRequestProperty {
+    const val TYPE = "json"
+    const val PAGE_INDEX = 1
+    const val PAGE_SIZE = 1000
+    const val SD_SCHUL_CODE = "7430310"
+    const val ATPT_OFCDC_CODE = "G10"
 }
