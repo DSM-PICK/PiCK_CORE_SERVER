@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.meal.service
 
 import dsm.pick2024.domain.meal.entity.MealJpaEntity
+import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.meal.port.out.SaveMealPort
 import dsm.pick2024.infrastructure.feign.NeisMealFeignClientService
 import org.springframework.stereotype.Service
@@ -10,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional
 class MealService(
     private val saveMealPort: SaveMealPort,
     private val neisMealFeignClientService: NeisMealFeignClientService
-) {
+): MealUseCase {
 
     @Transactional
-    fun saveNeisInfoToDatabase() {
+    override fun saveNeisInfoToDatabase() {
         val mealForSave = neisMealFeignClientService.getNeisInfoToEntity()
 
         mealForSave
@@ -41,6 +42,6 @@ class MealService(
             }
     }
 
-    private fun stickMeal(meals: List<String?>) =
+    override fun stickMeal(meals: List<String?>) =
         meals.filterNotNull().distinct().joinToString("||")
 }
