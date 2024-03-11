@@ -1,19 +1,19 @@
 package dsm.pick2024.domain.meal.service
 
+import dsm.pick2024.domain.meal.port.`in`.QueryTodayMealUseCase
 import dsm.pick2024.domain.meal.port.out.FindMealsByMealDatePort
 import dsm.pick2024.domain.meal.presentation.dto.response.MealListResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
 
 @Service
-class MealResponseService(
+class QueryTodayMealSearvice(
     private val findMealsByMealDatePort: FindMealsByMealDatePort
-) {
+) : QueryTodayMealUseCase {
 
     @Transactional(readOnly = true)
-    fun getMealsForToday(date: LocalDate): MealListResponse? {
-        val meals = findMealsByMealDatePort.findMealsByMealDate(date)
+    override fun queryTodayMeal(): MealListResponse? {
+        val meals = findMealsByMealDatePort.findMealsByMealDate()
 
         val mealDetails = meals?.map { meal ->
             MealListResponse.MealDetails.of(meal)

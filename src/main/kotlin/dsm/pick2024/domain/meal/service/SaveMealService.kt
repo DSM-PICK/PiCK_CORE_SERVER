@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class MealService(
+class SaveMealService(
     private val saveMealPort: SaveMealPort,
     private val neisMealFeignClientService: NeisMealFeignClientService
 ) : MealUseCase {

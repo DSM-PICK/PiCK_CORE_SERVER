@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.meal.presentation.dto
 
 import dsm.pick2024.domain.meal.presentation.dto.response.MealListResponse
-import dsm.pick2024.domain.meal.service.MealResponseService
-import dsm.pick2024.domain.meal.service.MealService
+import dsm.pick2024.domain.meal.service.QueryTodayMealSearvice
+import dsm.pick2024.domain.meal.service.SaveMealService
 import io.swagger.v3.oas.annotations.Operation
 import java.time.LocalDate
 import org.springframework.format.annotation.DateTimeFormat
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/meal")
 class MealController(
-    private val mealService: MealService,
-    private val mealResponseService: MealResponseService
+    private val saveMealService: SaveMealService,
+    private val queryTodayMealSearvice: QueryTodayMealSearvice
 ) {
     @Operation(summary = "급식 정보 저장 API")
     @GetMapping
     fun saveMeals() {
-        mealService.saveNeisInfoToDatabase()
+        saveMealService.saveNeisInfoToDatabase()
     }
 
     @Operation(summary = "오늘 급식 조회 API")
@@ -30,6 +30,6 @@ class MealController(
         @RequestParam(name = "date")
         date: LocalDate
     ): MealListResponse? {
-        return mealResponseService.getMealsForToday(date)
+        return queryTodayMealSearvice.queryTodayMeal()
     }
 }
