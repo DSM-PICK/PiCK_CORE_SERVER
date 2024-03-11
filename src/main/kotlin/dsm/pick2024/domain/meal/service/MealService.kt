@@ -20,8 +20,8 @@ class MealService(
             .groupBy { it.mealDate }
             .mapNotNull { (date, mealInfos) ->
                 if (mealInfos.any {
-                        !it.breakfast.isNullOrEmpty() || !it.lunch.isNullOrEmpty() || !it.dinner.isNullOrEmpty()
-                    }
+                    !it.breakfast.isNullOrEmpty() || !it.lunch.isNullOrEmpty() || !it.dinner.isNullOrEmpty()
+                }
                 ) {
                     val breakfast = stickMeal(mealInfos.map { it.breakfast })
                     val lunch = stickMeal(mealInfos.map { it.lunch })
