@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional
 class MealService(
     private val saveMealPort: SaveMealPort,
     private val neisMealFeignClientService: NeisMealFeignClientService
-): MealUseCase {
+) : MealUseCase {
 
     @Transactional
     override fun saveNeisInfoToDatabase() {
