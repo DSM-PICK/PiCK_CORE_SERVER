@@ -40,7 +40,7 @@ class UserLoginService(
                     classNum = xquareUser.classNum,
                     num = xquareUser.num,
                     birthDay = xquareUser.brith_day,
-                    role = Role.STU,
+                    role = Role.STU
                 )
             )
             return jwtTokenProvider.generateToken(xquareUser.name, Role.STU.toString())
