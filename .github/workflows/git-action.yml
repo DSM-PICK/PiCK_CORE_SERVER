@@ -54,3 +54,4 @@ jobs:
                       DAE_URL=${{ secrets.DAE_URL }}
                       NEIS_URL=${{ secrets.NEIS_URL }}
                       DSM_LOGIN=${{ secrets.DSM_LOGIN }}
+                      NEIS_KEY=${{ secrets.NEIS_KEY }}
