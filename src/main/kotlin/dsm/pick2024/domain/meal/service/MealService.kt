@@ -43,5 +43,4 @@ class MealService(
 
     private fun stickMeal(meals: List<String?>) =
          meals.filterNotNull().distinct().joinToString("||")
-
 }
