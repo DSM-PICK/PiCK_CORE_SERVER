@@ -20,6 +20,6 @@ class MealJpaEntity(
     val lunch: String?,
 
     @Column(columnDefinition = "VARCHAR(255)")
-    val dinner: String?,
+    val dinner: String?
 
 ) : BaseUUIDEntity(id)

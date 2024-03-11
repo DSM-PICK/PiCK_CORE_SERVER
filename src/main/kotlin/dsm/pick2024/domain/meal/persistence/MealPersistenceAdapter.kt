@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class MealPersistenceAdapter(
-    private val mealRepository: MealRepository,
-) : MealPort{
+    private val mealRepository: MealRepository
+) : MealPort {
     override fun save(meal: MealJpaEntity) {
         mealRepository.save(meal)
     }

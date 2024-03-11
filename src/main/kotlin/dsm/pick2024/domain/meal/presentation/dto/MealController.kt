@@ -27,7 +27,8 @@ class MealController(
     @GetMapping("/date")
     fun dateMeal(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
-        @RequestParam(name = "date") date: LocalDate,
+        @RequestParam(name = "date")
+        date: LocalDate
     ): MealListResponse? {
         return mealResponseService.getMealsForToday(date)
     }

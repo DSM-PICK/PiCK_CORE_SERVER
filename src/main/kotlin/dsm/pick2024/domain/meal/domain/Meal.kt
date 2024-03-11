@@ -8,7 +8,7 @@ data class Meal(
     val mealDate: LocalDate,
     val breakfast: String?,
     val lunch: String?,
-    val dinner: String?,
+    val dinner: String?
 ) {
     fun toSplit(meal: String?) = if (!meal.isNullOrEmpty()) {
         meal.split("||")

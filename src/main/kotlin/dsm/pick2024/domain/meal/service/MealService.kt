@@ -36,7 +36,7 @@ class MealService(
             }
     }
 
-    private fun stickMeal(meals: List<String?>,): String {
+    private fun stickMeal(meals: List<String?>): String {
         return meals.filterNotNull().distinct().joinToString("||")
     }
 }

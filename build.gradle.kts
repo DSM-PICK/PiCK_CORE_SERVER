@@ -80,7 +80,6 @@ dependencies {
     implementation(Dependencies.GSON)
 
     implementation("org.springframework.boot:spring-boot-starter")
-
 }
 
 tasks.withType<KotlinCompile> {

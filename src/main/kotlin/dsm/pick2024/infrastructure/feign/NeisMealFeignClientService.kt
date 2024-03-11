@@ -28,10 +28,13 @@ class NeisMealFeignClientService(
             sdSchoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
             atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
             startedYmd = convertDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
-            endedYmd =  convertDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
+            endedYmd = convertDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
         )
 
-        val mealJson = Gson().fromJson(neisMealServiceDietInfoString, NeisFeignClientMealServiceDietInfoResponse::class.java)
+        val mealJson = Gson().fromJson(
+            neisMealServiceDietInfoString,
+            NeisFeignClientMealServiceDietInfoResponse::class.java
+        )
         val mealTotalCount = mealJson.mealServiceDietInfo.first().head.first().list_total_count
 
         val mealEntities = mutableListOf<MealJpaEntity>()
@@ -61,14 +64,13 @@ class NeisMealFeignClientService(
                 "3" -> dinnerMap[mealLocalDate] = Pair(menu.first, calInfo)
             }
 
-
             mealEntities.add(
                 MealJpaEntity(
                     id = null,
                     mealDate = mealLocalDate,
                     breakfast = breakfastMap[mealLocalDate]?.first.orEmpty(),
                     lunch = lunchMap[mealLocalDate]?.first.orEmpty(),
-                    dinner = dinnerMap[mealLocalDate]?.first.orEmpty(),
+                    dinner = dinnerMap[mealLocalDate]?.first.orEmpty()
                 )
             )
         }
@@ -96,7 +98,6 @@ class NeisMealFeignClientService(
     }
 
     private fun getMealDate(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) = getRow(response, i).MLSV_YMD
-
 
     private fun convertDateTimeFormat(date: String): String =
         if (date.length > 8) {
