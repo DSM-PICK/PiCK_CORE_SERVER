@@ -9,7 +9,4 @@ data class TeacherRequest(
     val floor: Int,
     @NotBlank
     val teacher: String,
-    @NotBlank
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    val date: LocalDate
 )

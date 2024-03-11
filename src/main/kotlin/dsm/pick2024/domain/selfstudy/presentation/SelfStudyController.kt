@@ -2,7 +2,6 @@ package dsm.pick2024.domain.selfstudy.presentation
 
 import dsm.pick2024.domain.selfstudy.port.`in`.*
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
-import dsm.pick2024.domain.selfstudy.service.ChangeSelfStudyTeacherService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.format.annotation.DateTimeFormat
@@ -17,7 +16,6 @@ import java.time.Year
 @RequestMapping("/self-study")
 class SelfStudyController(
     private val registrationSelfStudyTeacherUseCase: RegistrationSelfStudyTeacherUseCase,
-    private val changeSelfStudyTeacherService: ChangeSelfStudyTeacherService,
     private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase,
     private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase,
     private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase,
@@ -31,13 +29,6 @@ class SelfStudyController(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
     ) =
         registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
-
-    @Operation(summary = "자습감독 선생님 변경 API")
-    @PatchMapping("/change")
-    fun changeSelfStudyTeacher(
-        @RequestBody changeSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
-    ) =
-        changeSelfStudyTeacherService.changeSelfStudyTeacher(changeSelfStudyTeacherRequest)
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")
