@@ -14,6 +14,6 @@ data class QueryMyApplicationResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val image: String,
+    val image: Byte,
     val type: Type
 )
