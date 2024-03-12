@@ -5,6 +5,7 @@ interface ClassroomPort :
     ClassroomDeletePort,
     FindByUserIdPort,
     ExistsByUserIdPort,
+    QueryAllClassroomPort,
     QueryFloorClassroomPort,
     QueryGradeClassroomPort,
     DeleteAllClassRoomPort
