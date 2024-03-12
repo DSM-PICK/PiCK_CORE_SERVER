@@ -9,7 +9,6 @@ import dsm.pick2024.domain.meal.persistence.repository.MealRepository
 import dsm.pick2024.domain.meal.port.out.MealPort
 import java.time.LocalDate
 import org.springframework.stereotype.Component
-import java.time.ZoneId
 
 @Component
 class MealPersistenceAdapter(
@@ -21,12 +20,10 @@ class MealPersistenceAdapter(
         mealRepository.save(meal)
     }
 
-    override fun findMealsByMealDate(): List<Meal>? {
-        val today = LocalDate.now(ZoneId.of("Asia/Seoul"))
-
+    override fun findMealsByMealDate(date: LocalDate): List<Meal>? {
         return jpaQueryFactory
             .selectFrom(QMealJpaEntity.mealJpaEntity)
-            .where(QMealJpaEntity.mealJpaEntity.mealDate.eq(today))
+            .where(QMealJpaEntity.mealJpaEntity.mealDate.eq(date))
             .fetch()
             .map { mealMapper.toDomain(it) }
     }
