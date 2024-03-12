@@ -16,9 +16,7 @@ class QueryMySelfStudyService(
     override fun queryMySelfStudy(): String {
         val admin = adminFacadeUseCase.currentUser()
 
-        val selfStudy = findByTodaySelfStudyTeacherPort.findByTodaySelfStudy()
-            .find { it.teacher == admin.name }
-
+        val selfStudy = findByTodaySelfStudyTeacherPort.findByTodayTeacher(admin.name)
         val floor = selfStudy?.floor
 
         return if (floor != null) {
