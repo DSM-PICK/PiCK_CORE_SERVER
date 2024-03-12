@@ -41,7 +41,7 @@ class QueryMyApplicationService(
             application.grade,
             application.classNum,
             application.num,
-            application.image!!.toByteArray(),
+            application.image!!,
             type = Type.APPLICATION
         )
     }
