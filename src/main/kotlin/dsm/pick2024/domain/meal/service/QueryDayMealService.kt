@@ -19,8 +19,8 @@ class QueryDayMealService(
             .map { it ->
                 MealResponse(
                     listOf(it.breakfast!!),
-                    listOf( it.lunch!!),
-                    listOf( it.dinner!!)
+                    listOf(it.lunch!!),
+                    listOf(it.dinner!!)
                 )
             }
         return MealDetailsResponse(date, meals)
