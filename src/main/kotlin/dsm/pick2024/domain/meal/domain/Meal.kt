@@ -10,9 +10,7 @@ data class Meal(
     val lunch: String?,
     val dinner: String?
 ) {
-    fun toSplit(meal: String?) = if (!meal.isNullOrEmpty()) {
-        meal.split("||")
-    } else {
-        null
+    fun toSplit(meal: String?): List<String> {
+        return meal?.split("||") ?: emptyList()
     }
 }
