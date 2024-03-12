@@ -21,8 +21,8 @@ class ScheduleMonthService(
                 ScheduleResponse(
                     it.id!!,
                     it.eventName,
-                    it.date.monthValue,
-                    it.date.dayOfMonth
+                    it.date.dayOfMonth,
+                    it.date.dayOfWeek.value
                 )
             }
 }
