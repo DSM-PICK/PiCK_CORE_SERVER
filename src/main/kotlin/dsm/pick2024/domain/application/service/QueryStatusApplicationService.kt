@@ -13,18 +13,17 @@ class QueryStatusApplicationService(
     private val queryAllApplicationPort: QueryAllApplicationPort,
     private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort,
     private val queryAllClassroomPort: QueryAllClassroomPort
-): QueryStatusApplicationUseCase {
+) : QueryStatusApplicationUseCase {
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
         val out = queryAllApplicationPort.findAll()
             .count { it.status == Status.OK }
 
         val request =
             queryAllEarlyReturnPort.findAll().count { it.status == Status.QUIET } +
-            queryAllApplicationPort.findAll().count() { it.status == Status.QUIET }
+                queryAllApplicationPort.findAll().count() { it.status == Status.QUIET }
 
         val classMove = queryAllClassroomPort.findAll().count()
 
         return QueryStatusApplicationResponse(out, request, classMove)
     }
-
 }
