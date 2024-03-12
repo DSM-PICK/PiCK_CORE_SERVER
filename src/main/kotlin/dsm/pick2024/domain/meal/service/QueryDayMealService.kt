@@ -19,9 +19,9 @@ class QueryDayMealService(
 
         return meals?.let { mealList ->
             val mealResponse = MealResponse(
-                breakfast = mealList.map { it.toSplit(it.breakfast) },
-                lunch = mealList.map { it.toSplit(it.lunch) },
-                dinner = mealList.map { it.toSplit(it.dinner) }
+                breakfast = mealList.flatMap { it.toSplit(it.breakfast) },
+                lunch = mealList.flatMap { it.toSplit(it.lunch) },
+                dinner = mealList.flatMap { it.toSplit(it.dinner) }
             )
             MealDetailsResponse(date, mealResponse)
         }
