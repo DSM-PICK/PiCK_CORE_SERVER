@@ -5,18 +5,11 @@ import java.time.LocalDate
 
 data class MealDetailsResponse(
     val date: LocalDate,
-    val meals: List<List<String>?>
-) {
-    companion object {
-        fun of(meal: Meal): MealDetailsResponse {
-            return MealDetailsResponse(
-                date = meal.mealDate,
-                meals = listOf(
-                    meal.toSplit(meal.breakfast),
-                    meal.toSplit(meal.lunch),
-                    meal.toSplit(meal.dinner)
-                )
-            )
-        }
-    }
-}
+    val meals: List<MealResponse>
+)
+
+data class MealResponse(
+    val breakfast: String,
+    val lunch: String,
+    val dinner: String
+)

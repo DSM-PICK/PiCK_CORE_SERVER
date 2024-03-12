@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation
 import java.time.LocalDate
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -18,7 +19,7 @@ class MealController(
     private val queryDayMealService: QueryDayMealService
 ) {
     @Operation(summary = "급식 정보 저장 API")
-    @GetMapping
+    @PostMapping
     fun saveMeals() {
         saveMealService.saveNeisInfoToDatabase()
     }
@@ -29,7 +30,6 @@ class MealController(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         @RequestParam(name = "date")
         date: LocalDate
-    ): List<MealDetailsResponse>? {
-        return queryDayMealService.queryDayMeal(date)
-    }
+    ) =
+        queryDayMealService.queryDayMeal(date)
 }

@@ -4,5 +4,5 @@ import dsm.pick2024.domain.meal.presentation.dto.response.MealDetailsResponse
 import java.time.LocalDate
 
 interface QueryDayMealUseCase {
-    fun queryDayMeal(date: LocalDate): List<MealDetailsResponse>?
+    fun queryDayMeal(date: LocalDate): MealDetailsResponse
 }

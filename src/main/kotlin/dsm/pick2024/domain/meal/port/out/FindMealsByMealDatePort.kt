@@ -4,5 +4,5 @@ import dsm.pick2024.domain.meal.domain.Meal
 import java.time.LocalDate
 
 interface FindMealsByMealDatePort {
-    fun findMealsByMealDate(date: LocalDate): List<Meal>?
+    fun findMealsByMealDate(date: LocalDate): List<Meal>
 }
