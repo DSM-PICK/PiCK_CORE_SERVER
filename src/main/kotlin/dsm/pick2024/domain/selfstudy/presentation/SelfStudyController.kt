@@ -32,8 +32,12 @@ class SelfStudyController(
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")
-    fun queryTodaySelfStudyTeacher() =
-        queryTodaySelfStudyTeacherUseCase.queryTodaySelfStudyTeacher()
+    fun queryTodaySelfStudyTeacher(
+        @RequestParam(name = "date")
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        date: LocalDate
+    ) =
+        queryTodaySelfStudyTeacherUseCase.queryTodaySelfStudyTeacher(date)
 
     @Operation(summary = "한달 자습감독 선생님 조회")
     @GetMapping("/month")

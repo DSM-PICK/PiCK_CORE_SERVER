@@ -34,15 +34,12 @@ class SelfStudyPersistenceAdapter(
         selfStudyRepository.saveAll(entities)
     }
 
-    override fun findByTodaySelfStudy(): List<SelfStudy> {
-        val today = LocalDate.now()
-
-        return jpaQueryFactory
+    override fun findByTodaySelfStudy(date: LocalDate) =
+        jpaQueryFactory
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
-            .where(QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(today))
+            .where(QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(date))
             .fetch()
             .map { selfStudyMapper.toDomain(it) }
-    }
 
     override fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy> {
         val startDay = LocalDate.of(year.value, month, 1)
