@@ -14,15 +14,16 @@ class QueryDayMealService(
 ) : QueryDayMealUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryDayMeal(date: LocalDate): MealDetailsResponse {
+    override fun queryDayMeal(date: LocalDate): MealDetailsResponse? {
         val meals = findMealsByMealDatePort.findMealsByMealDate(date)
-            .map { it ->
-                MealResponse(
-                    breakfast = it.toSplit(it.breakfast),
-                    lunch = it.toSplit(it.lunch),
-                    dinner = it.toSplit(it.dinner)
-                )
-            }
-        return MealDetailsResponse(date, meals)
+
+        return meals?.let { mealList ->
+            val mealResponse = MealResponse(
+                breakfast = mealList.map { it.toSplit(it.breakfast).toString() },
+                lunch = mealList.map { it.toSplit(it.lunch).toString() },
+                dinner = mealList.map { it.toSplit(it.dinner).toString() }
+            )
+            MealDetailsResponse(date, mealResponse)
+        }
     }
 }
