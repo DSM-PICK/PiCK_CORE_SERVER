@@ -27,7 +27,7 @@ class SelfStudyPersistenceAdapter(
         selfStudyRepository.findByDateAndFloor(date, floor).let { selfStudyMapper.toDomain(it) }
 
     override fun findByDate(date: LocalDate) =
-        selfStudyRepository.findByDate(date).let { selfStudyMapper.toDomain(it) }
+        selfStudyRepository.findByDate(date).let { selfStudyMapper.toDomain(it!!) }
 
     override fun saveAll(selfStudy: List<SelfStudy>) {
         val entities = selfStudy.map { selfStudyMapper.toEntity(it) }

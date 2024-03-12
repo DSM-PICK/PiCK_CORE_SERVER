@@ -13,5 +13,5 @@ interface SelfStudyRepository : Repository<SelfStudyJpaEntity, UUID> {
 
     fun findByDateAndFloor(date: LocalDate, floor: Int): SelfStudyJpaEntity
 
-    fun findByDate(date: LocalDate): SelfStudyJpaEntity
+    fun findByDate(date: LocalDate): SelfStudyJpaEntity?
 }
