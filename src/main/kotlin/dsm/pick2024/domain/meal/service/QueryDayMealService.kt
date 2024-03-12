@@ -18,9 +18,9 @@ class QueryDayMealService(
         val meals = findMealsByMealDatePort.findMealsByMealDate(date)
             .map { it ->
                 MealResponse(
-                    it.breakfast!!,
-                    it.lunch!!,
-                    it.dinner!!
+                    listOf(it.breakfast!!),
+                    listOf( it.lunch!!),
+                    listOf( it.dinner!!)
                 )
             }
         return MealDetailsResponse(date, meals)
