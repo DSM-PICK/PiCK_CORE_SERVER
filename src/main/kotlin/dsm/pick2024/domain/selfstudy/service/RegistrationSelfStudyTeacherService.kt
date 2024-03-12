@@ -17,18 +17,22 @@ class RegistrationSelfStudyTeacherService(
     @Transactional
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val teacher = request.teacher.map { teacherRequest ->
-            findByDatePort.findByDate(request.date)?.let { findSelfStudy ->
+            val selfStudyExists = existsByDatePort.existsByDate(request.date)
 
-                findSelfStudy.apply {
+            if (selfStudyExists) {
+                findByDatePort.findByDate(request.date)?.apply {
                     teacher = teacherRequest.teacher
                 }
-            } ?: SelfStudy(
-                date = request.date,
-                floor = teacherRequest.floor,
-                teacher = teacherRequest.teacher
-            )
+            } else {
+                SelfStudy(
+                    date = request.date,
+                    floor = teacherRequest.floor,
+                    teacher = teacherRequest.teacher
+                )
+            }
         }
 
         selfStudySaveAllPort.saveAll(teacher)
+
     }
 }
