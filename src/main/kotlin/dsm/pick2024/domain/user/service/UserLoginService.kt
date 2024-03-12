@@ -49,7 +49,7 @@ class UserLoginService(
         val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)
             ?: throw UserNotFoundException
 
-        if (passwordEncoder.matches(user.password, userLoginRequest.password)) {
+        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
             throw PasswordMissMatchException
         }
 
