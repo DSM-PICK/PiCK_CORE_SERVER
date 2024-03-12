@@ -28,7 +28,8 @@ class ApplicationController(
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
-    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase
+    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
+    private val queryStatusApplicationUseCase: QueryStatusApplicationUseCase
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -77,4 +78,8 @@ class ApplicationController(
     @Operation(summary = "외출중인 학생 조회 API")
     @GetMapping("/non-return")
     fun queryNonReturnApplication() = queryAllOKApplicationUseCase.queryAllNonReturnApplication()
+
+    @Operation(summary = "학생 조회 API")
+    @GetMapping("/status")
+    fun queryStatusApplication() = queryStatusApplicationUseCase.queryStatusApplication()
 }

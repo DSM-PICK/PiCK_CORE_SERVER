@@ -31,6 +31,9 @@ class ClassroomPersistenceAdapter(
         return classroomRepository.existsByUserId(userId)
     }
 
+    override fun findAll() =
+        classroomRepository.findAll().map { classroomMapper.toDomain(it) }
+
     override fun deleteAll() {
         classroomRepository.deleteAll()
     }
