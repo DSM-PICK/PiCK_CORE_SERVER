@@ -20,7 +20,7 @@ class MealPersistenceAdapter(
         mealRepository.save(meal)
     }
 
-    override fun findMealsByMealDate(date: LocalDate): List<Meal>? {
+    override fun findMealsByMealDate(date: LocalDate): List<Meal> {
         return jpaQueryFactory
             .selectFrom(QMealJpaEntity.mealJpaEntity)
             .where(QMealJpaEntity.mealJpaEntity.mealDate.eq(date))

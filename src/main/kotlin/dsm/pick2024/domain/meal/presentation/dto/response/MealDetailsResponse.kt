@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.meal.presentation.dto.response
 
-import dsm.pick2024.domain.meal.domain.Meal
 import java.time.LocalDate
 
 data class MealDetailsResponse(

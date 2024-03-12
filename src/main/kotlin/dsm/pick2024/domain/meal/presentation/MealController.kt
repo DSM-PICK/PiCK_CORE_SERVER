@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.meal.presentation
 
-import dsm.pick2024.domain.meal.presentation.dto.response.MealDetailsResponse
 import dsm.pick2024.domain.meal.service.QueryDayMealService
 import dsm.pick2024.domain.meal.service.SaveMealService
 import io.swagger.v3.oas.annotations.Operation

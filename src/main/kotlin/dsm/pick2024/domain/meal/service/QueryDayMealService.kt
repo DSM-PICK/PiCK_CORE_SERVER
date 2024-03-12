@@ -25,5 +25,4 @@ class QueryDayMealService(
             }
         return MealDetailsResponse(date, meals)
     }
-
 }
