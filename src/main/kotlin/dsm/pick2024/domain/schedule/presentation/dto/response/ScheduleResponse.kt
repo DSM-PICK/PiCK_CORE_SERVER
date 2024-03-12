@@ -5,6 +5,6 @@ import java.util.UUID
 data class ScheduleResponse(
     val id: UUID? = null,
     val eventName: String,
-    val date: Int,
+    val month: Int,
     val day: Int
 )
