@@ -28,8 +28,7 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.PAGE_SIZE) pageSize: Int,
         @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
         @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String,
-        @RequestParam(name = NeisFeignProperty.SEM)sem: String,
-        @RequestParam(name = NeisFeignProperty.DDDEP_NM)major: String,
-        @RequestParam(name = NeisFeignProperty.GRADE)grade: String
-    )
+        @RequestParam(name = NeisFeignProperty.TI_FROM_YMD)startedYmd: String,
+        @RequestParam(name = NeisFeignProperty.TI_TO_YMD)endedYmd: String
+    ): String
 }

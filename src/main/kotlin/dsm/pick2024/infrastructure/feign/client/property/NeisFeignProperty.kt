@@ -7,12 +7,10 @@ object NeisFeignProperty {
     const val PAGE_SIZE = "pSize"
     const val SD_SCHUL_CODE = "SD_SCHUL_CODE"
     const val ATPT_OFCDC_SC_CODE = "ATPT_OFCDC_SC_CODE"
-    const val SEM = "SEM"
-    const val ALL_TI_YMD = "ALL_TI_YMD"
-    const val DDDEP_NM = "DDDEP_NM"
-    const val GRADE = "GRADE"
     const val STARTED_YMD = "MLSV_FROM_YMD"
     const val ENDED_YMD = "MLSV_TO_YMD"
+    const val TI_FROM_YMD = "TI_FROM_YMD"
+    const val TI_TO_YMD = "TI_TO_YMD"
 }
 
 object NeisFeignClientRequestProperty {
