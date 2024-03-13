@@ -9,7 +9,7 @@ class TimetableMapper {
 
     fun toEntity(domain: Timetable)=
         domain.run {
-            Timetable(
+            TimetableJpaEntity(
                 id = id,
                 grade = grade,
                 classNum = classNum,
@@ -20,7 +20,7 @@ class TimetableMapper {
         }
     fun toDomain(entity: TimetableJpaEntity)=
         entity.run {
-            TimetableJpaEntity(
+            Timetable(
                 id = id,
                 grade = grade,
                 classNum = classNum,
