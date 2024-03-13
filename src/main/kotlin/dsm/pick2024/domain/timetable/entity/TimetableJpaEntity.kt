@@ -1,10 +1,13 @@
 package dsm.pick2024.domain.timetable.entity
 
+import dsm.pick2024.domain.timetable.enums.TimetableStatus
 import dsm.pick2024.global.base.BaseUUIDEntity
-import java.time.LocalDate
+import java.time.DayOfWeek
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
 @Entity(name = "tbl_timetable")
 class TimetableJpaEntity(
@@ -22,7 +25,7 @@ class TimetableJpaEntity(
     @Column(name = "subject_name", nullable = false)
     val subjectName: String,
 
-    @Column(nullable = false)
-    val date : LocalDate
+    @Column(name = "day_week", nullable = false)
+    val dayWeek: Int
 
 ) :BaseUUIDEntity(id)
