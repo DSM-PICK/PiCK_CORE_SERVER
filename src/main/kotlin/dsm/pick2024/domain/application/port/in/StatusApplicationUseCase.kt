@@ -12,5 +12,5 @@ interface StatusApplicationUseCase {
         startTime: LocalTime,
         endTime: LocalTime,
         reason: String
-    ): ByteArray
+    ): String
 }

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
+import java.util.Base64
 import javax.imageio.ImageIO
 
 @Service
@@ -84,7 +85,7 @@ class StatusEarlyReturnService(
         teacherName: String,
         startTime: LocalTime,
         reason: String
-    ): ByteArray {
+    ): String {
         val width = 200
         val height = 200
 
@@ -102,6 +103,6 @@ class StatusEarlyReturnService(
 
         ImageIO.write(MatrixToImageWriter.toBufferedImage(code), "png", byteArrayOutputStream)
 
-        return byteArrayOutputStream.toByteArray()
+        return Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray())
     }
 }

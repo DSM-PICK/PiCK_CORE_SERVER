@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.io.ByteArrayOutputStream
 import java.time.LocalTime
+import java.util.Base64
 import javax.imageio.ImageIO
 
 @Service
@@ -62,7 +63,7 @@ class StatusApplicationService(
                 teacherName = admin.name,
                 status = Status.OK,
                 applicationStatus = ApplicationStatus.NON_RETURN,
-                image = image.toString()
+                image = image
             )
             applicationUpdate.add(updatedApplication)
 
@@ -87,7 +88,7 @@ class StatusApplicationService(
         startTime: LocalTime,
         endTime: LocalTime,
         reason: String
-    ): ByteArray {
+    ): String {
         val width = 200
         val height = 200
 
@@ -105,6 +106,6 @@ class StatusApplicationService(
 
         ImageIO.write(MatrixToImageWriter.toBufferedImage(code), "png", byteArrayOutputStream)
 
-        return byteArrayOutputStream.toByteArray()
+        return Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray())
     }
 }

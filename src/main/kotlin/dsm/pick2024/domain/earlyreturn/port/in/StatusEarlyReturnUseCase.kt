@@ -11,5 +11,5 @@ interface StatusEarlyReturnUseCase {
         teacherName: String,
         startTime: LocalTime,
         reason: String
-    ): ByteArray
+    ): String
 }
