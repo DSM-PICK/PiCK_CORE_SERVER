@@ -37,7 +37,7 @@ class AdminLoginService(
                     role = Role.SCH
                 )
             )
-            jwtTokenProvider.generateToken(xquareUser.name, Role.SCH.toString())
+            return jwtTokenProvider.generateToken(xquareUser.name, Role.SCH.toString())
         }
 
         val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
