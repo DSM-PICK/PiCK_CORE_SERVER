@@ -41,7 +41,7 @@ class AdminLoginService(
         }
 
         val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
-        if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
+        if ((adminLoginRequest.password != admin.password)) {
             throw PasswordMissMatchException
         }
         val token = jwtTokenProvider.generateToken(admin.adminId, Role.SCH.toString())

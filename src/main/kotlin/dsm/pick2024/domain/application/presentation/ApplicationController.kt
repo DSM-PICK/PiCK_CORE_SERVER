@@ -64,7 +64,7 @@ class ApplicationController(
     ) = queryClassApplicationUseCase.queryClassApplication(grade, classNum)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
-    @GetMapping("reason/all")
+    @GetMapping("/reason/all")
     fun queryAllReasonApplication() = queryAllReasonApplicationUseCase.queryAllReasonApplication()
 
     @Operation(summary = "내 외출증 조회 API")
