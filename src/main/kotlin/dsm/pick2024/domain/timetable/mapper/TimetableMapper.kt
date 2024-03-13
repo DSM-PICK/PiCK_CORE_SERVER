@@ -15,10 +15,8 @@ class TimetableMapper {
                 classNum = classNum,
                 period = period,
                 subjectName = subjectName,
-                date = date,
-                dayWeek = dayWeek
+                date = date
             )
-
         }
     fun toDomain(entity: TimetableJpaEntity)=
         entity.run {
@@ -28,9 +26,7 @@ class TimetableMapper {
                 classNum = classNum,
                 period = period,
                 subjectName = subjectName,
-                date = date,
-                dayWeek = dayWeek
+                date = date
             )
         }
-
 }

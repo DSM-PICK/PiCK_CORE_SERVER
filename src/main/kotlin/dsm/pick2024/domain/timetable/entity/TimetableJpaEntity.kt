@@ -23,10 +23,6 @@ class TimetableJpaEntity(
     val subjectName: String,
 
     @Column(nullable = false)
-    val date : LocalDate,
+    val date : LocalDate
 
-    @Column(name = "day_week", nullable = false)
-    val dayWeek: Int
-
-) :BaseUUIDEntity(id){
-}
+) :BaseUUIDEntity(id)

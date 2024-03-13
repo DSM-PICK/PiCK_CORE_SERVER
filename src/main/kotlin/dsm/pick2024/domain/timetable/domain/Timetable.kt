@@ -9,6 +9,5 @@ data class Timetable (
     val classNum: Int,
     val period: Int,
     val subjectName: String,
-    val date : LocalDate,
-    val dayWeek: Int
+    val date : LocalDate
 )
