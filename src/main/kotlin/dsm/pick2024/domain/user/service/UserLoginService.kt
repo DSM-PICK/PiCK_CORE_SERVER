@@ -34,7 +34,7 @@ class UserLoginService(
                 User(
                     id = xquareUser.id,
                     accountId = xquareUser.accountId,
-                    password = passwordEncoder.encode(userLoginRequest.password),
+                    password = userLoginRequest.password,
                     name = xquareUser.name,
                     grade = xquareUser.grade,
                     classNum = xquareUser.classNum,
@@ -43,7 +43,7 @@ class UserLoginService(
                     role = Role.STU
                 )
             )
-            return jwtTokenProvider.generateToken(xquareUser.name, Role.STU.toString())
+            return jwtTokenProvider.generateToken(xquareUser.accountId, Role.STU.toString())
         }
 
         val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)

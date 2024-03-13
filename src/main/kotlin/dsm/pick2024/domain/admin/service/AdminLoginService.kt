@@ -32,7 +32,7 @@ class AdminLoginService(
             adminSavePort.save(
                 Admin(
                     adminId = xquareUser.accountId,
-                    password = passwordEncoder.encode(xquareUser.password),
+                    password = xquareUser.password,
                     name = xquareUser.name,
                     role = Role.SCH,
                     grade = xquareUser.grade,
