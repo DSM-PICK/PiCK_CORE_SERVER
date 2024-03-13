@@ -6,8 +6,8 @@ import java.util.*
 data class Admin(
     val id: UUID? = null,
     val name: String,
-    val grade: Int,
-    val classNum: Int,
+    val grade: Int? = null,
+    val classNum: Int? = null,
     val password: String,
     val adminId: String,
     val role: Role
