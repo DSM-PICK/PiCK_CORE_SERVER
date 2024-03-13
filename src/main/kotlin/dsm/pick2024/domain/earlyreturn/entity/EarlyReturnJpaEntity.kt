@@ -5,10 +5,7 @@ import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.EnumType
-import javax.persistence.Enumerated
+import javax.persistence.*
 
 @Entity(name = "tbl_early_return")
 class EarlyReturnJpaEntity(
@@ -38,5 +35,6 @@ class EarlyReturnJpaEntity(
     @Enumerated(value = EnumType.STRING)
     val status: Status,
 
+    @Lob
     val image: String? = null
 ) : BaseUUIDEntity(id)
