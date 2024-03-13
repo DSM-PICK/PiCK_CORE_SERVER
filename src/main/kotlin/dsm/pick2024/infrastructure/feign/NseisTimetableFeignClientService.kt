@@ -41,7 +41,7 @@ class NeisTimetableFeignClientService(
         for (timetable in timetableJson.hisTimetable) {
             timetable.row?.let { rows ->
                 for (row in rows) {
-                    val dayWeek = changeStringToLocalDate(row.ALL_TI_YMD).dayOfWeek
+                    val dayWeek = changeStringToLocalDate(row.ALL_TI_YMD).dayOfWeek.value
                     val grade = row.GRADE
                     val classNum = row.CLASS_NM
                     val period = row.PERIO
@@ -54,8 +54,7 @@ class NeisTimetableFeignClientService(
                             classNum = classNum,
                             period = period,
                             subjectName = subjectName,
-                            dayWeek = dayWeek,
-                            status = TimetableStatus.ORIGINAL
+                            dayWeek = dayWeek
                         )
                     )
 
