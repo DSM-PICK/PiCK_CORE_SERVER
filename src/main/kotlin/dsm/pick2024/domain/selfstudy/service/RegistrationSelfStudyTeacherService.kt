@@ -20,7 +20,6 @@ class RegistrationSelfStudyTeacherService(
 
         val teacherList = request.teacher.map { teacherRequest ->
             findSelfStudy?.copy(
-                floor = teacherRequest.floor,
                 teacher = teacherRequest.teacher
             ) ?: SelfStudy(
                 date = request.date,
