@@ -39,7 +39,7 @@ class UserLoginService(
                     grade = xquareUser.grade,
                     classNum = xquareUser.classNum,
                     num = xquareUser.num,
-                    birthDay = xquareUser.brith_day,
+                    birthDay = xquareUser.birthDay,
                     role = Role.STU
                 )
             )

@@ -12,5 +12,5 @@ data class XquareResponse(
     val classNum: Int,
     val num: Int,
     val userRole: String,
-    val brith_day: LocalDate
+    val birthDay: LocalDate
 )
