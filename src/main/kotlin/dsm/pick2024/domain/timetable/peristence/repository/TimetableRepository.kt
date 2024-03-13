@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.timetable.peristence.repository
 
-import dsm.pick2024.domain.timetable.domain.Timetable
+import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
 import java.util.UUID
-import org.springframework.data.repository.Repository
+import org.springframework.data.jpa.repository.JpaRepository
 
-interface TimetableRepository: Repository<Timetable, UUID>
+interface TimetableRepository : JpaRepository<TimetableJpaEntity, UUID>
