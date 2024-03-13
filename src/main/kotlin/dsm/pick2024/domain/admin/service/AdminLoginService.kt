@@ -25,7 +25,7 @@ class AdminLoginService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val adminSavePort: AdminSavePort
 ) : AdminLoginUseCase {
-    @Transactional(readOnly = true)
+    @Transactional
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
             val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
@@ -34,17 +34,18 @@ class AdminLoginService(
                     adminId = xquareUser.accountId,
                     password = passwordEncoder.encode(xquareUser.password),
                     name = xquareUser.name,
-                    role = Role.SCH
+                    role = Role.SCH,
+                    grade = xquareUser.grade,
+                    classNum = xquareUser.classNum
                 )
             )
-            return jwtTokenProvider.generateToken(xquareUser.name, Role.SCH.toString())
+            return jwtTokenProvider.generateToken(xquareUser.accountId, Role.SCH.toString())
+        } else {
+            val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
+            if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
+                throw PasswordMissMatchException
+            }
+            return jwtTokenProvider.generateToken(admin.adminId, Role.SCH.toString())
         }
-
-        val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
-        if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
-            throw PasswordMissMatchException
-        }
-        val token = jwtTokenProvider.generateToken(admin.adminId, Role.SCH.toString())
-        return token
     }
 }
