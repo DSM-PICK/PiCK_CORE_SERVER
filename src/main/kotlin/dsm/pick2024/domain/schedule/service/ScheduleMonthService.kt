@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Month
 import java.time.Year
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Service
 class ScheduleMonthService(
@@ -22,7 +24,8 @@ class ScheduleMonthService(
                     it.id!!,
                     it.eventName,
                     it.date.monthValue,
-                    it.date.dayOfMonth
+                    it.date.dayOfMonth,
+                    it.date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN)
                 )
             }
 }
