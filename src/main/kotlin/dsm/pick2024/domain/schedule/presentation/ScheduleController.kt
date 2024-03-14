@@ -5,7 +5,6 @@ import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.DeleteSchedulePort
-import dsm.pick2024.domain.schedule.port.out.SaveFeignSchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -69,4 +68,3 @@ class ScheduleController(
         @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
 }
-
