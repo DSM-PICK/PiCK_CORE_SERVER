@@ -1,11 +1,16 @@
 package dsm.pick2024.domain.schedule.presentation
 
+import dsm.pick2024.domain.schedule.port.`in`.CreateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
+import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.time.Month
 import java.time.Year
@@ -14,8 +19,15 @@ import java.time.Year
 @RestController
 @RequestMapping("/schedule")
 class ScheduleController(
+    private val createScheduleUseCase: CreateScheduleUseCase,
     private val scheduleMonthUseCase: ScheduleMonthUseCase
 ) {
+
+    @Operation(summary = "학사일정 추가")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping("/create")
+    fun createSchedule(createScheduleRequest: CreateScheduleRequest) =
+        createScheduleUseCase.createSchedule(createScheduleRequest)
 
     @Operation(summary = "월 별로 학사일정조회 api")
     @GetMapping("/month")

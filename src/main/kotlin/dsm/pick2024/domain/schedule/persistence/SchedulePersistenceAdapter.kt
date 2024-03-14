@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.schedule.domain.Schedule
 import dsm.pick2024.domain.schedule.entity.QScheduleJpaEntity
 import dsm.pick2024.domain.schedule.mapper.ScheduleMapper
+import dsm.pick2024.domain.schedule.persistence.repository.ScheduleRepository
 import dsm.pick2024.domain.schedule.port.out.SchedulePort
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -14,9 +15,13 @@ import java.time.temporal.TemporalAdjusters
 @Component
 class SchedulePersistenceAdapter(
     private val scheduleMapper: ScheduleMapper,
-//  private val scheduleRepository: ScheduleRepository,
+    private val scheduleRepository: ScheduleRepository,
     private val jpaQueryFactory: JPAQueryFactory
 ) : SchedulePort {
+
+    override fun save(schedule: Schedule) {
+        scheduleRepository.save(scheduleMapper.toEntity(schedule))
+    }
 
     override fun scheduleMonth(year: Year, month: Month): List<Schedule> {
         val startDay = LocalDate.of(year.value, month, 1)
