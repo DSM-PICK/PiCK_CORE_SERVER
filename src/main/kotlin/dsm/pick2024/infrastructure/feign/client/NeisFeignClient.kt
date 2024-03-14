@@ -31,4 +31,16 @@ interface NeisFeignClient {
         @RequestParam(name = NeisFeignProperty.TI_FROM_YMD)startedYmd: String,
         @RequestParam(name = NeisFeignProperty.TI_TO_YMD)endedYmd: String
     ): String
+
+    @GetMapping("/SchoolSchedule")
+    fun schoolSchedule(
+        @RequestParam(name = NeisFeignProperty.KEY) key: String,
+        @RequestParam(name = NeisFeignProperty.TYPE) type: String,
+        @RequestParam(name = NeisFeignProperty.PAGE_INDEX) pageIndex: Int,
+        @RequestParam(name = NeisFeignProperty.PAGE_SIZE) pageSize: Int,
+        @RequestParam(name = NeisFeignProperty.SD_SCHUL_CODE)schoolCode: String,
+        @RequestParam(name = NeisFeignProperty.ATPT_OFCDC_SC_CODE)atptCode: String,
+        @RequestParam(name = NeisFeignProperty.AA_FROM_YMD)startedYmd: String,
+        @RequestParam(name = NeisFeignProperty.AA_TO_YMD)endedYmd: String
+    ): String
 }

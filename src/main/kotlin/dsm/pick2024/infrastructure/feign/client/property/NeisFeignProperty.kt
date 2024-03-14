@@ -11,6 +11,8 @@ object NeisFeignProperty {
     const val ENDED_YMD = "MLSV_TO_YMD"
     const val TI_FROM_YMD = "TI_FROM_YMD"
     const val TI_TO_YMD = "TI_TO_YMD"
+    const val AA_FROM_YMD = "AA_FROM_YMD"
+    const val AA_TO_YMD = "AA_TO_YMD"
 }
 
 object NeisFeignClientRequestProperty {
