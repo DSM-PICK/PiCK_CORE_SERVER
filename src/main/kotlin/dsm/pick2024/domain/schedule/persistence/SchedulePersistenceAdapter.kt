@@ -27,6 +27,10 @@ class SchedulePersistenceAdapter(
     override fun findById(id: UUID) =
         scheduleRepository.findById(id).let { scheduleMapper.toDomain(it) }
 
+    override fun deleteById(id: UUID) {
+        scheduleRepository.deleteById(id)
+    }
+
     override fun scheduleMonth(year: Year, month: Month): List<Schedule> {
         val startDay = LocalDate.of(year.value, month, 1)
         val endDay = startDay.with(TemporalAdjusters.lastDayOfMonth())

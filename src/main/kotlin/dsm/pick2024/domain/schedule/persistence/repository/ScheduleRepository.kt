@@ -8,4 +8,6 @@ interface ScheduleRepository : Repository<ScheduleJpaEntity, UUID> {
     fun save(entity: ScheduleJpaEntity)
 
     fun findById(id: UUID): ScheduleJpaEntity
+
+    fun deleteById(id: UUID)
 }
