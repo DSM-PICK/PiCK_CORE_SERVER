@@ -9,7 +9,7 @@ class ScheduleMapper {
     fun toEntity(domain: Schedule) =
         domain.run {
             ScheduleJpaEntity(
-                id = id!!,
+                id = id,
                 eventName = eventName,
                 date = date
             )
@@ -18,7 +18,7 @@ class ScheduleMapper {
     fun toDomain(entity: ScheduleJpaEntity) =
         entity.run {
             Schedule(
-                id = id!!,
+                id = id,
                 eventName = eventName,
                 date = date
             )

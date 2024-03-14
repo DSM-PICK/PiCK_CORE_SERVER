@@ -5,6 +5,7 @@ import java.time.LocalDate
 
 data class CreateScheduleRequest(
     val eventName: String,
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     val date: LocalDate
 )

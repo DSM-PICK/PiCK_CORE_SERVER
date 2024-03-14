@@ -8,7 +8,7 @@ import javax.persistence.Entity
 
 @Entity(name = "tbl_schedule")
 class ScheduleJpaEntity(
-    id: UUID,
+    id: UUID?,
 
     @Column(name = "event_name")
     val eventName: String,
