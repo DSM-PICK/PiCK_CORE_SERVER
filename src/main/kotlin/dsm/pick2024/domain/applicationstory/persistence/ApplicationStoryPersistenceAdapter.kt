@@ -5,6 +5,7 @@ import dsm.pick2024.domain.applicationstory.mapper.ApplicationStoryMapper
 import dsm.pick2024.domain.applicationstory.persistence.repository.ApplicationStoryRepository
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStoryPort
 import org.springframework.stereotype.Component
+import java.util.*
 
 @Component
 class ApplicationStoryPersistenceAdapter(
@@ -17,6 +18,6 @@ class ApplicationStoryPersistenceAdapter(
         applicationStoryRepository.saveAll(entities)
     }
 
-    override fun findByUsername(username: String) =
-        applicationStoryRepository.findByUsername(username).map { applicationStoryMapper.toDomain(it) }
+    override fun findByUserId(userId: UUID) =
+        applicationStoryRepository.findByUserId(userId).let { applicationStoryMapper.toDomain(it) }
 }

@@ -1,29 +1,29 @@
 package dsm.pick2024.domain.applicationstory.service
 
 import dsm.pick2024.domain.applicationstory.port.`in`.QueryUserApplicationUseCase
-import dsm.pick2024.domain.applicationstory.port.out.FindStoryByUsernamePort
+import dsm.pick2024.domain.applicationstory.port.out.FindStoryByUserIdPort
+import dsm.pick2024.domain.applicationstory.presentation.dto.response.ApplicationStoryResponse
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryApplicationStoryResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class QueryUserApplicationStoryService(
-    private val findStoryByUsernamePort: FindStoryByUsernamePort
+    private val findStoryByUserIdPort: FindStoryByUserIdPort
 ) : QueryUserApplicationUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryUserApplicationStory(username: String): List<QueryApplicationStoryResponse> {
-        val story = findStoryByUsernamePort.findByUsername(username) ?: throw RuntimeException()
-        return story.map {
-                storyList ->
-            QueryApplicationStoryResponse(
-                reason = storyList.reason,
-                username = storyList.username,
-                startTime = storyList.startTime,
-                endTime = storyList.endTime,
-                date = storyList.date,
-                type = storyList.type
-            )
-        }
+    override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse {
+        val user = findStoryByUserIdPort.findByUserId(userId) ?: throw RuntimeException()
+
+        val story = ApplicationStoryResponse(
+            reason = user.reason,
+            startTime = user.startTime,
+            endTime = user.endTime,
+            date = user.date,
+            type = user.type
+        )
+        return QueryApplicationStoryResponse(user.username, listOf(story))
     }
 }

@@ -8,6 +8,7 @@ import java.util.*
 data class ApplicationStory(
     val id: UUID? = null,
     val reason: String,
+    val userId: UUID,
     val startTime: LocalTime,
     val endTime: LocalTime? = null,
     val username: String,

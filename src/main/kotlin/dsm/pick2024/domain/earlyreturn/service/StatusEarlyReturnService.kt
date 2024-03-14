@@ -71,7 +71,8 @@ class StatusEarlyReturnService(
                 username = earlyReturn.username,
                 startTime = earlyReturn.startTime,
                 date = earlyReturn.date,
-                type = Type.EARLY_RETURN
+                type = Type.EARLY_RETURN,
+                userId = updateEarlyReturn.userId
             )
             applicationStory.add(applicationStorySave)
         }

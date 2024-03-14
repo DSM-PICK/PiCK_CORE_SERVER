@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ApplicationStoryRepository : JpaRepository<ApplicationStoryJpaEntity, UUID> {
-    fun findByUsername(username: String): List<ApplicationStoryJpaEntity>
+    fun findByUserId(userId: UUID): ApplicationStoryJpaEntity
 }

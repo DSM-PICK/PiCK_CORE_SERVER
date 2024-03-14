@@ -5,10 +5,14 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 data class QueryApplicationStoryResponse(
+    val username: String,
+    val applicationStory: List<ApplicationStoryResponse>
+)
+
+data class ApplicationStoryResponse(
     val reason: String,
     val startTime: LocalTime,
     val endTime: LocalTime? = null,
-    val username: String,
     val date: LocalDate,
     val type: Type
 )

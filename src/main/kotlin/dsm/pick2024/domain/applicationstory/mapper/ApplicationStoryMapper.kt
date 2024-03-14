@@ -16,7 +16,8 @@ class ApplicationStoryMapper {
                 endTime = endTime,
                 username = username,
                 date = date,
-                type = type
+                type = type,
+                userId = userId
             )
         }
 
@@ -29,7 +30,8 @@ class ApplicationStoryMapper {
                 endTime = endTime,
                 username = username,
                 date = date,
-                type = type
+                type = type,
+                userId = userId
             )
         }
 }

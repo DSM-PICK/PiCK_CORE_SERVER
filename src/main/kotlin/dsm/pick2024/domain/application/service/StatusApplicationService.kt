@@ -73,7 +73,8 @@ class StatusApplicationService(
                 startTime = updatedApplication.startTime,
                 endTime = updatedApplication.endTime,
                 date = updatedApplication.date,
-                type = Type.APPLICATION
+                type = Type.APPLICATION,
+                userId = updatedApplication.userId
             )
             applicationStory.add(applicationStorySave)
         }

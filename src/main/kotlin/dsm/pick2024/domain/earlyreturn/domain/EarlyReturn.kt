@@ -7,7 +7,7 @@ import java.util.UUID
 
 data class EarlyReturn(
     val id: UUID? = null,
-    val userId: UUID?,
+    val userId: UUID,
     val reason: String,
     val startTime: LocalTime,
     val date: LocalDate,
