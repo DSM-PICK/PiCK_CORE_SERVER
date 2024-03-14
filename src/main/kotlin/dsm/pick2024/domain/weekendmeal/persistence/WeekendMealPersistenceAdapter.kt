@@ -53,4 +53,8 @@ class WeekendMealPersistenceAdapter(
             )
             .fetch()
             .map { weekendMealMapper.toDomain(it) }
+
+    override fun findByStatus(status: Status): List<WeekendMeal> {
+        return weekendMealRepository.findAllByStatus(status)
+    }
 }

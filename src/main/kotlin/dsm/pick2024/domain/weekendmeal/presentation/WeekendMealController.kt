@@ -5,8 +5,10 @@ import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryStatusResponse
+import dsm.pick2024.domain.weekendmeal.service.WeekendMealExcelService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import javax.servlet.http.HttpServletResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 class WeekendMealController(
     private val weekendMealUseCase: CreateWeekendMealUseCase,
     private val queryWeekendMealClassUseCase: QueryWeekendMealClassUseCase,
-    private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase
+    private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase,
+    private val weekendMealExcelService: WeekendMealExcelService
 ) {
     @Operation(summary = "주말급식 상태변경 API")
     @PatchMapping("/status")
@@ -47,4 +50,8 @@ class WeekendMealController(
     @GetMapping("/my")
     fun queryMyWeekendMealStatus(): QueryStatusResponse =
         queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()
+
+    @Operation(summary = "주말급식 신청자 엑셀 파일 출력 API")
+    @GetMapping("/excel")
+    fun getExcel(httpServletResponse: HttpServletResponse) = weekendMealExcelService.execute(httpServletResponse)
 }
