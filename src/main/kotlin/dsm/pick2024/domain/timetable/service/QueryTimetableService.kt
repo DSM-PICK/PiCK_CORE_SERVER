@@ -18,7 +18,7 @@ class QueryTimetableService(
     @Transactional(readOnly = true)
     override fun queryDayTimetable(): DayTimetableResponse {
         val user = userFacadeUseCase.currentUser()
-        val date = LocalDate.now().plusDays(1)
+        val date = LocalDate.now()
 
         val tables = findTimetableByDatePort.findTimetableByDayWeekPort(date.dayOfWeek.value, user.grade, user.classNum)
         val dayeResponses = mutableListOf<PeriodTimetableResponse>()
