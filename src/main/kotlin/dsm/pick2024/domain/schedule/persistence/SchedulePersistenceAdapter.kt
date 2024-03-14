@@ -11,6 +11,7 @@ import java.time.LocalDate
 import java.time.Month
 import java.time.Year
 import java.time.temporal.TemporalAdjusters
+import java.util.*
 
 @Component
 class SchedulePersistenceAdapter(
@@ -22,6 +23,9 @@ class SchedulePersistenceAdapter(
     override fun save(schedule: Schedule) {
         scheduleRepository.save(scheduleMapper.toEntity(schedule))
     }
+
+    override fun findById(id: UUID) =
+        scheduleRepository.findById(id).let { scheduleMapper.toDomain(it) }
 
     override fun scheduleMonth(year: Year, month: Month): List<Schedule> {
         val startDay = LocalDate.of(year.value, month, 1)
