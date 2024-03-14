@@ -55,7 +55,6 @@ class SelfStudyPersistenceAdapter(
         return nullCheck?.let { selfStudyMapper.toDomain(it) }
     }
 
-
     override fun findByDaySelfStudy(date: LocalDate) =
         jpaQueryFactory
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
