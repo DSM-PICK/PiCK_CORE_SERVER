@@ -34,7 +34,7 @@ class UserLoginService(
                 User(
                     id = xquareUser.id,
                     accountId = xquareUser.accountId,
-                    password = userLoginRequest.password,
+                    password = xquareUser.password,
                     name = xquareUser.name,
                     grade = xquareUser.grade,
                     classNum = xquareUser.classNum,
