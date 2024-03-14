@@ -27,8 +27,8 @@ class NeisMealFeignClientService(
             pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
             sdSchoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
             atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
-            startedYmd = convertDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
-            endedYmd = convertDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
+            startedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
+            endedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
         )
 
         val mealJson = Gson().fromJson(
@@ -50,7 +50,7 @@ class NeisMealFeignClientService(
             val menu = getMenuReplace(mealJson, i)
             val mealDate = getMealDate(mealJson, i)
 
-            val transferMealDate = convertDateTimeFormat(mealDate)
+            val transferMealDate = changeDateTimeFormat(mealDate)
             val mealLocalDate = stringToLocalDate(transferMealDate)
 
             mealCodes.add(
@@ -99,7 +99,7 @@ class NeisMealFeignClientService(
 
     private fun getMealDate(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) = getRow(response, i).MLSV_YMD
 
-    private fun convertDateTimeFormat(date: String): String =
+    private fun changeDateTimeFormat(date: String): String =
         if (date.length > 8) {
             date.replace("-", "")
         } else {
