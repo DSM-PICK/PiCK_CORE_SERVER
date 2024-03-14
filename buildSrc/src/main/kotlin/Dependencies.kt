@@ -52,4 +52,8 @@ object Dependencies {
     const val ZXING_CORE = "com.google.zxing:core:${DependencyVersions.ZXING}"
 
     const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
+
+    //apachePOI
+    const val APACHE_POI = "org.apache.poi:poi:${DependencyVersions.APACHE_POI}"
+    const val APACHE_POI_OOXML = "org.apache.poi:poi-ooxml:${DependencyVersions.APACHE_POI}"
 }

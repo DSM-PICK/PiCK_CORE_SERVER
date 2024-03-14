@@ -11,4 +11,5 @@ object DependencyVersions {
     const val ZXING = "3.5.3"
     const val AWS = "1.12.281"
     const val GSON = "2.8.7"
+    const val APACHE_POI = "5.2.5"
 }

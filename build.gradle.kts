@@ -80,6 +80,9 @@ dependencies {
     implementation(Dependencies.GSON)
 
     implementation("org.springframework.boot:spring-boot-starter")
+
+    implementation(Dependencies.APACHE_POI)
+    implementation(Dependencies.APACHE_POI_OOXML)
 }
 
 tasks.withType<KotlinCompile> {
