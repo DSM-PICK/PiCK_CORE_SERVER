@@ -2,13 +2,12 @@ package dsm.pick2024.domain.timetable.mapper
 
 import dsm.pick2024.domain.timetable.domain.Timetable
 import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
-import java.time.DayOfWeek
 import org.springframework.stereotype.Component
 
 @Component
 class TimetableMapper {
 
-    fun toEntity(domain: Timetable)=
+    fun toEntity(domain: Timetable) =
         domain.run {
             TimetableJpaEntity(
                 id = id,
@@ -19,7 +18,7 @@ class TimetableMapper {
                 dayWeek = dayWeek
             )
         }
-    fun toDomain(entity: TimetableJpaEntity)=
+    fun toDomain(entity: TimetableJpaEntity) =
         entity.run {
             Timetable(
                 id = id,

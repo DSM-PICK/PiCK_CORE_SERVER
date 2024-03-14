@@ -4,11 +4,10 @@ import dsm.pick2024.domain.timetable.domain.Timetable
 import java.time.LocalDate
 import java.util.UUID
 
-
 data class DayTimetableResponse(
     val date: LocalDate,
     val timetables: List<PeriodTimetableResponse>?
-){
+) {
     fun addTimetable(
         tables: List<Timetable>,
         dayTimetableResponses: MutableList<PeriodTimetableResponse>

@@ -25,7 +25,11 @@ class QueryWeekTimetableService(
 
         for (i in 0 until 5) {
             val date = mon.plusDays(i.toLong())
-            val tables = findTimetableByDayWeekPort.findTimetableByDayWeekPort(date.dayOfWeek.value,user.grade, user.classNum)
+            val tables = findTimetableByDayWeekPort.findTimetableByDayWeekPort(
+                date.dayOfWeek.value,
+                user.grade,
+                user.classNum
+            )
             val response = mutableListOf<PeriodTimetableResponse>()
 
             DayTimetableResponse(date, response).addTimetable(tables, response)
@@ -37,6 +41,3 @@ class QueryWeekTimetableService(
         return timetableResponses
     }
 }
-
-
-

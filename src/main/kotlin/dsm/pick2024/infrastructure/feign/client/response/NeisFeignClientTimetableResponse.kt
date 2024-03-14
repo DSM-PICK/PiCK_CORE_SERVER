@@ -20,5 +20,3 @@ data class NeisTimetableRow(
     val PERIO: Int,
     val ITRT_CNTNT: String
 )
-
-

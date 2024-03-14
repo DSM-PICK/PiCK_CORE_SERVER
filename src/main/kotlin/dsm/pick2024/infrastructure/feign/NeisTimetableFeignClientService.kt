@@ -1,13 +1,12 @@
 package dsm.pick2024.infrastructure.feign
 
 import com.google.gson.Gson
+import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
+import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
 import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
+import dsm.pick2024.infrastructure.feign.client.response.NeisFeignClientTimetableResponse
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
-import dsm.pick2024.domain.timetable.enums.TimetableStatus
-import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.client.response.NeisFeignClientTimetableResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
@@ -15,9 +14,8 @@ import org.springframework.stereotype.Component
 class NeisTimetableFeignClientService(
     @Value("\${open-feign.neis-key}")
     private val neisKey: String,
-    private val neisFeignClient: NeisFeignClient,
+    private val neisFeignClient: NeisFeignClient
 ) {
-
     fun getNeisInfoToEntity(): MutableList<TimetableJpaEntity>? {
         val runDay = LocalDate.now()
 
@@ -31,7 +29,6 @@ class NeisTimetableFeignClientService(
             startedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).toString().replace("-", ""),
             endedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).plusDays(7).toString().replace("-", "")
         )
-
         val timetableJson = Gson().fromJson(
             neisTimetableServiceInfoString,
             NeisFeignClientTimetableResponse::class.java
@@ -57,7 +54,6 @@ class NeisTimetableFeignClientService(
                             dayWeek = dayWeek
                         )
                     )
-
                 }
             }
         }
@@ -66,5 +62,4 @@ class NeisTimetableFeignClientService(
     private fun changeStringToLocalDate(date: String): LocalDate {
         return LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE)
     }
-
 }
