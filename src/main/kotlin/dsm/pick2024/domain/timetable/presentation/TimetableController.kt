@@ -25,7 +25,7 @@ class TimetableController(
     @PostMapping
     fun saveTimetableInfo() = saveTimetableService.saveTimetable()
 
-    @Operation(summary = "당일 시갖표 조회 API")
+    @Operation(summary = "당일 시간표 조회 API")
     @GetMapping("/today")
     fun getTodayTimetable() = queryTimetableService.queryDayTimetable()
 
