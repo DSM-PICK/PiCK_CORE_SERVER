@@ -5,6 +5,7 @@ import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
 import dsm.pick2024.domain.schedule.port.out.DeleteSchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
+import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -39,8 +40,8 @@ class ScheduleController(
 
     @Operation(summary = "학사일정 수정 api")
     @PatchMapping("/modify")
-    fun modifySchedule(createScheduleRequest: CreateScheduleRequest) =
-        modifyScheduleUseCase.modifyModify(createScheduleRequest)
+    fun modifySchedule(modifyScheduleRequest: ModifyScheduleRequest) =
+        modifyScheduleUseCase.modifyModify(modifyScheduleRequest)
 
     @Operation(summary = "월 별로 학사일정조회 api")
     @GetMapping("/month")
