@@ -44,15 +44,17 @@ class SelfStudyPersistenceAdapter(
 
     override fun findByTodayTeacher(teacher: String): SelfStudy? {
         val day = LocalDate.now()
-        return jpaQueryFactory
+        val nullCheck = jpaQueryFactory
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(
                 QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(day),
                 QSelfStudyJpaEntity.selfStudyJpaEntity.teacher.eq(teacher)
             )
             .fetchOne()
-            .let { selfStudyMapper.toDomain(it!!) }
+
+        return nullCheck?.let { selfStudyMapper.toDomain(it) }
     }
+
 
     override fun findByDaySelfStudy(date: LocalDate) =
         jpaQueryFactory
