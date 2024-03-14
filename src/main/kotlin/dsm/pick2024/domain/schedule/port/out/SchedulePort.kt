@@ -4,4 +4,5 @@ interface SchedulePort :
     ScheduleMonthPort,
     ScheduleSavePort,
     FindScheduleByIdPort,
-    DeleteSchedulePort
+    DeleteSchedulePort,
+    SaveFeignSchedulePort
