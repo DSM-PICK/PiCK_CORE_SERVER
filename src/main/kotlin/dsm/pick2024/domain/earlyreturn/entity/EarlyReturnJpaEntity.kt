@@ -12,7 +12,7 @@ class EarlyReturnJpaEntity(
     id: UUID?,
 
     @Column(columnDefinition = "BINARY(16)")
-    val userId: UUID?,
+    val userId: UUID,
 
     @Column(name = "reason", nullable = false)
     val reason: String,
