@@ -1,7 +1,6 @@
 package dsm.pick2024.infrastructure.feign.client.response
 
-
-data class NeisFeignClientScheduleResponse (
+data class NeisFeignClientScheduleResponse(
     val SchoolSchedule: List<SchoolSchedule>
 )
 

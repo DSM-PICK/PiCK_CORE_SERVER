@@ -17,7 +17,6 @@ class NeisScheduleFeignClientService(
     private val neisFeignClient: NeisFeignClient
 ) {
     fun getNeisInfoToEntity(start: String, end: String): MutableList<ScheduleJpaEntity>? {
-
         val neisScheduleServiceInfoString = neisFeignClient.schoolSchedule(
             key = neisKey,
             type = NeisFeignClientRequestProperty.TYPE,
