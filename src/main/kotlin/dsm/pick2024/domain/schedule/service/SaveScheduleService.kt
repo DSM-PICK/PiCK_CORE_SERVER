@@ -14,6 +14,6 @@ class SaveScheduleService(
     override fun saveNeisInfoToDatabase(start: String, end: String) {
         val scheduleForSave = neisScheduleFeignClientService.getNeisInfoToEntity(start, end)
 
-        saveFeignSchedulePort.saveFeignSchedule(scheduleForSave)
+        scheduleForSave?.let { saveFeignSchedulePort.saveFeignSchedule(it) }
     }
 }

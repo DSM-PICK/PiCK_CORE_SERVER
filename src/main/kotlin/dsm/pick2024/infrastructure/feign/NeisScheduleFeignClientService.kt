@@ -16,8 +16,9 @@ class NeisScheduleFeignClientService(
     private val neisKey: String,
     private val neisFeignClient: NeisFeignClient
 ) {
-    fun getNeisInfoToEntity(start: String, end: String): MutableList<ScheduleJpaEntity> {
-        val neisFeignInfoToString = neisFeignClient.schoolSchedule(
+    fun getNeisInfoToEntity(start: String, end: String): MutableList<ScheduleJpaEntity>? {
+
+        val neisScheduleServiceInfoString = neisFeignClient.schoolSchedule(
             key = neisKey,
             type = NeisFeignClientRequestProperty.TYPE,
             pageIndex = NeisFeignClientRequestProperty.PAGE_INDEX,
@@ -29,27 +30,30 @@ class NeisScheduleFeignClientService(
         )
 
         val scheduleJson = Gson().fromJson(
-            neisFeignInfoToString,
+            neisScheduleServiceInfoString,
             NeisFeignClientScheduleResponse::class.java
         )
 
         val scheduleEntities = mutableListOf<ScheduleJpaEntity>()
 
-        scheduleJson.schoolSchedule.forEach { schoolSchedule ->
-            schoolSchedule.row.forEach { row ->
-                val date = changeStringToLocalDate(row.AA_YMD)
-                scheduleEntities.add(
-                    ScheduleJpaEntity(
-                        id = null,
-                        eventName = row.EVENT_NM,
-                        date = date
+        scheduleJson.SchoolSchedule.forEach { schedule ->
+            schedule.row?.let { rows ->
+                rows.forEach { row ->
+                    val date = changeStringToLocalDate(row.AA_YMD)
+                    val eventName = row.EVENT_NM
+                    scheduleEntities.add(
+                        ScheduleJpaEntity(
+                            id = null,
+                            eventName = eventName,
+                            date = date
+                        )
                     )
-                )
+                }
             }
         }
-
         return scheduleEntities
     }
+
     private fun changeStringToLocalDate(date: String): LocalDate {
         return LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE)
     }
