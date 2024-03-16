@@ -96,7 +96,7 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/application/status",
                 "/application/change/**",
-                "weekend-meal/status"
+                "/weekend-meal/status"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.GET,
