@@ -34,7 +34,6 @@ class SecurityConfig(
             .permitAll()
             .antMatchers(
                 HttpMethod.POST,
-                "/admin/login",
                 "/after",
                 "/meal",
                 "/notice/",
@@ -85,8 +84,7 @@ class SecurityConfig(
                 HttpMethod.POST,
                 "/application/",
                 "/class-room/move",
-                "/early-return/create",
-                "/user/login"
+                "/early-return/create"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.PUT,
