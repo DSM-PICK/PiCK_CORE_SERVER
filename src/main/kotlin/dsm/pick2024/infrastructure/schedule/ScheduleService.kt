@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class ScheduleService(
-
     private val deleteAllClassRoomPort: DeleteAllClassRoomPort,
     private val deleteAllEarlyReturnPort: DeleteAllEarlyReturnPort,
     private val deleteAllApplicationPort: DeleteAllApplicationPort,
