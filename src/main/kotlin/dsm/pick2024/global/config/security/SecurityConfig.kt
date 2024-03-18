@@ -43,7 +43,6 @@ class SecurityConfig(
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.PUT,
-                "/admin/refresh",
                 "/after/**"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
@@ -85,10 +84,6 @@ class SecurityConfig(
                 "/application/",
                 "/class-room/move",
                 "/early-return/create"
-            ).hasRole(Role.STU.toString())
-            .antMatchers(
-                HttpMethod.PUT,
-                "/user/refresh"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.PATCH,
