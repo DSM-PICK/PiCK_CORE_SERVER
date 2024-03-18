@@ -107,9 +107,6 @@ class SecurityConfig(
                 "/class-room/return"
             ).hasRole(Role.STU.toString())
             .antMatchers(
-                HttpMethod.PUT,
-                "user/refresh",
-                "admin/refresh"
             ).permitAll()
 
         http
