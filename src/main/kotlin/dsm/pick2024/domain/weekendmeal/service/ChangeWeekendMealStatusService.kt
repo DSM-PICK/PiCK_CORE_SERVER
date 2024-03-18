@@ -1,27 +1,26 @@
 package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.user.exception.UserNotFoundException
-import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.domain.weekendmeal.enums.Status
-import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealByUserIdPort
 import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 @Service
-class WeekendMealService(
-    private val userFacadeUseCase: UserFacadeUseCase,
-    private val weekendMealPort: SaveWeekendMealPort,
-    private val findWeekendMealByUserIdPort: FindWeekendMealByUserIdPort
-) : CreateWeekendMealUseCase {
+class ChangeWeekendMealStatusService(
+    private val findWeekendMealByUserIdPort: FindWeekendMealByUserIdPort,
+    private val saveWeekendMealPort: SaveWeekendMealPort
+) : ChangeWeekendMealStatusUseCase {
+
     @Transactional
-    override fun changeWeekendMeal(status: Status) {
-        val user = userFacadeUseCase.currentUser()
-        val weekendMeal = findWeekendMealByUserIdPort.findByUserId(user.id!!)
+    override fun changeWeekendMealStatus(id: UUID, status: Status) {
+        val weekendMeal = findWeekendMealByUserIdPort.findByUserId(id)
             ?: throw UserNotFoundException
 
-        weekendMealPort.save(
+        saveWeekendMealPort.save(
             weekendMeal.copy(
                 status = status
             )

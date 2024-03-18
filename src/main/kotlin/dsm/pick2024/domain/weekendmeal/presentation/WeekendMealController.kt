@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.weekendmeal.presentation
 
 import dsm.pick2024.domain.weekendmeal.enums.Status
+import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @Tag(name = "weekendMeal API")
 @RestController
@@ -22,10 +24,21 @@ class WeekendMealController(
     private val weekendMealUseCase: CreateWeekendMealUseCase,
     private val queryWeekendMealClassUseCase: QueryWeekendMealClassUseCase,
     private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase,
-    private val weekendMealExcelService: WeekendMealExcelService
+    private val weekendMealExcelService: WeekendMealExcelService,
+    private val changeWeekendMealStatusUseCase: ChangeWeekendMealStatusUseCase
 ) {
-    @Operation(summary = "주말급식 상태변경 API")
+    @Operation(summary = "주말급식 강제 상태변경")
     @PatchMapping("/status")
+    fun changeWeekendMealStatus(
+        @RequestParam(name = "userId")
+        userId: UUID,
+        @RequestParam(name = "status")
+        status: Status
+    ) =
+        changeWeekendMealStatusUseCase.changeWeekendMealStatus(userId, status)
+
+    @Operation(summary = "내 주말급식 상태변경 API")
+    @PatchMapping("/my-status")
     fun changeStatus(
         @RequestParam(name = "status") status: Status
     ) = weekendMealUseCase.changeWeekendMeal(status)
