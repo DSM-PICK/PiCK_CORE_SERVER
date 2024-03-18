@@ -21,6 +21,6 @@ class NoticeJpaEntity(
 
     val teacher: String,
 
-    val forStudent: Int
+    val grade: String
 
 ) : BaseUUIDEntity(id)

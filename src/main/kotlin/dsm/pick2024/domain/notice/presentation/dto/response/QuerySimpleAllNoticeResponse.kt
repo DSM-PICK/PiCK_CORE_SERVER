@@ -8,5 +8,5 @@ data class QuerySimpleAllNoticeResponse(
     val title: String,
     val createAt: LocalDate,
     val teacher: String,
-    val forStudent: Int
+    val grade: List<Int>
 )

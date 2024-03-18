@@ -6,5 +6,5 @@ data class ModifyNoticeRequest(
     val id: UUID,
     val title: String,
     val content: String,
-    val forStudent: Int
+    val grade: List<Int>
 )
