@@ -9,6 +9,8 @@ import java.util.UUID
 interface WeekendMealRepository : Repository<WeekendMealJpaEntity, UUID> {
     fun save(entity: WeekendMealJpaEntity)
 
+    fun saveAll(entity: Iterable<WeekendMealJpaEntity>)
+
     fun findByUserId(id: UUID): WeekendMealJpaEntity
 
     fun existsByUserId(id: UUID): Boolean

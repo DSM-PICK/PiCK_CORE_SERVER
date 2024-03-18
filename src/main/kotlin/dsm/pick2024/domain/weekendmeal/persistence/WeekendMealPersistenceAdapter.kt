@@ -4,6 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.entity.QWeekendMealJpaEntity
+import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealMapper
 import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealRepository
@@ -19,6 +20,10 @@ class WeekendMealPersistenceAdapter(
 ) : WeekendMealPort {
     override fun save(weekendMeal: WeekendMeal) {
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
+    }
+
+    override fun saveAll(weekendMeals: MutableList<WeekendMealJpaEntity>) {
+        weekendMealRepository.saveAll(weekendMeals)
     }
 
     override fun findByUserId(id: UUID) =
