@@ -6,6 +6,7 @@ import dsm.pick2024.domain.notice.port.out.FindByTodayPort
 import dsm.pick2024.domain.notice.port.out.QueryNoticeAllPort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
+import dsm.pick2024.domain.notice.presentation.dto.response.QueryTodayNoticeResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -44,12 +45,11 @@ class QueryNoticeService(
     override fun queryTodayNotice() =
         findByTodayPort.findByToday()
             .map { it ->
-                QuerySimpleAllNoticeResponse(
+                QueryTodayNoticeResponse(
                     it.id!!,
                     it.title,
                     it.createAt,
-                    it.teacher,
-                    it.grade.split(",").map { grade -> grade.toInt() }
+                    it.teacher
                 )
             }
 }

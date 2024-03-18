@@ -2,6 +2,7 @@ package dsm.pick2024.domain.notice.port.`in`
 
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
+import dsm.pick2024.domain.notice.presentation.dto.response.QueryTodayNoticeResponse
 import java.util.UUID
 
 interface QueryAllNoticeUseCase {
@@ -10,5 +11,5 @@ interface QueryAllNoticeUseCase {
 
     fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse
 
-    fun queryTodayNotice(): List<QuerySimpleAllNoticeResponse>
+    fun queryTodayNotice(): List<QueryTodayNoticeResponse>
 }
