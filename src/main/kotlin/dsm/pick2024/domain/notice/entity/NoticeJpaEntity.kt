@@ -19,6 +19,8 @@ class NoticeJpaEntity(
     @Column(columnDefinition = "BINARY(16)")
     val adminId: UUID,
 
-    val teacher: String
+    val teacher: String,
+
+    val forStudent: Int
 
 ) : BaseUUIDEntity(id)

@@ -25,7 +25,8 @@ class CreateNoticeService(
                 teacher = admin.name,
                 createAt = LocalDate.now(ZoneId.of("Asia/Seoul")),
                 title = request.title,
-                content = request.content
+                content = request.content,
+                forStudent = request.forStudent
             )
         )
     }

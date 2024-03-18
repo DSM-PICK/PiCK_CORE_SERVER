@@ -24,7 +24,9 @@ class QueryNoticeService(
                 QuerySimpleAllNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt
+                    it.createAt,
+                    it.teacher,
+                    it.forStudent
                 )
             }
 
@@ -34,7 +36,8 @@ class QueryNoticeService(
             notice.title,
             notice.content,
             notice.createAt,
-            notice.teacher
+            notice.teacher,
+            notice.forStudent
         )
     }
 
@@ -44,7 +47,9 @@ class QueryNoticeService(
                 QuerySimpleAllNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt
+                    it.createAt,
+                    it.teacher,
+                    it.forStudent
                 )
             }
 }

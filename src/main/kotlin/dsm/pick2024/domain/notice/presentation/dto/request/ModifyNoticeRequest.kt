@@ -5,5 +5,6 @@ import java.util.UUID
 data class ModifyNoticeRequest(
     val id: UUID,
     val title: String,
-    val content: String
+    val content: String,
+    val forStudent: Int
 )

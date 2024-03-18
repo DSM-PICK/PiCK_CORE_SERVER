@@ -6,5 +6,7 @@ import java.util.UUID
 data class QuerySimpleAllNoticeResponse(
     val id: UUID,
     val title: String,
-    val createAt: LocalDate
+    val createAt: LocalDate,
+    val teacher: String,
+    val forStudent: Int
 )

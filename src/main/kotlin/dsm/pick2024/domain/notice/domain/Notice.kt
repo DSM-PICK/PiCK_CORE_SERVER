@@ -9,5 +9,6 @@ data class Notice(
     val content: String,
     val createAt: LocalDate,
     val adminId: UUID,
-    val teacher: String
+    val teacher: String,
+    val forStudent: Int
 )
