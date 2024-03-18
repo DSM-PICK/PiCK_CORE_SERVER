@@ -106,7 +106,11 @@ class SecurityConfig(
                 HttpMethod.DELETE,
                 "/class-room/return"
             ).hasRole(Role.STU.toString())
-            .requestMatchers().permitAll()
+            .antMatchers(
+                HttpMethod.PUT,
+                "user/refresh",
+                "admin/refresh"
+            ).permitAll()
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
