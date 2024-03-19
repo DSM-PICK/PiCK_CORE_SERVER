@@ -5,7 +5,7 @@ import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllUserUseCase
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryStatusResponse
 import dsm.pick2024.domain.weekendmeal.service.WeekendMealExcelService
 import io.swagger.v3.oas.annotations.Operation
@@ -28,7 +28,7 @@ class WeekendMealController(
     private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase,
     private val weekendMealExcelService: WeekendMealExcelService,
     private val changeWeekendMealStatusUseCase: ChangeWeekendMealStatusUseCase,
-    private val saveAllWeekendMealUseCase: SaveAllWeekendMealUseCase
+    private val saveAllUserUseCase: SaveAllUserUseCase
 ) {
     @Operation(summary = "주말급식 강제 상태변경")
     @PatchMapping("/status")
@@ -73,5 +73,5 @@ class WeekendMealController(
 
     @Operation(summary = "주말급식 유저 정보 저장 API")
     @PostMapping("/saveAll")
-    fun saveAll(@RequestParam key: String) = saveAllWeekendMealUseCase.saveAll(key)
+    fun saveAll(@RequestParam key: String) = saveAllUserUseCase.saveAll(key)
 }
