@@ -37,27 +37,27 @@ class JwtTokenProvider(
         return TokenResponse(accessToken, refreshToken)
     }
 
-    fun reIssue(refreshToken: String): TokenResponse {
-        if (!isRefreshToken(refreshToken)) {
-            throw InvalidJwtException
-        }
-
-        refreshTokenRepository.findByToken(refreshToken)
-            ?.let { token ->
-                val id = token.id
-                val role = getRole(token.token)
-
-                val tokenResponse = generateToken(id, role)
-                token.update(tokenResponse.refreshToken, jwtProperties.refreshExp)
-                return TokenResponse(tokenResponse.accessToken, tokenResponse.refreshToken)
-            } ?: throw InvalidJwtException
-    }
-
-    fun getRole(token: String) = getJws(token).body["role"].toString()
-
-    private fun isRefreshToken(token: String?): Boolean {
-        return REFRESH_KEY == getJws(token!!).header["typ"].toString()
-    }
+//    fun reIssue(refreshToken: String): TokenResponse {
+//        if (!isRefreshToken(refreshToken)) {
+//            throw InvalidJwtException
+//        }
+//
+//        refreshTokenRepository.findByToken(refreshToken)
+//            ?.let { token ->
+//                val id = token.id
+//                val role = getRole(token.token)
+//
+//                val tokenResponse = generateToken(id, role)
+//                token.update(tokenResponse.refreshToken, jwtProperties.refreshExp)
+//                return TokenResponse(tokenResponse.accessToken, tokenResponse.refreshToken)
+//            } ?: throw InvalidJwtException
+//    }
+//
+//    fun getRole(token: String) = getJws(token).body["role"].toString()
+//
+//    private fun isRefreshToken(token: String?): Boolean {
+//        return REFRESH_KEY == getJws(token!!).header["typ"].toString()
+//    }
 
     private fun generateAccessToken(id: String, role: String, type: String, exp: Long): String =
         Jwts.builder()
