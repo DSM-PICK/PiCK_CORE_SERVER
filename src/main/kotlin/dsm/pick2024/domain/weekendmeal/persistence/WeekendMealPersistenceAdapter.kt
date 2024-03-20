@@ -22,7 +22,7 @@ class WeekendMealPersistenceAdapter(
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
     }
 
-    override fun saveAll(weekendMeals: List<WeekendMealJpaEntity>) {
+    override fun saveAll(weekendMeals: MutableList<WeekendMealJpaEntity>) {
         weekendMealRepository.saveAll(weekendMeals)
     }
 
