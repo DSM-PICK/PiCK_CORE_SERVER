@@ -32,39 +32,39 @@ class ScheduleController(
     private val modifyScheduleUseCase: ModifyScheduleUseCase,
     private val scheduleMonthUseCase: ScheduleMonthUseCase,
     private val deleteSchedulePort: DeleteSchedulePort,
-    private val scheduleUseCase: ScheduleUseCase,
+    private val scheduleUseCase: ScheduleUseCase
 ) {
     @Operation(summary = "학사일정 추가")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/create")
     fun createSchedule(
-        @RequestBody createScheduleRequest: CreateScheduleRequest,
+        @RequestBody createScheduleRequest: CreateScheduleRequest
     ) = createScheduleUseCase.createSchedule(createScheduleRequest)
 
     @Operation(summary = "학사일정 수정 api")
     @PatchMapping("/modify")
     fun modifySchedule(
-        @RequestBody modifyScheduleRequest: ModifyScheduleRequest,
+        @RequestBody modifyScheduleRequest: ModifyScheduleRequest
     ) = modifyScheduleUseCase.modifyModify(modifyScheduleRequest)
 
     @Operation(summary = "월 별로 학사일정조회 api")
     @GetMapping("/month")
     fun scheduleMonth(
         @RequestParam(name = "year") year: Year,
-        @RequestParam(name = "month") month: Month,
+        @RequestParam(name = "month") month: Month
     ) = scheduleMonthUseCase.scheduleMonth(year, month)
 
     @Operation(summary = "학사일정 삭제 api")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @DeleteMapping("/delete/{scheduleId}")
     fun deleteSchedule(
-        @PathVariable(name = "scheduleId") id: UUID,
+        @PathVariable(name = "scheduleId") id: UUID
     ) = deleteSchedulePort.deleteById(id)
 
     @Operation(summary = "나이스 학사일정 저장 api")
     @PostMapping("/save")
     fun saveSchedule(
         @RequestParam(name = "start") start: String,
-        @RequestParam(name = "end") end: String,
+        @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
 }

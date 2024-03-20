@@ -16,7 +16,7 @@ import org.springframework.web.cors.CorsUtils
 @Configuration
 class SecurityConfig(
     private val objectMapper: ObjectMapper,
-    private val jwtTokenProvider: JwtTokenProvider,
+    private val jwtTokenProvider: JwtTokenProvider
 ) {
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -39,11 +39,11 @@ class SecurityConfig(
                 "/dsm-pick/notice/",
                 "/dsm-pick/schedule/create",
                 "/dsm-pick/self-study/",
-                "/dsm-pick/timetable/",
+                "/dsm-pick/timetable/"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.PUT,
-                "/dsm-pick/after/**",
+                "/dsm-pick/after/**"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.GET,
@@ -64,32 +64,32 @@ class SecurityConfig(
                 "/dsm-pick/self-study/admin",
                 "/dsm-pick/weekend-meal/all",
                 "/dsm-pick/weekend-meal/quit",
-                "/dsm-pick/weekend-meal/excel",
+                "/dsm-pick/weekend-meal/excel"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/**",
                 "/dsm-pick/early-return/**",
-                "/dsm-pick/notice/**",
+                "/dsm-pick/notice/**"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.DELETE,
                 "/dsm-pick/after/**",
                 "/dsm-pick/notice/delete/",
-                "/dsm-pick/schedule/delete/",
+                "/dsm-pick/schedule/delete/"
             )
             .hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.POST,
                 "/dsm-pick/application/",
                 "/dsm-pick/class-room/move",
-                "/dsm-pick/early-return/create",
+                "/dsm-pick/early-return/create"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/status",
                 "/dsm-pick/application/change/**",
-                "/dsm-pick/weekend-meal/status",
+                "/dsm-pick/weekend-meal/status"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.GET,
@@ -100,11 +100,11 @@ class SecurityConfig(
                 "/dsm-pick/meal/date",
                 "/dsm-pick/timetable/**",
                 "/dsm-pick/user/simple",
-                "/dsm-pick/weekend-meal/my",
+                "/dsm-pick/weekend-meal/my"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.DELETE,
-                "/dsm-pick/class-room/return",
+                "/dsm-pick/class-room/return"
             ).hasRole(Role.STU.toString())
 
         http
