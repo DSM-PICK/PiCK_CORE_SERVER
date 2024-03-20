@@ -12,6 +12,6 @@ class UserTokenRefreshService(
 ) : UserTokenRefreshUseCase {
 
     @Transactional
-    override fun userTokenRefresh(userId: String) =
-        jwtTokenProvider.generateToken(userId, Role.STU.toString())
+    override fun userTokenRefresh(accountId: String) =
+        jwtTokenProvider.generateToken(accountId, Role.STU.toString())
 }

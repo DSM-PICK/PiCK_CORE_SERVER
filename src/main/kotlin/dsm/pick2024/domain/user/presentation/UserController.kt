@@ -30,8 +30,8 @@ class UserController(
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun userTokenRefresh(@RequestBody userId: String) =
-        userTokenRefreshUseCase.userTokenRefresh(userId)
+    fun userTokenRefresh(@RequestBody accountId: String) =
+        userTokenRefreshUseCase.userTokenRefresh(accountId)
 
     @Operation(summary = "내 정보 간편조회 API")
     @GetMapping("/simple")
