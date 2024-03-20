@@ -11,12 +11,9 @@ import javax.persistence.Enumerated
 @Entity(name = "tbl_status")
 class StatusJpaEntity(
     id: UUID?,
-
-    @Column(name = "user_id", nullable = false)
+    @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
-
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     val type: StatusType
-
 ) : BaseUUIDEntity(id)
