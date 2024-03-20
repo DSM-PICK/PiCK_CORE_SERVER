@@ -13,6 +13,10 @@ class StatusJpaEntity(
     id: UUID?,
     @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
+    val username: String,
+    val grade: Int,
+    val classNum: Int,
+    val num: Int,
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     val type: StatusType

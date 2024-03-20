@@ -21,6 +21,10 @@ class SaveAllStatusUserService(
                 StatusJpaEntity(
                     id = null,
                     userId = user.id,
+                    username = user.name,
+                    grade = user.grade,
+                    classNum = user.classNum,
+                    num = user.num,
                     type = StatusType.ATTENDANCE
                 )
             }.toMutableList()

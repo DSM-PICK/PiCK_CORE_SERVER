@@ -6,12 +6,15 @@ import org.springframework.stereotype.Component
 
 @Component
 class StatusMapper {
-
     fun toEntity(domain: Status): StatusJpaEntity =
         domain.run {
             StatusJpaEntity(
                 id = id,
                 userId = userId,
+                username = username,
+                grade = grade,
+                classNum = classNum,
+                num = num,
                 type = type
             )
         }
@@ -21,6 +24,10 @@ class StatusMapper {
             Status(
                 id = id,
                 userId = userId,
+                username = username,
+                grade = grade,
+                classNum = classNum,
+                num = num,
                 type = type
             )
         }
