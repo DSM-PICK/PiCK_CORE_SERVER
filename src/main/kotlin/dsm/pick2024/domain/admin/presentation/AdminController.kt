@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -29,8 +30,8 @@ class AdminController(
 
     @Operation(summary = "어드민 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun adminTokenRefresh(@RequestBody adminId: String): TokenResponse =
-        adminTokenRefreshUseCase.adminTokenRefresh(adminId)
+    fun adminTokenRefresh(@RequestHeader("X-Refresh-Token") token: String): TokenResponse =
+        adminTokenRefreshUseCase.adminTokenRefresh(token)
 
     @Operation(summary = "어드민 이름 조회 API")
     @GetMapping("my-name")

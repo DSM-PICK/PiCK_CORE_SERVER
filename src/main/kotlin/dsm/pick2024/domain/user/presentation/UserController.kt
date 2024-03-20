@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -30,8 +31,8 @@ class UserController(
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PatchMapping("/refresh")
-    fun userTokenRefresh(@RequestBody accountId: String) =
-        userTokenRefreshUseCase.userTokenRefresh(accountId)
+    fun userTokenRefresh(@RequestHeader("X-Refresh-Token") token: String) =
+        userTokenRefreshUseCase.userTokenRefresh(token)
 
     @Operation(summary = "내 정보 간편조회 API")
     @GetMapping("/simple")
