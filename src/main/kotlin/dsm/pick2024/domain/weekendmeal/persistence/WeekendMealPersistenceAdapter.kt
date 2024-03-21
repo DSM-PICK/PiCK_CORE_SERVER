@@ -15,7 +15,7 @@ import java.util.UUID
 class WeekendMealPersistenceAdapter(
     private val weekendMealRepository: WeekendMealRepository,
     private val weekendMealMapper: WeekendMealMapper,
-    private val jpaQueryFactory: JPAQueryFactory,
+    private val jpaQueryFactory: JPAQueryFactory
 ) : WeekendMealPort {
     override fun save(weekendMeal: WeekendMeal) {
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
@@ -31,27 +31,27 @@ class WeekendMealPersistenceAdapter(
 
     override fun findByGradeAndClassNum(
         grade: Int,
-        classNum: Int,
+        classNum: Int
     ) = jpaQueryFactory
         .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
         .where(
             QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
             QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
             QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.OK)
-                .or(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.NO)),
+                .or(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.NO))
         )
         .fetch()
         .map { weekendMealMapper.toDomain(it) }
 
     override fun findQuitByGradeAndClassNum(
         grade: Int,
-        classNum: Int,
+        classNum: Int
     ) = jpaQueryFactory
         .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
         .where(
             QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
             QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
-            QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET),
+            QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET)
         )
         .fetch()
         .map { weekendMealMapper.toDomain(it) }
