@@ -12,16 +12,17 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class WeekendMealService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val weekendMealPort: SaveWeekendMealPort,
+    private val saveWeekendMealPort: SaveWeekendMealPort,
     private val findWeekendMealByUserIdPort: FindWeekendMealByUserIdPort
 ) : CreateWeekendMealUseCase {
     @Transactional
     override fun changeWeekendMeal(status: Status) {
         val user = userFacadeUseCase.currentUser()
-        val weekendMeal = findWeekendMealByUserIdPort.findByUserId(user.id!!)
-            ?: throw UserNotFoundException
+        val weekendMeal =
+            findWeekendMealByUserIdPort.findByUserId(user.xquareId!!)
+                ?: throw UserNotFoundException
 
-        weekendMealPort.save(
+        saveWeekendMealPort.save(
             weekendMeal.copy(
                 status = status
             )
