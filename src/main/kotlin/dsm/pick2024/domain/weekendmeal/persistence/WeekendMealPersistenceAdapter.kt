@@ -26,40 +26,46 @@ class WeekendMealPersistenceAdapter(
         weekendMealRepository.saveAll(weekendMeals)
     }
 
-    override fun findByUserId(id: UUID) =
-        weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
+    override fun findByUserId(id: UUID) = weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
 
-    override fun existsByUserId(id: UUID) =
-        weekendMealRepository.existsByUserId(id)
+    override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUserId(id)
 
-    override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
-        jpaQueryFactory
-            .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
-            .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QWeekendMealJpaEntity.weekendMealJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.OK)
-                    .or(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.NO))
-            )
-            .fetch()
-            .map { weekendMealMapper.toDomain(it) }
+    override fun findByGradeAndClassNum(
+        grade: Int,
+        classNum: Int
+    ) = jpaQueryFactory
+        .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
+        .innerJoin(QUserJpaEntity.userJpaEntity)
+        .on(QWeekendMealJpaEntity.weekendMealJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .where(
+            QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
+            QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
+            QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.OK)
+                .or(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.NO))
+        )
+        .fetch()
+        .map { weekendMealMapper.toDomain(it) }
 
-    override fun findQuitByGradeAndClassNum(grade: Int, classNum: Int) =
-        jpaQueryFactory
-            .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
-            .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QWeekendMealJpaEntity.weekendMealJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET)
-            )
-            .fetch()
-            .map { weekendMealMapper.toDomain(it) }
+    override fun findQuitByGradeAndClassNum(
+        grade: Int,
+        classNum: Int
+    ) = jpaQueryFactory
+        .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
+        .innerJoin(QUserJpaEntity.userJpaEntity)
+        .on(QWeekendMealJpaEntity.weekendMealJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .where(
+            QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
+            QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
+            QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET)
+        )
+        .fetch()
+        .map { weekendMealMapper.toDomain(it) }
 
     override fun findByStatus(status: Status): List<WeekendMeal> {
         return weekendMealRepository.findAllByStatus(status)
+    }
+
+    override fun findById(id: UUID): WeekendMeal? {
+        return weekendMealRepository.findById(id).let { weekendMealMapper.toDomain(it) }
     }
 }
