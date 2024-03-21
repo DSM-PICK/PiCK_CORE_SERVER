@@ -40,6 +40,7 @@ class WeekendMealPersistenceAdapter(
             QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.OK)
                 .or(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.NO))
         )
+        .orderBy(QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc())
         .fetch()
         .map { weekendMealMapper.toDomain(it) }
 
@@ -53,6 +54,7 @@ class WeekendMealPersistenceAdapter(
             QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
             QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET)
         )
+        .orderBy(QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc())
         .fetch()
         .map { weekendMealMapper.toDomain(it) }
 
