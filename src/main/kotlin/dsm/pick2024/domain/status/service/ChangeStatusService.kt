@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeStatusService(
-    private val statusPersistenceAdapter: StatusPersistenceAdapter,
+    private val statusPersistenceAdapter: StatusPersistenceAdapter
 ) : ChangeStatusUseCase {
     @Transactional
     override fun changeStatus(request: QueryClassResponse) {
@@ -20,7 +20,7 @@ class ChangeStatusService(
 
             val update =
                 status?.copy(
-                    type = request.status,
+                    type = request.status
                 )
 
             update?.let { statusPersistenceAdapter.save(it) }
