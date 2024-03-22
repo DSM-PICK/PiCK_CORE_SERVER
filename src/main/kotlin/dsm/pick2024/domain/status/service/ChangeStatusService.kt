@@ -4,13 +4,12 @@ import dsm.pick2024.domain.status.exception.StatusNotFoundException
 import dsm.pick2024.domain.status.persistence.StatusPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
 import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
-import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeStatusService(
-    private val statusPersistenceAdapter: StatusPersistenceAdapter,
+    private val statusPersistenceAdapter: StatusPersistenceAdapter
 ) : ChangeStatusUseCase {
 
     @Transactional
