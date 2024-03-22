@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.status.port.`in`
 
-import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
+import dsm.pick2024.domain.status.present.dto.response.QueryClassResponse
 
 interface ChangeStatusUseCase {
-    fun changeStatus(request: List<ChangeStatusRequest>)
+    fun changeStatus(request: QueryClassResponse)
 }
