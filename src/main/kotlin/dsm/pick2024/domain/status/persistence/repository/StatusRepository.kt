@@ -6,4 +6,8 @@ import java.util.UUID
 
 interface StatusRepository : Repository<StatusJpaEntity, UUID> {
     fun saveAll(entity: Iterable<StatusJpaEntity>)
+
+    fun findByUserId(userId: UUID): StatusJpaEntity
+
+    fun save(entity: StatusJpaEntity)
 }

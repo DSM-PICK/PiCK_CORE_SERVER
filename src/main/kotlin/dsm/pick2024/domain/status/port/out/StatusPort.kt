@@ -2,4 +2,6 @@ package dsm.pick2024.domain.status.port.out
 
 interface StatusPort :
     SaveAllStatusPort,
-    QueryClassStatusPort
+    QueryClassStatusPort,
+    FindStatusByUserId,
+    SaveStatusPort
