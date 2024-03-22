@@ -11,16 +11,21 @@ class AdminPersistenceAdapter(
     private val adminRepository: AdminRepository,
     private val adminMapper: AdminMapper
 ) : AdminPortAdmin {
-    override fun findByName(name: String) =
-        adminRepository.findByName(name).let { adminMapper.toDomain(it) }
+    override fun findByName(name: String) = adminRepository.findByName(name).let { adminMapper.toDomain(it) }
 
     override fun findByAdminId(adminId: String) =
         adminRepository.findByAdminId(adminId).let { adminMapper.toDomain(it) }
 
-    override fun existsByAdminId(adminId: String) =
-        adminRepository.existsByAdminId(adminId)
+    override fun existsByAdminId(adminId: String) = adminRepository.existsByAdminId(adminId)
 
     override fun save(admin: Admin) {
         adminRepository.save(adminMapper.toEntity(admin))
+    }
+
+    override fun findByGradeAndClassNum(
+        grade: Int,
+        classNum: Int
+    ): Admin? {
+        return adminRepository.findByGradeAndClassNum(grade, classNum).let { adminMapper.toDomain(it) }
     }
 }

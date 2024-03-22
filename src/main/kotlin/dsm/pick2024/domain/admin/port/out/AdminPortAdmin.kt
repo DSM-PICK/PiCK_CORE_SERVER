@@ -4,4 +4,5 @@ interface AdminPortAdmin :
     FindAdminByNamePort,
     FindByAdminIdPort,
     ExistsByAdminIdPort,
-    AdminSavePort
+    AdminSavePort,
+    FindAdminByGradeAndClassNum

@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional
 class ChangeStatusService(
     private val statusPersistenceAdapter: StatusPersistenceAdapter
 ) : ChangeStatusUseCase {
-
     @Transactional
     override fun changeStatus(request: List<ChangeStatusRequest>) {
         request.forEach { request ->
