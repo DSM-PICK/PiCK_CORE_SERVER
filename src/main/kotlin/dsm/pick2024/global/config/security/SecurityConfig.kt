@@ -34,12 +34,13 @@ class SecurityConfig(
             .permitAll()
             .antMatchers(
                 HttpMethod.POST,
-                "/dsm-pick/after",
+                "/dsm-pick/after/**",
                 "/dsm-pick/meal",
                 "/dsm-pick/notice/",
                 "/dsm-pick/schedule/create",
                 "/dsm-pick/self-study/",
-                "/dsm-pick/timetable/"
+                "/dsm-pick/timetable/",
+                "/dsm-pick/weekend-meal/status"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.PUT,
@@ -70,7 +71,8 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/**",
                 "/dsm-pick/early-return/**",
-                "/dsm-pick/notice/**"
+                "/dsm-pick/notice/**",
+                "/dsm-pick/status/change"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.DELETE,
@@ -89,7 +91,7 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/status",
                 "/dsm-pick/application/change/**",
-                "/dsm-pick/weekend-meal/status"
+                "/dsm-pick/weekend-meal/my-status"
             ).hasRole(Role.STU.toString())
             .antMatchers(
                 HttpMethod.GET,
