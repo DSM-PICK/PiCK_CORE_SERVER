@@ -2,7 +2,7 @@ package dsm.pick2024.domain.afterschool.service
 
 import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.out.FindAfterSchoolStudentByIdPort
-import dsm.pick2024.domain.afterschool.port.out.SaveAllAfetSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -10,7 +10,7 @@ import kotlin.collections.List
 
 @Service
 class ChangeStatusAfterSchoolStudentService(
-    private val saveAllAfetSchoolStudentPort: SaveAllAfetSchoolStudentPort,
+    private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
     private val findAfterSchoolStudentByIdPort: FindAfterSchoolStudentByIdPort
 ) : ChangeStatusAfterSchoolStudentUseCase {
     @Transactional
@@ -27,6 +27,6 @@ class ChangeStatusAfterSchoolStudentService(
                 )
             }
 
-        saveAllAfetSchoolStudentPort.saveAll(updates)
+        saveAllAfterSchoolStudentPort.saveAll(updates)
     }
 }
