@@ -12,7 +12,6 @@ class AfterSchoolStudentPersistenceAdapter(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository
 ) : AfterSchoolStudentPort {
-
     override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
         val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
         afterSchoolStudentRepository.saveAll(entities)
@@ -25,6 +24,5 @@ class AfterSchoolStudentPersistenceAdapter(
         afterSchoolStudentRepository.deleteById(id)
     }
 
-    override fun findByAll() =
-        afterSchoolStudentRepository.findAll().map { afterSchoolStudentMapper.toDomain(it) }
+    override fun findByAll() = afterSchoolStudentRepository.findAll().map { afterSchoolStudentMapper.toDomain(it) }
 }

@@ -4,6 +4,7 @@ import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentU
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
+import dsm.pick2024.domain.afterschool.port.`in`.SaveAllAfterSchoolUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -19,32 +20,36 @@ class AfterSchoolStudentController(
     private val saveAfterSchoolUseCase: SaveAfterSchoolStudentUseCase,
     private val changeStatusAfterSchoolStudentUseCase: ChangeStatusAfterSchoolStudentUseCase,
     private val deleteAfterSchoolStudentUseCase: DeleteAfterSchoolStudentUseCase,
-    private val queryAfterSchoolStudentAllUseCase: QueryAfterSchoolStudentAllUseCase
+    private val queryAfterSchoolStudentAllUseCase: QueryAfterSchoolStudentAllUseCase,
+    private val saveAllAfterSchoolUseCase: SaveAllAfterSchoolUseCase
 ) {
-
     @Operation(summary = "학생등록 API")
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     fun saveAfterSchoolStudent(
         @RequestBody saveAfterSchoolStudentRequest: List<SaveAfterSchoolStudentRequest>
-    ) =
-        saveAfterSchoolUseCase.saveAfterSchoolStudentUseCase(saveAfterSchoolStudentRequest)
+    ) = saveAfterSchoolUseCase.saveAfterSchoolStudentUseCase(saveAfterSchoolStudentRequest)
 
     @Operation(summary = "학생 출결상태 변경")
     @PatchMapping("/change")
     fun changeAfterSchoolStudentStatus(
         @RequestBody changeAfterSchoolStatusRequest: List<ChangeAfterSchoolStatusRequest>
-    ) =
-        changeStatusAfterSchoolStudentUseCase.changeStatusAfterSchoolStudent(changeAfterSchoolStatusRequest)
+    ) = changeStatusAfterSchoolStudentUseCase.changeStatusAfterSchoolStudent(changeAfterSchoolStatusRequest)
 
     @Operation(summary = "학생제거 API")
     @DeleteMapping("/delete")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    fun deleteAfterSchoolStudent(@RequestBody id: UUID) =
-        deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
+    fun deleteAfterSchoolStudent(
+        @RequestBody id: UUID
+    ) = deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
 
     @Operation(summary = "방과후 학생 전체 조회 API")
     @GetMapping("/all")
-    fun queryAfterSchoolAll() =
-        queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
+    fun queryAfterSchoolAll() = queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
+
+    @Operation(summary = "방과후 학생 저장 API")
+    @PostMapping("/saveAll")
+    fun saveAllAfterSchoolStudent(
+        @RequestParam key: String
+    ) = saveAllAfterSchoolUseCase.saveAll(key)
 }
