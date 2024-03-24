@@ -72,9 +72,6 @@ class StatusApplicationService(
                 ApplicationStory(
                     reason = updatedApplication.reason,
                     username = updatedApplication.username,
-                    grade = updatedApplication.grade,
-                    classNum = updatedApplication.classNum,
-                    num = updatedApplication.num,
                     startTime = updatedApplication.startTime,
                     endTime = updatedApplication.endTime,
                     date = updatedApplication.date,
