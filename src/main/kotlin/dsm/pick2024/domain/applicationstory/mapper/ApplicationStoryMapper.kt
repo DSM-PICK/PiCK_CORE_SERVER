@@ -14,9 +14,6 @@ class ApplicationStoryMapper {
                 startTime = startTime,
                 endTime = endTime,
                 username = username,
-                grade = grade,
-                classNum = classNum,
-                num = num,
                 date = date,
                 type = type,
                 userId = userId
@@ -31,9 +28,6 @@ class ApplicationStoryMapper {
                 startTime = startTime,
                 endTime = endTime,
                 username = username,
-                grade = grade,
-                classNum = classNum,
-                num = num,
                 date = date,
                 type = type,
                 userId = userId

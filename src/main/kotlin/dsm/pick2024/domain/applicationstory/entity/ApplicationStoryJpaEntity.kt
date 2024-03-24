@@ -17,12 +17,6 @@ class ApplicationStoryJpaEntity(
     val reason: String,
     @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
-    @Column(nullable = false)
-    val grade: Int,
-    @Column(nullable = false)
-    val classNum: Int,
-    @Column(nullable = false)
-    val num: Int,
     @Column(name = "start_time", nullable = false)
     val startTime: LocalTime,
     @Column(name = "end_time")

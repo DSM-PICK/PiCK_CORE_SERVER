@@ -73,9 +73,6 @@ class StatusEarlyReturnService(
                 ApplicationStory(
                     reason = earlyReturn.reason,
                     username = earlyReturn.username,
-                    grade = earlyReturn.grade,
-                    classNum = earlyReturn.grade,
-                    num = earlyReturn.num,
                     startTime = earlyReturn.startTime,
                     date = earlyReturn.date,
                     type = Type.EARLY_RETURN,
