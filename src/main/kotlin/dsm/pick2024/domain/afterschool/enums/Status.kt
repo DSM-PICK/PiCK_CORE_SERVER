@@ -5,5 +5,6 @@ enum class Status {
     MOVEMENT, // 이동
     GO_OUT, // 외출
     DISALLOWED, // 무단
-    PICNIC // 현체
+    PICNIC, // 현체
+    EMPLOYMENT, // 취업
 }
