@@ -19,7 +19,6 @@ class ApplicationService(
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationUseCase {
-
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
@@ -39,7 +38,7 @@ class ApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.id
+                userId = user.xquareId
             )
         )
     }
