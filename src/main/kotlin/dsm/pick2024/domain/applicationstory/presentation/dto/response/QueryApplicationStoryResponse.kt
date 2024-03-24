@@ -6,7 +6,7 @@ import java.time.LocalTime
 
 data class QueryApplicationStoryResponse(
     val username: String,
-    val applicationStory: List<ApplicationStoryResponse>
+    val applicationStory: List<ApplicationStoryResponse?>
 )
 
 data class ApplicationStoryResponse(

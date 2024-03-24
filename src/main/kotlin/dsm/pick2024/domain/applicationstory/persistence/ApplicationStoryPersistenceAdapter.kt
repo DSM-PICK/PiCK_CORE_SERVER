@@ -18,5 +18,5 @@ class ApplicationStoryPersistenceAdapter(
     }
 
     override fun findByUserId(userId: UUID) =
-        applicationStoryRepository.findByUserId(userId).let { applicationStoryMapper.toDomain(it) }
+        applicationStoryRepository.findByUserId(userId)?.let(applicationStoryMapper::toDomain)
 }

@@ -4,5 +4,5 @@ import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryAppli
 import java.util.UUID
 
 interface QueryUserApplicationUseCase {
-    fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse
+    fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse?
 }
