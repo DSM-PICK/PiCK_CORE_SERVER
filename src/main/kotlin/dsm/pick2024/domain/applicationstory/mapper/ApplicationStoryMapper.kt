@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class ApplicationStoryMapper {
-
     fun toEntity(domain: ApplicationStory) =
         domain.run {
             ApplicationStoryJpaEntity(
@@ -15,6 +14,9 @@ class ApplicationStoryMapper {
                 startTime = startTime,
                 endTime = endTime,
                 username = username,
+                grade = grade,
+                classNum = classNum,
+                num = num,
                 date = date,
                 type = type,
                 userId = userId
@@ -29,6 +31,9 @@ class ApplicationStoryMapper {
                 startTime = startTime,
                 endTime = endTime,
                 username = username,
+                grade = grade,
+                classNum = classNum,
+                num = num,
                 date = date,
                 type = type,
                 userId = userId

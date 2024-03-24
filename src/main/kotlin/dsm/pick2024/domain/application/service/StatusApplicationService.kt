@@ -8,7 +8,6 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteAllApplicationListPort
@@ -16,6 +15,7 @@ import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
 import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
+import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,7 +32,6 @@ class StatusApplicationService(
     private val applicationStorySaveAllPort: ApplicationStorySavePort,
     private val deleteAllApplicationListPort: DeleteAllApplicationListPort
 ) : StatusApplicationUseCase {
-
     @Transactional
     override fun statusApplication(request: ApplicationStatusRequest?) {
         val admin = adminFacadeUseCase.currentUser()
@@ -51,31 +50,37 @@ class StatusApplicationService(
         for (id in request.ids) {
             val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
 
-            val image = generateApplicationQRCode(
-                application.username,
-                admin.name,
-                application.startTime,
-                application.endTime,
-                application.reason
-            )
+            val image =
+                generateApplicationQRCode(
+                    application.username,
+                    admin.name,
+                    application.startTime,
+                    application.endTime,
+                    application.reason
+                )
 
-            val updatedApplication = application.copy(
-                teacherName = admin.name,
-                status = Status.OK,
-                applicationStatus = ApplicationStatus.NON_RETURN,
-                image = image
-            )
+            val updatedApplication =
+                application.copy(
+                    teacherName = admin.name,
+                    status = Status.OK,
+                    applicationStatus = ApplicationStatus.NON_RETURN,
+                    image = image
+                )
             applicationUpdate.add(updatedApplication)
 
-            val applicationStorySave = ApplicationStory(
-                reason = updatedApplication.reason,
-                username = updatedApplication.username,
-                startTime = updatedApplication.startTime,
-                endTime = updatedApplication.endTime,
-                date = updatedApplication.date,
-                type = Type.APPLICATION,
-                userId = updatedApplication.userId
-            )
+            val applicationStorySave =
+                ApplicationStory(
+                    reason = updatedApplication.reason,
+                    username = updatedApplication.username,
+                    grade = updatedApplication.grade,
+                    classNum = updatedApplication.classNum,
+                    num = updatedApplication.num,
+                    startTime = updatedApplication.startTime,
+                    endTime = updatedApplication.endTime,
+                    date = updatedApplication.date,
+                    type = Type.APPLICATION,
+                    userId = updatedApplication.userId
+                )
             applicationStory.add(applicationStorySave)
         }
 
@@ -97,13 +102,14 @@ class StatusApplicationService(
 
         val message = "username=$username&teacherName=$teacherName&startTime=$startTime&endTIme=$endTime"
 
-        val code = QRCodeWriter().encode(
-            message,
-            BarcodeFormat.QR_CODE,
-            width,
-            height,
-            mapOf(EncodeHintType.MARGIN to 1)
-        )
+        val code =
+            QRCodeWriter().encode(
+                message,
+                BarcodeFormat.QR_CODE,
+                width,
+                height,
+                mapOf(EncodeHintType.MARGIN to 1)
+            )
 
         ImageIO.write(MatrixToImageWriter.toBufferedImage(code), "png", byteArrayOutputStream)
 
