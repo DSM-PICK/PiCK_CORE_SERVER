@@ -14,18 +14,21 @@ class QueryUserApplicationStoryService(
 ) : QueryUserApplicationUseCase {
     @Transactional(readOnly = true)
     override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse? {
-        val user = findStoryByUserIdPort.findByUserId(userId)
+        val user = findStoryByUserIdPort.findAllByUserId(userId)
 
-        val story =
-            user?.let {
-                ApplicationStoryResponse(
-                    reason = it.reason,
-                    startTime = user.startTime,
-                    endTime = user.endTime,
-                    date = user.date,
-                    type = user.type
-                )
+        val userStory =
+            user.map { story ->
+                story?.let {
+                    ApplicationStoryResponse(
+                        reason = story.reason,
+                        startTime = story.startTime,
+                        endTime = story.endTime,
+                        date = story.date,
+                        type = story.type
+                    )
+                }
             }
-        return user?.let { QueryApplicationStoryResponse(it.username, listOf(story)) }
+
+        return (user.firstOrNull()?.username ?: null)?.let { QueryApplicationStoryResponse(it, userStory) }
     }
 }

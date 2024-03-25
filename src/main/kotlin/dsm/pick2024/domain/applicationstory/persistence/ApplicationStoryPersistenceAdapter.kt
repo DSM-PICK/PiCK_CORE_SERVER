@@ -17,6 +17,7 @@ class ApplicationStoryPersistenceAdapter(
         applicationStoryRepository.saveAll(entities)
     }
 
-    override fun findByUserId(userId: UUID) =
-        applicationStoryRepository.findByUserId(userId)?.let(applicationStoryMapper::toDomain)
+    override fun findAllByUserId(userId: UUID) =
+        applicationStoryRepository.findAllByUserId(userId)
+            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }
 }
