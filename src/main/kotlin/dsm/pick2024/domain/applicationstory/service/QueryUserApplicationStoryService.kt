@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Service
 class QueryUserApplicationStoryService(
-    private val findStoryByUserIdPort: FindStoryByUserIdPort,
+    private val findStoryByUserIdPort: FindStoryByUserIdPort
 ) : QueryUserApplicationUseCase {
     @Transactional(readOnly = true)
     override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse? {
@@ -24,7 +24,7 @@ class QueryUserApplicationStoryService(
                         startTime = story.startTime,
                         endTime = story.endTime,
                         date = story.date,
-                        type = story.type,
+                        type = story.type
                     )
                 }
             }
