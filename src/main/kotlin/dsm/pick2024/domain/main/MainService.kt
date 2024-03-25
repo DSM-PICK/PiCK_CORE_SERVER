@@ -21,15 +21,15 @@ class MainService(
     private val findByUserIdPort: FindByUserIdPort
 ) {
     @Transactional(readOnly = true)
-    fun main(): String {
-        val userId = userFacadeUseCase.currentUser().id!!
+    fun main(): Any {
+        val userId = userFacadeUseCase.currentUser().id ?: throw IllegalStateException("User ID not found")
 
         return findApplication(userId)
             ?: findEarlyReturn(userId)
             ?: findClassroom(userId)
     }
 
-    private fun findApplication(userId: UUID): String? {
+    private fun findApplication(userId: UUID): QuerySimpleMyApplicationResponse? {
         val application = findApplicationByNamePort.findByUserId(userId)
             ?: throw ApplicationNotFoundException
 
@@ -38,10 +38,10 @@ class MainService(
             startTime = application.startTime,
             username = application.username,
             endTime = application.endTime
-        ).toString()
+        )
     }
 
-    private fun findEarlyReturn(userId: UUID): String? {
+    private fun findEarlyReturn(userId: UUID): QuerySimpleMyEarlyResponse? {
         val earlyReturn = findEarlyReturnByUserIdPort.findByUserId(userId)
             ?: throw EarlyReturnApplicationNotFoundException
 
@@ -49,16 +49,16 @@ class MainService(
             userId = earlyReturn.userId,
             startTime = earlyReturn.startTime,
             username = earlyReturn.username
-        ).toString()
+        )
     }
 
-    private fun findClassroom(userId: UUID): String {
+    private fun findClassroom(userId: UUID): UserMoveClassroomResponse {
         val classroom = findByUserIdPort.findByUserId(userId)
-            ?: throw RuntimeException()
+            ?: throw IllegalStateException("Classroom data not found")
 
         return UserMoveClassroomResponse(
             username = classroom.username,
             classroom = classroom.classroomName
-        ).toString()
+        )
     }
 }
