@@ -14,12 +14,12 @@ class QueryMyEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findEarlyReturnByUserIdPort: FindEarlyReturnByUserIdPort
 ) : QueryMyEarlyReturnUseCase {
-
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
         val user = userFacadeUseCase.currentUser()
-        val earlyReturn = findEarlyReturnByUserIdPort.findByUserId(user.id!!)
-            ?: throw EarlyReturnApplicationNotFoundException
+        val earlyReturn =
+            findEarlyReturnByUserIdPort.findByUserId(user.id!!)
+                ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
             earlyReturn.username,
@@ -29,7 +29,7 @@ class QueryMyEarlyReturnService(
             earlyReturn.grade,
             earlyReturn.classNum,
             earlyReturn.num,
-            earlyReturn.image!!.toByteArray(),
+            earlyReturn.image!!,
             type = Type.EARLY_RETURN
         )
     }
