@@ -3,8 +3,8 @@ package dsm.pick2024.infrastructure.feign
 import com.google.gson.Gson
 import dsm.pick2024.domain.meal.entity.MealJpaEntity
 import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.client.response.NeisFeignClientMealServiceDietInfoResponse
 import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
+import dsm.pick2024.infrastructure.feign.client.response.NeisFeignClientMealServiceDietInfoResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -16,25 +16,26 @@ class NeisMealFeignClientService(
     private val neisKey: String,
     private val neisFeignClient: NeisFeignClient
 ) {
-
     fun getNeisInfoToEntity(): MutableList<MealJpaEntity> {
-        val nextMonth = LocalDate.now()
+        val nextMonth = LocalDate.now().plusMonths(1)
 
-        val neisMealServiceDietInfoString = neisFeignClient.getMealServiceDietInfo(
-            key = neisKey,
-            type = NeisFeignClientRequestProperty.TYPE,
-            pageIndex = NeisFeignClientRequestProperty.PAGE_INDEX,
-            pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
-            sdSchoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
-            atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
-            startedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
-            endedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
-        )
+        val neisMealServiceDietInfoString =
+            neisFeignClient.getMealServiceDietInfo(
+                key = neisKey,
+                type = NeisFeignClientRequestProperty.TYPE,
+                pageIndex = NeisFeignClientRequestProperty.PAGE_INDEX,
+                pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
+                sdSchoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
+                atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
+                startedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
+                endedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
+            )
 
-        val mealJson = Gson().fromJson(
-            neisMealServiceDietInfoString,
-            NeisFeignClientMealServiceDietInfoResponse::class.java
-        )
+        val mealJson =
+            Gson().fromJson(
+                neisMealServiceDietInfoString,
+                NeisFeignClientMealServiceDietInfoResponse::class.java
+            )
         val mealTotalCount = mealJson.mealServiceDietInfo.first().head.first().list_total_count
 
         val mealEntities = mutableListOf<MealJpaEntity>()
@@ -77,27 +78,41 @@ class NeisMealFeignClientService(
         return mealEntities
     }
 
-    private fun getRow(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) =
-        response.mealServiceDietInfo[1].row[i]
+    private fun getRow(
+        response: NeisFeignClientMealServiceDietInfoResponse,
+        i: Int
+    ) = response.mealServiceDietInfo[1].row[i]
 
-    private fun getMealCode(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) =
-        getRow(response, i).MMEAL_SC_CODE
+    private fun getMealCode(
+        response: NeisFeignClientMealServiceDietInfoResponse,
+        i: Int
+    ) = getRow(response, i).MMEAL_SC_CODE
 
-    private fun getCalInfo(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) = getRow(response, i).CAL_INFO
+    private fun getCalInfo(
+        response: NeisFeignClientMealServiceDietInfoResponse,
+        i: Int
+    ) = getRow(response, i).CAL_INFO
 
-    private fun getMenuReplace(response: NeisFeignClientMealServiceDietInfoResponse, i: Int): Pair<String, String> {
-        val menu = getRow(response, i).DDISH_NM
-            .replace("<br/>", "||")
-            .replace("/", "&")
-            .replace("[0-9.()]".toRegex(), "")
-            .replace("\\p{Z}".toRegex(), "")
+    private fun getMenuReplace(
+        response: NeisFeignClientMealServiceDietInfoResponse,
+        i: Int
+    ): Pair<String, String> {
+        val menu =
+            getRow(response, i).DDISH_NM
+                .replace("<br/>", "||")
+                .replace("/", "&")
+                .replace("[0-9.()]".toRegex(), "")
+                .replace("\\p{Z}".toRegex(), "")
 
         val calInfo = getRow(response, i).CAL_INFO
 
         return Pair(menu, calInfo)
     }
 
-    private fun getMealDate(response: NeisFeignClientMealServiceDietInfoResponse, i: Int) = getRow(response, i).MLSV_YMD
+    private fun getMealDate(
+        response: NeisFeignClientMealServiceDietInfoResponse,
+        i: Int
+    ) = getRow(response, i).MLSV_YMD
 
     private fun changeDateTimeFormat(date: String): String =
         if (date.length > 8) {

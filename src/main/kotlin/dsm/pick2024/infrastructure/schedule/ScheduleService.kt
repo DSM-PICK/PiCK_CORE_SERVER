@@ -5,9 +5,9 @@ import dsm.pick2024.domain.classroom.port.out.DeleteAllClassRoomPort
 import dsm.pick2024.domain.earlyreturn.port.out.DeleteAllEarlyReturnPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import org.springframework.scheduling.annotation.Scheduled
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 
-@Service
+@Component
 class ScheduleService(
     private val deleteAllClassRoomPort: DeleteAllClassRoomPort,
     private val deleteAllEarlyReturnPort: DeleteAllEarlyReturnPort,
@@ -21,7 +21,7 @@ class ScheduleService(
         deleteAllApplicationPort.deleteAll()
     }
 
-    @Scheduled(cron = "0 7 14 25 * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 20 * ?", zone = "Asia/Seoul")
     fun mealSave() {
         mealUseCase.saveNeisInfoToDatabase()
     }
