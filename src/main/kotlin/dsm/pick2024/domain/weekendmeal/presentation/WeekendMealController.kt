@@ -75,6 +75,7 @@ class WeekendMealController(
         @RequestParam key: String
     ) = saveAllWeekendMealUserUseCase.saveAll(key)
 
+    @Operation(summary = "주말급식 유저 전체 조회 API")
     @GetMapping("/hey")
     fun hey() = queryAllWeekendMealStatus.findAll()
 }
