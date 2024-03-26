@@ -8,4 +8,5 @@ interface WeekendMealPort :
     ExistsByUserId,
     FindWeekendMealByStatus,
     SaveAllWeekendMealPort,
-    FindWeekendMealByIdPort
+    FindWeekendMealByIdPort,
+    FindAllWeekendMealStatusPort
