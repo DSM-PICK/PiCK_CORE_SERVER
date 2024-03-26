@@ -24,30 +24,22 @@ class ApplicationPersistenceAdapter(
 
     override fun existsByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
-    override fun findById(id: UUID) =
-        applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
+    override fun findById(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
 
     override fun deleteById(applicationId: UUID) {
         applicationRepository.deleteById(applicationId)
-    }
-
-    override fun deleteAll(application: List<Application>) {
-        val entities: List<Application> = application
-        applicationRepository.deleteAll(entities)
     }
 
     override fun deleteAll() {
         applicationRepository.deleteAll()
     }
 
-    override fun findAll() =
-        applicationRepository.findAll().map { applicationMapper.toDomain(it) }
+    override fun findAll() = applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 
     override fun findByUserId(userId: UUID) =
         applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
 
-    override fun save(application: Application) =
-        applicationRepository.save(applicationMapper.toEntity(application))
+    override fun save(application: Application) = applicationRepository.save(applicationMapper.toEntity(application))
 
     override fun findByFloor(floor: Int) =
         jpaQueryFactory
@@ -68,16 +60,18 @@ class ApplicationPersistenceAdapter(
             .fetch()
             .map { applicationMapper.toDomain(it) }
 
-    override fun findByGradeAndClassNum(grade: Int, classNum: Int) =
-        jpaQueryFactory
-            .selectFrom(QApplicationJapEntity.applicationJapEntity)
-            .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
-                QUserJpaEntity.userJpaEntity.grade.eq(grade),
-                QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
-                QApplicationJapEntity.applicationJapEntity.status.eq(Status.QUIET)
-            )
-            .fetch()
-            .map { applicationMapper.toDomain(it) }
+    override fun findByGradeAndClassNum(
+        grade: Int,
+        classNum: Int
+    ) = jpaQueryFactory
+        .selectFrom(QApplicationJapEntity.applicationJapEntity)
+        .innerJoin(QUserJpaEntity.userJpaEntity)
+        .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .where(
+            QUserJpaEntity.userJpaEntity.grade.eq(grade),
+            QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
+            QApplicationJapEntity.applicationJapEntity.status.eq(Status.QUIET)
+        )
+        .fetch()
+        .map { applicationMapper.toDomain(it) }
 }

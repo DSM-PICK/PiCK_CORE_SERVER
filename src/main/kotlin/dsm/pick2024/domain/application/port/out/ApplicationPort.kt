@@ -8,7 +8,6 @@ interface ApplicationPort :
     QueryFloorApplicationPort,
     QueryClassApplicationPort,
     SaveApplicationPort,
-    DeleteAllApplicationListPort,
     QueryAllApplicationPort,
     FindApplicationByNamePort,
     DeleteAllApplicationPort
