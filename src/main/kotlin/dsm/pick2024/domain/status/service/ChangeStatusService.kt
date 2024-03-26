@@ -3,7 +3,7 @@ package dsm.pick2024.domain.status.service
 import dsm.pick2024.domain.status.exception.StatusNotFoundException
 import dsm.pick2024.domain.status.persistence.StatusPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
-import dsm.pick2024.domain.status.present.dto.response.QueryClassStatusResponse
+import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -12,10 +12,10 @@ class ChangeStatusService(
     private val statusPersistenceAdapter: StatusPersistenceAdapter
 ) : ChangeStatusUseCase {
     @Transactional
-    override fun changeStatus(request: List<QueryClassStatusResponse>) {
+    override fun changeStatus(request: List<ChangeStatusRequest>) {
         request.forEach { request ->
             val status =
-                statusPersistenceAdapter.findStatusByUserId(request.userId)
+                statusPersistenceAdapter.findStatusByUserId(request.id)
                     ?: throw StatusNotFoundException
 
             val update =

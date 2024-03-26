@@ -3,7 +3,7 @@ package dsm.pick2024.domain.status.present
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.`in`.SaveAllStatusUserUseCase
-import dsm.pick2024.domain.status.present.dto.response.QueryClassStatusResponse
+import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
@@ -38,6 +38,6 @@ class StatusController(
     @Operation(summary = "학생 출석 상태 변경 API")
     @PatchMapping("/change")
     fun changeStatus(
-        @RequestBody request: List<QueryClassStatusResponse>
+        @RequestBody request: List<ChangeStatusRequest>
     ) = changeStatusUseCase.changeStatus(request)
 }
