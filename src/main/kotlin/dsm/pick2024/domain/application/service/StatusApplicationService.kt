@@ -10,7 +10,7 @@ import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
-import dsm.pick2024.domain.application.port.out.DeleteAllApplicationListPort
+import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
 import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
@@ -30,7 +30,7 @@ class StatusApplicationService(
     private val findApplicationByIdPort: FindApplicationByIdPort,
     private val saveAllApplicationPort: SaveAllApplicationPort,
     private val applicationStorySaveAllPort: ApplicationStorySavePort,
-    private val deleteAllApplicationListPort: DeleteAllApplicationListPort
+    private val deleteApplicationPort: DeleteApplicationPort
 ) : StatusApplicationUseCase {
     @Transactional
     override fun statusApplication(request: ApplicationStatusRequest?) {
@@ -42,9 +42,9 @@ class StatusApplicationService(
         if (request!!.status == Status.NO) {
             for (id in request.ids) {
                 val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
-                applicationUpdate.add(application)
+                deleteApplicationPort.deleteById(application.id!!)
             }
-            deleteAllApplicationListPort.deleteAll(applicationUpdate)
+            return
         }
 
         for (id in request.ids) {
