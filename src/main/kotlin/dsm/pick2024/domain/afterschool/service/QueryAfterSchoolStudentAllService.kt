@@ -12,7 +12,7 @@ class QueryAfterSchoolStudentAllService(
 ) : QueryAfterSchoolStudentAllUseCase {
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =
-        queryAfterSchoolStudentAllPort.findByAll()
+        queryAfterSchoolStudentAllPort.findAll()
             .map {
                     it ->
                 QueryAfterSchoolStudentAllResponse(
