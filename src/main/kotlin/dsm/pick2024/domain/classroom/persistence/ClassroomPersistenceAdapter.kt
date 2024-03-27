@@ -31,8 +31,7 @@ class ClassroomPersistenceAdapter(
         return classroomRepository.existsByUserId(userId)
     }
 
-    override fun findAll() =
-        classroomRepository.findAll().map { classroomMapper.toDomain(it) }
+    override fun findAll() = classroomRepository.findAll().map { classroomMapper.toDomain(it) }
 
     override fun deleteAll() {
         classroomRepository.deleteAll()
@@ -40,7 +39,7 @@ class ClassroomPersistenceAdapter(
 
     override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
-            .select(QClassroomJpaEntity.classroomJpaEntity)
+            .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
             .on(QClassroomJpaEntity.classroomJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
             .where(
@@ -56,15 +55,17 @@ class ClassroomPersistenceAdapter(
             .fetch()
             .map { classroomMapper.toDomain(it) }
 
-    override fun queryGradeClassroom(grade: Int, classNum: Int) =
-        jpaQueryFactory
-            .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
-            .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QClassroomJpaEntity.classroomJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
-                QUserJpaEntity.userJpaEntity.grade.eq(grade),
-                QUserJpaEntity.userJpaEntity.classNum.eq(classNum)
-            )
-            .fetch()
-            .map { classroomMapper.toDomain(it) }
+    override fun queryGradeClassroom(
+        grade: Int,
+        classNum: Int
+    ) = jpaQueryFactory
+        .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
+        .innerJoin(QUserJpaEntity.userJpaEntity)
+        .on(QClassroomJpaEntity.classroomJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .where(
+            QUserJpaEntity.userJpaEntity.grade.eq(grade),
+            QUserJpaEntity.userJpaEntity.classNum.eq(classNum)
+        )
+        .fetch()
+        .map { classroomMapper.toDomain(it) }
 }
