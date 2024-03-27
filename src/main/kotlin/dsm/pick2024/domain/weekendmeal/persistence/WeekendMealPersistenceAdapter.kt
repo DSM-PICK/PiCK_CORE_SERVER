@@ -59,7 +59,18 @@ class WeekendMealPersistenceAdapter(
         .map { weekendMealMapper.toDomain(it) }
 
     override fun findByStatus(status: Status): List<WeekendMeal> {
-        return weekendMealRepository.findAllByStatus(status)
+        return jpaQueryFactory
+            .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
+            .where(
+                QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(status)
+            )
+            .orderBy(
+                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
+                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.asc(),
+                QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
+            )
+            .fetch()
+            .map { weekendMealMapper.toDomain(it) }
     }
 
     override fun findById(id: UUID): WeekendMeal? {
