@@ -43,7 +43,7 @@ class ApplicationPersistenceAdapter(
 
     override fun findByFloor(floor: Int) =
         jpaQueryFactory
-            .select(QApplicationJapEntity.applicationJapEntity)
+            .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
             .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
             .where(
