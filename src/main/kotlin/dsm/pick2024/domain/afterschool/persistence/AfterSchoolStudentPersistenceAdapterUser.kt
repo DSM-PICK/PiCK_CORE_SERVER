@@ -1,28 +1,32 @@
 package dsm.pick2024.domain.afterschool.persistence
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
+import dsm.pick2024.domain.afterschool.entity.AfterSchoolStudentJpaEntity
 import dsm.pick2024.domain.afterschool.mapper.AfterSchoolStudentMapper
 import dsm.pick2024.domain.afterschool.persistence.repository.AfterSchoolStudentRepository
-import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPortUser
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class AfterSchoolStudentPersistenceAdapter(
+class AfterSchoolStudentPersistenceAdapterUser(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository
-) : AfterSchoolStudentPort {
-    override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
-        val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
-        afterSchoolStudentRepository.saveAll(entities)
+) : AfterSchoolStudentPortUser {
+    override fun saveAll(afterSchool: MutableList<AfterSchoolStudentJpaEntity>) {
+        afterSchoolStudentRepository.saveAll(afterSchool)
     }
 
-    override fun findById(id: UUID) =
-        afterSchoolStudentRepository.findById(id).let { afterSchoolStudentMapper.toDomain(it) }
+    override fun findByUserId(id: UUID) =
+        afterSchoolStudentRepository.findByUserId(id).let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun deleteById(id: UUID) {
         afterSchoolStudentRepository.deleteById(id)
     }
 
     override fun findByAll() = afterSchoolStudentRepository.findAll().map { afterSchoolStudentMapper.toDomain(it) }
+
+    override fun save(entity: AfterSchoolStudent) {
+        afterSchoolStudentRepository.save(afterSchoolStudentMapper.toEntity(entity))
+    }
 }
