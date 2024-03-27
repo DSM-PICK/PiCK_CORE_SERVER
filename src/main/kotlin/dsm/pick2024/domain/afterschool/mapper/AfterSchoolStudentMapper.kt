@@ -11,6 +11,7 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
         domain.run {
             AfterSchoolStudentJpaEntity(
                 id = id,
+                userId = userId,
                 grade = grade,
                 classNum = classNum,
                 num = num,
@@ -25,6 +26,7 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
         entity.run {
             AfterSchoolStudent(
                 id = id,
+                userId = userId,
                 grade = grade,
                 classNum = classNum,
                 num = num,

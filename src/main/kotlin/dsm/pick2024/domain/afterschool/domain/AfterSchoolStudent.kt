@@ -5,6 +5,7 @@ import java.util.UUID
 
 data class AfterSchoolStudent(
     val id: UUID? = null,
+    val userId: UUID,
     val grade: Int,
     val classNum: Int,
     val num: Int,
