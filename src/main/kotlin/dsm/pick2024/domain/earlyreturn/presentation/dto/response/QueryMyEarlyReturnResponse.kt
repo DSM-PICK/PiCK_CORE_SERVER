@@ -11,6 +11,5 @@ data class QueryMyEarlyReturnResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val image: String,
     val type: Type
 )

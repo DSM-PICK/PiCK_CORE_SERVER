@@ -19,6 +19,5 @@ data class Application(
     val classNum: Int,
     val num: Int,
     val status: Status,
-    val applicationStatus: ApplicationStatus? = null,
-    val image: String? = null
+    val applicationStatus: ApplicationStatus? = null
 )

@@ -72,13 +72,6 @@ dependencies {
     implementation(Dependencies.QUERYDSL)
     kapt(Dependencies.QUERYDSL_PROCESSOR)
 
-    implementation(Dependencies.ZXING)
-    implementation(Dependencies.ZXING_CORE)
-
-    implementation(Dependencies.AWS)
-
-    implementation(Dependencies.GSON)
-
     implementation("org.springframework.boot:spring-boot-starter")
 
     implementation(Dependencies.APACHE_POI)

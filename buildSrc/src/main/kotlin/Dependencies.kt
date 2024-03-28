@@ -36,8 +36,6 @@ object Dependencies {
     // Cloud Config
     const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"
 
-    const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
-
     // cloud
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
 
@@ -46,12 +44,6 @@ object Dependencies {
     //QueryDSL
     const val QUERYDSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERYDSL}"
     const val QUERYDSL_PROCESSOR = "com.querydsl:querydsl-apt:${DependencyVersions.QUERYDSL}:jpa"
-
-    //Zxing
-    const val ZXING = "com.google.zxing:javase:${DependencyVersions.ZXING}"
-    const val ZXING_CORE = "com.google.zxing:core:${DependencyVersions.ZXING}"
-
-    const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
 
     //apachePOI
     const val APACHE_POI = "org.apache.poi:poi:${DependencyVersions.APACHE_POI}"
