@@ -27,7 +27,7 @@ class ClassroomPersistenceAdapter(
     override fun findByUserId(userId: UUID) =
         classroomRepository.findByUserId(userId).let { classroomMapper.toDomain(it) }
 
-    override fun existsByUserId(userId: UUID): Boolean? {
+    override fun existsByUserId(userId: UUID): Boolean {
         return classroomRepository.existsByUserId(userId)
     }
 

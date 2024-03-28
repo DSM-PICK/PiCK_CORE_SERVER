@@ -17,7 +17,7 @@ import java.time.ZoneId
 class ApplicationService(
     private val existApplicationByUseridPort: ExistApplicationByUserIdPort,
     private val saveApplicationPort: SaveApplicationPort,
-    private val userFacadeUseCase: UserFacadeUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationUseCase {
     @Transactional
     override fun application(request: ApplicationRequest) {
@@ -38,8 +38,8 @@ class ApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.xquareId,
-            ),
+                userId = user.xquareId
+            )
         )
     }
 }

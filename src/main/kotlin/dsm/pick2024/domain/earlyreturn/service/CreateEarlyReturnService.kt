@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.earlyreturn.service
 
-import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUserIdPort
@@ -19,12 +19,11 @@ class CreateEarlyReturnService(
     private val existsEarlyReturnByUserIdPort: ExistsEarlyReturnByUserIdPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : CreateEarlyReturnUseCase {
-
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existsEarlyReturnByUserIdPort.existsByUserId(user.id!!) == true) {
+        if (existsEarlyReturnByUserIdPort.existsByUserId(user.id!!)) {
             throw AlreadyApplyingForEarlyReturnException
         }
 
@@ -38,7 +37,7 @@ class CreateEarlyReturnService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.id
+                userId = user.xquareId
             )
         )
     }
