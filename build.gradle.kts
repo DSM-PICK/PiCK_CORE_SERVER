@@ -76,6 +76,8 @@ dependencies {
 
     implementation(Dependencies.APACHE_POI)
     implementation(Dependencies.APACHE_POI_OOXML)
+
+    implementation(Dependencies.GSON)
 }
 
 tasks.withType<KotlinCompile> {

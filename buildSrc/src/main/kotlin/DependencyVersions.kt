@@ -9,4 +9,5 @@ object DependencyVersions {
     const val SWAGGER_VERSION = "1.6.11"
     const val QUERYDSL = "5.0.0"
     const val APACHE_POI = "5.2.5"
+    const val GSON = "2.8.7"
 }

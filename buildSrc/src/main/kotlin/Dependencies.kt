@@ -1,5 +1,4 @@
 object Dependencies {
-
     // kotlin
     const val KOTLIN_REFLECT = "org.jetbrains.kotlin:kotlin-reflect"
     const val JACKSON = "com.fasterxml.jackson.module:jackson-module-kotlin:${DependencyVersions.JACKSON_VERSION}"
@@ -41,11 +40,13 @@ object Dependencies {
 
     const val SWAGGER = "org.springdoc:springdoc-openapi-ui:${DependencyVersions.SWAGGER_VERSION}"
 
-    //QueryDSL
+    // QueryDSL
     const val QUERYDSL = "com.querydsl:querydsl-jpa:${DependencyVersions.QUERYDSL}"
     const val QUERYDSL_PROCESSOR = "com.querydsl:querydsl-apt:${DependencyVersions.QUERYDSL}:jpa"
 
-    //apachePOI
+    // apachePOI
     const val APACHE_POI = "org.apache.poi:poi:${DependencyVersions.APACHE_POI}"
     const val APACHE_POI_OOXML = "org.apache.poi:poi-ooxml:${DependencyVersions.APACHE_POI}"
+
+    const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
 }
