@@ -4,13 +4,13 @@ import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentU
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
+import dsm.pick2024.domain.afterschool.presentation.dto.request.DeleteRequest
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import dsm.pick2024.domain.afterschool.service.SaveAfterSchoolStudentService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @Tag(name = "after school API")
 @RestController
@@ -38,8 +38,8 @@ class AfterSchoolStudentController(
     @DeleteMapping("/delete")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     fun deleteAfterSchoolStudent(
-        @RequestBody id: UUID
-    ) = deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
+        @RequestBody request: DeleteRequest
+    ) = deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(request)
 
     @Operation(summary = "방과후 창조실 학생 조회 API")
     @GetMapping("/all")

@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.afterschool.port.`in`
 
-import java.util.UUID
+import dsm.pick2024.domain.afterschool.presentation.dto.request.DeleteRequest
 
 interface DeleteAfterSchoolStudentUseCase {
-    fun deleteAfterSchoolStudent(id: UUID)
+    fun deleteAfterSchoolStudent(request: DeleteRequest)
 }
