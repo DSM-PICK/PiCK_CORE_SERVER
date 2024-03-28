@@ -21,7 +21,6 @@ class ApplicationMapper {
                 classNum = classNum,
                 num = num,
                 applicationStatus = applicationStatus,
-                image = image,
                 userId = userId
             )
         }
@@ -41,7 +40,6 @@ class ApplicationMapper {
                 classNum = classNum,
                 num = num,
                 applicationStatus = applicationStatus,
-                image = image,
                 userId = userId
             )
         }

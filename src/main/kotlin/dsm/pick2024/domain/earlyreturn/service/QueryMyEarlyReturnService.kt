@@ -29,7 +29,6 @@ class QueryMyEarlyReturnService(
             earlyReturn.grade,
             earlyReturn.classNum,
             earlyReturn.num,
-            earlyReturn.image!!,
             type = Type.EARLY_RETURN
         )
     }

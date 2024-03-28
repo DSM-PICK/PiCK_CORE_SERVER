@@ -8,8 +8,5 @@ object DependencyVersions {
     const val JWT_VERSION = "0.9.1"
     const val SWAGGER_VERSION = "1.6.11"
     const val QUERYDSL = "5.0.0"
-    const val ZXING = "3.5.3"
-    const val AWS = "1.12.281"
-    const val GSON = "2.8.7"
     const val APACHE_POI = "5.2.5"
 }

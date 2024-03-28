@@ -33,8 +33,6 @@ class EarlyReturnJpaEntity(
     val num: Int,
 
     @Enumerated(value = EnumType.STRING)
-    val status: Status,
+    val status: Status
 
-    @Lob
-    val image: String? = null
 ) : BaseUUIDEntity(id)
