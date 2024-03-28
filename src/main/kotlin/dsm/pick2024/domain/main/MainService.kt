@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.main
 
-import dsm.pick2024.domain.application.port.out.FindApplicationByNamePort
+import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
 import dsm.pick2024.domain.application.presentation.dto.response.QuerySimpleMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse
@@ -14,11 +14,10 @@ import java.util.UUID
 @Service
 class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findApplicationByNamePort: FindApplicationByNamePort,
     private val findEarlyReturnByUserIdPort: FindEarlyReturnByUserIdPort,
+    private val findApplicationByUserIdPort: FindApplicationByUserIdPort,
     private val findByUserIdPort: FindByUserIdPort
 ) {
-
     @Transactional(readOnly = true)
     fun main(): Any? {
         val userId = userFacadeUseCase.currentUser().id!!
@@ -31,7 +30,7 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QuerySimpleMyApplicationResponse? {
-        return findApplicationByNamePort.findByUserId(userId)?.run {
+        return findApplicationByUserIdPort.findByUserId(userId)?.run {
             QuerySimpleMyApplicationResponse(
                 userId = userId,
                 startTime = startTime,
