@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.AlreadyApplyingForPicnicException
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
-import dsm.pick2024.domain.application.port.out.ExistApplicationByUsernamePort
+import dsm.pick2024.domain.application.port.out.ExistApplicationByUserIdPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -15,15 +15,15 @@ import java.time.ZoneId
 
 @Service
 class ApplicationService(
-    private val existApplicationByUsernamePort: ExistApplicationByUsernamePort,
+    private val existApplicationByUseridPort: ExistApplicationByUserIdPort,
     private val saveApplicationPort: SaveApplicationPort,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
 ) : ApplicationUseCase {
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existApplicationByUsernamePort.existsByUserId(user.id!!) == true) {
+        if (existApplicationByUseridPort.existsByUserId(user.id!!) == true) {
             throw AlreadyApplyingForPicnicException
         }
 
@@ -38,8 +38,8 @@ class ApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.xquareId
-            )
+                userId = user.xquareId,
+            ),
         )
     }
 }
