@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.afterschool.port.out
 
-import dsm.pick2024.domain.afterschool.entity.AfterSchoolStudentJpaEntity
+import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 
 interface SaveAllAfterSchoolStudentPort {
-    fun saveAll(afterSchool: MutableList<AfterSchoolStudentJpaEntity>)
+    fun saveAll(afterSchool: List<AfterSchoolStudent>)
 }

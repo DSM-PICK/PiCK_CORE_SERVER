@@ -4,6 +4,7 @@ import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentU
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
+import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import dsm.pick2024.domain.afterschool.service.SaveAfterSchoolStudentService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -21,11 +22,11 @@ class AfterSchoolStudentController(
     private val saveAfterSchoolStudentService: SaveAfterSchoolStudentService
 ) {
     @Operation(summary = "학생등록 API")
-    @PostMapping("/saveAll")
+    @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     fun saveAfterSchoolStudent(
-        @RequestParam key: String
-    ) = saveAfterSchoolStudentService.saveAfterSchoolStudent(key)
+        @RequestBody request: List<SaveAfterSchoolStudentRequest>
+    ) = saveAfterSchoolStudentService.saveAfterSchoolStudent(request)
 
     @Operation(summary = "학생 출결상태 변경")
     @PatchMapping("/change")
@@ -40,7 +41,7 @@ class AfterSchoolStudentController(
         @RequestBody id: UUID
     ) = deleteAfterSchoolStudentUseCase.deleteAfterSchoolStudent(id)
 
-    @Operation(summary = "방과후 학생 전체 조회 API")
+    @Operation(summary = "방과후 창조실 학생 조회 API")
     @GetMapping("/all")
     fun queryAfterSchoolAll() = queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
 }

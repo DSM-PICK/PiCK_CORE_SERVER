@@ -9,7 +9,7 @@ interface AfterSchoolStudentRepository : Repository<AfterSchoolStudentJpaEntity,
 
     fun saveAll(entity: Iterable<AfterSchoolStudentJpaEntity>)
 
-    fun deleteById(id: UUID)
+    fun deleteByUserId(id: UUID)
 
     fun save(entity: AfterSchoolStudentJpaEntity)
 }

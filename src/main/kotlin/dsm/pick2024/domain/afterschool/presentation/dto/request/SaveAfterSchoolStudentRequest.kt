@@ -1,8 +1,9 @@
 package dsm.pick2024.domain.afterschool.presentation.dto.request
 
+import javax.validation.constraints.Size
+
 data class SaveAfterSchoolStudentRequest(
-    val grade: Int,
-    val classNum: Int,
-    val num: Int,
+    @field:Size(min = 4, max = 4)
+    val studentNum: String,
     val name: String
 )
