@@ -9,5 +9,5 @@ interface ApplicationPort :
     QueryClassApplicationPort,
     SaveApplicationPort,
     QueryAllApplicationPort,
-    FindApplicationByNamePort,
+    FindApplicationByUserIdPort,
     DeleteAllApplicationPort

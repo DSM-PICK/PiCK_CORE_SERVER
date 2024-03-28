@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
-import dsm.pick2024.domain.application.port.out.FindApplicationByNamePort
+import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.application.presentation.dto.response.QuerySimpleMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
@@ -18,14 +18,14 @@ import java.time.ZoneId
 @Transactional(readOnly = true)
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findApplicationByNamePort: FindApplicationByNamePort,
+    private val findApplicationByUserIdPort: FindApplicationByUserIdPort,
     private val deleteApplicationPort: DeleteApplicationPort
 ) : QueryMyApplicationUseCase {
-
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
-        val application = findApplicationByNamePort.findByUserId(user.id!!)
-            ?: throw ApplicationNotFoundException
+        val application =
+            findApplicationByUserIdPort.findByUserId(user.id!!)
+                ?: throw ApplicationNotFoundException
 
         if (application.status != Status.OK) {
             throw RuntimeException()
@@ -48,8 +48,9 @@ class QueryMyApplicationService(
 
     override fun querySimpleMyApplication(): QuerySimpleMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
-        val application = findApplicationByNamePort.findByUserId(user.id!!)
-            ?: throw ApplicationNotFoundException
+        val application =
+            findApplicationByUserIdPort.findByUserId(user.id!!)
+                ?: throw ApplicationNotFoundException
 
         if (application.status != Status.OK) {
             throw RuntimeException()
