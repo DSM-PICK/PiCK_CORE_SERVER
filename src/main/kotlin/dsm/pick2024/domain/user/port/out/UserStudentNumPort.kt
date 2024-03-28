@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.user.port.out
 
-interface UserPort :
+interface UserStudentNumPort :
     FindByAccountIdPort,
-    FindByNamePort,
+    FindByStudentNumPort,
     UserAllPort,
     ExistsByAccountIdPort,
     UserSavePort

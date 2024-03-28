@@ -10,4 +10,10 @@ interface UserRepository : JpaRepository<UserJpaEntity, UUID> {
     fun findByAccountId(accountId: String): UserJpaEntity?
 
     fun existsByAccountId(accountId: String): Boolean
+
+    fun findByGradeAndClassNumAndNum(
+        grade: Int,
+        classNum: Int,
+        num: Int
+    ): UserJpaEntity?
 }
