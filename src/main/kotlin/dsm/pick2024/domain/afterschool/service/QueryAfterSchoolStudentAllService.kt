@@ -16,6 +16,7 @@ class QueryAfterSchoolStudentAllService(
             .map {
                     it ->
                 QueryAfterSchoolStudentAllResponse(
+                    it.userId,
                     it.grade,
                     it.classNum,
                     it.num,
