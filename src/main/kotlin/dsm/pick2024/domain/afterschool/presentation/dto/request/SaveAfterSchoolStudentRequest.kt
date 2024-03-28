@@ -4,6 +4,5 @@ import javax.validation.constraints.Size
 
 data class SaveAfterSchoolStudentRequest(
     @field:Size(min = 4, max = 4)
-    val studentNum: String,
-    val name: String
+    val studentNum: String
 )
