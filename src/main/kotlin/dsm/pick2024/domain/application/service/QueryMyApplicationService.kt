@@ -24,7 +24,7 @@ class QueryMyApplicationService(
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            findApplicationByUserIdPort.findByUserId(user.id!!)
+            findApplicationByUserIdPort.findByUserId(user.xquareId!!)
                 ?: throw ApplicationNotFoundException
 
         if (application.status != Status.OK) {
