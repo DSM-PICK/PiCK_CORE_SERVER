@@ -18,7 +18,7 @@ class QueryMyEarlyReturnService(
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
         val user = userFacadeUseCase.currentUser()
         val earlyReturn =
-            findEarlyReturnByUserIdPort.findByUserId(user.xquareId!!)
+            findEarlyReturnByUserIdPort.findByUserId(user.id!!)
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(

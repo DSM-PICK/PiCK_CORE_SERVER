@@ -15,7 +15,7 @@ class UserMoveClassroomQueryService(
     @Transactional(readOnly = true)
     override fun queryUserMoveClassroom(): UserMoveClassroomResponse {
         val user = userFacadeUseCase.currentUser()
-        val move = findByUserIdPort.findByUserId(user.xquareId!!)!!
+        val move = findByUserIdPort.findByUserId(user.id!!)!!
         return UserMoveClassroomResponse(move.username, move.classroomName)
     }
 }

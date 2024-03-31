@@ -20,12 +20,12 @@ class UserMoveClassroomService(
     override fun moveClassroom(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existsByUserIdPort.existsByUserId(user.xquareId!!)) {
+        if (existsByUserIdPort.existsByUserId(user.id!!)) {
             throw AleadyApplyingMovementException
         }
         classroomSavePort.save(
             Classroom(
-                userId = user.xquareId,
+                userId = user.id,
                 username = user.name,
                 classroomName = request.classroomName,
                 floor = request.floor,

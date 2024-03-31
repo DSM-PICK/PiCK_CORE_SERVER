@@ -37,7 +37,7 @@ class CreateEarlyReturnService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.xquareId
+                userId = user.id
             )
         )
     }

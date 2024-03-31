@@ -14,6 +14,6 @@ class UserBackClassroomService(
     @Transactional
     override fun backClassroom() {
         val user = userFacadeUseCase.currentUser()
-        classroomDeletePort.deleteByUserId(user.xquareId!!)
+        classroomDeletePort.deleteByUserId(user.id!!)
     }
 }
