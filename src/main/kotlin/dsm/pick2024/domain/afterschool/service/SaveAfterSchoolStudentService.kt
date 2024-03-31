@@ -23,7 +23,7 @@ class SaveAfterSchoolStudentService(
                 user.let {
                     AfterSchoolStudent(
                         id = null,
-                        userId = it!!.xquareId,
+                        userId = user!!.id!!,
                         grade = grade,
                         classNum = classNum,
                         num = num,
