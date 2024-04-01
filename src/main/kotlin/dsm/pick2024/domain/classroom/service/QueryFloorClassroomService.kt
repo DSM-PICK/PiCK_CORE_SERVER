@@ -10,15 +10,14 @@ import org.springframework.transaction.annotation.Transactional
 class QueryFloorClassroomService(
     private val queryFloorClassroomPort: QueryFloorClassroomPort
 ) : QueryFloorClassroomUseCase {
-
     @Transactional(readOnly = true)
     override fun queryFloorClassroom(floor: Int) =
         queryFloorClassroomPort.queryFloorClassroom(floor)
             .map {
                     it ->
                 QueryClassroomResponse(
-                    it.classroomName,
                     it.username,
+                    it.classroomName,
                     move = "${it.grade}-${it.classNum}",
                     it.grade,
                     it.classNum,
