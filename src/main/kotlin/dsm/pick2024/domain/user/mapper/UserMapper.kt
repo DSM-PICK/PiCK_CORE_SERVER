@@ -19,14 +19,13 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             num = num,
             birthDay = birthDay,
             profile = profile,
-            role = role,
-            xquareId = xquareId
+            role = role
         )
     }
 
     override fun toDomain(entity: UserJpaEntity) = entity.run {
         User(
-            id = id,
+            id = id!!,
             accountId = accountId,
             password = password,
             name = name,
@@ -35,8 +34,7 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             num = num,
             birthDay = birthDay,
             profile = profile,
-            role = role,
-            xquareId = xquareId
+            role = role
         )
     }
 }

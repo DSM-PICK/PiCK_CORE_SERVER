@@ -32,7 +32,7 @@ class UserLoginService(
             val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
             userSavePort.save(
                 User(
-                    xquareId = xquareUser.id,
+                    id = xquareUser.id,
                     accountId = xquareUser.accountId,
                     password = xquareUser.password,
                     name = xquareUser.name,

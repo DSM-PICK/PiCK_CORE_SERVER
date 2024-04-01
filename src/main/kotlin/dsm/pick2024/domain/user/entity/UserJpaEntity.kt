@@ -12,13 +12,10 @@ import javax.persistence.Enumerated
 @Entity(name = "tbl_user")
 class UserJpaEntity(
 
-    id: UUID?,
+    id: UUID,
 
     @Column(name = "account_id", nullable = false, unique = true)
     val accountId: String,
-
-    @Column(columnDefinition = "BINARY(16)")
-    val xquareId: UUID,
 
     @Column(name = "password", nullable = false)
     val password: String,

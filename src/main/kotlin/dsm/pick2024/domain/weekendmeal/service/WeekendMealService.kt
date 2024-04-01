@@ -19,7 +19,7 @@ class WeekendMealService(
     override fun changeWeekendMeal(status: Status) {
         val user = userFacadeUseCase.currentUser()
         val weekendMeal =
-            findWeekendMealByUserIdPort.findByUserId(user.xquareId!!)
+            findWeekendMealByUserIdPort.findByUserId(user.id)
                 ?: throw UserNotFoundException
 
         saveWeekendMealPort.save(

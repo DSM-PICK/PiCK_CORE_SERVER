@@ -5,8 +5,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 data class User(
-    val id: UUID? = null,
-    val xquareId: UUID,
+    val id: UUID,
     val accountId: String,
     val password: String,
     val name: String,
