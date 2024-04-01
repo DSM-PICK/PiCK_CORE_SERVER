@@ -13,20 +13,20 @@ class RegistrationSelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
     private val findByDatePort: FindByDatePort
 ) : RegistrationSelfStudyTeacherUseCase {
-
     @Transactional
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val findSelfStudy = findByDatePort.findByDateList(request.date).firstOrNull()
 
-        val teacherList = request.teacher.map { teacherRequest ->
-            findSelfStudy?.copy(
-                teacher = teacherRequest.teacher
-            ) ?: SelfStudy(
-                date = request.date,
-                floor = teacherRequest.floor,
-                teacher = teacherRequest.teacher
-            )
-        }
+        val teacherList =
+            request.teacher.filter { it.teacher.isNotBlank() }.map { teacherRequest ->
+                findSelfStudy?.copy(
+                    teacher = teacherRequest.teacher
+                ) ?: SelfStudy(
+                    date = request.date,
+                    floor = teacherRequest.floor,
+                    teacher = teacherRequest.teacher
+                )
+            }
 
         selfStudySaveAllPort.saveAll(teacherList)
     }
