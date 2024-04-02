@@ -1,12 +1,12 @@
 package dsm.pick2024.domain.main
 
-import dsm.pick2024.domain.application.port.out.ExistApplicationByUserIdPort
+import dsm.pick2024.domain.application.port.out.ExistsOKApplicationByUserIdPort
 import dsm.pick2024.domain.application.port.out.QueryOKMyApplication
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
-import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUserIdPort
+import dsm.pick2024.domain.earlyreturn.port.out.ExistsOKEarlyReturnByUserIDPort
 import dsm.pick2024.domain.earlyreturn.port.out.QueryOKMyEarlyReturn
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -20,8 +20,8 @@ class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val queryOKMyApplication: QueryOKMyApplication,
     private val findByUserIdPort: FindByUserIdPort,
-    private val existApplicationByUserIdPort: ExistApplicationByUserIdPort,
-    private val existsEarlyReturnByUserIdPort: ExistsEarlyReturnByUserIdPort,
+    private val existsOKApplicationByUserIdPort: ExistsOKApplicationByUserIdPort,
+    private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
     private val existsByUserIdPort: ExistsByUserIdPort,
     private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
 ) {
@@ -30,8 +30,8 @@ class MainService(
         val userId = userFacadeUseCase.currentUser().id
 
         return when {
-            existApplicationByUserIdPort.existsByUserId(userId) -> findApplication(userId)
-            existsEarlyReturnByUserIdPort.existsByUserId(userId) -> findEarlyReturn(userId)
+            existsOKApplicationByUserIdPort.existsOKByUserId(userId) -> findApplication(userId)
+            existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existsByUserIdPort.existsByUserId(userId) -> findClassroom(userId)
             else -> null
         }
