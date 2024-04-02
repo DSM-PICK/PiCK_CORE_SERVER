@@ -11,4 +11,5 @@ interface EarlyReturnPort :
     DeleteAllEarlyReturnListPort,
     QueryAllEarlyReturnPort,
     FindEarlyReturnByUserIdPort,
-    DeleteAllEarlyReturnPort
+    DeleteAllEarlyReturnPort,
+    QueryOKMyEarlyReturn

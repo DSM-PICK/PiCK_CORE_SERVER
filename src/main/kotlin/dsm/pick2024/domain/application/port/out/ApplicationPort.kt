@@ -10,4 +10,5 @@ interface ApplicationPort :
     SaveApplicationPort,
     QueryAllApplicationPort,
     FindApplicationByUserIdPort,
-    DeleteAllApplicationPort
+    DeleteAllApplicationPort,
+    QueryOKMyApplication

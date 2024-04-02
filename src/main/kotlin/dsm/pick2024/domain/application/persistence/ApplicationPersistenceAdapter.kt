@@ -74,4 +74,9 @@ class ApplicationPersistenceAdapter(
         )
         .fetch()
         .map { applicationMapper.toDomain(it) }
+
+    override fun findOKApplication(id: UUID) =
+        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
+            applicationMapper.toDomain(it)
+        }
 }

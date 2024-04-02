@@ -21,14 +21,12 @@ class SelfStudyController(
     private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase,
     private val queryMySelfStudyUseCase: QueryMySelfStudyUseCase
 ) {
-
     @Operation(summary = "자습감독 선생님 등록 API")
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/register")
     fun selfStudyTeacherRegister(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
-    ) =
-        registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
+    ) = registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")
@@ -36,8 +34,7 @@ class SelfStudyController(
         @RequestParam(name = "date")
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         date: LocalDate
-    ) =
-        queryTodaySelfStudyTeacherUseCase.queryTodaySelfStudyTeacher(date)
+    ) = queryTodaySelfStudyTeacherUseCase.queryTodaySelfStudyTeacher(date)
 
     @Operation(summary = "한달 자습감독 선생님 조회")
     @GetMapping("/month")
@@ -46,8 +43,7 @@ class SelfStudyController(
         year: Year,
         @RequestParam(name = "month")
         month: Month
-    ) =
-        querySelfStudyTeacherUseCase.queryMonthSelfStudyTeacher(year, month)
+    ) = querySelfStudyTeacherUseCase.queryMonthSelfStudyTeacher(year, month)
 
     @Operation(summary = "특정 날짜 자습감독 선생님 조회")
     @GetMapping("/date")
@@ -55,11 +51,9 @@ class SelfStudyController(
         @RequestParam(name = "date")
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         date: LocalDate
-    ) =
-        queryDateSelfStudyUseCase.queryDateSelfStudy(date)
+    ) = queryDateSelfStudyUseCase.queryDateSelfStudy(date)
 
     @Operation(summary = "어드민 자습감독 확인 API")
     @GetMapping("/admin")
-    fun queryMySelfStudy() =
-        queryMySelfStudyUseCase.queryMySelfStudy()
+    fun queryMySelfStudy() = queryMySelfStudyUseCase.queryMySelfStudy()
 }

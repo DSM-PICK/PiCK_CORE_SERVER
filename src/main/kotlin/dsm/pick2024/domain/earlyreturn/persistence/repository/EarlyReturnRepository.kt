@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.persistence.repository
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.entity.EarlyReturnJpaEntity
 import org.springframework.data.repository.Repository
@@ -23,4 +24,9 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun findByUserId(userId: UUID): EarlyReturnJpaEntity
 
     fun deleteAll()
+
+    fun findByUserIdAndStatus(
+        userID: UUID,
+        status: Status
+    ): EarlyReturnJpaEntity
 }

@@ -1,13 +1,13 @@
 package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.port.out.ExistApplicationByUserIdPort
-import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
+import dsm.pick2024.domain.application.port.out.QueryOKMyApplication
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUserIdPort
-import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByUserIdPort
+import dsm.pick2024.domain.earlyreturn.port.out.QueryOKMyEarlyReturn
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
@@ -18,12 +18,12 @@ import java.util.UUID
 @Service
 class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findEarlyReturnByUserIdPort: FindEarlyReturnByUserIdPort,
-    private val findApplicationByUserIdPort: FindApplicationByUserIdPort,
+    private val queryOKMyApplication: QueryOKMyApplication,
     private val findByUserIdPort: FindByUserIdPort,
     private val existApplicationByUserIdPort: ExistApplicationByUserIdPort,
     private val existsEarlyReturnByUserIdPort: ExistsEarlyReturnByUserIdPort,
-    private val existsByUserIdPort: ExistsByUserIdPort
+    private val existsByUserIdPort: ExistsByUserIdPort,
+    private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
@@ -38,7 +38,7 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return findApplicationByUserIdPort.findByUserId(userId)?.run {
+        return queryOKMyApplication.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
@@ -50,7 +50,7 @@ class MainService(
     }
 
     private fun findEarlyReturn(userId: UUID): QuerySimpleMyEarlyResponse {
-        return findEarlyReturnByUserIdPort.findByUserId(userId)?.run {
+        return queryOKMyEarlyReturn.findByOKEarlyReturn(userId)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
