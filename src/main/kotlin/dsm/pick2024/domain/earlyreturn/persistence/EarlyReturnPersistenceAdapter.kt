@@ -85,4 +85,14 @@ class EarlyReturnPersistenceAdapter(
         earlyReturnRepository.findByUserIdAndStatus(userId, Status.OK).let {
             earlyReturnMapper.toDomain(it)
         }
+
+    override fun existsOKByUserId(userId: UUID): Boolean {
+        val earlyReturn = QEarlyReturnJpaEntity.earlyReturnJpaEntity
+        val user = QUserJpaEntity.userJpaEntity
+
+        return jpaQueryFactory.selectFrom(earlyReturn)
+            .innerJoin(user).on(earlyReturn.username.eq(user.name))
+            .where(user.id.eq(userId), earlyReturn.status.eq(Status.OK))
+            .fetchFirst() != null
+    }
 }
