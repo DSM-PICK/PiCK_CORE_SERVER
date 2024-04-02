@@ -2,10 +2,10 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.port.out.ExistApplicationByUserIdPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
-import dsm.pick2024.domain.application.presentation.dto.response.QuerySimpleMyApplicationResponse
+import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
-import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse
+import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnByUserIdPort
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByUserIdPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
@@ -37,13 +37,14 @@ class MainService(
         }
     }
 
-    private fun findApplication(userId: UUID): QuerySimpleMyApplicationResponse {
+    private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
         return findApplicationByUserIdPort.findByUserId(userId)?.run {
-            QuerySimpleMyApplicationResponse(
+            QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
                 username = username,
-                endTime = endTime.truncatedTo(ChronoUnit.MINUTES)
+                endTime = endTime.truncatedTo(ChronoUnit.MINUTES),
+                type = Main.APPLICATION
             )
         }!!
     }
@@ -53,16 +54,18 @@ class MainService(
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
-                username = username
+                username = username,
+                type = Main.EARLYRETURN
             )
         }!!
     }
 
-    private fun findClassroom(userId: UUID): UserMoveClassroomResponse {
+    private fun findClassroom(userId: UUID): QueryMainUserMoveClassroomResponse {
         return findByUserIdPort.findByUserId(userId)?.run {
-            UserMoveClassroomResponse(
+            QueryMainUserMoveClassroomResponse(
                 username = username,
-                classroom = classroomName
+                classroom = classroomName,
+                type = Main.CLASSROOM
             )
         }!!
     }
