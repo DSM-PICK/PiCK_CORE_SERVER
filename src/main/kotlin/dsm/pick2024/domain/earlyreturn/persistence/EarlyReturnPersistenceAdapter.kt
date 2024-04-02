@@ -95,4 +95,20 @@ class EarlyReturnPersistenceAdapter(
             .where(user.id.eq(userId), earlyReturn.status.eq(Status.OK))
             .fetchFirst() != null
     }
+
+    override fun findAllByStatus(status: Status) =
+        jpaQueryFactory
+            .selectFrom(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
+            .innerJoin(QUserJpaEntity.userJpaEntity)
+            .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .where(
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.status.eq(status)
+            )
+            .orderBy(
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.asc(),
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.asc(),
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.asc()
+            )
+            .fetch()
+            .map { earlyReturnMapper.toDomain(it) }
 }
