@@ -12,6 +12,7 @@ import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEa
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.temporal.ChronoUnit
 import java.util.UUID
 
 @Service
@@ -26,8 +27,7 @@ class MainService(
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
-        val userId = userFacadeUseCase.currentUser().id!!
-        println(userId)
+        val userId = userFacadeUseCase.currentUser().id
 
         return when {
             existApplicationByUserIdPort.existsByUserId(userId) -> findApplication(userId)
@@ -41,9 +41,9 @@ class MainService(
         return findApplicationByUserIdPort.findByUserId(userId)?.run {
             QuerySimpleMyApplicationResponse(
                 userId = userId,
-                startTime = startTime,
+                startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
                 username = username,
-                endTime = endTime
+                endTime = endTime.truncatedTo(ChronoUnit.MINUTES)
             )
         }!!
     }
@@ -52,7 +52,7 @@ class MainService(
         return findEarlyReturnByUserIdPort.findByUserId(userId)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
-                startTime = startTime,
+                startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
                 username = username
             )
         }!!
