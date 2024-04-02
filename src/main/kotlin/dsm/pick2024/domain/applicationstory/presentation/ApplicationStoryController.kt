@@ -27,7 +27,7 @@ class ApplicationStoryController(
     @Operation(summary = "외출기록 반별 조회 기능")
     @GetMapping("/grade")
     fun queryClassUserUseCase(
-        @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "classNum") classNum: Int
+        @RequestParam grade: Int,
+        @RequestParam classNum: Int
     ) = queryClassUserUseCase.queryClassUser(grade, classNum)
 }
