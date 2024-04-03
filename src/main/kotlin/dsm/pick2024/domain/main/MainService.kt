@@ -3,7 +3,7 @@ package dsm.pick2024.domain.main
 import dsm.pick2024.domain.application.port.out.ExistsOKApplicationByUserIdPort
 import dsm.pick2024.domain.application.port.out.QueryOKMyApplication
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
-import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
+import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.port.out.ExistsOKEarlyReturnByUserIDPort
@@ -22,7 +22,7 @@ class MainService(
     private val findByUserIdPort: FindByUserIdPort,
     private val existsOKApplicationByUserIdPort: ExistsOKApplicationByUserIdPort,
     private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
-    private val existsByUserIdPort: ExistsByUserIdPort,
+    private val existOKByUserIdPort: ExistOKByUserIdPort,
     private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
 ) {
     @Transactional(readOnly = true)
@@ -32,7 +32,7 @@ class MainService(
         return when {
             existsOKApplicationByUserIdPort.existsOKByUserId(userId) -> findApplication(userId)
             existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
-            existsByUserIdPort.existsByUserId(userId) -> findClassroom(userId)
+            existOKByUserIdPort.existOKByUserId(userId) -> findClassroom(userId)
             else -> null
         }
     }

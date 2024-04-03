@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.classroom.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.entity.QClassroomJpaEntity
 import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
@@ -73,4 +74,14 @@ class ClassroomPersistenceAdapter(
         )
         .fetch()
         .map { classroomMapper.toDomain(it) }
+
+    override fun existOKByUserId(userId: UUID): Boolean {
+        val classroom = QClassroomJpaEntity.classroomJpaEntity
+        val user = QUserJpaEntity.userJpaEntity
+
+        return jpaQueryFactory.selectFrom(classroom)
+            .innerJoin(user).on(classroom.username.eq(user.name))
+            .where(user.id.eq(userId), classroom.status.eq(Status.OK))
+            .fetchFirst() != null
+    }
 }
