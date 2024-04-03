@@ -2,7 +2,6 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.*
-import dsm.pick2024.domain.application.port.out.QueryAllApplicationByStatusPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -32,7 +31,7 @@ class ApplicationController(
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
     private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
     private val queryStatusApplicationUseCase: QueryStatusApplicationUseCase,
-    private val queryAllApplicationByStatusPort: QueryAllApplicationByStatusPort
+    private val queryAllApplicationByStatusUseCase: QueryAllApplicationByStatusUseCase
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -70,7 +69,7 @@ class ApplicationController(
     @GetMapping("/all")
     fun queryAllQuietApplication(
         @RequestParam status: Status
-    ) = queryAllApplicationByStatusPort.findAllByStatus(status)
+    ) = queryAllApplicationByStatusUseCase.queryAllApplicationByStatus(status)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
     @GetMapping("/reason/all")
