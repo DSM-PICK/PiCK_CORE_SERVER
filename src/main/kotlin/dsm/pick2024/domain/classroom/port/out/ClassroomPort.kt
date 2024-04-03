@@ -10,4 +10,5 @@ interface ClassroomPort :
     QueryGradeClassroomPort,
     DeleteAllClassRoomPort,
     SaveAllClassroomPort,
-    ExistOKByUserIdPort
+    ExistOKByUserIdPort,
+    FindOKClassroomPort

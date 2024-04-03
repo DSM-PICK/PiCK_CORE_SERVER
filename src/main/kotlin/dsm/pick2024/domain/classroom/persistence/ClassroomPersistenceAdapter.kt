@@ -43,6 +43,11 @@ class ClassroomPersistenceAdapter(
         classroomRepository.saveAll(entities)
     }
 
+    override fun findOKClassroom(id: UUID) =
+        classroomRepository.findByUserIdAndStatus(id, Status.OK).let {
+            classroomMapper.toDomain(it)
+        }
+
     override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
             .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
