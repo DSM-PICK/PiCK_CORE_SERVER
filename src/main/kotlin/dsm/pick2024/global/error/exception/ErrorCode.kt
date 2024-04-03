@@ -24,6 +24,8 @@ enum class ErrorCode(
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
     STATUS_NOT_FOUND(404, "Status Not Found"),
 
+    CLASSROOM_NOT_FOUND(404, "Classroom Not Found"),
+
     WEEKEND_MEAL_NOT_FOUND(404, "WeekendMeal Not Found"),
 
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
