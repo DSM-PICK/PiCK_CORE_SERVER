@@ -52,7 +52,8 @@ class SecurityConfig(
                 "/dsm-pick/application/non-return",
                 "/dsm-pick/application/status",
                 "/dsm-pick/application/floor",
-                "dsm-pick/application/grade",
+                "/dsm-pick/application/grade",
+                "/dsm-pick/application/all",
                 "/dsm-pick/story/**",
                 "/dsm-pick/class-room/floor",
                 "/dsm-pick/class-room/grade",
@@ -60,6 +61,7 @@ class SecurityConfig(
                 "/dsm-pick/early-return/floor",
                 "/dsm-pick/early-return/reason/ok-all",
                 "/dsm-pick/early-return/ok",
+                "/dsm-pick/early-return/all",
                 "/dsm-pick/self-study/month",
                 "/dsm-pick/self-study/date",
                 "/dsm-pick/self-study/admin",
@@ -78,7 +80,8 @@ class SecurityConfig(
                 "/dsm-pick/status/change",
                 "/dsm-pick/weekend-meal/status",
                 "dsm-pick/schedule/modify",
-                "dsm-pick/after/change"
+                "dsm-pick/after/change",
+                "/dsm-pick/class-room/status"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.DELETE,

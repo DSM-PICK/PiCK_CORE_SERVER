@@ -6,5 +6,7 @@ data class QueryClassroomResponse(
     val move: String,
     val grade: Int,
     val classNum: Int,
-    val num: Int
+    val num: Int,
+    val startPeriod: Int,
+    val endPeriod: Int
 )

@@ -21,7 +21,9 @@ class QueryFloorClassroomService(
                     move = "${it.grade}-${it.classNum}",
                     it.grade,
                     it.classNum,
-                    it.num
+                    it.num,
+                    it.startPeriod,
+                    it.endPeriod
                 )
             }
 }
