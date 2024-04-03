@@ -16,9 +16,7 @@ class QueryClassUserService(
         grade: Int,
         classNum: Int
     ): List<QueryUserClassResponse> {
-        println("시바 어디서부터ㅏㅇㄴ되노")
         val students = queryClassStatusService.queryClasStatus(grade, classNum).students
-        println("시바 어디서부터ㅏㅇㄴ되노")
 
         return students.map { student ->
             val applicationStory = findStoryByUserIdPort.findAllByUserId(student.userId)
