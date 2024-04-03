@@ -9,6 +9,7 @@ import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.SaveAllClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import org.springframework.stereotype.Component
+import org.springframework.transaction.annotation.Transactional
 
 @Component
 class ChangeClassroomStatusService(
@@ -16,13 +17,14 @@ class ChangeClassroomStatusService(
     private val classroomDeletePort: ClassroomDeletePort,
     private val saveAllClassroomPort: SaveAllClassroomPort
 ) : ChangeClassroomStatusUseCase {
+    @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         val update = mutableListOf<Classroom>()
 
         if (request!!.status == Status.NO) {
             for (id in request.ids) {
                 val classroom = findByUserIdPort.findByUserId(id) ?: throw ClassroomNorFoundException
-                classroomDeletePort.deleteByUserId(classroom.id!!)
+                classroomDeletePort.deleteByUserId(classroom.userId!!)
             }
             return
         }

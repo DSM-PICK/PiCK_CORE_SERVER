@@ -61,7 +61,7 @@ class ClassroomController(
         @RequestParam classNum: Int
     ) = queryGradeClassroomUseCase.queryGradeClassroom(grade, classNum)
 
-    @Operation(summary = "외출신청 수락또는 거절 API")
+    @Operation(summary = "교실이동 수락또는 거절 API")
     @PatchMapping("/status")
     fun statusClassroom(
         @RequestBody request: ClassroomStatusRequest
