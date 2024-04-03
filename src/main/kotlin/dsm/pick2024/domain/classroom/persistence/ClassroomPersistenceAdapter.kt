@@ -37,6 +37,11 @@ class ClassroomPersistenceAdapter(
         classroomRepository.deleteAll()
     }
 
+    override fun saveAll(classroom: List<Classroom>) {
+        val entities = classroom.map { classroomMapper.toEntity(it) }
+        classroomRepository.saveAll(entities)
+    }
+
     override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
             .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
