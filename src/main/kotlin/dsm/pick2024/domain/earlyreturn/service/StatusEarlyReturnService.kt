@@ -8,7 +8,6 @@ import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.out.DeleteAllEarlyReturnListPort
 import dsm.pick2024.domain.earlyreturn.port.out.FindEarlyReturnByIdPort
 import dsm.pick2024.domain.earlyreturn.port.out.SaveAllEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
@@ -21,7 +20,7 @@ class StatusEarlyReturnService(
     private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
     private val applicationStorySaveAllPort: ApplicationStorySavePort,
-    private val deleteAllEarlyReturnListPort: DeleteAllEarlyReturnListPort
+    private val deleteEarlyReturnByIdPort: FindEarlyReturnByIdPort
 ) : StatusEarlyReturnUseCase {
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
@@ -32,12 +31,10 @@ class StatusEarlyReturnService(
 
         if (request.status == Status.NO) {
             for (id in request.ids) {
-                val earlyReturn =
-                    findEarlyReturnByIdPort.findById(id)
-                        ?: throw EarlyReturnApplicationNotFoundException
-                earlyReturnUpdate.add(earlyReturn)
+                findEarlyReturnByIdPort.findById(id)
+                    ?: throw EarlyReturnApplicationNotFoundException
+                deleteEarlyReturnByIdPort.findById(id)
             }
-            deleteAllEarlyReturnListPort.deleteAll(earlyReturnUpdate)
         }
 
         for (earlyReturnId in request.ids) {
