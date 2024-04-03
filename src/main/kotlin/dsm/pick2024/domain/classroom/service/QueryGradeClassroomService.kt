@@ -10,19 +10,22 @@ import org.springframework.transaction.annotation.Transactional
 class QueryGradeClassroomService(
     private val queryGradeClassroomPort: QueryGradeClassroomPort
 ) : QueryGradeClassroomUseCase {
-
     @Transactional(readOnly = true)
-    override fun queryGradeClassroom(grade: Int, classNum: Int) =
-        queryGradeClassroomPort.queryGradeClassroom(grade, classNum)
-            .map {
-                    it ->
-                QueryClassroomResponse(
-                    it.classroomName,
-                    it.username,
-                    move = "${it.grade}-${it.classNum}",
-                    it.grade,
-                    it.classNum,
-                    it.num
-                )
-            }
+    override fun queryGradeClassroom(
+        grade: Int,
+        classNum: Int
+    ) = queryGradeClassroomPort.queryGradeClassroom(grade, classNum)
+        .map {
+                it ->
+            QueryClassroomResponse(
+                it.classroomName,
+                it.username,
+                move = "${it.grade}-${it.classNum}",
+                it.grade,
+                it.classNum,
+                it.num,
+                it.startPeriod,
+                it.endPeriod
+            )
+        }
 }

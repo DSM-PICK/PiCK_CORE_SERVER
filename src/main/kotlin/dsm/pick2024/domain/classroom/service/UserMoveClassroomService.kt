@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.classroom.service
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.AleadyApplyingMovementException
 import dsm.pick2024.domain.classroom.port.`in`.UserMoveClassroomUseCase
@@ -31,7 +32,10 @@ class UserMoveClassroomService(
                 floor = request.floor,
                 grade = user.grade,
                 classNum = user.classNum,
-                num = user.num
+                num = user.num,
+                startPeriod = request.startPeriod,
+                endPeriod = request.endPeriod,
+                status = Status.QUIET
             )
         )
     }
