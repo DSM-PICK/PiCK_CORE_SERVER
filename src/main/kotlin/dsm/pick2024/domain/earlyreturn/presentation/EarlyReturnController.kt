@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.earlyreturn.presentation
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.port.`in`.*
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
@@ -20,8 +19,7 @@ class EarlyReturnController(
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
     private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase,
-    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase,
-    private val queryAllEarlyReturnByStatusUseCase: QueryAllEarlyReturnByStatusUseCase
+    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase
 ) {
     @Operation(summary = "조기귀가 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -60,10 +58,4 @@ class EarlyReturnController(
     @Operation(summary = "조귀귀가중인 학생 조회 API")
     @GetMapping("/ok")
     fun queryOKEarlyReturn() = queryAllOKEarlyReturnUseCase.queryAllOKEarlyReturn()
-
-    @Operation(summary = "상태별 조귀귀가 학생 전체 조회 API")
-    @GetMapping("/all")
-    fun queryEarlyReturnByStatus(
-        @RequestParam status: Status
-    ) = queryAllEarlyReturnByStatusUseCase.queryAllEarlyReturn(status)
 }

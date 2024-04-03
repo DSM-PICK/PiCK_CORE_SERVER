@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.presentation
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.*
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
@@ -30,8 +29,7 @@ class ApplicationController(
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
     private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
-    private val queryStatusApplicationUseCase: QueryStatusApplicationUseCase,
-    private val queryAllApplicationByStatusUseCase: QueryAllApplicationByStatusUseCase
+    private val queryStatusApplicationUseCase: QueryStatusApplicationUseCase
 ) {
     @Operation(summary = "외출 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -64,12 +62,6 @@ class ApplicationController(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "class_num") classNum: Int
     ) = queryClassApplicationUseCase.queryClassApplication(grade, classNum)
-
-    @Operation(summary = "상태별 전체 조회 API")
-    @GetMapping("/all")
-    fun queryAllQuietApplication(
-        @RequestParam status: Status
-    ) = queryAllApplicationByStatusUseCase.queryAllApplicationByStatus(status)
 
     @Operation(summary = "외출자 전체 사유 확인하기 API")
     @GetMapping("/reason/all")
