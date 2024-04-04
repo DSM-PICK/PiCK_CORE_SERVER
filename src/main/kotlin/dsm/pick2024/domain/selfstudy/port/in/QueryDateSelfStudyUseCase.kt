@@ -4,5 +4,5 @@ import dsm.pick2024.domain.selfstudy.presentation.dto.response.QuerySelfStudyTea
 import java.time.LocalDate
 
 interface QueryDateSelfStudyUseCase {
-    fun queryDateSelfStudy(date: LocalDate): QuerySelfStudyTeacherResponse
+    fun queryDateSelfStudy(date: LocalDate): List<QuerySelfStudyTeacherResponse>?
 }
