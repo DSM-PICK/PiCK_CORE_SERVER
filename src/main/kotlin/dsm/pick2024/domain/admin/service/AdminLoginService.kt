@@ -29,6 +29,9 @@ class AdminLoginService(
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
             val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
+            if (Role.SCH.toString() != xquareUser.userRole){
+                throw RuntimeException("어드민 아님")
+            }
             adminSavePort.save(
                 Admin(
                     adminId = xquareUser.accountId,

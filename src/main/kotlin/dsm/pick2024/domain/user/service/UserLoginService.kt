@@ -30,6 +30,9 @@ class UserLoginService(
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
+            if (Role.STU.toString() != xquareUser.userRole) {
+                throw RuntimeException("학생아님")
+            }
             userSavePort.save(
                 User(
                     id = xquareUser.id,
