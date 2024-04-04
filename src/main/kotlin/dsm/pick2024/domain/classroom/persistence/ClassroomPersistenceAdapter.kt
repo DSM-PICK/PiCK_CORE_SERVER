@@ -63,6 +63,10 @@ class ClassroomPersistenceAdapter(
                     }
                 )
             )
+            .orderBy(
+                QClassroomJpaEntity.classroomJpaEntity.classNum.asc(),
+                QClassroomJpaEntity.classroomJpaEntity.num.asc()
+            )
             .fetch()
             .map { classroomMapper.toDomain(it) }
 
