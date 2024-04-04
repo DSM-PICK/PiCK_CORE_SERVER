@@ -71,10 +71,6 @@ class ApplicationController(
     @GetMapping("/my")
     fun queryMyApplication() = queryMyApplicationUseCase.queryMyApplication()
 
-    @Operation(summary = "내 외출증 간편 조회 API")
-    @GetMapping("/simple")
-    fun querySimpleMyApplication() = queryMyApplicationUseCase.querySimpleMyApplication()
-
     @Operation(summary = "외출중인 학생 조회 API")
     @GetMapping("/non-return")
     fun queryNonReturnApplication() = queryAllOKApplicationUseCase.queryAllNonReturnApplication()
