@@ -28,6 +28,13 @@ class SelfStudyController(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
     ) = registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
+    @Operation(summary = "자습감독 선생님 변경 API")
+    @PatchMapping("/modify")
+    fun modifySelfStudy(
+        @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
+    ) =
+        registrationSelfStudyTeacherUseCase.modifySelfStudyTeacher(registrationSelfStudyTeacherRequest)
+
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")
     fun queryTodaySelfStudyTeacher(

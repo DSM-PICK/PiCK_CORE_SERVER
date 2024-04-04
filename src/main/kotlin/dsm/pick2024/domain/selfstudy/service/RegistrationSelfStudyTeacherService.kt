@@ -8,26 +8,33 @@ import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfSt
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+@Transactional
 @Service
 class RegistrationSelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
     private val findByDatePort: FindByDatePort
 ) : RegistrationSelfStudyTeacherUseCase {
-    @Transactional
+
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val findSelfStudy = findByDatePort.findByDateList(request.date).firstOrNull()
-
-        val teacherList =
-            request.teacher.filter { it.teacher.isNotBlank() }.map { teacherRequest ->
-                findSelfStudy?.copy(
-                    teacher = teacherRequest.teacher
-                ) ?: SelfStudy(
-                    date = request.date,
-                    floor = teacherRequest.floor,
-                    teacher = teacherRequest.teacher
-                )
-            }
-
+        val teacherList = request.teacher.map { teacherRequest ->
+            SelfStudy(
+                date = request.date,
+                floor = teacherRequest.floor,
+                teacher = teacherRequest.teacher
+            )
+        }
         selfStudySaveAllPort.saveAll(teacherList)
+    }
+
+    override fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
+        val selfStudy = findByDatePort.findByDateList(request.date)
+
+        val modifiedSelfStudies = selfStudy.mapNotNull { existeSelfStudy ->
+            request.teacher.find { it.teacher == existeSelfStudy!!.teacher }?.let { teacherRequest ->
+                existeSelfStudy!!.copy(teacher = request.teacher.toString())
+            }
+        }
+
+        selfStudySaveAllPort.saveAll(modifiedSelfStudies)
     }
 }
