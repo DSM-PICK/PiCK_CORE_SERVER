@@ -14,10 +14,14 @@ class QuerySelfStudyTeacherService(
 ) : QueryDateSelfStudyUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryDateSelfStudy(date: LocalDate): QuerySelfStudyTeacherResponse {
-        val selfStudy = findByDatePort.findByDate(date)
-            ?: throw SelfStudyNotFoundException
-
-        return QuerySelfStudyTeacherResponse(selfStudy.floor, selfStudy.teacher, selfStudy.date)
-    }
+    override fun queryDateSelfStudy(date: LocalDate) =
+        findByDatePort.findByDateList(date)
+            .map {
+                it ->
+                QuerySelfStudyTeacherResponse(
+                    it!!.floor,
+                    it.teacher,
+                    it.date
+                )
+            }
 }
