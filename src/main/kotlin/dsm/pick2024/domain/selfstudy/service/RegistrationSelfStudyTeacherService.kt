@@ -14,27 +14,36 @@ class RegistrationSelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
     private val findByDatePort: FindByDatePort
 ) : RegistrationSelfStudyTeacherUseCase {
-
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val teacherList = request.teacher.map { teacherRequest ->
-            SelfStudy(
-                date = request.date,
-                floor = teacherRequest.floor,
-                teacher = teacherRequest.teacher
-            )
-        }
+        val teacherList =
+            request.teacher.map { teacherRequest ->
+                SelfStudy(
+                    date = request.date,
+                    floor = teacherRequest.floor,
+                    teacher = teacherRequest.teacher
+                )
+            }
         selfStudySaveAllPort.saveAll(teacherList)
     }
 
     override fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val selfStudy = findByDatePort.findByDateList(request.date)
+        val teacherList = mutableListOf<SelfStudy>()
 
-        val modifiedSelfStudies = selfStudy.mapNotNull { existeSelfStudy ->
-            request.teacher.find { it.teacher == existeSelfStudy!!.teacher }?.let { teacherRequest ->
-                existeSelfStudy!!.copy(teacher = request.teacher.toString())
-            }
+        request.teacher.forEach { requestedTeacher ->
+            val existingSelfStudy = selfStudy.find { it!!.floor == requestedTeacher.floor }
+
+            val modifiedSelfStudy =
+                existingSelfStudy?.copy(teacher = requestedTeacher.teacher)
+                    ?: SelfStudy(
+                        floor = requestedTeacher.floor,
+                        teacher = requestedTeacher.teacher,
+                        date = request.date
+                    )
+
+            teacherList.add(modifiedSelfStudy)
         }
 
-        selfStudySaveAllPort.saveAll(modifiedSelfStudies)
+        selfStudySaveAllPort.saveAll(teacherList)
     }
 }
