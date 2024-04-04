@@ -5,7 +5,5 @@ import java.time.LocalDate
 
 interface FindByDatePort {
 
-    fun findByDate(date: LocalDate): SelfStudy?
-
     fun findByDateList(date: LocalDate): List<SelfStudy?>
 }
