@@ -19,6 +19,7 @@ class QueryFloorClassroomService(
         .filter { if (status == Status.QUIET) it.status == Status.QUIET else it.status == Status.OK }
         .map {
             QueryClassroomResponse(
+                id = it.userId,
                 username = it.username,
                 classroomName = it.classroomName,
                 move = "${it.grade}-${it.classNum}",

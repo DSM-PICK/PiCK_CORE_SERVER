@@ -18,14 +18,15 @@ class QueryGradeClassroomService(
         .map {
                 it ->
             QueryClassroomResponse(
-                it.classroomName,
-                it.username,
+                id = it.userId,
+                username = it.username,
+                classroomName = it.classroomName,
                 move = "${it.grade}-${it.classNum}",
-                it.grade,
-                it.classNum,
-                it.num,
-                it.startPeriod,
-                it.endPeriod
+                grade = it.grade,
+                classNum = it.classNum,
+                num = it.num,
+                startPeriod = it.startPeriod,
+                endPeriod = it.endPeriod
             )
         }
 }
