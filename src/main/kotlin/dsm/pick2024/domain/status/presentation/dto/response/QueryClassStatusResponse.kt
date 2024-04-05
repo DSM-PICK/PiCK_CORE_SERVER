@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.status.present.dto.response
+package dsm.pick2024.domain.status.presentation.dto.response
 
 import dsm.pick2024.domain.status.entity.enum.StatusType
 import java.util.UUID

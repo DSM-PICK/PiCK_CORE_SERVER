@@ -3,8 +3,8 @@ package dsm.pick2024.domain.status.service
 import dsm.pick2024.domain.admin.persistence.AdminPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.out.QueryClassStatusPort
-import dsm.pick2024.domain.status.present.dto.response.QueryClassResponse
-import dsm.pick2024.domain.status.present.dto.response.QueryClassStatusResponse
+import dsm.pick2024.domain.status.presentation.dto.response.QueryClassResponse
+import dsm.pick2024.domain.status.presentation.dto.response.QueryClassStatusResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

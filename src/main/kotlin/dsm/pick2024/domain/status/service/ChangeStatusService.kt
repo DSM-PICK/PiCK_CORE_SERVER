@@ -3,7 +3,7 @@ package dsm.pick2024.domain.status.service
 import dsm.pick2024.domain.status.exception.StatusNotFoundException
 import dsm.pick2024.domain.status.persistence.StatusPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
-import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
+import dsm.pick2024.domain.status.presentation.dto.request.ChangeStatusRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
