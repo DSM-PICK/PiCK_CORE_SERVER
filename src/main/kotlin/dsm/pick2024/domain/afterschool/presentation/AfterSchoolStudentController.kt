@@ -47,6 +47,7 @@ class AfterSchoolStudentController(
     @GetMapping("/all")
     fun queryAfterSchoolAll() = queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
 
+    @Operation(summary = "방과후 등록 자동완성 API")
     @GetMapping("/search")
     fun queryAllUser() = queryAllUserUseCase.queryAllUser()
 }
