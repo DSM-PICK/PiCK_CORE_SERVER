@@ -3,10 +3,11 @@ package dsm.pick2024.domain.afterschool.presentation
 import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
+import dsm.pick2024.domain.afterschool.port.`in`.QueryAllUserUseCase
+import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
 import dsm.pick2024.domain.afterschool.presentation.dto.request.DeleteRequest
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
-import dsm.pick2024.domain.afterschool.service.SaveAfterSchoolStudentService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -19,14 +20,15 @@ class AfterSchoolStudentController(
     private val changeStatusAfterSchoolStudentUseCase: ChangeStatusAfterSchoolStudentUseCase,
     private val deleteAfterSchoolStudentUseCase: DeleteAfterSchoolStudentUseCase,
     private val queryAfterSchoolStudentAllUseCase: QueryAfterSchoolStudentAllUseCase,
-    private val saveAfterSchoolStudentService: SaveAfterSchoolStudentService
+    private val saveAfterSchoolStudentUseCase: SaveAfterSchoolStudentUseCase,
+    private val queryAllUserUseCase: QueryAllUserUseCase
 ) {
     @Operation(summary = "학생등록 API")
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     fun saveAfterSchoolStudent(
         @RequestBody request: List<SaveAfterSchoolStudentRequest>
-    ) = saveAfterSchoolStudentService.saveAfterSchoolStudent(request)
+    ) = saveAfterSchoolStudentUseCase.saveAfterSchoolStudent(request)
 
     @Operation(summary = "학생 출결상태 변경")
     @PatchMapping("/change")
@@ -44,4 +46,7 @@ class AfterSchoolStudentController(
     @Operation(summary = "방과후 창조실 학생 조회 API")
     @GetMapping("/all")
     fun queryAfterSchoolAll() = queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
+
+    @GetMapping("/search")
+    fun queryAllUser() = queryAllUserUseCase.queryAllUser()
 }
