@@ -17,8 +17,9 @@ class StatusPersistenceAdapter(
     private val statusMapper: StatusMapper
 
 ) : StatusPort {
-    override fun saveAll(statuses: MutableList<StatusJpaEntity>) {
-        statusRepository.saveAll(statuses)
+    override fun saveAll(statuses: MutableList<Status>) {
+        val entities = statuses.map { statusMapper.toEntity(it) }
+        statusRepository.saveAll(entities)
     }
 
     override fun findByGradeAndClassNum(grade: Int, classNum: Int): List<Status> {
