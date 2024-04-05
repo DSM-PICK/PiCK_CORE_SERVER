@@ -1,29 +1,33 @@
 package dsm.pick2024.domain.status.service
 
+import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.exception.StatusNotFoundException
-import dsm.pick2024.domain.status.persistence.StatusPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
-import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
+import dsm.pick2024.domain.status.port.out.FindStatusByUserId
+import dsm.pick2024.domain.status.port.out.SaveAllStatusPort
+import dsm.pick2024.domain.status.presentation.dto.request.ChangeStatusRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeStatusService(
-    private val statusPersistenceAdapter: StatusPersistenceAdapter
+    private val findStatusByUserId: FindStatusByUserId,
+    private val saveAllStatusPort: SaveAllStatusPort
 ) : ChangeStatusUseCase {
     @Transactional
     override fun changeStatus(request: List<ChangeStatusRequest>) {
-        request.forEach { request ->
-            val status =
-                statusPersistenceAdapter.findStatusByUserId(request.id)
+        val statusUpdate = mutableListOf<Status>()
+
+        request.map {
+                requests ->
+            requests.request.map {
+                    it ->
+                val status = findStatusByUserId.findStatusByUserId(it.id)
                     ?: throw StatusNotFoundException
-
-            val update =
-                status?.copy(
-                    type = request.status
-                )
-
-            update?.let { statusPersistenceAdapter.save(it) }
+                val add = status.copy(userId = it.id, type = it.statusType)
+                statusUpdate.add(add)
+            }
         }
+        saveAllStatusPort.saveAll(statusUpdate)
     }
 }

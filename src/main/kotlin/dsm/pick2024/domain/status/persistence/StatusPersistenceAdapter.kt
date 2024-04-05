@@ -3,7 +3,6 @@ package dsm.pick2024.domain.status.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.entity.QStatusJpaEntity
-import dsm.pick2024.domain.status.entity.StatusJpaEntity
 import dsm.pick2024.domain.status.mapper.StatusMapper
 import dsm.pick2024.domain.status.persistence.repository.StatusRepository
 import dsm.pick2024.domain.status.port.out.StatusPort
@@ -17,8 +16,9 @@ class StatusPersistenceAdapter(
     private val statusMapper: StatusMapper
 
 ) : StatusPort {
-    override fun saveAll(statuses: MutableList<StatusJpaEntity>) {
-        statusRepository.saveAll(statuses)
+    override fun saveAll(statuses: MutableList<Status>) {
+        val entities = statuses.map { statusMapper.toEntity(it) }
+        statusRepository.saveAll(entities)
     }
 
     override fun findByGradeAndClassNum(grade: Int, classNum: Int): List<Status> {

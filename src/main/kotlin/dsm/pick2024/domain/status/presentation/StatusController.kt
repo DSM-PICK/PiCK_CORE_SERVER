@@ -1,9 +1,9 @@
-package dsm.pick2024.domain.status.present
+package dsm.pick2024.domain.status.presentation
 
 import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.`in`.SaveAllStatusUserUseCase
-import dsm.pick2024.domain.status.present.dto.request.ChangeStatusRequest
+import dsm.pick2024.domain.status.presentation.dto.request.ChangeStatusRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
