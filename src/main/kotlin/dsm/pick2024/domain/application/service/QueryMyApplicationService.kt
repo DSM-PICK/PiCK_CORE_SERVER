@@ -10,6 +10,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.format.DateTimeFormatter
 
 @Service
 @Transactional(readOnly = true)
@@ -32,8 +33,8 @@ class QueryMyApplicationService(
             application.userId,
             application.username,
             application.teacherName!!,
-            application.startTime,
-            application.endTime,
+            application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             application.reason,
             application.grade,
             application.classNum,

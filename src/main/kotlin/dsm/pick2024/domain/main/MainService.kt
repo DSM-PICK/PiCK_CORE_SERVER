@@ -12,7 +12,7 @@ import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEa
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.temporal.ChronoUnit
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @Service
@@ -41,9 +41,9 @@ class MainService(
         return queryOKMyApplication.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
-                startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
+                startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 username = username,
-                endTime = endTime.truncatedTo(ChronoUnit.MINUTES),
+                endTime = endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 type = Main.APPLICATION
             )
         }!!
@@ -53,7 +53,7 @@ class MainService(
         return queryOKMyEarlyReturn.findByOKEarlyReturn(userId)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
-                startTime = startTime.truncatedTo(ChronoUnit.MINUTES),
+                startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 username = username,
                 type = Main.EARLYRETURN
             )

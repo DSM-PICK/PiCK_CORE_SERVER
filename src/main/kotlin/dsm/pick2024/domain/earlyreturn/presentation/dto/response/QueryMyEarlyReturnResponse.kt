@@ -1,12 +1,11 @@
 package dsm.pick2024.domain.earlyreturn.presentation.dto.response
 
 import dsm.pick2024.domain.applicationstory.enums.Type
-import java.time.LocalTime
 
 data class QueryMyEarlyReturnResponse(
     val username: String,
     val teacherName: String,
-    val startTime: LocalTime,
+    val startTime: String,
     val reason: String,
     val grade: Int,
     val classNum: Int,

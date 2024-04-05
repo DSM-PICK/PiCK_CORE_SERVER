@@ -8,6 +8,7 @@ import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryMyEarlyRet
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.format.DateTimeFormatter
 
 @Service
 class QueryMyEarlyReturnService(
@@ -24,7 +25,7 @@ class QueryMyEarlyReturnService(
         return QueryMyEarlyReturnResponse(
             earlyReturn.username,
             earlyReturn.teacherName!!,
-            earlyReturn.startTime,
+            earlyReturn.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             earlyReturn.reason,
             earlyReturn.grade,
             earlyReturn.classNum,
