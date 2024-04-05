@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class ChangeStatusRequest(
     val period: Int,
-    val request: List<StatusRequest>
+    val statusList: List<StatusRequest>
 )
 
 data class StatusRequest(

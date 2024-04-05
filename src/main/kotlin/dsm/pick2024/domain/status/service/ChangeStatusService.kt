@@ -20,7 +20,7 @@ class ChangeStatusService(
 
         request.map {
                 requests ->
-            requests.request.map {
+            requests.statusList.map {
                     it ->
                 val status = findStatusByUserId.findStatusByUserId(it.id)
                     ?: throw StatusNotFoundException
