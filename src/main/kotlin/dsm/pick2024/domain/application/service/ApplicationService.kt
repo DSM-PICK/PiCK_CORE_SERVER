@@ -23,7 +23,7 @@ class ApplicationService(
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existApplicationByUseridPort.existsByUserId(user.id!!) == true) {
+        if (existApplicationByUseridPort.existsByUserId(user.id)) {
             throw AlreadyApplyingForPicnicException
         }
 
