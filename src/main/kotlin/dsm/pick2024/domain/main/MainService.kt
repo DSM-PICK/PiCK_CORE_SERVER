@@ -33,7 +33,7 @@ class MainService(
             existsOKApplicationByUserIdPort.existsOKByUserId(userId) -> findApplication(userId)
             existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existOKByUserIdPort.existOKByUserId(userId) -> findClassroom(userId)
-            else -> throw MainException
+            else -> null
         }
     }
 
