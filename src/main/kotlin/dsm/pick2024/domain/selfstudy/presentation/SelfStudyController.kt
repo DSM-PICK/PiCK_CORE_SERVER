@@ -15,7 +15,7 @@ import java.time.Year
 @RestController
 @RequestMapping("/self-study")
 class SelfStudyController(
-    private val registrationSelfStudyTeacherUseCase: RegistrationSelfStudyTeacherUseCase,
+    private val selfStudyTeacherUseCase: SelfStudyTeacherUseCase,
     private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase,
     private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase,
     private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase,
@@ -26,14 +26,14 @@ class SelfStudyController(
     @PostMapping("/register")
     fun selfStudyTeacherRegister(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
-    ) = registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
+    ) = selfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "자습감독 선생님 변경 API")
     @PatchMapping("/modify")
     fun modifySelfStudy(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
     ) =
-        registrationSelfStudyTeacherUseCase.modifySelfStudyTeacher(registrationSelfStudyTeacherRequest)
+        selfStudyTeacherUseCase.modifySelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")

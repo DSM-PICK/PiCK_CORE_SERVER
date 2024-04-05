@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.selfstudy.service
 
 import dsm.pick2024.domain.selfstudy.domain.SelfStudy
-import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.FindByDatePort
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudySaveAllPort
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Service
-class RegistrationSelfStudyTeacherService(
+class SelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
     private val findByDatePort: FindByDatePort
-) : RegistrationSelfStudyTeacherUseCase {
+) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val teacherList =
             request.teacher.map { teacherRequest ->
