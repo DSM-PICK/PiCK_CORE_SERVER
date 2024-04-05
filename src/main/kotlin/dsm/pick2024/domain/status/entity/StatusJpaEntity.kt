@@ -18,6 +18,5 @@ class StatusJpaEntity(
     val classNum: Int,
     val num: Int,
     @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.STRING)
-    val type: StatusType
+    val type: String
 ) : BaseUUIDEntity(id)
