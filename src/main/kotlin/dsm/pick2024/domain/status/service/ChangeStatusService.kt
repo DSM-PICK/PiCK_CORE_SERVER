@@ -15,28 +15,19 @@ class ChangeStatusService(
     private val saveAllStatusPort: SaveAllStatusPort
 ) : ChangeStatusUseCase {
     @Transactional
-    override fun changeStatus(request: ChangeStatusRequest) {
-        val statusUpdate = mutableListOf<Status>()
-        request.list.map {
-                requests ->
-            val period = requests.period
-            requests.statusList.map {
-                    it ->
-                val status = findStatusByUserId.findStatusByUserId(it.userId)
+    override fun changeStatus(request: List<ChangeStatusRequest>) {
+        val update = mutableListOf<Status>()
+        request.map { requests ->
+            val status =
+                findStatusByUserId.findStatusByUserId(requests.userId)
                     ?: throw StatusNotFoundException
 
-                val add = when (period){
-                    6 -> status.copy(period6 = it.statusType)
-                    7 -> status.copy(period7 = it.statusType)
-                    8 -> status.copy(period8 = it.statusType)
-                    9 -> status.copy(period9 = it.statusType)
-                    10 -> status.copy(period10 = it.statusType)
-                    else -> throw Exception("adsf")
-                }
-                statusUpdate.add(add)
-            }
+            val add =
+                status.copy(
+                    status = requests.statusType
+                )
+            update.add(add)
         }
-        saveAllStatusPort.saveAll(statusUpdate)
-        }
-
+        saveAllStatusPort.saveAll(update)
+    }
 }

@@ -19,17 +19,5 @@ class StatusJpaEntity(
     val num: Int,
     @Column(name = "status_6", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    val period6: StatusType,
-    @Column(name = "status_7", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    val period7: StatusType,
-    @Column(name = "status_8", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    val period8: StatusType,
-    @Column(name = "status_9", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    val period9: StatusType,
-    @Column(name = "status_10", nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    val period10: StatusType
+    val status: StatusType,
 ) : BaseUUIDEntity(id)

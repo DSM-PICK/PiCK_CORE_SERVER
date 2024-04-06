@@ -15,11 +15,7 @@ class StatusMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                period6 = period6,
-                period7 = period7,
-                period8 = period8,
-                period9 = period9,
-                period10 = period10
+                status = status
             )
         }
 
@@ -32,11 +28,7 @@ class StatusMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                period6 = period6,
-                period7 = period7,
-                period8 = period8,
-                period9 = period9,
-                period10 = period10
+                status = status
             )
         }
 }
