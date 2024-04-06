@@ -17,20 +17,16 @@ class ChangeStatusService(
     @Transactional
     override fun changeStatus(request: ChangeStatusRequest) {
         val statusUpdate = mutableListOf<Status>()
-
-        request.list.forEach { changeRequest ->
-            changeRequest.statusList.forEachIndexed { index, statusRequest ->
-                val userId = statusRequest.userId
-                val statusTypeList = statusRequest.statusType.split(",")
-                if (changeRequest.period in 7..10 && index < statusTypeList.size) {
-                    val statusType = statusTypeList[index].trim()
-                    val status = findStatusByUserId.findStatusByUserId(userId)
-                        ?: throw StatusNotFoundException
-                    val updatedStatus = status.copy(type = statusType)
-                    statusUpdate.add(updatedStatus)
-                }
+        request.list.map {
+                requests ->
+            requests.statusList.map {
+                    it ->
+                val status = findStatusByUserId.findStatusByUserId(it.userId)
+                    ?: throw StatusNotFoundException
+                val add = status.copy(type = it.statusType)
+                statusUpdate.add(add)
             }
         }
         saveAllStatusPort.saveAll(statusUpdate)
-    }
+        }
 }
