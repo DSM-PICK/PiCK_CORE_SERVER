@@ -20,19 +20,17 @@ class SaveAfterSchoolStudentService(
             request.map { requests ->
                 val (grade, classNum, num) = parseSchoolNum(requests.studentNum)
                 val user = findByStudentNumPort.findByStudentNum(grade, classNum, num)
-                user.let {
-                    AfterSchoolStudent(
-                        id = null,
-                        userId = user!!.id!!,
-                        grade = grade,
-                        classNum = classNum,
-                        num = num,
-                        name = user!!.name,
-                        status1 = Status.ATTENDANCE,
-                        status2 = Status.ATTENDANCE,
-                        status3 = Status.ATTENDANCE
-                    )
-                }
+                AfterSchoolStudent(
+                    id = null,
+                    userId = user!!.id!!,
+                    grade = grade,
+                    classNum = classNum,
+                    num = num,
+                    name = user!!.name,
+                    status1 = Status.ATTENDANCE,
+                    status2 = Status.ATTENDANCE,
+                    status3 = Status.ATTENDANCE
+                )
             }
         saveAllAfterSchoolStudentPort.saveAll(afterSchoolStudent)
     }

@@ -16,34 +16,35 @@ class SelfStudyTeacherService(
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val teacherList =
-            request.teacher.map { teacherRequest ->
-                SelfStudy(
-                    date = request.date,
-                    floor = teacherRequest.floor,
-                    teacher = teacherRequest.teacher
-                )
-            }
+            request.teacher
+                .filter { it.teacher.isNotBlank() }
+                .map { teacher ->
+                    SelfStudy(
+                        floor = teacher.floor,
+                        teacher = teacher.teacher,
+                        date = request.date
+                    )
+                }
         selfStudySaveAllPort.saveAll(teacherList)
     }
 
     override fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val selfStudy = findByDatePort.findByDateList(request.date)
-        val teacherList = mutableListOf<SelfStudy>()
+        if (request.teacher.any { it.teacher.isNotBlank() }) {
+            val selfStudy = findByDatePort.findByDateList(request.date)
+            val teacherList =
+                request.teacher
+                    .filter { it.teacher.isNotBlank() }
+                    .mapNotNull { teacher ->
+                        val exist = selfStudy.find { it!!.floor == teacher.floor }
 
-        request.teacher.forEach { requestedTeacher ->
-            val existingSelfStudy = selfStudy.find { it!!.floor == requestedTeacher.floor }
+                        exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
+                            floor = teacher.floor,
+                            teacher = teacher.teacher,
+                            date = request.date
+                        )
+                    }
 
-            val modifiedSelfStudy =
-                existingSelfStudy?.copy(teacher = requestedTeacher.teacher)
-                    ?: SelfStudy(
-                        floor = requestedTeacher.floor,
-                        teacher = requestedTeacher.teacher,
-                        date = request.date
-                    )
-
-            teacherList.add(modifiedSelfStudy)
+            selfStudySaveAllPort.saveAll(teacherList)
         }
-
-        selfStudySaveAllPort.saveAll(teacherList)
     }
 }
