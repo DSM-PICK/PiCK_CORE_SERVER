@@ -10,5 +10,5 @@ data class Status(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val type: StatusType
+    val status: StatusType
 )

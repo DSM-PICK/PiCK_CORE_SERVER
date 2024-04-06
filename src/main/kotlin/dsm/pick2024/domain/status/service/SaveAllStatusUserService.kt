@@ -24,7 +24,7 @@ class SaveAllStatusUserService(
                     grade = user.grade,
                     classNum = user.classNum,
                     num = user.num,
-                    type = StatusType.ATTENDANCE
+                    status = StatusType.ATTENDANCE
                 )
             }.toMutableList()
         saveAllStatusPort.saveAll(statusEntities)

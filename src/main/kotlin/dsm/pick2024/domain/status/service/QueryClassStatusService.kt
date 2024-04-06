@@ -29,7 +29,7 @@ class QueryClassStatusService(
                         grade = classStatus.grade,
                         classNum = classStatus.classNum,
                         num = classStatus.num,
-                        status = classStatus.type
+                        status = classStatus.status
                     )
                 }
 

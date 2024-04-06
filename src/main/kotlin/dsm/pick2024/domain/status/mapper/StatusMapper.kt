@@ -15,7 +15,7 @@ class StatusMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                type = type
+                status = status
             )
         }
 
@@ -28,7 +28,7 @@ class StatusMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                type = type
+                status = status
             )
         }
 }

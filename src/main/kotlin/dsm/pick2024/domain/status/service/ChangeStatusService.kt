@@ -16,18 +16,18 @@ class ChangeStatusService(
 ) : ChangeStatusUseCase {
     @Transactional
     override fun changeStatus(request: List<ChangeStatusRequest>) {
-        val statusUpdate = mutableListOf<Status>()
-
-        request.map {
-                requests ->
-            requests.statusList.map {
-                    it ->
-                val status = findStatusByUserId.findStatusByUserId(it.id)
+        val update = mutableListOf<Status>()
+        request.map { requests ->
+            val status =
+                findStatusByUserId.findStatusByUserId(requests.userId)
                     ?: throw StatusNotFoundException
-                val add = status.copy(userId = it.id, type = it.statusType)
-                statusUpdate.add(add)
-            }
+
+            val add =
+                status.copy(
+                    status = requests.statusType
+                )
+            update.add(add)
         }
-        saveAllStatusPort.saveAll(statusUpdate)
+        saveAllStatusPort.saveAll(update)
     }
 }
