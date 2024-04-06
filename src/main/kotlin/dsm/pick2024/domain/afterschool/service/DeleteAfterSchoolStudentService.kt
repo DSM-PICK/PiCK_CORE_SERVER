@@ -11,5 +11,6 @@ class DeleteAfterSchoolStudentService(
     private val deleteAfterSchoolStudentPort: AfterSchoolStudentPortUser
 ) : DeleteAfterSchoolStudentUseCase {
     @Transactional
-    override fun deleteAfterSchoolStudent(request: DeleteRequest) = deleteAfterSchoolStudentPort.deleteById(request.id)
+    override fun deleteAfterSchoolStudent(request: DeleteRequest) =
+        deleteAfterSchoolStudentPort.deleteById(request.id)
 }

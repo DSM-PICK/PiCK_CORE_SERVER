@@ -3,9 +3,7 @@ package dsm.pick2024.domain.afterschool.service
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.out.FindAfterSchoolStudentByUserIdPort
-import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
-import dsm.pick2024.domain.afterschool.presentation.dto.request.AfterSchool
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
@@ -21,10 +19,10 @@ class ChangeStatusAfterSchoolStudentService(
         val update = mutableListOf<AfterSchoolStudent>()
 
         request.list.map {
-            requests ->
+                requests ->
             val period = requests.period
             requests.afterSchool.map {
-                it ->
+                    it ->
                 val afterSchool = findAfterSchoolStudentByUserIdPort.findByUserId(it.userId)
                     ?: throw UserNotFoundException
                 val add = when (period) {
@@ -37,6 +35,5 @@ class ChangeStatusAfterSchoolStudentService(
             }
             saveAllAfterSchoolStudentPort.saveAll(update)
         }
-
     }
 }
