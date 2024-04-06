@@ -4,15 +4,7 @@ import dsm.pick2024.domain.afterschool.enums.Status
 import java.util.UUID
 
 data class ChangeAfterSchoolStatusRequest(
-    val list: List<Change>
-)
+    val id: UUID,
+    val statusList: List<Status>
 
-data class Change(
-    val period: Int,
-    val afterSchool: List<AfterSchool>
-)
-
-data class AfterSchool(
-    val userId: UUID,
-    val status: Status
 )
