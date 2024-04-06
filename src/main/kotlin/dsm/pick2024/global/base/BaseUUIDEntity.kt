@@ -18,3 +18,4 @@ abstract class BaseUUIDEntity(
     )
     val id: UUID?
 )
+
