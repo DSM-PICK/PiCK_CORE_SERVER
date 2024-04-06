@@ -10,5 +10,9 @@ data class Status(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val type: String
+    val period6: StatusType,
+    val period7: StatusType,
+    val period8: StatusType,
+    val period9: StatusType,
+    val period10: StatusType
 )

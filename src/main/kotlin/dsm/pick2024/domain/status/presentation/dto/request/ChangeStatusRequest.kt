@@ -14,5 +14,5 @@ data class StatusRequests(
 
 data class StatusRequest(
     val userId: UUID,
-    val statusType: String
+    val statusType: StatusType
 )
