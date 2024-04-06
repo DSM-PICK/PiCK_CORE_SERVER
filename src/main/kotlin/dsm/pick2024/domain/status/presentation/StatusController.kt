@@ -38,6 +38,6 @@ class StatusController(
     @Operation(summary = "학생 출석 상태 변경 API")
     @PatchMapping("/change")
     fun changeStatus(
-        @RequestBody request: ChangeStatusRequest
+        @RequestBody request: List<ChangeStatusRequest>
     ) = changeStatusUseCase.changeStatus(request)
 }
