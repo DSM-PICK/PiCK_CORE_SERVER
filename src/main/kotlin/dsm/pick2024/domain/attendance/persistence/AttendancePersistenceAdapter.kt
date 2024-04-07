@@ -2,6 +2,7 @@ package dsm.pick2024.domain.attendance.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.entity.QAttendanceJpaEntity
 import dsm.pick2024.domain.attendance.mapper.AttendanceMapper
 import dsm.pick2024.domain.attendance.persistence.repository.AttendanceRepository
 import dsm.pick2024.domain.attendance.port.out.AttendancePort
@@ -21,4 +22,19 @@ class AttendancePersistenceAdapter(
 
     override fun findByUserId(userId: UUID) =
         attendanceJpaRepository.findByUserId(userId).let { attendanceMapper.toDomain(it) }
+
+    override fun findByGradeAndClassNum(
+        grade: Int,
+        classNum: Int
+    ) = jpaQueryFactory
+        .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
+        .where(
+            QAttendanceJpaEntity.attendanceJpaEntity.grade.eq(grade),
+            QAttendanceJpaEntity.attendanceJpaEntity.classNum.eq(classNum)
+        )
+        .orderBy(
+            QAttendanceJpaEntity.attendanceJpaEntity.num.asc()
+        )
+        .fetch()
+        .map { attendanceMapper.toDomain(it) }
 }
