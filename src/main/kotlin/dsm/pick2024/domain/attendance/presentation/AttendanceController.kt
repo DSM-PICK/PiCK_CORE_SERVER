@@ -19,7 +19,7 @@ class AttendanceController(
     private val changeAttendanceUseCase: ChangeAttendanceUseCase,
     private val queryClassAttendanceUseCase: QueryClassAttendanceUseCase
 ) {
-    @Operation(summary = "자습 or 방과후 상태관리")
+    @Operation(summary = "자습 or 동아리 상태관리")
     @PatchMapping("/modify")
     fun changeAttendance(
         @RequestBody changeAttendanceRequest: List<ChangeAttendanceRequest>
