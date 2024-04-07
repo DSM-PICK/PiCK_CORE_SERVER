@@ -7,5 +7,6 @@ data class XquareUserAllResponse(
     val name: String,
     val grade: Int,
     val classNum: Int,
-    val num: Int
+    val num: Int,
+    val club: String
 )

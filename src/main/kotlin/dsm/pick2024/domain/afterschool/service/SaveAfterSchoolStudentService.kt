@@ -22,11 +22,11 @@ class SaveAfterSchoolStudentService(
                 val user = findByStudentNumPort.findByStudentNum(grade, classNum, num)
                 AfterSchoolStudent(
                     id = null,
-                    userId = user!!.id!!,
+                    userId = user!!.id,
                     grade = grade,
                     classNum = classNum,
                     num = num,
-                    name = user!!.name,
+                    name = user.name,
                     status1 = Status.ATTENDANCE,
                     status2 = Status.ATTENDANCE,
                     status3 = Status.ATTENDANCE
