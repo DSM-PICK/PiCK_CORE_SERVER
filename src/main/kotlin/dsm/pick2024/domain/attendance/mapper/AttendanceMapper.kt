@@ -34,7 +34,7 @@ class AttendanceMapper : GenericMapper<AttendanceJpaEntity, Attendance> {
                 classNum = classNum,
                 num = num,
                 name = name,
-                club = club!!,
+                club = club,
                 period6 = period6,
                 period7 = period7,
                 period8 = period8,

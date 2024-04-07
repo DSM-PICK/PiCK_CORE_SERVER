@@ -10,7 +10,7 @@ data class Attendance(
     val classNum: Int,
     val num: Int,
     val name: String,
-    val club: String,
+    val club: String? = null,
     val period6: Status,
     val period7: Status,
     val period8: Status,
