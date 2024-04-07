@@ -21,7 +21,7 @@ class AttendanceController(
 
     @Operation(summary = "데이터 저장 api")
     @PostMapping("/all")
-    fun all (@RequestParam(name = "key") key: String) =
+    fun all(@RequestParam(name = "key") key: String) =
         saveAllAttendanceUseCase.saveAll(key)
 
     @Operation(summary = "자습 or 방과후 상태관리")
