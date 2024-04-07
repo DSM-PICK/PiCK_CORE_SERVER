@@ -3,7 +3,7 @@ spring:
         import: "optional:configserver:"
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: ${DB_URL}
+        url: jdbc:mysql://mysql.xquare.app:3306/stag_new_pick
         username: ${DB_USERNAME}
         password: ${DB_PASSWORD}
         hikari:
