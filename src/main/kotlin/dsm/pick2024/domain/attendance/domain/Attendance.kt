@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.attendance.domain
 
 import dsm.pick2024.domain.afterschool.enums.Status
-import java.util.*
+import java.util.UUID
 
 data class Attendance(
     val id: UUID? = null,
