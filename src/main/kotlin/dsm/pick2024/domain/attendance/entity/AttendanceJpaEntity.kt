@@ -8,10 +8,9 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
-@Entity
+@Entity(name = "tbl_attendance")
 class AttendanceJpaEntity (
     id: UUID?,
-
     @Column(columnDefinition = "BINARY(16)")
     val userId: UUID,
     @Column(nullable = false)
@@ -34,5 +33,4 @@ class AttendanceJpaEntity (
     val period9: Status,
     @Enumerated(value = EnumType.STRING)
     val period10: Status
-
 ): BaseUUIDEntity(id)
