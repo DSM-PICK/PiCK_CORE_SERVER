@@ -6,7 +6,7 @@ import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class AttendanceMapper: GenericMapper<AttendanceJpaEntity, Attendance> {
+class AttendanceMapper : GenericMapper<AttendanceJpaEntity, Attendance> {
     override fun toEntity(domain: Attendance) =
         domain.run {
             AttendanceJpaEntity(

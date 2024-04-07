@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional
 class SaveAllAttendanceSaveAllUserService(
     private val saveAll: SaveAll,
     private val xquareFeignClient: XquareFeignClient
-): SaveAllAttendanceUseCase {
+) : SaveAllAttendanceUseCase {
 
     @Transactional
     override fun saveAll(key: String) {
         val xquare = xquareFeignClient.userAll(key)
         val entity = xquare.map {
-            it ->
+                it ->
             Attendance(
                 userId = it.id,
                 name = it.name,

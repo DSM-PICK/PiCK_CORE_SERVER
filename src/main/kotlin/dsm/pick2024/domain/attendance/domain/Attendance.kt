@@ -3,7 +3,7 @@ package dsm.pick2024.domain.attendance.domain
 import dsm.pick2024.domain.afterschool.enums.Status
 import java.util.*
 
-data class Attendance (
+data class Attendance(
     val id: UUID? = null,
     val userId: UUID,
     val grade: Int,
@@ -15,5 +15,5 @@ data class Attendance (
     val period7: Status,
     val period8: Status,
     val period9: Status,
-    val period10: Status,
+    val period10: Status
 )

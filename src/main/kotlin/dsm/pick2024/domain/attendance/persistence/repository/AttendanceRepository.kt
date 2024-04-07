@@ -6,4 +6,6 @@ import java.util.UUID
 
 interface AttendanceRepository : Repository<AttendanceJpaEntity, UUID> {
     fun saveAll(entity: Iterable<AttendanceJpaEntity>)
+
+    fun findByUserId(userId: UUID): AttendanceJpaEntity
 }
