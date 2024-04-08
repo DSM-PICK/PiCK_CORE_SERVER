@@ -17,15 +17,11 @@ class NoticePersistenceAdapter(
     private val noticeMapper: NoticeMapper,
     private val jpaQueryFactory: JPAQueryFactory
 ) : NoticePort {
+    override fun save(notice: Notice) = noticeRepository.save(noticeMapper.toEntity(notice))
 
-    override fun save(notice: Notice) =
-        noticeRepository.save(noticeMapper.toEntity(notice))
+    override fun findById(noticeId: UUID) = noticeRepository.findById(noticeId).let { noticeMapper.toDomain(it) }
 
-    override fun findById(noticeId: UUID) =
-        noticeRepository.findById(noticeId).let { noticeMapper.toDomain(it) }
-
-    override fun deleteById(id: UUID) =
-        noticeRepository.deleteById(id)
+    override fun deleteById(id: UUID) = noticeRepository.deleteById(id)
 
     override fun findByToday(): List<Notice> {
         val today = LocalDate.now(ZoneId.of("Asia/Seoul"))
