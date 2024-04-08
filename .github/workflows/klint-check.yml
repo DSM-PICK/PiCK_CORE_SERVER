@@ -1,27 +1,32 @@
-name: ktlint
+name: Ktlint Ci
 
-on:
-    pull_request:
-        branches:
-            - main
+on: [pull_request]
 
 jobs:
     ktlint:
         name: Check Code Quality
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                os: [ ubuntu-latest ]
+                java-version: [ 17 ]
 
         steps:
+            - uses: actions/checkout@v2
+            - name: Set up JDK
+              uses: actions/setup-java@v2
+              with:
+                  java-version: ${{ matrix.java-version }}
+                  distribution: 'zulu'
+
             - name: Clone repo
-              uses: actions/checkout@v2
+              uses: actions/checkout@master
               with:
                   fetch-depth: 1
 
-            - name: Setup JDK
-              uses: actions/setup-java@v2
+            - name: ktlint
+              uses: ScaCap/action-ktlint@master
               with:
-                  java-version: '17'
-                  distribution: 'adopt'
-
-            - name: Run ktlint
-              run: |
-                  ./gradlew ktlintCheck --daemon --parallel --configure-on-demand
+                  github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                  reporter: github-pr-check # Change review
+                  fail_on_error: true
