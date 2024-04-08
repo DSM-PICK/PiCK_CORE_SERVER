@@ -1,6 +1,14 @@
 package dsm.pick2024.domain.application.presentation
 
-import dsm.pick2024.domain.application.port.`in`.*
+import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryAllOKApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryAllReasonApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryFloorApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryStatusApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.StatusApplicationChangeUseCase
+import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import io.swagger.v3.oas.annotations.Operation

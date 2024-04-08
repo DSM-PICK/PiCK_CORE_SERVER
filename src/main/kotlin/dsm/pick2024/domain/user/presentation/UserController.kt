@@ -1,6 +1,10 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.user.port.`in`.*
+import dsm.pick2024.domain.user.port.`in`.LoginUseCase
+import dsm.pick2024.domain.user.port.`in`.QueryUserAllUseCase
+import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
+import dsm.pick2024.domain.user.port.`in`.QueryUserSimpleInfoUseCase
+import dsm.pick2024.domain.user.port.`in`.UserTokenRefreshUseCase
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -23,29 +27,27 @@ class UserController(
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase
 ) {
-
     @Operation(summary = "유저 로그인 API")
     @PostMapping("/login")
-    fun login(@RequestBody userLoginRequest: UserLoginRequest): TokenResponse =
-        loginUseCase.login(userLoginRequest)
+    fun login(
+        @RequestBody userLoginRequest: UserLoginRequest
+    ): TokenResponse = loginUseCase.login(userLoginRequest)
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
-    fun userTokenRefresh(@RequestHeader("X-Refresh-Token") token: String) =
-        userTokenRefreshUseCase.userTokenRefresh(token)
+    fun userTokenRefresh(
+        @RequestHeader("X-Refresh-Token") token: String
+    ) = userTokenRefreshUseCase.userTokenRefresh(token)
 
     @Operation(summary = "내 정보 간편조회 API")
     @GetMapping("/simple")
-    fun queryUserSimpleInfo() =
-        queryUserSimpleInfoUseCase.queryUserSimpleInfo()
+    fun queryUserSimpleInfo() = queryUserSimpleInfoUseCase.queryUserSimpleInfo()
 
     @Operation(summary = "내 정보 상세조회 API")
     @GetMapping("/details")
-    fun queryUserDetailsInfo() =
-        queryUserDetailsInfoUseCase.queryUserDetailsInfo()
+    fun queryUserDetailsInfo() = queryUserDetailsInfoUseCase.queryUserDetailsInfo()
 
     @Operation(summary = "유저 전체 불러오기 API")
     @GetMapping("/all")
-    fun queryUserAll() =
-        queryUserAllUseCase.queryUserAll()
+    fun queryUserAll() = queryUserAllUseCase.queryUserAll()
 }
