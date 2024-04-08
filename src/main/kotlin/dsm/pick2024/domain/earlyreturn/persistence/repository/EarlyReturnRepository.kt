@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.entity.EarlyReturnJpaEntity
 import org.springframework.data.repository.Repository
-import java.util.*
+import java.util.UUID
 
 interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun existsByUserId(userId: UUID): Boolean

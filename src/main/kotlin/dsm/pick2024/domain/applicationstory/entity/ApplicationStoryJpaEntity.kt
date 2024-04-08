@@ -4,7 +4,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType

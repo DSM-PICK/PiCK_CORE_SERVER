@@ -9,7 +9,7 @@ import dsm.pick2024.domain.application.persistence.repository.ApplicationReposit
 import dsm.pick2024.domain.application.port.out.ApplicationByStatusPortPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class ApplicationPersistenceAdapterByStatusPort(

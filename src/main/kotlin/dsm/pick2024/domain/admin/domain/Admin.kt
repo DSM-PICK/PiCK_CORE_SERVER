@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.admin.domain
 
 import dsm.pick2024.domain.user.entity.enums.Role
-import java.util.*
+import java.util.UUID
 
 data class Admin(
     val id: UUID? = null,

@@ -9,7 +9,7 @@ import dsm.pick2024.domain.earlyreturn.persistence.repository.EarlyReturnReposit
 import dsm.pick2024.domain.earlyreturn.port.out.EarlyReturnPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class EarlyReturnPersistenceAdapter(
