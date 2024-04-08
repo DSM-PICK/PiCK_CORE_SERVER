@@ -15,14 +15,15 @@ class QueryStatusApplicationService(
     private val queryAllClassroomPort: QueryAllClassroomPort
 ) : QueryStatusApplicationUseCase {
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
-        val out = queryAllApplicationPort.findAll()
-            .count { it.status == Status.OK }
+        val out =
+            queryAllApplicationPort.findAll()
+                .count { it.status == Status.OK }
 
         val request =
             queryAllEarlyReturnPort.findAll().count { it.status == Status.QUIET } +
-                queryAllApplicationPort.findAll().count() { it.status == Status.QUIET }
+                queryAllApplicationPort.findAll().count { it.status == Status.QUIET }
 
-        val classMove = queryAllClassroomPort.findAll().count()
+        val classMove = queryAllClassroomPort.findAll().count { it.status == Status.OK }
 
         return QueryStatusApplicationResponse(out, request, classMove)
     }
