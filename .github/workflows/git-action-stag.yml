@@ -46,8 +46,8 @@ jobs:
                       JWT_REFRESH_EXP=36000000
                       JWT_HEADER=Authorization
                       JWT_PREFIX=Bearer
-                      DB_URL=${{ secrets.STAG_DB_URL }}
-                      DB_USERNAME=${{ secrets.DB_USERNAME }}
+                      DB_URL=${{ secrets.DB_URL }}
+                      DB_USERNAME=${{ secrets.STAG_DB_USERNAME }}
                       DB_PASSWORD=${{ secrets.DB_PASSWORD }}
                       REDIS_HOST=${{ secrets.REDIS_HOST }}
                       REDIS_PORT=${{ secrets.REDIS_PORT }}
