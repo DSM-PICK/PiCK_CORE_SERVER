@@ -21,7 +21,9 @@ class AttendanceMapper : GenericMapper<AttendanceJpaEntity, Attendance> {
                 period7 = period7,
                 period8 = period8,
                 period9 = period9,
-                period10 = period10
+                period10 = period10,
+                place = place,
+                floor = floor
             )
         }
 
@@ -39,7 +41,9 @@ class AttendanceMapper : GenericMapper<AttendanceJpaEntity, Attendance> {
                 period7 = period7,
                 period8 = period8,
                 period9 = period9,
-                period10 = period10
+                period10 = period10,
+                place = place,
+                floor = floor
             )
         }
 }
