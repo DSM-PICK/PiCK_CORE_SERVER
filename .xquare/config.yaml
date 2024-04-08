@@ -3,6 +3,3 @@ config:
     prefix: "/dsm-pick"
     service_type: be
     port: 8080
-    domain:
-        prod: pick.xquare.app
-        stag: pick-stag.xquare.app
