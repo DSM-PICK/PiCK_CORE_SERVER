@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.earlyreturn.presentation.dto.response
 
 import java.time.LocalTime
-import java.util.*
+import java.util.UUID
 
 data class QueryEarlyReturnResponse(
     val id: UUID,

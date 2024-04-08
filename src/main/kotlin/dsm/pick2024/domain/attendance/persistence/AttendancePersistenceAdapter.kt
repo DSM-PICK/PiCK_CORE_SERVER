@@ -7,7 +7,7 @@ import dsm.pick2024.domain.attendance.mapper.AttendanceMapper
 import dsm.pick2024.domain.attendance.persistence.repository.AttendanceRepository
 import dsm.pick2024.domain.attendance.port.out.AttendancePort
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class AttendancePersistenceAdapter(
@@ -37,4 +37,18 @@ class AttendancePersistenceAdapter(
         )
         .fetch()
         .map { attendanceMapper.toDomain(it) }
+
+    override fun findByClub(club: String) =
+        jpaQueryFactory
+            .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
+            .where(
+                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club)
+            )
+            .orderBy(
+                QAttendanceJpaEntity.attendanceJpaEntity.grade.asc(),
+                QAttendanceJpaEntity.attendanceJpaEntity.classNum.asc(),
+                QAttendanceJpaEntity.attendanceJpaEntity.num.asc()
+            )
+            .fetch()
+            .map { attendanceMapper.toDomain(it) }
 }

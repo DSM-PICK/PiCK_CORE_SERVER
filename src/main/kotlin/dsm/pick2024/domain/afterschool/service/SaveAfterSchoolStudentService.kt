@@ -5,6 +5,7 @@ import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
+import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.FindByStudentNumPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,10 +20,10 @@ class SaveAfterSchoolStudentService(
         val afterSchoolStudent =
             request.map { requests ->
                 val (grade, classNum, num) = parseSchoolNum(requests.studentNum)
-                val user = findByStudentNumPort.findByStudentNum(grade, classNum, num)
+                val user = findByStudentNumPort.findByStudentNum(grade, classNum, num) ?: throw UserNotFoundException
                 AfterSchoolStudent(
                     id = null,
-                    userId = user!!.id,
+                    userId = user.id,
                     grade = grade,
                     classNum = classNum,
                     num = num,

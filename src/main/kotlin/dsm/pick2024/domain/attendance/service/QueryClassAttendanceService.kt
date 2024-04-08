@@ -20,6 +20,8 @@ class QueryClassAttendanceService(
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num,
+                status6 = it.period6,
+                status7 = it.period7,
                 status8 = it.period8,
                 status9 = it.period9,
                 status10 = it.period10

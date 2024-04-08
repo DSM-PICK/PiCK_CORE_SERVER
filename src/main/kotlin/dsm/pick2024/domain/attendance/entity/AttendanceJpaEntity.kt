@@ -23,6 +23,10 @@ class AttendanceJpaEntity(
     val num: Int,
     @Column(name = "club")
     val club: String? = null,
+    @Column(name = "place")
+    val place: String? = null,
+    @Column(name = "floor")
+    val floor: Int? = null,
     @Enumerated(value = EnumType.STRING)
     val period6: Status,
     @Enumerated(value = EnumType.STRING)

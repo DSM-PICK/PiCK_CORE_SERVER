@@ -7,7 +7,7 @@ import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealByIdPort
 import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.UUID
 
 @Service
 class ChangeWeekendMealStatusService(

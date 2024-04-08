@@ -1,6 +1,10 @@
 package dsm.pick2024.domain.selfstudy.presentation
 
-import dsm.pick2024.domain.selfstudy.port.`in`.*
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryDateSelfStudyUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryMonthSelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryMySelfStudyUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.QueryTodaySelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -32,8 +36,7 @@ class SelfStudyController(
     @PatchMapping("/modify")
     fun modifySelfStudy(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
-    ) =
-        selfStudyTeacherUseCase.modifySelfStudyTeacher(registrationSelfStudyTeacherRequest)
+    ) = selfStudyTeacherUseCase.modifySelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")

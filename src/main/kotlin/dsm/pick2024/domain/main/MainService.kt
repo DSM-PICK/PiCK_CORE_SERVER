@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.port.out.ExistsOKApplicationByUserIdPort
-import dsm.pick2024.domain.application.port.out.QueryOKMyApplication
+import dsm.pick2024.domain.application.port.out.QueryOKMyApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
@@ -18,7 +18,7 @@ import java.util.UUID
 @Service
 class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryOKMyApplication: QueryOKMyApplication,
+    private val queryOKMyApplicationPort: QueryOKMyApplicationPort,
     private val findByUserIdPort: FindByUserIdPort,
     private val existsOKApplicationByUserIdPort: ExistsOKApplicationByUserIdPort,
     private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
@@ -38,7 +38,7 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryOKMyApplication.findOKApplication(userId)?.run {
+        return queryOKMyApplicationPort.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),

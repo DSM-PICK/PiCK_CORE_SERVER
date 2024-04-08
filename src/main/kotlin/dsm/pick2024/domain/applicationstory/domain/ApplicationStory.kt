@@ -3,7 +3,7 @@ package dsm.pick2024.domain.applicationstory.domain
 import dsm.pick2024.domain.applicationstory.enums.Type
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.*
+import java.util.UUID
 
 data class ApplicationStory(
     val id: UUID? = null,

@@ -7,7 +7,7 @@ import dsm.pick2024.domain.afterschool.mapper.AfterSchoolStudentMapper
 import dsm.pick2024.domain.afterschool.persistence.repository.AfterSchoolStudentRepository
 import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPortUser
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class AfterSchoolStudentPersistenceAdapter(
