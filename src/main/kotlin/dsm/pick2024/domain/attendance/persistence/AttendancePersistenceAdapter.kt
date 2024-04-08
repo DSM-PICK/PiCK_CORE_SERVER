@@ -37,4 +37,18 @@ class AttendancePersistenceAdapter(
         )
         .fetch()
         .map { attendanceMapper.toDomain(it) }
+
+    override fun findByClub(club: String) =
+        jpaQueryFactory
+            .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
+            .where(
+                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club)
+            )
+            .orderBy(
+                QAttendanceJpaEntity.attendanceJpaEntity.grade.asc(),
+                QAttendanceJpaEntity.attendanceJpaEntity.classNum.asc(),
+                QAttendanceJpaEntity.attendanceJpaEntity.num.asc()
+            )
+            .fetch()
+            .map { attendanceMapper.toDomain(it) }
 }
