@@ -6,17 +6,17 @@ import dsm.pick2024.domain.application.entity.QApplicationJapEntity
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
-import dsm.pick2024.domain.application.port.out.ApplicationByStatusPort
+import dsm.pick2024.domain.application.port.out.ApplicationByStatusPortPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class ApplicationPersistenceAdapterByStatus(
+class ApplicationPersistenceAdapterByStatusPort(
     private val applicationRepository: ApplicationRepository,
     private val applicationMapper: ApplicationMapper,
     private val jpaQueryFactory: JPAQueryFactory
-) : ApplicationByStatusPort {
+) : ApplicationByStatusPortPort {
     override fun saveAll(application: List<Application>) {
         val entities = application.map { applicationMapper.toEntity(it) }
         applicationRepository.saveAll(entities)
