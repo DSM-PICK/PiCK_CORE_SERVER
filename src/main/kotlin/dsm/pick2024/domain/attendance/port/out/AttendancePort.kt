@@ -4,4 +4,5 @@ interface AttendancePort :
     SaveAll,
     FindByUserIdPort,
     QueryClassAttendancePort,
-    QueryClubAttendancePort
+    QueryClubAttendancePort,
+    FindAllAttendancePort
