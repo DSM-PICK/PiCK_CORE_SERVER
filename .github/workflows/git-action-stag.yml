@@ -1,4 +1,4 @@
-name: gradle-pick-stag(pick-stag)
+name: gradle-pick-stag
 
 on:
     push:
