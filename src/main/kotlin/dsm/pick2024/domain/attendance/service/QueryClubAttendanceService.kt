@@ -2,7 +2,7 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryClubAttendancePort
-import dsm.pick2024.domain.attendance.presentation.dto.response.QueryClubAttendanceResponse
+import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.stereotype.Service
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class QueryClubAttendanceService(
     private val queryClubAttendancePort: QueryClubAttendancePort
 ) : QueryClubAttendanceUseCase {
-    override fun queryClubAttendance(club: String): List<QueryClubAttendanceResponse> {
+    override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
         val students = queryClubAttendancePort.findByClub(club)
 
         if (students.isEmpty()) {
@@ -18,7 +18,7 @@ class QueryClubAttendanceService(
         }
 
         return students.map { it ->
-            QueryClubAttendanceResponse(
+            QueryAttendanceResponse(
                 id = it.userId,
                 username = it.name,
                 grade = it.grade,
