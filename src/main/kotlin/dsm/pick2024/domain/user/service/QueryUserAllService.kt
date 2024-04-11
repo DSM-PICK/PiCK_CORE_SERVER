@@ -23,5 +23,4 @@ class QueryUserAllService(
                     it.num
                 )
             }
-    
 }
