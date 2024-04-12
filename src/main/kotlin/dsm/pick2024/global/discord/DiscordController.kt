@@ -10,7 +10,6 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.LocalDateTime
 
-
 @RestControllerAdvice
 class DiscordController(
     private val discordClient: DiscordClient,
