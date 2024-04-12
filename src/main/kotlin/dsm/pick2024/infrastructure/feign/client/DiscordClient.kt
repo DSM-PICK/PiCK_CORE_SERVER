@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody
 
 @FeignClient(
 name = "discord-client",
-url = "{discord-webhook-url}")
+url = "\${discord.webhook.url}")
 interface DiscordClient {
-    @PostMapping
-    fun sendAlarm(@RequestBody message: DiscordMessage)
+    @PostMapping("\${discord.webhook.prod}")
+    fun prodSendAlarm(@RequestBody message: DiscordMessage)
+
+    @PostMapping("\${discord.webhook.stag}")
+    fun stagSendAlarm(@RequestBody message: DiscordMessage)
 }
