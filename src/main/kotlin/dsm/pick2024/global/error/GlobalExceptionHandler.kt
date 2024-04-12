@@ -1,6 +1,5 @@
 package dsm.pick2024.global.error
 
-import ch.qos.logback.core.status.ErrorStatus
 import dsm.pick2024.global.discord.DiscordController
 import dsm.pick2024.global.error.exception.PickException
 import org.springframework.context.MessageSource
@@ -11,9 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.WebRequest
 import java.io.Serializable
-import java.util.Arrays
-
-
 
 @RestControllerAdvice
 class GlobalExceptionHandler(
