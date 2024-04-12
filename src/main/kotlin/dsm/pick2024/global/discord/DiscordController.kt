@@ -3,6 +3,7 @@ package dsm.pick2024.global.discord
 import dsm.pick2024.global.discord.DiscordMessage.Embed
 import dsm.pick2024.infrastructure.feign.client.DiscordClient
 import org.springframework.core.env.Environment
+import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
@@ -10,7 +11,7 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.LocalDateTime
 
-@RestControllerAdvice
+@Component
 class DiscordController(
     private val discordClient: DiscordClient,
     private val environment: Environment
