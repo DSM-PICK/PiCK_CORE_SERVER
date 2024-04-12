@@ -2,6 +2,7 @@ package dsm.pick2024.global.discord
 
 import dsm.pick2024.global.discord.DiscordMessage.Embed
 import dsm.pick2024.infrastructure.feign.client.DiscordClient
+import org.springframework.core.env.Environment
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
@@ -9,12 +10,23 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.time.LocalDateTime
 
+
 @RestControllerAdvice
 class DiscordController(
-    private val discordClient: DiscordClient
+    private val discordClient: DiscordClient,
+    private val environment: Environment
 ) {
     fun sendDiscordAlarm(e: Exception, request: WebRequest) {
-        discordClient.sendAlarm(createMessage(e, request))
+        if (isProductionEnvironment()) {
+            discordClient.prodSendAlarm(createMessage(e, request))
+        } else {
+            discordClient.stagSendAlarm(createMessage(e, request))
+        }
+    }
+
+    private fun isProductionEnvironment(): Boolean {
+        val activeProfiles = environment.activeProfiles
+        return "prod" in activeProfiles
     }
 
     private fun createMessage(e: Exception, request: WebRequest): DiscordMessage {
