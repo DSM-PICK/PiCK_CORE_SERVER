@@ -44,3 +44,9 @@ url:
 
 open-feign:
     neis-key: ${NEIS_KEY}
+
+discord:
+    webhook:
+        url: ${DISCORD_URL}
+        prod: ${DISCORD_PROD}
+        stag: ${DISCORD_STAG}
