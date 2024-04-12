@@ -55,3 +55,18 @@ jobs:
                       NEIS_URL=${{ secrets.NEIS_URL }}
                       DSM_LOGIN=${{ secrets.DSM_LOGIN }}
                       NEIS_KEY=${{ secrets.NEIS_KEY }}
+        
+
+            - name: Discord Alert Success
+              uses: sarisia/actions-status-discord@v1
+              if: success()
+              with:
+                  webhook: ${{ secrets.DISCORD_PROD }}
+                  description: "🎉 사이트가 배포되었습니다!"
+
+            - name: Discord Alert Failure
+              uses: sarisia/actions-status-discord@v1
+              if: failure()
+              with:
+                  webhook: ${{ secrets.DISCORD_PROD }}
+                  description: "🔥 사이트 배포를 실패하였습니다."
