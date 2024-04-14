@@ -27,7 +27,7 @@ class GlobalExceptionHandler(
         )
     }
 
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(PickException::class)
     fun exception(e: PickException, request: WebRequest): ResponseEntity<Any>? {
         if (!listOf(environment.activeProfiles).contains<Serializable?>("local")) {
             discordController.sendDiscordAlarm(e, request)
