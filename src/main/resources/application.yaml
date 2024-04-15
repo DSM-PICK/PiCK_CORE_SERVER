@@ -41,11 +41,12 @@ url:
     neis: ${NEIS_URL}
     daedongyeojido: ${DAE_URL}
     dsmlogin: ${DSM_LOGIN}
+    discord: ${DISCORD}
 
 open-feign:
     neis-key: ${NEIS_KEY}
 
 discord:
     webhook:
-        prod: ${DISCORD_PROD}
-        stag: ${DISCORD_STAG}
+        prod: ${WEBHOOK_PROD}
+        stag: ${WEBHOOK_STAG}
