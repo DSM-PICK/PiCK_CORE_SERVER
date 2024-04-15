@@ -48,5 +48,5 @@ open-feign:
 
 discord:
     webhook:
-        prod: ${DISCORD_PROD}
-        stag: ${DISCORD_STAG}
+        prod: ${WEBHOOK_PROD}
+        stag: ${WEBHOOK_STAG}
