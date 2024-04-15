@@ -3,7 +3,7 @@ package dsm.pick2024.domain.weekendmeal.service
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.persistence.WeekendMealPersistenceAdapter
-import javax.servlet.http.HttpServletResponse
+import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealExcelUseCase
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.FillPatternType
@@ -14,29 +14,32 @@ import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import javax.servlet.http.HttpServletResponse
 
 @Service
 class WeekendMealExcelService(
     private val weekendMealPersistenceAdapter: WeekendMealPersistenceAdapter
-) {
+) : WeekendMealExcelUseCase {
     @Transactional(readOnly = true)
-    fun execute(response: HttpServletResponse) {
+    override fun execute(response: HttpServletResponse) {
         val workbook: Workbook = XSSFWorkbook()
-        val sheet: Sheet = workbook.createSheet("weekendMeal_apply").apply {
-            defaultColumnWidth = 30
-        }
+        val sheet: Sheet =
+            workbook.createSheet("weekendMeal_apply").apply {
+                defaultColumnWidth = 30
+            }
 
         // Header
-        val headerCellStyle: CellStyle = workbook.createCellStyle().apply {
-            setBorderStyle(BorderStyle.THIN)
-            fillForegroundColor = IndexedColors.BLACK1.index
-            fillPattern = FillPatternType.SOLID_FOREGROUND
-            setFont(
-                workbook.createFont().apply {
-                    color = IndexedColors.WHITE.index
-                }
-            )
-        }
+        val headerCellStyle: CellStyle =
+            workbook.createCellStyle().apply {
+                setBorderStyle(BorderStyle.THIN)
+                fillForegroundColor = IndexedColors.BLACK1.index
+                fillPattern = FillPatternType.SOLID_FOREGROUND
+                setFont(
+                    workbook.createFont().apply {
+                        color = IndexedColors.WHITE.index
+                    }
+                )
+            }
 
         val headerNames = arrayOf("이름", "학년", "반", "번호")
 
@@ -49,9 +52,10 @@ class WeekendMealExcelService(
         }
 
         // Body
-        val bodyCellStyle: CellStyle = workbook.createCellStyle().apply {
-            setBorderStyle(BorderStyle.THIN)
-        }
+        val bodyCellStyle: CellStyle =
+            workbook.createCellStyle().apply {
+                setBorderStyle(BorderStyle.THIN)
+            }
 
         val userList: List<WeekendMeal> = weekendMealPersistenceAdapter.findByStatus(Status.OK)
 

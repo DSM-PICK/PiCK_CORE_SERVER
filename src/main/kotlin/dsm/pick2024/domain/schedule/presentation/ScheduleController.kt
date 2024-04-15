@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.schedule.presentation
 
 import dsm.pick2024.domain.schedule.port.`in`.CreateScheduleUseCase
+import dsm.pick2024.domain.schedule.port.`in`.DeleteScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
-import dsm.pick2024.domain.schedule.port.out.DeleteSchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -31,7 +31,7 @@ class ScheduleController(
     private val createScheduleUseCase: CreateScheduleUseCase,
     private val modifyScheduleUseCase: ModifyScheduleUseCase,
     private val scheduleMonthUseCase: ScheduleMonthUseCase,
-    private val deleteSchedulePort: DeleteSchedulePort,
+    private val deleteScheduleUseCase: DeleteScheduleUseCase,
     private val scheduleUseCase: ScheduleUseCase
 ) {
     @Operation(summary = "학사일정 추가")
@@ -59,7 +59,7 @@ class ScheduleController(
     @DeleteMapping("/delete/{scheduleId}")
     fun deleteSchedule(
         @PathVariable(name = "scheduleId") id: UUID
-    ) = deleteSchedulePort.deleteById(id)
+    ) = deleteScheduleUseCase.deleteSchedule(id)
 
     @Operation(summary = "나이스 학사일정 저장 api")
     @PostMapping("/save")
