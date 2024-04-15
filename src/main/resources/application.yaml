@@ -50,6 +50,3 @@ discord:
     webhook:
         prod: ${WEBHOOK_PROD}
         stag: ${WEBHOOK_STAG}
-
-
-
