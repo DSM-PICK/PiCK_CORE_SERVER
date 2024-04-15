@@ -1,26 +1,26 @@
 package dsm.pick2024.domain.meal.presentation
 
-import dsm.pick2024.domain.meal.service.QueryDayMealService
-import dsm.pick2024.domain.meal.service.SaveMealService
+import dsm.pick2024.domain.meal.port.`in`.MealUseCase
+import dsm.pick2024.domain.meal.port.`in`.QueryDayMealUseCase
 import io.swagger.v3.oas.annotations.Operation
-import java.time.LocalDate
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/meal")
 class MealController(
-    private val saveMealService: SaveMealService,
-    private val queryDayMealService: QueryDayMealService
+    private val mealUseCase: MealUseCase,
+    private val queryDayMealUseCase: QueryDayMealUseCase
 ) {
     @Operation(summary = "급식 정보 저장 API")
     @PostMapping
     fun saveMeals() {
-        saveMealService.saveNeisInfoToDatabase()
+        mealUseCase.saveNeisInfoToDatabase()
     }
 
     @Operation(summary = "급식 조회 API")
@@ -29,6 +29,5 @@ class MealController(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         @RequestParam(name = "date")
         date: LocalDate
-    ) =
-        queryDayMealService.queryDayMeal(date)
+    ) = queryDayMealUseCase.queryDayMeal(date)
 }
