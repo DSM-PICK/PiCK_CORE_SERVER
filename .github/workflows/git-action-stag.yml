@@ -55,6 +55,7 @@ jobs:
                       NEIS_URL=${{ secrets.NEIS_URL }}
                       DSM_LOGIN=${{ secrets.DSM_LOGIN }}
                       NEIS_KEY=${{ secrets.NEIS_KEY }}
+                      DISCORD_STAG=${{ secrets.DISCORD_STAG }}
 
             - name: Discord Alert Success
               uses: sarisia/actions-status-discord@v1
