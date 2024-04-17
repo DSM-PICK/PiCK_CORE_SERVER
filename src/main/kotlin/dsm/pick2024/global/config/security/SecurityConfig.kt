@@ -128,7 +128,7 @@ class SecurityConfig(
                 HttpMethod.GET,
                 "/dsm-pick/weekend-meal/excel"
             ).hasAnyRole(Role.SCH.toString(), Role.COOK.toString())
-            .anyRequest().hasAnyRole(Role.SCH.toString(), Role.STU.toString())
+            .anyRequest().permitAll()
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
