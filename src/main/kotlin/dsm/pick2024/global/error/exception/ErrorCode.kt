@@ -35,6 +35,8 @@ enum class ErrorCode(
 
     CLUB_NOT_FOUND(404, "Club Not Found"),
 
+    NOTICE_NOT_FOUND(404, "Notice Not Found"),
+
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error")
 }
