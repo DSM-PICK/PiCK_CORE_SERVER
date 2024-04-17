@@ -59,8 +59,8 @@ class ClassroomController(
     @Operation(summary = "반별로 교실이동 조회 API")
     @GetMapping("/grade")
     fun queryGradeClassroom(
-        @RequestParam grade: Int,
-        @RequestParam classNum: Int
+        @RequestParam(name = "grade") grade: Int,
+        @RequestParam(name = "class_num") classNum: Int
     ) = queryGradeClassroomUseCase.queryGradeClassroom(grade, classNum)
 
     @Operation(summary = "교실이동 수락또는 거절 API")
