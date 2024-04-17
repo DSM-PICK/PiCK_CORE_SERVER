@@ -41,8 +41,8 @@ class SecurityConfig(
                 "/dsm-pick/self-study/register",
                 "/dsm-pick/timetable",
                 "/dsm-pick/weekend-meal/saveAll",
-                "dsm-pick/status/saveAll",
-                "dsm-pick/schedule/**"
+                "/dsm-pick/status/saveAll",
+                "/dsm-pick/schedule/**"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.GET,
@@ -68,7 +68,8 @@ class SecurityConfig(
                 "/dsm-pick/weekend-meal/quit",
                 "/dsm-pick/weekend-meal/hey",
                 "/dsm-pick/status/**",
-                "/dsm-pick/user/all"
+                "/dsm-pick/user/all",
+                "/dsm-pick/status/grade"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.PATCH,
@@ -77,15 +78,16 @@ class SecurityConfig(
                 "/dsm-pick/notice/modify",
                 "/dsm-pick/status/change",
                 "/dsm-pick/weekend-meal/status",
-                "dsm-pick/schedule/modify",
-                "dsm-pick/after/change",
-                "/dsm-pick/class-room/status"
+                "/dsm-pick/schedule/modify",
+                "/dsm-pick/after/change",
+                "/dsm-pick/class-room/status",
+                "/dsm-pick/class"
             ).hasRole(Role.SCH.toString())
             .antMatchers(
                 HttpMethod.DELETE,
                 "/dsm-pick/after/**",
-                "/dsm-pick/notice/delete/",
-                "/dsm-pick/schedule/delete/",
+                "/dsm-pick/notice/delete/**",
+                "/dsm-pick/schedule/delete/**",
                 "/dsm-pick/after/delete"
             )
             .hasRole(Role.SCH.toString())
@@ -125,6 +127,7 @@ class SecurityConfig(
                 HttpMethod.GET,
                 "/dsm-pick/weekend-meal/excel"
             ).hasAnyRole(Role.SCH.toString(), Role.COOK.toString())
+            .anyRequest().hasAnyRole(Role.SCH.toString(), Role.STU.toString())
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
