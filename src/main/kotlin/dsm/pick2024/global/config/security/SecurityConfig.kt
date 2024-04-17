@@ -32,6 +32,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
+            .antMatchers("/dsm-pick/admin/login", "/dsm-pick/user/login").permitAll()
             .antMatchers(
                 HttpMethod.POST,
                 "/dsm-pick/after/**",
