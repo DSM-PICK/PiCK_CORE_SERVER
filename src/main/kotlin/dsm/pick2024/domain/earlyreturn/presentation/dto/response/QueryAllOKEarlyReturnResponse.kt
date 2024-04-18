@@ -9,5 +9,6 @@ data class QueryAllOKEarlyReturnResponse(
     val startTime: LocalTime,
     val grade: Int,
     val classNum: Int,
-    val num: Int
+    val num: Int,
+    val reason: String
 )
