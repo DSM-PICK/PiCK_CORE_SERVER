@@ -30,6 +30,8 @@ class SchedulePersistenceAdapter(
         scheduleRepository.deleteById(id)
     }
 
+    override fun findByDate(date: LocalDate) = scheduleRepository.findByDate(date)
+
     override fun scheduleMonth(
         year: Year,
         month: Month

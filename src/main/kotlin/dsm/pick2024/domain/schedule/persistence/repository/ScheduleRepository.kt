@@ -2,6 +2,7 @@ package dsm.pick2024.domain.schedule.persistence.repository
 
 import dsm.pick2024.domain.schedule.entity.ScheduleJpaEntity
 import org.springframework.data.repository.Repository
+import java.time.LocalDate
 import java.util.UUID
 
 interface ScheduleRepository : Repository<ScheduleJpaEntity, UUID> {
@@ -12,4 +13,6 @@ interface ScheduleRepository : Repository<ScheduleJpaEntity, UUID> {
     fun deleteById(id: UUID)
 
     fun saveAll(entity: Iterable<ScheduleJpaEntity>)
+
+    fun findByDate(date: LocalDate): ScheduleJpaEntity
 }
