@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.schedule.service
 
+import dsm.pick2024.domain.schedule.exception.ScheduleNotFoundException
 import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.FindScheduleByDatePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
@@ -13,8 +14,8 @@ class QueryDateScheduleService(
     private val findScheduleByDatePort: FindScheduleByDatePort
 ) : QueryDateScheduleUseCase {
     override fun queryDateScheduleUseCase(date: LocalDate): ScheduleResponse? {
-        val schedule = findScheduleByDatePort.findByDate(date)
-        return schedule?.let {
+        val schedule = findScheduleByDatePort.findByDate(date) ?: throw ScheduleNotFoundException
+        return schedule.let {
             ScheduleResponse(
                 id = it.id!!,
                 eventName = it.eventName,
