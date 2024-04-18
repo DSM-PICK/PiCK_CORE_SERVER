@@ -37,6 +37,8 @@ enum class ErrorCode(
 
     NOTICE_NOT_FOUND(404, "Notice Not Found"),
 
+    SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
+
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error")
 }
