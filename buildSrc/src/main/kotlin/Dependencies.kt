@@ -32,9 +32,6 @@ object Dependencies {
     // Jwt
     const val JWT = "io.jsonwebtoken:jjwt:${DependencyVersions.JWT_VERSION}"
 
-    // Cloud Config
-    const val CLOUD_CONFIG = "org.springframework.cloud:spring-cloud-config-client"
-
     // cloud
     const val SPRING_CLOUD = "org.springframework.cloud:spring-cloud-dependencies:${DependencyVersions.SPRING_CLOUD_VERSION}"
 

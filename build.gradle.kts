@@ -58,9 +58,6 @@ dependencies {
     // Jwt
     implementation(Dependencies.JWT)
 
-    // Spring Config
-    implementation(Dependencies.CLOUD_CONFIG)
-
     implementation(Dependencies.MYSQL_CONNECTOR)
 
     implementation(Dependencies.OPEN_FEIGN)
