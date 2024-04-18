@@ -3,12 +3,14 @@ package dsm.pick2024.domain.schedule.presentation
 import dsm.pick2024.domain.schedule.port.`in`.CreateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.DeleteScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
+import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 import java.time.Month
 import java.time.Year
 import java.util.UUID
@@ -32,7 +35,8 @@ class ScheduleController(
     private val modifyScheduleUseCase: ModifyScheduleUseCase,
     private val scheduleMonthUseCase: ScheduleMonthUseCase,
     private val deleteScheduleUseCase: DeleteScheduleUseCase,
-    private val scheduleUseCase: ScheduleUseCase
+    private val scheduleUseCase: ScheduleUseCase,
+    private val queryDateScheduleUseCase: QueryDateScheduleUseCase
 ) {
     @Operation(summary = "학사일정 추가")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -67,4 +71,12 @@ class ScheduleController(
         @RequestParam(name = "start") start: String,
         @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
+
+    @Operation(summary = "일 별 학사일정조회 api")
+    @GetMapping("/date")
+    fun queryDateSchedule(
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @RequestParam(name = "date")
+        date: LocalDate
+    ) = queryDateScheduleUseCase.queryDateScheduleUseCase(date)
 }
