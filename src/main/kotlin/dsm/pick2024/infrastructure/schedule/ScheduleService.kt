@@ -25,7 +25,7 @@ class ScheduleService(
         deleteAllApplicationPort.deleteAll()
     }
 
-    @Scheduled(cron = "0 0 0 20 * ?", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 25 * ?", zone = "Asia/Seoul")
     fun monthSchedule() {
         mealUseCase.saveNeisInfoToDatabase()
         resetWeekendMealUseCase.resetWeekendMeal()
