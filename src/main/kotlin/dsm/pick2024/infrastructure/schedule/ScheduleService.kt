@@ -16,7 +16,7 @@ class ScheduleService(
     private val deleteAllClassRoomPort: DeleteAllClassRoomPort,
     private val deleteAllEarlyReturnPort: DeleteAllEarlyReturnPort,
     private val deleteAllApplicationPort: DeleteAllApplicationPort,
-    private val deleteAllSchoolStudentPort: DeleteAllSchoolStudentPort
+    private val deleteAllSchoolStudentPort: DeleteAllSchoolStudentPort,
     private val mealUseCase: MealUseCase,
     private val resetAttendanceUseCase: ResetAttendanceUseCase,
     private val resetWeekendMealUseCase: ResetWeekendMealUseCase,
