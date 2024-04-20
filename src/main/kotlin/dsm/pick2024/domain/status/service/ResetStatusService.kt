@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @Service
 class ResetStatusService(
     private val findAllStatusPort: FindAllStatusPort,
-    private val saveAllStatusPort: SaveAllStatusPort,
+    private val saveAllStatusPort: SaveAllStatusPort
 ) : ResetStatusUseCase {
     override fun reset() {
         val allStudent = findAllStatusPort.findAll()
@@ -19,7 +19,7 @@ class ResetStatusService(
         allStudent.map { it ->
             val updatedStatus =
                 it.copy(
-                    status = getStatus(it.status),
+                    status = getStatus(it.status)
                 )
             update.add(updatedStatus)
         }

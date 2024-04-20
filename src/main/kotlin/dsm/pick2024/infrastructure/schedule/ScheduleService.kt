@@ -20,7 +20,7 @@ class ScheduleService(
     private val mealUseCase: MealUseCase,
     private val resetAttendanceUseCase: ResetAttendanceUseCase,
     private val resetWeekendMealUseCase: ResetWeekendMealUseCase,
-    private val resetStatusUseCase: ResetStatusUseCase,
+    private val resetStatusUseCase: ResetStatusUseCase
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {

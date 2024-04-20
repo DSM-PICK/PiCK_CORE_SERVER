@@ -13,7 +13,7 @@ import java.util.UUID
 class StatusPersistenceAdapter(
     private val statusRepository: StatusRepository,
     private val jpaQueryFactory: JPAQueryFactory,
-    private val statusMapper: StatusMapper,
+    private val statusMapper: StatusMapper
 ) : StatusPort {
     override fun saveAll(statuses: MutableList<Status>) {
         val entities = statuses.map { statusMapper.toEntity(it) }
@@ -22,13 +22,13 @@ class StatusPersistenceAdapter(
 
     override fun findByGradeAndClassNum(
         grade: Int,
-        classNum: Int,
+        classNum: Int
     ): List<Status> {
         return jpaQueryFactory
             .selectFrom(QStatusJpaEntity.statusJpaEntity)
             .where(
                 QStatusJpaEntity.statusJpaEntity.grade.eq(grade),
-                QStatusJpaEntity.statusJpaEntity.classNum.eq(classNum),
+                QStatusJpaEntity.statusJpaEntity.classNum.eq(classNum)
             )
             .orderBy(QStatusJpaEntity.statusJpaEntity.num.asc())
             .fetch()
