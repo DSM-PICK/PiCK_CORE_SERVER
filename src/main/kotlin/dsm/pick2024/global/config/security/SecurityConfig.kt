@@ -18,6 +18,13 @@ class SecurityConfig(
     private val objectMapper: ObjectMapper,
     private val jwtTokenProvider: JwtTokenProvider
 ) {
+
+    companion object{
+        private const val STU = "STU"
+        private const val SCH = "SCH"
+        private const val SEC = "SEC"
+        private const val COOK = "COOK"
+    }
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf()
@@ -44,7 +51,7 @@ class SecurityConfig(
                 "/dsm-pick/weekend-meal/saveAll",
                 "/dsm-pick/status/saveAll",
                 "/dsm-pick/schedule/**"
-            ).hasRole(Role.SCH.toString())
+            ).hasRole(SCH)
             .antMatchers(
                 HttpMethod.GET,
                 "/dsm-pick/admin/**",
@@ -71,7 +78,7 @@ class SecurityConfig(
                 "/dsm-pick/status/**",
                 "/dsm-pick/user/all",
                 "/dsm-pick/status/grade"
-            ).hasRole(Role.SCH.toString())
+            ).hasRole(SCH)
             .antMatchers(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/**",
@@ -83,7 +90,7 @@ class SecurityConfig(
                 "/dsm-pick/after/change",
                 "/dsm-pick/class-room/status",
                 "/dsm-pick/class"
-            ).hasRole(Role.SCH.toString())
+            ).hasRole(SCH)
             .antMatchers(
                 HttpMethod.DELETE,
                 "/dsm-pick/after/**",
@@ -91,18 +98,18 @@ class SecurityConfig(
                 "/dsm-pick/schedule/delete/**",
                 "/dsm-pick/after/delete"
             )
-            .hasRole(Role.SCH.toString())
+            .hasRole(SCH)
             .antMatchers(
                 HttpMethod.POST,
                 "/dsm-pick/application",
                 "/dsm-pick/class-room/move",
                 "/dsm-pick/early-return/create"
-            ).hasRole(Role.STU.toString())
+            ).hasRole(STU)
             .antMatchers(
                 HttpMethod.PATCH,
                 "/dsm-pick/application/status",
                 "/dsm-pick/weekend-meal/my-status"
-            ).hasRole(Role.STU.toString())
+            ).hasRole(STU)
             .antMatchers(
                 HttpMethod.GET,
                 "dsm-pick/user/simple",
@@ -115,19 +122,19 @@ class SecurityConfig(
                 "/dsm-pick/timetable/**",
                 "/dsm-pick/weekend-meal/my",
                 "/dsm-pick/main"
-            ).hasRole(Role.STU.toString())
+            ).hasRole(STU)
             .antMatchers(
                 HttpMethod.DELETE,
                 "/dsm-pick/class-room/return"
-            ).hasRole(Role.STU.toString())
+            ).hasRole(STU)
             .antMatchers(
                 HttpMethod.GET,
                 "/dsm-pick/application/non-return"
-            ).hasAnyRole(Role.SCH.toString(), Role.SEC.toString())
+            ).hasAnyRole(SCH, SEC)
             .antMatchers(
                 HttpMethod.GET,
                 "/dsm-pick/weekend-meal/excel"
-            ).hasAnyRole(Role.SCH.toString(), Role.COOK.toString())
+            ).hasAnyRole(SCH, COOK)
             .anyRequest().permitAll()
 
         http
