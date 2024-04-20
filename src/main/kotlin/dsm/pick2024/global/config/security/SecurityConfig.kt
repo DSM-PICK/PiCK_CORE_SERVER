@@ -1,7 +1,6 @@
 package dsm.pick2024.global.config.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
@@ -19,12 +18,13 @@ class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider
 ) {
 
-    companion object{
+    companion object {
         private const val STU = "STU"
         private const val SCH = "SCH"
         private const val SEC = "SEC"
         private const val COOK = "COOK"
     }
+
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf()
