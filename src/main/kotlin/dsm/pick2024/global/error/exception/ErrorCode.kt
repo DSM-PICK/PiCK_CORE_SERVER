@@ -4,41 +4,35 @@ enum class ErrorCode(
     val status: Int,
     val message: String
 ) {
-    FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
-    FEIGN_UNAUTHORIZED(401, "Feign UnAuthorized"),
     FEIGN_FORBIDDEN(403, "Feign Forbidden"),
-    FEIGN_SERVER_ERROR(500, "Feign Server Error"),
 
-    USER_NOT_FOUND(404, "User Not Found"),
-    PASSWORD_MISS_MATCH(401, "Password Miss Match"),
-
-    ADMIN_NOT_FOUND(404, "Admin Not Found"),
-
-    SELF_STUDY_NOT_FOUND(404, "Self Study Not Found"),
     EXISTS_SELF_STUDY_TEACHER(409, "Exists Self Study Teacher"),
-
-    EARLY_RETURN_NOT_FOUND(404, "Early Return Application Not Found"),
     ALREADY_APPLYING_EARLY_RETURN(409, "Already applying For Early Return Application"),
-
-    APPLICATION_NOT_FOUND(404, "Application Not Found"),
-    ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
-    STATUS_NOT_FOUND(404, "Status Not Found"),
-
-    CLASSROOM_NOT_FOUND(404, "Classroom Not Found"),
-
-    WEEKEND_MEAL_NOT_FOUND(404, "WeekendMeal Not Found"),
-
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
+    ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
 
+    FEIGN_UNAUTHORIZED(401, "Feign UnAuthorized"),
+    PASSWORD_MISS_MATCH(401, "Password Miss Match"),
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
 
+    USER_NOT_FOUND(404, "User Not Found"),
+    ADMIN_NOT_FOUND(404, "Admin Not Found"),
+    SELF_STUDY_NOT_FOUND(404, "Self Study Not Found"),
+    EARLY_RETURN_NOT_FOUND(404, "Early Return Application Not Found"),
+    APPLICATION_NOT_FOUND(404, "Application Not Found"),
+    STATUS_NOT_FOUND(404, "Status Not Found"),
+    CLASSROOM_NOT_FOUND(404, "Classroom Not Found"),
+    WEEKEND_MEAL_NOT_FOUND(404, "WeekendMeal Not Found"),
     CLUB_NOT_FOUND(404, "Club Not Found"),
-
     NOTICE_NOT_FOUND(404, "Notice Not Found"),
-
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
 
+    FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
+    FILE_IS_EMPTY(400, "File does not exist"),
+    BAD_FILE_EXTENSION(400, "File Extension is invalid"),
+
     // Internal Server Error
-    INTERNAL_SERVER_ERROR(500, "Internal Server Error")
+    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+    FEIGN_SERVER_ERROR(500, "Feign Server Error"),
 }
