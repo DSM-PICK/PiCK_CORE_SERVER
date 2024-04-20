@@ -10,4 +10,6 @@ interface StatusRepository : Repository<StatusJpaEntity, UUID> {
     fun findByUserId(userId: UUID): StatusJpaEntity
 
     fun save(entity: StatusJpaEntity)
+
+    fun findAll(): List<StatusJpaEntity>
 }

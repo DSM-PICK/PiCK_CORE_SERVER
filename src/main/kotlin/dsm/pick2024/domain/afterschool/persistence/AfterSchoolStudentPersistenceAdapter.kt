@@ -32,6 +32,9 @@ class AfterSchoolStudentPersistenceAdapter(
         afterSchoolStudentRepository.save(entity)
     }
 
+    override fun deleteAll() {
+    }
+
     override fun findAll() =
         jpaQueryFactory
             .selectFrom(QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity)
