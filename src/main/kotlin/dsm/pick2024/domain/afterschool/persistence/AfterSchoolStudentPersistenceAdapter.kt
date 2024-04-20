@@ -13,7 +13,7 @@ import java.util.UUID
 class AfterSchoolStudentPersistenceAdapter(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository,
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
 ) : AfterSchoolStudentPortUser {
     override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
         val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
@@ -32,13 +32,16 @@ class AfterSchoolStudentPersistenceAdapter(
         afterSchoolStudentRepository.save(entity)
     }
 
+    override fun deleteAll() {
+    }
+
     override fun findAll() =
         jpaQueryFactory
             .selectFrom(QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity)
             .orderBy(
                 QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.grade.asc(),
                 QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.classNum.asc(),
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.num.asc()
+                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.num.asc(),
             )
             .fetch()
             .map { afterSchoolStudentMapper.toDomain(it) }

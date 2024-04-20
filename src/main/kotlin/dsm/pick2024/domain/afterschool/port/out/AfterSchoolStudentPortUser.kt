@@ -5,4 +5,5 @@ interface AfterSchoolStudentPortUser :
     DeleteAfterSchoolStudentPort,
     QueryAfterSchoolStudentAllPort,
     FindAfterSchoolStudentByUserIdPort,
-    SaveAfterSchoolStudentPort
+    SaveAfterSchoolStudentPort,
+    DeleteAllSchoolStudentPort
