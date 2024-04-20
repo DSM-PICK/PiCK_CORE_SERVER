@@ -41,7 +41,7 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**",
+                "/schedule/**"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
