@@ -8,8 +8,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
 import dsm.pick2024.infrastructure.s3.exception.BadFileExtensionException
 import dsm.pick2024.infrastructure.s3.exception.EmptyFileException
-import hs.kr.equus.feed.infrastructure.s3.exception.BadFileExtensionException
-import hs.kr.equus.feed.infrastructure.s3.exception.EmptyFileException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
