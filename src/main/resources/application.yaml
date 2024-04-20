@@ -48,3 +48,21 @@ discord:
     webhook:
         prod: ${WEBHOOK_PROD}
         stag: ${WEBHOOK_STAG}
+
+cloud:
+    aws:
+        credentials:
+            accessKey: ${AWS_ACCESS_KEY}
+            secretKey: ${AWS_SECRET_KEY}
+        s3:
+            bucket: ${AWS_BUCKET}
+        region:
+            static: ${AWS_STATIC}
+        stack:
+            auto: false
+
+
+servlet:
+    multipart:
+        max-file-size: 10MB
+        max-request-size: 10MB
