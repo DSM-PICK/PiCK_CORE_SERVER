@@ -12,4 +12,6 @@ interface AfterSchoolStudentRepository : Repository<AfterSchoolStudentJpaEntity,
     fun deleteByUserId(id: UUID)
 
     fun save(entity: AfterSchoolStudentJpaEntity)
+
+    fun deleteAll()
 }

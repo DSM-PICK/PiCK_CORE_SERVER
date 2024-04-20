@@ -4,4 +4,5 @@ interface StatusPort :
     SaveAllStatusPort,
     QueryClassStatusPort,
     FindStatusByUserId,
-    SaveStatusPort
+    SaveStatusPort,
+    FindAllStatusPort
