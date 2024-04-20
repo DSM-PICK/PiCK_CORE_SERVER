@@ -46,4 +46,6 @@ object Dependencies {
     const val APACHE_POI_OOXML = "org.apache.poi:poi-ooxml:${DependencyVersions.APACHE_POI}"
 
     const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
+
+    const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
 }
