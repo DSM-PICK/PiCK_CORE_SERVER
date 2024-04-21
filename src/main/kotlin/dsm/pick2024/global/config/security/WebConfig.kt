@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 class WebConfig : WebMvcConfigurer {
-
     override fun addCorsMappings(registry: CorsRegistry) {
         registry
             .addMapping("/**")
@@ -14,9 +13,9 @@ class WebConfig : WebMvcConfigurer {
             .allowedHeaders("*")
             .allowedOrigins(
                 "https://pick-admin.xquare.app",
+                "https://pick-teacher.xquare.app",
                 "http://localhost:3000",
                 "http://localhost:3001"
-
             )
     }
 }
