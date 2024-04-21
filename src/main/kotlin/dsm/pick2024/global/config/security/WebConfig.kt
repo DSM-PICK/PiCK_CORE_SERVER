@@ -14,6 +14,7 @@ class WebConfig : WebMvcConfigurer {
             .allowedOrigins(
                 "https://pick-admin.xquare.app",
                 "https://pick-teacher.xquare.app",
+                "https://prod-server.xquare.app",
                 "http://localhost:3000",
                 "http://localhost:3001"
             )
