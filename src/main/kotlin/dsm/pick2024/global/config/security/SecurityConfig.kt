@@ -1,12 +1,10 @@
 package dsm.pick2024.global.config.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -32,7 +30,7 @@ class SecurityConfig(
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
             .antMatchers("/dsm-pick/admin/login", "/dsm-pick/user/login").permitAll()
-            
+
 //            .antMatchers(
 //                HttpMethod.POST,
 //                "/after/**",
