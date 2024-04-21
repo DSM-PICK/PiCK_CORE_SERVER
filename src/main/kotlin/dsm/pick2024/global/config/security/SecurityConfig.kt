@@ -20,10 +20,12 @@ class SecurityConfig(
 ) {
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf()
+        http
+            .csrf()
             .disable()
             .formLogin()
             .disable()
+            .cors().disable()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
