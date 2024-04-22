@@ -10,10 +10,13 @@ import org.springframework.transaction.annotation.Transactional
 class QueryAdminNameService(
     private val adminFacadeUseCase: AdminFacadeUseCase
 ) : QueryAdminNameUseCase {
-
     @Transactional(readOnly = true)
     override fun queryAdminName(): QueryAdminNameResponse {
-        val admin = adminFacadeUseCase.currentUser().name
-        return QueryAdminNameResponse(admin)
+        val admin = adminFacadeUseCase.currentUser()
+        return QueryAdminNameResponse(
+            name = admin.name,
+            grade = admin.grade!!,
+            classNum = admin.classNum!!
+        )
     }
 }
