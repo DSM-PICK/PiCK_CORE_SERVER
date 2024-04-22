@@ -23,13 +23,14 @@ class SecurityConfig(
         http
             .csrf()
             .disable()
-            .formLogin()
+            .formLogin().and().cors()
             .disable()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
+            .permitAll()
             .antMatchers("/admin/login", "/user/login").permitAll()
             .antMatchers(
                 HttpMethod.POST,
