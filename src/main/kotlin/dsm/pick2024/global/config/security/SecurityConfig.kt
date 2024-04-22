@@ -23,8 +23,6 @@ class SecurityConfig(
         http
             .csrf()
             .disable()
-            .cors()
-            .and()
             .formLogin()
             .disable()
             .sessionManagement()
@@ -32,7 +30,6 @@ class SecurityConfig(
 
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
-            .permitAll()
             .antMatchers("/admin/login", "/user/login").permitAll()
             .antMatchers(
                 HttpMethod.POST,
@@ -45,7 +42,7 @@ class SecurityConfig(
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
                 "/schedule/**"
-            ).hasRole("SCH")
+            ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
                 "/admin/**",
