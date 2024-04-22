@@ -14,7 +14,6 @@ class AuthDetails(
         return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority("ROLE_" + role.name))
     }
 
-
     override fun getPassword(): String? {
         return null
     }
