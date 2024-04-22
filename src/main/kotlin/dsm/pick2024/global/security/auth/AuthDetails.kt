@@ -11,7 +11,7 @@ class AuthDetails(
 ) : UserDetails {
 
     override fun getAuthorities(): Collection<GrantedAuthority?> {
-        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority("ROLE_"+role.name))
+        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority("ROLE_" + role.name))
     }
 
     override fun getPassword(): String? {

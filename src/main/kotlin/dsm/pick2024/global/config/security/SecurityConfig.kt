@@ -44,7 +44,7 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**",
+                "/schedule/**"
             ).hasRole("SCH")
             .antMatchers(
                 HttpMethod.GET,
@@ -71,7 +71,7 @@ class SecurityConfig(
                 "/weekend-meal/hey",
                 "/status/**",
                 "/user/all",
-                "/status/grade",
+                "/status/grade"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
@@ -83,26 +83,26 @@ class SecurityConfig(
                 "/schedule/modify",
                 "/after/change",
                 "/class-room/status",
-                "/class",
+                "/class"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
                 "/after/**",
                 "/notice/delete/**",
                 "/schedule/delete/**",
-                "/after/delete",
+                "/after/delete"
             )
             .hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.POST,
                 "/application",
                 "/class-room/move",
-                "/early-return/create",
+                "/early-return/create"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
                 "/application/status",
-                "/weekend-meal/my-status",
+                "/weekend-meal/my-status"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
@@ -115,19 +115,19 @@ class SecurityConfig(
                 "meal/date",
                 "/timetable/**",
                 "/weekend-meal/my",
-                "/main",
+                "/main"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.DELETE,
-                "/class-room/return",
+                "/class-room/return"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/application/non-return",
+                "/application/non-return"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/weekend-meal/excel",
+                "/weekend-meal/excel"
             ).hasRole(Role.SCH.name)
             .anyRequest().authenticated()
 
