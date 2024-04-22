@@ -11,6 +11,6 @@ class AdminDetailsService(
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails {
         val admin = adminFacadeUseCase.getAdminByAdminId(username)
-        return AuthDetails(admin!!.adminId)
+        return AuthDetails(admin!!.adminId, admin.role)
     }
 }

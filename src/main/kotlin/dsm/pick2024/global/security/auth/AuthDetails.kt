@@ -1,19 +1,17 @@
 package dsm.pick2024.global.security.auth
 
+import dsm.pick2024.domain.user.entity.enums.Role
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class AuthDetails(
-    private val name: String
+    private val name: String,
+    private val role: Role
 ) : UserDetails {
 
-    companion object {
-        private val ROLE_STU = "ROLE_STU"
-    }
-
     override fun getAuthorities(): Collection<GrantedAuthority?> {
-        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority(ROLE_STU))
+        return listOf<SimpleGrantedAuthority>(SimpleGrantedAuthority("ROLE_"+role.name))
     }
 
     override fun getPassword(): String? {
