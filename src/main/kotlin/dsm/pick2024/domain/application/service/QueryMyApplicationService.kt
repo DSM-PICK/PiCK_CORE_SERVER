@@ -30,15 +30,15 @@ class QueryMyApplicationService(
         }
 
         return QueryMyApplicationResponse(
-            application.userId,
-            application.username,
-            application.teacherName!!,
-            application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-            application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-            application.reason,
-            application.grade,
-            application.classNum,
-            application.num,
+            userId = application.userId,
+            username = application.username,
+            teacherName = application.teacherName!!,
+            startTime = application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            endTime = application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            reason = application.reason,
+            grade = application.grade,
+            classNum = application.classNum,
+            num = application.num,
             type = Type.APPLICATION
         )
     }

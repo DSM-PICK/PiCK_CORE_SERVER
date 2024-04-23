@@ -23,13 +23,13 @@ class QueryMyEarlyReturnService(
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
-            earlyReturn.username,
-            earlyReturn.teacherName!!,
-            earlyReturn.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-            earlyReturn.reason,
-            earlyReturn.grade,
-            earlyReturn.classNum,
-            earlyReturn.num,
+            username = earlyReturn.username,
+            teacherName = earlyReturn.teacherName!!,
+            startTime = earlyReturn.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            reason = earlyReturn.reason,
+            grade = earlyReturn.grade,
+            classNum = earlyReturn.classNum,
+            num = earlyReturn.num,
             type = Type.EARLY_RETURN
         )
     }

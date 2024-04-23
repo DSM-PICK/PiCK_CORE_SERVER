@@ -10,17 +10,16 @@ import org.springframework.transaction.annotation.Transactional
 class QueryUserAllService(
     private val userAllPort: UserAllPort
 ) : QueryUserAllUseCase {
-
     @Transactional(readOnly = true)
     override fun queryUserAll() =
         userAllPort.userAll()
             .map {
                     it ->
                 QueryUserSimpleInfoResponse(
-                    it.name,
-                    it.grade,
-                    it.classNum,
-                    it.num
+                    name = it.name,
+                    grade = it.grade,
+                    classNum = it.classNum,
+                    num = it.num
                 )
             }
 }
