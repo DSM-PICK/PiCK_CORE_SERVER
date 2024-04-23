@@ -20,12 +20,12 @@ class QueryWeekendMealClassService(
         .map {
                 it ->
             QueryWeekendMealResponse(
-                it.id!!,
-                it.username,
-                it.status,
-                it.grade,
-                it.classNum,
-                it.num
+                id = it.id!!,
+                name = it.username,
+                status = it.status,
+                grade = it.grade,
+                classNum = it.classNum,
+                num = it.num
             )
         }
 

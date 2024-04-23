@@ -14,18 +14,19 @@ import java.util.Locale
 class ScheduleMonthService(
     private val scheduleMonthPort: ScheduleMonthPort
 ) : ScheduleMonthUseCase {
-
     @Transactional(readOnly = true)
-    override fun scheduleMonth(year: Year, month: Month) =
-        scheduleMonthPort.scheduleMonth(year, month)
-            .map {
-                    it ->
-                ScheduleResponse(
-                    it.id!!,
-                    it.eventName,
-                    it.date.monthValue,
-                    it.date.dayOfMonth,
-                    it.date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN)
-                )
-            }
+    override fun scheduleMonth(
+        year: Year,
+        month: Month
+    ) = scheduleMonthPort.scheduleMonth(year, month)
+        .map {
+                it ->
+            ScheduleResponse(
+                id = it.id!!,
+                eventName = it.eventName,
+                month = it.date.monthValue,
+                day = it.date.dayOfMonth,
+                dayName = it.date.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN)
+            )
+        }
 }

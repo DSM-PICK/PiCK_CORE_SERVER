@@ -18,7 +18,6 @@ class QueryNoticeService(
     private val findByNoticeIdPort: FindByNoticeIdPort,
     private val findByTodayPort: FindByTodayPort
 ) : QueryAllNoticeUseCase {
-
     override fun queryAllSimpleNotice() =
         queryNoticeAllPort.findAll()
             .map { it ->
@@ -34,11 +33,11 @@ class QueryNoticeService(
     override fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse {
         val notice = findByNoticeIdPort.findById(noticeId) ?: throw RuntimeException()
         return QueryAllNoticeResponse(
-            notice.title,
-            notice.content,
-            notice.createAt,
-            notice.teacher,
-            notice.grade.split(",").map { grade -> grade.toInt() }
+            title = notice.title,
+            content = notice.content,
+            createAt = notice.createAt,
+            teacher = notice.teacher,
+            grade = notice.grade.split(",").map { grade -> grade.toInt() }
         )
     }
 
