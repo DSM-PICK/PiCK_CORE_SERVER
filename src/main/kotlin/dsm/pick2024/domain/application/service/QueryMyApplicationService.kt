@@ -3,7 +3,6 @@ package dsm.pick2024.domain.application.service
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
-import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
@@ -16,8 +15,7 @@ import java.time.format.DateTimeFormatter
 @Transactional(readOnly = true)
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findApplicationByUserIdPort: FindApplicationByUserIdPort,
-    private val deleteApplicationPort: DeleteApplicationPort
+    private val findApplicationByUserIdPort: FindApplicationByUserIdPort
 ) : QueryMyApplicationUseCase {
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
@@ -29,6 +27,7 @@ class QueryMyApplicationService(
             throw RuntimeException()
         }
 
+        val schoolNum = "${user.grade}${user.classNum}${"%02d".format(user.num)}"
         return QueryMyApplicationResponse(
             userId = application.userId,
             username = application.username,
@@ -36,9 +35,7 @@ class QueryMyApplicationService(
             startTime = application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             endTime = application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             reason = application.reason,
-            grade = application.grade,
-            classNum = application.classNum,
-            num = application.num,
+            schoolNum = schoolNum,
             type = Type.APPLICATION
         )
     }
