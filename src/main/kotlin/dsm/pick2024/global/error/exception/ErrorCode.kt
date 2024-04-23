@@ -28,6 +28,9 @@ enum class ErrorCode(
     NOTICE_NOT_FOUND(404, "Notice Not Found"),
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
 
+    NOT_ADMIN(403, "Not an Admin"),
+    NOT_STUDENT(403, "Not an Student"),
+
     FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
     FILE_IS_EMPTY(400, "File does not exist"),
     BAD_FILE_EXTENSION(400, "File Extension is invalid"),

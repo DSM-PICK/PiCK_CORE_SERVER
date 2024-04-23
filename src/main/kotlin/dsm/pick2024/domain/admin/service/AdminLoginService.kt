@@ -2,6 +2,7 @@ package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.exception.AdminNotFoundException
+import dsm.pick2024.domain.admin.exception.NotAdminException
 import dsm.pick2024.domain.admin.port.`in`.AdminLoginUseCase
 import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
 import dsm.pick2024.domain.admin.port.out.FindByAdminIdPort
@@ -30,7 +31,7 @@ class AdminLoginService(
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
             val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
             if (Role.SCH.toString() != xquareUser.userRole) {
-                throw RuntimeException("어드민 아님")
+                throw NotAdminException
             }
             adminSavePort.save(
                 Admin(
