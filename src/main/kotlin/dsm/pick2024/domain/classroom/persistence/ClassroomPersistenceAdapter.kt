@@ -80,8 +80,11 @@ class ClassroomPersistenceAdapter(
     ) = jpaQueryFactory
         .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
         .innerJoin(QUserJpaEntity.userJpaEntity)
-        .on(QClassroomJpaEntity.classroomJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-        .where(
+        .on(
+            QClassroomJpaEntity.classroomJpaEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                .and(QClassroomJpaEntity.classroomJpaEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                .and(QClassroomJpaEntity.classroomJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+        ).where(
             QUserJpaEntity.userJpaEntity.grade.eq(grade),
             QUserJpaEntity.userJpaEntity.classNum.eq(classNum)
         )

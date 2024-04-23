@@ -55,8 +55,11 @@ class ApplicationPersistenceAdapterByStatusPort(
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
+            .on(
+                QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            ).where(
                 QUserJpaEntity.userJpaEntity.grade.eq(
                     when (floor) {
                         4 -> 1
@@ -76,7 +79,11 @@ class ApplicationPersistenceAdapterByStatusPort(
     ) = jpaQueryFactory
         .selectFrom(QApplicationJapEntity.applicationJapEntity)
         .innerJoin(QUserJpaEntity.userJpaEntity)
-        .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .on(
+            QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+        )
         .where(
             QUserJpaEntity.userJpaEntity.grade.eq(grade),
             QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
@@ -94,7 +101,11 @@ class ApplicationPersistenceAdapterByStatusPort(
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .on(
+                QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            )
             .where(
                 QApplicationJapEntity.applicationJapEntity.status.eq(status)
             )
