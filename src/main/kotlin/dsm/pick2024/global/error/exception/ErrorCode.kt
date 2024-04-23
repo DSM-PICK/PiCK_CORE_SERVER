@@ -37,5 +37,5 @@ enum class ErrorCode(
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
-    FEIGN_SERVER_ERROR(500, "Feign Server Error"),
+    FEIGN_SERVER_ERROR(500, "Feign Server Error")
 }

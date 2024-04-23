@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.bug.presentation.dto.request
 
-data class DiscordMessage (
+data class BugRequest(
     val title: String,
     val content: String,
-    val imageUrl: String?
+    val fileName: String?
 )

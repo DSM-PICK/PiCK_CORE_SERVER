@@ -1,20 +1,21 @@
 package dsm.pick2024.domain.bug
 
-import dsm.pick2024.domain.user.facade.UserFacade
+import dsm.pick2024.domain.bug.presentation.dto.request.BugRequest
+import dsm.pick2024.infrastructure.feign.client.DiscordMessageClient
 import dsm.pick2024.infrastructure.s3.FileUtil
 import dsm.pick2024.infrastructure.s3.PathList
 import org.springframework.stereotype.Service
 
 @Service
 class AddBugService(
-    private val userFacade: UserFacade,
-    private val adminFacade: UserFacade,
-    private val fileUtil: FileUtil
+    private val fileUtil: FileUtil,
+    private val discordMessageClient: DiscordMessageClient
 ) {
     fun bugAlarm(request: BugRequest) {
-        val file = request.fileName?.let {
-                 fileUtil.generateObjectUrl(request.fileName, PathList.BUG)
-            }
+        request.fileName?.let {
+            fileUtil.generateObjectUrl(request.fileName, PathList.BUG)
+        }
 
+        discordMessageClient.sendMessage(request)
     }
 }
