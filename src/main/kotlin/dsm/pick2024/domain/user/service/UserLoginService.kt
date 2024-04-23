@@ -2,6 +2,7 @@ package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
+import dsm.pick2024.domain.user.exception.NotStudentException
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.LoginUseCase
@@ -31,7 +32,7 @@ class UserLoginService(
         if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
             if (Role.STU.toString() != xquareUser.userRole) {
-                throw RuntimeException("학생아님")
+                throw NotStudentException
             }
             userSavePort.save(
                 User(

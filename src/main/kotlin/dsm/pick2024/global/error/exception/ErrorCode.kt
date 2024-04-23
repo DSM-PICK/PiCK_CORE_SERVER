@@ -39,6 +39,9 @@ enum class ErrorCode(
 
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
 
+    NOT_ADMIN(403, "Not an Admin"),
+    NOT_STUDENT(403, "Not an Student"),
+
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error")
 }
