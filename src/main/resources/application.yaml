@@ -62,7 +62,6 @@ cloud:
         stack:
             auto: false
 
-
 servlet:
     multipart:
         max-file-size: 10MB
