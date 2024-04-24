@@ -56,7 +56,7 @@ jobs:
                       DSM_LOGIN=${{ secrets.DSM_LOGIN }}
                       NEIS_KEY=${{ secrets.NEIS_KEY }}
                       WEBHOOK_STAG=${{ secrets.WEBHOOK_STAG }}
-                      DISCORD=${{ secrets.DISCORD }}
+                      WEBHOOK_MESSAGE=${{ secrets.WEBHOOK_MESSAGE }}
 
             - name: Discord Alert Success
               uses: sarisia/actions-status-discord@v1
