@@ -1,7 +1,8 @@
 package dsm.pick2024.global.discord
 
 import dsm.pick2024.global.discord.DiscordMessage.Embed
-import dsm.pick2024.infrastructure.feign.client.DiscordClient
+import dsm.pick2024.infrastructure.feign.client.DiscordProdClient
+import dsm.pick2024.infrastructure.feign.client.DiscordStagClient
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.ServletWebRequest
@@ -12,14 +13,15 @@ import java.time.LocalDateTime
 
 @Component
 class DiscordController(
-    private val discordClient: DiscordClient,
+    private val discordStagClient: DiscordStagClient,
+    private val discordProdClient: DiscordProdClient,
     private val environment: Environment
 ) {
     fun sendDiscordAlarm(e: Exception, request: WebRequest) {
         if (isProductionEnvironment()) {
-            discordClient.prodSendAlarm(createMessage(e, request))
+            discordProdClient.prodSendAlarm(createMessage(e, request))
         } else {
-            discordClient.stagSendAlarm(createMessage(e, request))
+            discordStagClient.stagSendAlarm(createMessage(e, request))
         }
     }
 

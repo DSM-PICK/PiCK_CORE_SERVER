@@ -5,8 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 
-@FeignClient(name = "discord-bug-stag-message-client", url = "\${discord.webhook.stag}")
-interface DiscordStagClient {
-    @PostMapping("\${discord.webhook.stag}")
-    fun stagSendAlarm(@RequestBody message: DiscordMessage)
+@FeignClient(name = "discord-bug-prod-client", url = "\${discord.webhook.prod}")
+interface DiscordProdClient {
+    @PostMapping
+    fun prodSendAlarm(@RequestBody message: DiscordMessage)
 }
