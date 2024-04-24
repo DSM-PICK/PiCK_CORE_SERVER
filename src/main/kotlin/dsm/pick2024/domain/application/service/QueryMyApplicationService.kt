@@ -2,7 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
-import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
+import dsm.pick2024.domain.application.port.out.QueryOKMyApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -11,15 +11,16 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.format.DateTimeFormatter
 
 @Service
-@Transactional(readOnly = true)
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findApplicationByUserIdPort: FindApplicationByUserIdPort
+    private val queryOKMyApplicationPort: QueryOKMyApplicationPort
 ) : QueryMyApplicationUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            findApplicationByUserIdPort.findByUserId(user.id)
+            queryOKMyApplicationPort.findOKApplication(user.id)
                 ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
