@@ -1,5 +1,6 @@
 package dsm.pick2024.infrastructure.feign.client.response
 
+import dsm.pick2024.domain.user.entity.enums.Role
 import java.time.LocalDate
 import java.util.*
 
@@ -11,7 +12,7 @@ data class XquareResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val userRole: String,
+    val userRole: Role,
     val clubName: String? = null,
     val birthDay: LocalDate
 )
