@@ -16,6 +16,7 @@ class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findApplicationByUserIdPort: FindApplicationByUserIdPort
 ) : QueryMyApplicationUseCase {
+
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
