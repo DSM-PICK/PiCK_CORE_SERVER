@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.FindApplicationByUserIdPort
@@ -22,10 +21,6 @@ class QueryMyApplicationService(
         val application =
             findApplicationByUserIdPort.findByUserId(user.id)
                 ?: throw ApplicationNotFoundException
-
-        if (application.status != Status.OK) {
-            throw RuntimeException()
-        }
 
         return QueryMyApplicationResponse(
             userId = application.userId,
