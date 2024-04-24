@@ -44,7 +44,16 @@ class ApplicationPersistenceAdapterPort(
         applicationRepository.deleteAll()
     }
 
-    override fun findAll() = applicationRepository.findAll().map { applicationMapper.toDomain(it) }
+    override fun findAll() =
+        jpaQueryFactory
+            .selectFrom(QApplicationJapEntity.applicationJapEntity)
+            .orderBy(
+                QApplicationJapEntity.applicationJapEntity.grade.asc(),
+                QApplicationJapEntity.applicationJapEntity.classNum.asc(),
+                QApplicationJapEntity.applicationJapEntity.num.asc()
+            )
+            .fetch()
+            .map { applicationMapper.toDomain(it) }
 
     override fun findByUserId(userId: UUID) =
         applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
