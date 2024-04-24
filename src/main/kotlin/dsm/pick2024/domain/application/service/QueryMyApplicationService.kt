@@ -20,14 +20,13 @@ class QueryMyApplicationService(
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            findApplicationByUserIdPort.findByUserId(user.id!!)
+            findApplicationByUserIdPort.findByUserId(user.id)
                 ?: throw ApplicationNotFoundException
 
         if (application.status != Status.OK) {
             throw RuntimeException()
         }
 
-        val schoolNum = "${user.grade}${user.classNum}${"%02d".format(user.num)}"
         return QueryMyApplicationResponse(
             userId = application.userId,
             username = application.username,
@@ -35,7 +34,7 @@ class QueryMyApplicationService(
             startTime = application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             endTime = application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             reason = application.reason,
-            schoolNum = schoolNum,
+            schoolNum = (user.grade * 1000) + (user.classNum * 100) + user.num,
             type = Type.APPLICATION
         )
     }
