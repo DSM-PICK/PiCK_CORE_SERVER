@@ -6,17 +6,17 @@ import dsm.pick2024.domain.application.entity.QApplicationJapEntity
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
-import dsm.pick2024.domain.application.port.out.ApplicationByStatusPortPort
+import dsm.pick2024.domain.application.port.out.ApplicationPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ApplicationPersistenceAdapterByStatusPort(
+class ApplicationPersistenceAdapterPort(
     private val applicationRepository: ApplicationRepository,
     private val applicationMapper: ApplicationMapper,
     private val jpaQueryFactory: JPAQueryFactory
-) : ApplicationByStatusPortPort {
+) : ApplicationPort {
     override fun saveAll(application: List<Application>) {
         val entities = application.map { applicationMapper.toEntity(it) }
         applicationRepository.saveAll(entities)
@@ -48,6 +48,11 @@ class ApplicationPersistenceAdapterByStatusPort(
 
     override fun findByUserId(userId: UUID) =
         applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
+
+    override fun findOKApplication(id: UUID) =
+        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
+            applicationMapper.toDomain(it)
+        }
 
     override fun save(application: Application) = applicationRepository.save(applicationMapper.toEntity(application))
 
@@ -91,11 +96,6 @@ class ApplicationPersistenceAdapterByStatusPort(
         )
         .fetch()
         .map { applicationMapper.toDomain(it) }
-
-    override fun findOKApplication(id: UUID) =
-        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
-            applicationMapper.toDomain(it)
-        }
 
     override fun findAllByStatus(status: Status) =
         jpaQueryFactory

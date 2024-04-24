@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.application.port.out
 
-interface ApplicationByStatusPortPort :
+interface ApplicationPort :
     ExistApplicationByUserIdPort,
     SaveAllApplicationPort,
     FindApplicationByIdPort,
