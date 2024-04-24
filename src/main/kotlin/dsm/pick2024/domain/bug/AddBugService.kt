@@ -12,10 +12,17 @@ class AddBugService(
     private val discordMessageClient: DiscordMessageClient
 ) {
     fun bugAlarm(request: BugRequest) {
-        request.fileName?.let {
-            fileUtil.generateObjectUrl(request.fileName, PathList.BUG)
+        val messageTitle = "Bug Report: ${request.title}"
+        val messageContent = buildString {
+            append("Title: ${request.title}\n")
+            append("Content: ${request.content}\n")
+            if (request.fileName != null) {
+                val fileUrl = fileUtil.generateObjectUrl(request.fileName, PathList.BUG)
+                append("File Name: ${request.fileName}\nFile URL: $fileUrl")
+            }
         }
 
-        discordMessageClient.sendMessage(request)
+        val message = mapOf("message" to messageTitle, "content" to messageContent)
+        discordMessageClient.sendMessage(message)
     }
 }

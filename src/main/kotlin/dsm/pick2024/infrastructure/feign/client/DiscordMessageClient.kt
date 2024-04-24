@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody
 interface DiscordMessageClient {
     @PostMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     fun sendMessage(
-        @RequestBody bugRequest: BugRequest
+        @RequestBody message: Map<String, String>
     )
 }
