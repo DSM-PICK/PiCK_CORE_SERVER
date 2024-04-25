@@ -1,6 +1,5 @@
 package dsm.pick2024.infrastructure.feign.client
 
-import dsm.pick2024.infrastructure.feign.client.dto.response.XquareResponse
 import dsm.pick2024.infrastructure.feign.client.dto.response.XquareUserAllResponse
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
