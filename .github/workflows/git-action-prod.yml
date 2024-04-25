@@ -57,6 +57,10 @@ jobs:
                       NEIS_KEY=${{ secrets.NEIS_KEY }}
                       WEBHOOK_PROD=${{ secrets.WEBHOOK_PROD }}
                       WEBHOOK_MESSAGE=${{ secrets.WEBHOOK_MESSAGE }}
+                      AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
+                      AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
+                      AWS_BUCKET=${{ secrets.AWS_BUCKET }}
+                      AWS_STATIC=${{ secrets.AWS_STATIC }}
 
             - name: Discord Alert Success
               uses: sarisia/actions-status-discord@v1
