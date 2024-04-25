@@ -39,7 +39,6 @@ url:
     neis: ${NEIS_URL}
     daedongyeojido: ${DAE_URL}
     dsmlogin: ${DSM_LOGIN}
-    discord: ${DISCORD}
 
 open-feign:
     neis-key: ${NEIS_KEY}
@@ -48,3 +47,21 @@ discord:
     webhook:
         prod: ${WEBHOOK_PROD}
         stag: ${WEBHOOK_STAG}
+        message: ${WEBHOOK_MESSAGE}
+
+cloud:
+    aws:
+        credentials:
+            accessKey: ${AWS_ACCESS_KEY}
+            secretKey: ${AWS_SECRET_KEY}
+        s3:
+            bucket: ${AWS_BUCKET}
+        region:
+            static: ${AWS_STATIC}
+        stack:
+            auto: false
+
+servlet:
+    multipart:
+        max-file-size: 10MB
+        max-request-size: 10MB

@@ -1,6 +1,6 @@
 package dsm.pick2024.global.error
 
-import dsm.pick2024.global.discord.DiscordController
+import dsm.pick2024.infrastructure.discord.DiscordComponet
 import dsm.pick2024.global.error.exception.PickException
 import org.springframework.context.MessageSource
 import org.springframework.core.env.Environment
@@ -14,7 +14,7 @@ import java.io.Serializable
 @RestControllerAdvice
 class GlobalExceptionHandler(
     private val messageSource: MessageSource,
-    private val discordController: DiscordController,
+    private val discordComponet: DiscordComponet,
     private val environment: Environment
 ) {
 
@@ -30,7 +30,7 @@ class GlobalExceptionHandler(
     @ExceptionHandler(Exception::class)
     fun exception(e: PickException, request: WebRequest): ResponseEntity<Any>? {
         if (!listOf(environment.activeProfiles).contains<Serializable?>("local")) {
-            discordController.sendDiscordAlarm(e, request)
+            discordComponet.sendDiscordAlarm(e, request)
             return ResponseEntity(
                 ErrorResponse(e.errorCode.status, e.message),
                 HttpStatus.valueOf(e.errorCode.status)

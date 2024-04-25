@@ -1,6 +1,6 @@
-package dsm.pick2024.global.discord
+package dsm.pick2024.infrastructure.feign.client.dto.request
 
-data class DiscordMessage(
+data class DiscordMessageRequest(
     val content: String,
     val embeds: List<Embed>
 ) {

@@ -1,7 +1,9 @@
-package dsm.pick2024.global.discord
+package dsm.pick2024.infrastructure.discord
 
-import dsm.pick2024.global.discord.DiscordMessage.Embed
-import dsm.pick2024.infrastructure.feign.client.DiscordClient
+import dsm.pick2024.infrastructure.feign.client.dto.request.DiscordMessageRequest.Embed
+import dsm.pick2024.infrastructure.feign.client.DiscordProdClient
+import dsm.pick2024.infrastructure.feign.client.DiscordStagClient
+import dsm.pick2024.infrastructure.feign.client.dto.request.DiscordMessageRequest
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.ServletWebRequest
@@ -11,15 +13,16 @@ import java.io.StringWriter
 import java.time.LocalDateTime
 
 @Component
-class DiscordController(
-    private val discordClient: DiscordClient,
+class DiscordComponet(
+    private val discordStagClient: DiscordStagClient,
+    private val discordProdClient: DiscordProdClient,
     private val environment: Environment
 ) {
     fun sendDiscordAlarm(e: Exception, request: WebRequest) {
         if (isProductionEnvironment()) {
-            discordClient.prodSendAlarm(createMessage(e, request))
+            discordProdClient.prodSendAlarm(createMessage(e, request))
         } else {
-            discordClient.stagSendAlarm(createMessage(e, request))
+            discordStagClient.stagSendAlarm(createMessage(e, request))
         }
     }
 
@@ -28,8 +31,8 @@ class DiscordController(
         return "prod" in activeProfiles
     }
 
-    private fun createMessage(e: Exception, request: WebRequest): DiscordMessage {
-        return DiscordMessage(
+    private fun createMessage(e: Exception, request: WebRequest): DiscordMessageRequest {
+        return DiscordMessageRequest(
             content = "# 🚨 에러 발생",
             embeds = listOf(
                 Embed(

@@ -1,6 +1,5 @@
 package dsm.pick2024.infrastructure.feign.client.dto.response
 
-import dsm.pick2024.domain.user.entity.enums.Role
 import java.time.LocalDate
 import java.util.*
 
