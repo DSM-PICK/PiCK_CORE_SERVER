@@ -44,8 +44,11 @@ class EarlyReturnPersistenceAdapter(
         jpaQueryFactory
             .select(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
+            .on(
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            ).where(
                 QUserJpaEntity.userJpaEntity.grade.eq(
                     when (floor) {
                         4 -> 1
@@ -65,7 +68,11 @@ class EarlyReturnPersistenceAdapter(
     ) = jpaQueryFactory
         .selectFrom(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
         .innerJoin(QUserJpaEntity.userJpaEntity)
-        .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .on(
+            QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+        )
         .where(
             QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(grade),
             QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(classNum),
@@ -100,7 +107,11 @@ class EarlyReturnPersistenceAdapter(
         jpaQueryFactory
             .selectFrom(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QEarlyReturnJpaEntity.earlyReturnJpaEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .on(
+                QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            )
             .where(
                 QEarlyReturnJpaEntity.earlyReturnJpaEntity.status.eq(status)
             )

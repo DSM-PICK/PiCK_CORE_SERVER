@@ -6,17 +6,17 @@ import dsm.pick2024.domain.application.entity.QApplicationJapEntity
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
-import dsm.pick2024.domain.application.port.out.ApplicationByStatusPortPort
+import dsm.pick2024.domain.application.port.out.ApplicationPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ApplicationPersistenceAdapterByStatusPort(
+class ApplicationPersistenceAdapterPort(
     private val applicationRepository: ApplicationRepository,
     private val applicationMapper: ApplicationMapper,
     private val jpaQueryFactory: JPAQueryFactory
-) : ApplicationByStatusPortPort {
+) : ApplicationPort {
     override fun saveAll(application: List<Application>) {
         val entities = application.map { applicationMapper.toEntity(it) }
         applicationRepository.saveAll(entities)
@@ -44,10 +44,24 @@ class ApplicationPersistenceAdapterByStatusPort(
         applicationRepository.deleteAll()
     }
 
-    override fun findAll() = applicationRepository.findAll().map { applicationMapper.toDomain(it) }
+    override fun findAll() =
+        jpaQueryFactory
+            .selectFrom(QApplicationJapEntity.applicationJapEntity)
+            .orderBy(
+                QApplicationJapEntity.applicationJapEntity.grade.asc(),
+                QApplicationJapEntity.applicationJapEntity.classNum.asc(),
+                QApplicationJapEntity.applicationJapEntity.num.asc()
+            )
+            .fetch()
+            .map { applicationMapper.toDomain(it) }
 
     override fun findByUserId(userId: UUID) =
         applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
+
+    override fun findOKApplication(id: UUID) =
+        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
+            applicationMapper.toDomain(it)
+        }
 
     override fun save(application: Application) = applicationRepository.save(applicationMapper.toEntity(application))
 
@@ -55,8 +69,11 @@ class ApplicationPersistenceAdapterByStatusPort(
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
-            .where(
+            .on(
+                QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            ).where(
                 QUserJpaEntity.userJpaEntity.grade.eq(
                     when (floor) {
                         4 -> 1
@@ -76,7 +93,11 @@ class ApplicationPersistenceAdapterByStatusPort(
     ) = jpaQueryFactory
         .selectFrom(QApplicationJapEntity.applicationJapEntity)
         .innerJoin(QUserJpaEntity.userJpaEntity)
-        .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+        .on(
+            QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+        )
         .where(
             QUserJpaEntity.userJpaEntity.grade.eq(grade),
             QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
@@ -85,16 +106,15 @@ class ApplicationPersistenceAdapterByStatusPort(
         .fetch()
         .map { applicationMapper.toDomain(it) }
 
-    override fun findOKApplication(id: UUID) =
-        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
-            applicationMapper.toDomain(it)
-        }
-
     override fun findAllByStatus(status: Status) =
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
-            .on(QApplicationJapEntity.applicationJapEntity.username.eq(QUserJpaEntity.userJpaEntity.name))
+            .on(
+                QApplicationJapEntity.applicationJapEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
+                    .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
+                    .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
+            )
             .where(
                 QApplicationJapEntity.applicationJapEntity.status.eq(status)
             )

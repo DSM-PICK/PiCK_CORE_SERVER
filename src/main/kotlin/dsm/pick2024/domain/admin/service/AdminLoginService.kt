@@ -30,7 +30,7 @@ class AdminLoginService(
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
             val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
-            if (Role.SCH.toString() != xquareUser.userRole) {
+            if (Role.SCH != xquareUser.userRole) {
                 throw NotAdminException
             }
             adminSavePort.save(
@@ -45,10 +45,13 @@ class AdminLoginService(
             )
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.SCH.toString())
         } else {
-            val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
+            val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId)
+                ?: throw AdminNotFoundException
+
             if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
                 throw PasswordMissMatchException
             }
+
             return jwtTokenProvider.generateToken(admin.adminId, Role.SCH.toString())
         }
     }

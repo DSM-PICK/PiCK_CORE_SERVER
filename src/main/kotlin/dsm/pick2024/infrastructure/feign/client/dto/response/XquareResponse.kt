@@ -11,7 +11,7 @@ data class XquareResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val userRole: String,
+    val userRole: Role,
     val clubName: String? = null,
     val birthDay: LocalDate
 )

@@ -2,7 +2,6 @@ package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
-import dsm.pick2024.domain.user.exception.NotStudentException
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.LoginUseCase
@@ -31,9 +30,6 @@ class UserLoginService(
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
-            if (Role.STU.toString() != xquareUser.userRole) {
-                throw NotStudentException
-            }
             userSavePort.save(
                 User(
                     id = xquareUser.id,
@@ -44,19 +40,19 @@ class UserLoginService(
                     classNum = xquareUser.classNum,
                     num = xquareUser.num,
                     birthDay = xquareUser.birthDay,
-                    role = Role.STU
+                    role = xquareUser.userRole
                 )
             )
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.STU.toString())
+        } else {
+            val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)
+                ?: throw UserNotFoundException
+
+            if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
+                throw PasswordMissMatchException
+            }
+
+            return jwtTokenProvider.generateToken(user.accountId, Role.STU.toString())
         }
-
-        val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)
-            ?: throw UserNotFoundException
-
-        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
-            throw PasswordMissMatchException
-        }
-
-        return jwtTokenProvider.generateToken(user.accountId, Role.STU.toString())
     }
 }

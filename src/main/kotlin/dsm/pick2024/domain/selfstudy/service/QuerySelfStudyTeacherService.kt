@@ -11,16 +11,15 @@ import java.time.LocalDate
 class QuerySelfStudyTeacherService(
     private val findByDatePort: FindByDatePort
 ) : QueryDateSelfStudyUseCase {
-
     @Transactional(readOnly = true)
     override fun queryDateSelfStudy(date: LocalDate) =
         findByDatePort.findByDateList(date)
             .map {
                     it ->
                 QuerySelfStudyTeacherResponse(
-                    it!!.floor,
-                    it.teacher,
-                    it.date
+                    floor = it!!.floor,
+                    teacher = it.teacher,
+                    date = it.date
                 )
             }
 }
