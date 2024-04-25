@@ -1,4 +1,4 @@
-package dsm.pick2024.infrastructure.feign.client.response
+package dsm.pick2024.infrastructure.feign.client.dto.response
 
 import java.util.UUID
 

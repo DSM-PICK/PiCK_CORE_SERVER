@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import dsm.pick2024.domain.schedule.entity.ScheduleJpaEntity
 import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
 import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
-import dsm.pick2024.infrastructure.feign.client.response.NeisFeignClientScheduleResponse
+import dsm.pick2024.infrastructure.feign.client.dto.response.NeisFeignClientScheduleResponse
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.springframework.beans.factory.annotation.Value
