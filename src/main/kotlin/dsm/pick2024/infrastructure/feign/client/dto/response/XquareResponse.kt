@@ -1,4 +1,4 @@
-package dsm.pick2024.infrastructure.feign.client
+package dsm.pick2024.infrastructure.feign.client.dto.response
 
 import java.time.LocalDate
 import java.util.*
