@@ -15,20 +15,6 @@ class SelfStudyTeacherService(
     private val findByDatePort: FindByDatePort
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val teacherList =
-            request.teacher
-                .filter { it.teacher.isNotBlank() }
-                .map { teacher ->
-                    SelfStudy(
-                        floor = teacher.floor,
-                        teacher = teacher.teacher,
-                        date = request.date
-                    )
-                }
-        selfStudySaveAllPort.saveAll(teacherList)
-    }
-
-    override fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         if (request.teacher.any { it.teacher.isNotBlank() }) {
             val selfStudy = findByDatePort.findByDateList(request.date)
             val teacherList =
