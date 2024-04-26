@@ -12,23 +12,9 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class SelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
-    private val findByDatePort: FindByDatePort
+    private val findByDatePort: FindByDatePort,
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val teacherList =
-            request.teacher
-                .filter { it.teacher.isNotBlank() }
-                .map { teacher ->
-                    SelfStudy(
-                        floor = teacher.floor,
-                        teacher = teacher.teacher,
-                        date = request.date
-                    )
-                }
-        selfStudySaveAllPort.saveAll(teacherList)
-    }
-
-    override fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         if (request.teacher.any { it.teacher.isNotBlank() }) {
             val selfStudy = findByDatePort.findByDateList(request.date)
             val teacherList =
@@ -40,7 +26,7 @@ class SelfStudyTeacherService(
                         exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
                             floor = teacher.floor,
                             teacher = teacher.teacher,
-                            date = request.date
+                            date = request.date,
                         )
                     }
 
