@@ -1,5 +1,5 @@
 config:
-    name: new-pick
-    prefix: "/dsm-pick"
+    name: pick-core
+    prefix: "/pick-core"
     service_type: be
     port: 8080
