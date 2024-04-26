@@ -69,14 +69,14 @@ dependencies {
     implementation(Dependencies.QUERYDSL)
     kapt(Dependencies.QUERYDSL_PROCESSOR)
 
-    implementation("org.springframework.boot:spring-boot-starter")
-
     implementation(Dependencies.APACHE_POI)
     implementation(Dependencies.APACHE_POI_OOXML)
 
     implementation(Dependencies.GSON)
 
     implementation(Dependencies.AWS)
+
+    implementation(Dependencies.CLOUD)
 }
 
 tasks.withType<KotlinCompile> {

@@ -48,4 +48,6 @@ object Dependencies {
     const val GSON = "com.google.code.gson:gson:${DependencyVersions.GSON}"
 
     const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
+
+    const val CLOUD = "org.springframework.cloud:spring-cloud-starter-loadbalancer"
 }
