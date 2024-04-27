@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 class SelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
     private val findByDatePort: FindByDatePort,
-    private val deleteByDatePort: DeleteByDatePort,
+    private val deleteByDatePort: DeleteByDatePort
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         if (request.teacher.any { it.teacher.isNotBlank() }) {
@@ -29,7 +29,7 @@ class SelfStudyTeacherService(
                         exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
                             floor = teacher.floor,
                             teacher = teacher.teacher,
-                            date = request.date,
+                            date = request.date
                         )
                     }
 
