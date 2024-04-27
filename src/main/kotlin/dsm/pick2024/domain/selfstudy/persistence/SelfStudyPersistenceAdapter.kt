@@ -16,20 +16,21 @@ import java.time.temporal.TemporalAdjusters
 class SelfStudyPersistenceAdapter(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyMapper: SelfStudyMapper,
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
 ) : SelfStudyPort {
-
     override fun save(selfStudy: SelfStudy) {
         selfStudyRepository.save(selfStudyMapper.toEntity(selfStudy))
     }
 
-    override fun findByDate(date: LocalDate, floor: Int) =
-        selfStudyRepository.findByDateAndFloor(date, floor).let { selfStudyMapper.toDomain(it) }
+    override fun findByDate(
+        date: LocalDate,
+        floor: Int,
+    ) = selfStudyRepository.findByDateAndFloor(date, floor).let { selfStudyMapper.toDomain(it) }
 
     override fun findByDateList(date: LocalDate) =
         jpaQueryFactory.selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(
-                QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(date)
+                QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(date),
             )
             .fetch()
             .map { selfStudyMapper.toDomain(it) }
@@ -39,15 +40,20 @@ class SelfStudyPersistenceAdapter(
         selfStudyRepository.saveAll(entities)
     }
 
+    override fun deleteByDate(date: LocalDate) {
+        selfStudyRepository.deleteByDate(date)
+    }
+
     override fun findByTodayTeacher(teacher: String): SelfStudy? {
         val day = LocalDate.now()
-        val nullCheck = jpaQueryFactory
-            .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
-            .where(
-                QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(day),
-                QSelfStudyJpaEntity.selfStudyJpaEntity.teacher.eq(teacher)
-            )
-            .fetchOne()
+        val nullCheck =
+            jpaQueryFactory
+                .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
+                .where(
+                    QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(day),
+                    QSelfStudyJpaEntity.selfStudyJpaEntity.teacher.eq(teacher),
+                )
+                .fetchOne()
 
         return nullCheck?.let { selfStudyMapper.toDomain(it) }
     }
@@ -60,14 +66,17 @@ class SelfStudyPersistenceAdapter(
             .fetch()
             .map { selfStudyMapper.toDomain(it) }
 
-    override fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy> {
+    override fun findByMonthSelfStudyTeacher(
+        year: Year,
+        month: Month,
+    ): List<SelfStudy> {
         val startDay = LocalDate.of(year.value, month, 1)
         val endDay = startDay.with(TemporalAdjusters.lastDayOfMonth())
 
         return jpaQueryFactory
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(
-                QSelfStudyJpaEntity.selfStudyJpaEntity.date.between(startDay, endDay)
+                QSelfStudyJpaEntity.selfStudyJpaEntity.date.between(startDay, endDay),
             )
             .fetch()
             .map { selfStudyMapper.toDomain(it) }

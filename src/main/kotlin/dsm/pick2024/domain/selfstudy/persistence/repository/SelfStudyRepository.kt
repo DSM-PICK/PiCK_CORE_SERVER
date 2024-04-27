@@ -6,12 +6,16 @@ import java.time.LocalDate
 import java.util.UUID
 
 interface SelfStudyRepository : Repository<SelfStudyJpaEntity, UUID> {
-
     fun save(entity: SelfStudyJpaEntity): SelfStudyJpaEntity
 
     fun saveAll(entity: Iterable<SelfStudyJpaEntity>)
 
-    fun findByDateAndFloor(date: LocalDate, floor: Int): SelfStudyJpaEntity
+    fun findByDateAndFloor(
+        date: LocalDate,
+        floor: Int,
+    ): SelfStudyJpaEntity
 
     fun findByDate(date: LocalDate): SelfStudyJpaEntity
+
+    fun deleteByDate(date: LocalDate)
 }

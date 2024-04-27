@@ -7,4 +7,5 @@ interface SelfStudyPort :
     FindByMonthSelfStudyTeacherPort,
     FindByDatePort,
     SelfStudySaveAllPort,
-    FindByTodaySelfStudyTeacherPort
+    FindByTodaySelfStudyTeacherPort,
+    DeleteByDatePort
