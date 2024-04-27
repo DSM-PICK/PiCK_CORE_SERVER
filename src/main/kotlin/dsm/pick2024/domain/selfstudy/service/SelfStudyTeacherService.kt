@@ -2,6 +2,7 @@ package dsm.pick2024.domain.selfstudy.service
 
 import dsm.pick2024.domain.selfstudy.domain.SelfStudy
 import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.out.DeleteByDatePort
 import dsm.pick2024.domain.selfstudy.port.out.FindByDatePort
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudySaveAllPort
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
@@ -12,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class SelfStudyTeacherService(
     private val selfStudySaveAllPort: SelfStudySaveAllPort,
-    private val findByDatePort: FindByDatePort
+    private val findByDatePort: FindByDatePort,
+    private val deleteByDatePort: DeleteByDatePort,
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         if (request.teacher.any { it.teacher.isNotBlank() }) {
             val selfStudy = findByDatePort.findByDateList(request.date)
+            if (selfStudy.isNotEmpty()) deleteByDatePort.deleteByDate(request.date)
             val teacherList =
                 request.teacher
                     .filter { it.teacher.isNotBlank() }
@@ -26,7 +29,7 @@ class SelfStudyTeacherService(
                         exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
                             floor = teacher.floor,
                             teacher = teacher.teacher,
-                            date = request.date
+                            date = request.date,
                         )
                     }
 
