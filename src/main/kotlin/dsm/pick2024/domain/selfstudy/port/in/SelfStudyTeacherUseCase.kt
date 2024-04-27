@@ -4,6 +4,4 @@ import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfSt
 
 interface SelfStudyTeacherUseCase {
     fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest)
-
-    fun modifySelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest)
 }
