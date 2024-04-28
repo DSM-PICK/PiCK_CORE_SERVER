@@ -17,23 +17,20 @@ class SelfStudyTeacherService(
     private val deleteByDatePort: DeleteByDatePort
 ) : SelfStudyTeacherUseCase {
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        if (request.teacher.any { it.teacher.isNotBlank() }) {
-            val selfStudy = findByDatePort.findByDateList(request.date)
-            if (selfStudy.isNotEmpty()) deleteByDatePort.deleteByDate(request.date)
-            val teacherList =
-                request.teacher
-                    .filter { it.teacher.isNotBlank() }
-                    .mapNotNull { teacher ->
-                        val exist = selfStudy.find { it!!.floor == teacher.floor }
+        val selfStudy = findByDatePort.findByDateList(request.date)
+        if (selfStudy.isNotEmpty()) deleteByDatePort.deleteByDate(request.date)
+        val teacherList =
+            request.teacher
+                .filter { it.teacher.isNotBlank() }
+                .mapNotNull { teacher ->
+                    val exist = selfStudy.find { it!!.floor == teacher.floor }
+                    exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
+                        floor = teacher.floor,
+                        teacher = teacher.teacher,
+                        date = request.date
+                    )
+                }
 
-                        exist?.copy(teacher = teacher.teacher) ?: SelfStudy(
-                            floor = teacher.floor,
-                            teacher = teacher.teacher,
-                            date = request.date
-                        )
-                    }
-
-            selfStudySaveAllPort.saveAll(teacherList)
-        }
+        selfStudySaveAllPort.saveAll(teacherList)
     }
 }
