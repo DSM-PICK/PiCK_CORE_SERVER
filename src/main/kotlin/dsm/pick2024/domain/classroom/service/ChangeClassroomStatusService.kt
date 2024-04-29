@@ -22,7 +22,7 @@ class ChangeClassroomStatusService(
     private val classroomDeletePort: ClassroomDeletePort,
     private val saveAllClassroomPort: SaveAllClassroomPort,
     private val findAttendanceByUserIdPort: FindAttendanceByUserIdPort,
-    private val saveAll: SaveAll,
+    private val saveAll: SaveAll
 ) : ChangeClassroomStatusUseCase {
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
@@ -53,7 +53,7 @@ class ChangeClassroomStatusService(
                     period7 = if (7 in period) MOVEMENT else attendance.period7,
                     period8 = if (8 in period) MOVEMENT else attendance.period8,
                     period9 = if (9 in period) MOVEMENT else attendance.period9,
-                    period10 = if (10 in period) MOVEMENT else attendance.period10,
+                    period10 = if (10 in period) MOVEMENT else attendance.period10
                 )
             updateAttendanceList.add(updatedAttendance)
         }
