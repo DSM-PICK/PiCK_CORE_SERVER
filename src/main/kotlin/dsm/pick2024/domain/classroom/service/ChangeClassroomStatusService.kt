@@ -44,18 +44,17 @@ class ChangeClassroomStatusService(
             val updatedClassroom = classroom.copy(status = OK)
             update.add(updatedClassroom)
 
-            val attendance =
-                findAttendanceByUserIdPort.findByUserId(classroom.userId)
-                    ?: throw UserNotFoundException
-
             val updatedAttendance =
-                attendance.copy(
-                    period6 = getStatus(classroom, attendance.period6, 6),
-                    period7 = getStatus(classroom, attendance.period7, 7),
-                    period8 = getStatus(classroom, attendance.period8, 8),
-                    period9 = getStatus(classroom, attendance.period9, 9),
-                    period10 = getStatus(classroom, attendance.period10, 10)
-                )
+                findAttendanceByUserIdPort.findByUserId(classroom.userId)?.run {
+                    copy(
+                        period6 = getStatus(classroom, period6, 6),
+                        period7 = getStatus(classroom, period7, 7),
+                        period8 = getStatus(classroom, period8, 8),
+                        period9 = getStatus(classroom, period9, 9),
+                        period10 = getStatus(classroom, period10, 10)
+                    )
+                } ?: throw UserNotFoundException
+
             updateAttendanceList.add(updatedAttendance)
         }
 
