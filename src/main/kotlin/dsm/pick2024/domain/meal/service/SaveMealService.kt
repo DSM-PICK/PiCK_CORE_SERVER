@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.meal.service
 
-import dsm.pick2024.domain.meal.entity.MealJpaEntity
+import dsm.pick2024.domain.meal.domain.Meal
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.meal.port.out.SaveMealPort
 import dsm.pick2024.infrastructure.feign.NeisMealFeignClientService
@@ -27,15 +27,14 @@ class SaveMealService(
                     val lunch = stickMeal(mealInfos.map { it.lunch })
                     val dinner = stickMeal(mealInfos.map { it.dinner })
 
-                    val mealJpaEntity =
-                        MealJpaEntity(
-                            id = null,
+                    saveMealPort.save(
+                        Meal(
                             mealDate = date,
                             breakfast = breakfast,
                             lunch = lunch,
                             dinner = dinner
                         )
-                    saveMealPort.save(mealJpaEntity)
+                    )
                 } else {
                     throw InternalError()
                 }
