@@ -12,7 +12,6 @@ class SaveMealService(
     private val saveMealPort: SaveMealPort,
     private val neisMealFeignClientService: NeisMealFeignClientService
 ) : MealUseCase {
-
     @Transactional
     override fun saveNeisInfoToDatabase() {
         val mealForSave = neisMealFeignClientService.getNeisInfoToEntity()
@@ -28,13 +27,14 @@ class SaveMealService(
                     val lunch = stickMeal(mealInfos.map { it.lunch })
                     val dinner = stickMeal(mealInfos.map { it.dinner })
 
-                    val mealJpaEntity = MealJpaEntity(
-                        id = null,
-                        mealDate = date,
-                        breakfast = breakfast,
-                        lunch = lunch,
-                        dinner = dinner
-                    )
+                    val mealJpaEntity =
+                        MealJpaEntity(
+                            id = null,
+                            mealDate = date,
+                            breakfast = breakfast,
+                            lunch = lunch,
+                            dinner = dinner
+                        )
                     saveMealPort.save(mealJpaEntity)
                 } else {
                     throw InternalError()
@@ -42,6 +42,5 @@ class SaveMealService(
             }
     }
 
-    override fun stickMeal(meals: List<String?>) =
-        meals.filterNotNull().distinct().joinToString("||")
+    override fun stickMeal(meals: List<String?>) = meals.filterNotNull().distinct().joinToString("||")
 }

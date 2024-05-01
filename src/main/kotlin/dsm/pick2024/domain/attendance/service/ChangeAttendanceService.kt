@@ -2,7 +2,7 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.ChangeAttendanceUseCase
-import dsm.pick2024.domain.attendance.port.out.FindByUserIdPort
+import dsm.pick2024.domain.attendance.port.out.FindAttendanceByUserIdPort
 import dsm.pick2024.domain.attendance.port.out.SaveAll
 import dsm.pick2024.domain.attendance.presentation.dto.request.ChangeAttendanceRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ChangeAttendanceService(
     private val saveAll: SaveAll,
-    private val findByUserIdPort: FindByUserIdPort
+    private val findAttendanceByUserIdPort: FindAttendanceByUserIdPort
 ) : ChangeAttendanceUseCase {
     @Transactional
     override fun changeAttendance(request: List<ChangeAttendanceRequest>) {
@@ -21,7 +21,7 @@ class ChangeAttendanceService(
         request.map {
                 it ->
             val attendance =
-                findByUserIdPort.findByUserId(it.userId)
+                findAttendanceByUserIdPort.findByUserId(it.userId)
                     ?: throw UserNotFoundException
             val list = it.statusList
             val add =
