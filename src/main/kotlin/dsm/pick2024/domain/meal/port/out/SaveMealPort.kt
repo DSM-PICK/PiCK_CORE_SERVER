@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.meal.port.out
 
-import dsm.pick2024.domain.meal.entity.MealJpaEntity
+import dsm.pick2024.domain.meal.domain.Meal
 
 interface SaveMealPort {
-    fun save(meal: MealJpaEntity)
+    fun save(meal: Meal)
 }
