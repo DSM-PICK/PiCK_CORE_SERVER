@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
 @RestControllerAdvice
-class GlobalExceptionHandler(
-) {
+class GlobalExceptionHandler() {
 
     @ExceptionHandler(PickException::class)
     fun handlingPickException(e: PickException): ResponseEntity<ErrorResponse> {

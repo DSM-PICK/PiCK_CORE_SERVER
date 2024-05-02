@@ -32,7 +32,7 @@ class SecurityConfig(
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
             .antMatchers("/admin/login", "/user/login").permitAll()
-            .antMatchers( "/bug/**").hasAnyRole(Role.SCH.name, Role.STU.name)
+            .antMatchers("/bug/**").hasAnyRole(Role.SCH.name, Role.STU.name)
             .antMatchers(
                 HttpMethod.POST,
                 "/after/**",
