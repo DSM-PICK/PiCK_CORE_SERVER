@@ -15,8 +15,8 @@ class QueryAdminNameService(
         val admin = adminFacadeUseCase.currentUser()
         return QueryAdminNameResponse(
             name = admin.name,
-            grade = admin.grade!!,
-            classNum = admin.classNum!!
+            grade = admin.grade,
+            classNum = admin.classNum
         )
     }
 }
