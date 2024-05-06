@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.timetable.presentation.dto
+package dsm.pick2024.domain.timetable.presentation.dto.response
 
 import dsm.pick2024.domain.timetable.domain.Timetable
 import java.time.LocalDate
