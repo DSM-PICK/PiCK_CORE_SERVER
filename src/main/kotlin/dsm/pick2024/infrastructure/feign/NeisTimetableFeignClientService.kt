@@ -2,13 +2,14 @@ package dsm.pick2024.infrastructure.feign
 
 import com.google.gson.Gson
 import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
+import dsm.pick2024.domain.timetable.enums.TableType
 import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
 import dsm.pick2024.infrastructure.feign.client.dto.response.NeisFeignClientTimetableResponse
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Component
 class NeisTimetableFeignClientService(
@@ -19,20 +20,22 @@ class NeisTimetableFeignClientService(
     fun getNeisInfoToEntity(): MutableList<TimetableJpaEntity>? {
         val runDay = LocalDate.now()
 
-        val neisTimetableServiceInfoString = neisFeignClient.hisTimetable(
-            key = neisKey,
-            type = NeisFeignClientRequestProperty.TYPE,
-            pageIndex = NeisFeignClientRequestProperty.PAGE_INDEX,
-            pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
-            schoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
-            atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
-            startedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).toString().replace("-", ""),
-            endedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).plusDays(7).toString().replace("-", "")
-        )
-        val timetableJson = Gson().fromJson(
-            neisTimetableServiceInfoString,
-            NeisFeignClientTimetableResponse::class.java
-        )
+        val neisTimetableServiceInfoString =
+            neisFeignClient.hisTimetable(
+                key = neisKey,
+                type = NeisFeignClientRequestProperty.TYPE,
+                pageIndex = NeisFeignClientRequestProperty.PAGE_INDEX,
+                pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
+                schoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
+                atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
+                startedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).toString().replace("-", ""),
+                endedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).plusDays(7).toString().replace("-", "")
+            )
+        val timetableJson =
+            Gson().fromJson(
+                neisTimetableServiceInfoString,
+                NeisFeignClientTimetableResponse::class.java
+            )
         val timetableEntities = mutableListOf<TimetableJpaEntity>()
 
         for (timetable in timetableJson.hisTimetable) {
@@ -51,7 +54,8 @@ class NeisTimetableFeignClientService(
                             classNum = classNum,
                             period = period,
                             subjectName = subjectName,
-                            dayWeek = dayWeek
+                            dayWeek = dayWeek,
+                            tableType = TableType.DEFAULT
                         )
                     )
                 }
@@ -59,6 +63,7 @@ class NeisTimetableFeignClientService(
         }
         return timetableEntities
     }
+
     private fun changeStringToLocalDate(date: String): LocalDate {
         return LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE)
     }
