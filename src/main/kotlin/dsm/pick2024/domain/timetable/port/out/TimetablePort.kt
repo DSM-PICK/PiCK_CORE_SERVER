@@ -2,4 +2,6 @@ package dsm.pick2024.domain.timetable.port.out
 
 interface TimetablePort :
     SaveAllTimetablePort,
-    FindTimetableByDayWeekPort
+    FindTimetableByDayWeekPort,
+    FindTimetableByIdPort,
+    SaveTimetablePort
