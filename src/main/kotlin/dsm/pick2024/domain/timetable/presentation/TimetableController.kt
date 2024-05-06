@@ -1,12 +1,15 @@
 package dsm.pick2024.domain.timetable.presentation
 
+import dsm.pick2024.domain.timetable.port.`in`.ChangeTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryDayTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryWeekTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
+import dsm.pick2024.domain.timetable.presentation.dto.request.ChangeTimetableRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -16,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController
 class TimetableController(
     private val saveTimetableUseCase: SaveTimetableUseCase,
     private val queryDayTimetableUseCase: QueryDayTimetableUseCase,
-    private val queryWeekTimetableUseCase: QueryWeekTimetableUseCase
+    private val queryWeekTimetableUseCase: QueryWeekTimetableUseCase,
+    private val changeTimetableUseCase: ChangeTimetableUseCase
 ) {
     @Operation(summary = "시간표 저장 API")
     @PostMapping
@@ -29,4 +33,10 @@ class TimetableController(
     @Operation(summary = "일주일 시간표 조회")
     @GetMapping("/week")
     fun getWeekTimetable() = queryWeekTimetableUseCase.queryWeekTimetable()
+
+    @Operation(summary = "일주일 시간표 조회")
+    @PostMapping("/change")
+    fun change(
+        @RequestBody request: ChangeTimetableRequest
+    ) = changeTimetableUseCase.change(request)
 }
