@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class TimetableMapper {
-
     fun toEntity(domain: Timetable) =
         domain.run {
             TimetableJpaEntity(
@@ -15,9 +14,11 @@ class TimetableMapper {
                 classNum = classNum,
                 period = period,
                 subjectName = subjectName,
-                dayWeek = dayWeek
+                dayWeek = dayWeek,
+                tableType = tableType
             )
         }
+
     fun toDomain(entity: TimetableJpaEntity) =
         entity.run {
             Timetable(
@@ -26,7 +27,8 @@ class TimetableMapper {
                 classNum = classNum,
                 period = period,
                 subjectName = subjectName,
-                dayWeek = dayWeek
+                dayWeek = dayWeek,
+                tableType = tableType
             )
         }
 }
