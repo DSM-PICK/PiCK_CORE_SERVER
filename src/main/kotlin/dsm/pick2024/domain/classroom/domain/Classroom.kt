@@ -1,8 +1,10 @@
 package dsm.pick2024.domain.classroom.domain
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.global.annotation.Aggregate
 import java.util.UUID
 
+@Aggregate
 data class Classroom(
     val id: UUID? = null,
     val userId: UUID,
