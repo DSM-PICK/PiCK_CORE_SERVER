@@ -1,9 +1,11 @@
 package dsm.pick2024.domain.user.domain
 
 import dsm.pick2024.domain.user.entity.enums.Role
+import dsm.pick2024.global.annotation.Aggregate
 import java.time.LocalDate
 import java.util.UUID
 
+@Aggregate
 data class User(
     val id: UUID,
     val accountId: String,
