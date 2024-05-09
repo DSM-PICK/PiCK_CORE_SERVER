@@ -1,8 +1,10 @@
 package dsm.pick2024.domain.meal.domain
 
+import dsm.pick2024.global.annotation.Aggregate
 import java.time.LocalDate
 import java.util.UUID
 
+@Aggregate
 data class Meal(
     val id: UUID? = null,
     val mealDate: LocalDate,

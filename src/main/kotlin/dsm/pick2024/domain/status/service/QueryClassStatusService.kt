@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.status.service
 
 import dsm.pick2024.domain.admin.persistence.AdminPersistenceAdapter
+import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
+import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.out.QueryClassStatusPort
 import dsm.pick2024.domain.status.presentation.dto.response.QueryClassResponse
@@ -11,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClassStatusService(
     private val queryClassStatusPort: QueryClassStatusPort,
-    private val adminPersistenceAdapter: AdminPersistenceAdapter
+    private val adminPersistenceAdapter: AdminPersistenceAdapter,
+    private val findOKClassroomPort: FindOKClassroomPort,
+    private val existsByUserIdPort: ExistsByUserIdPort
 ) : QueryClassStatusUseCase {
     @Transactional(readOnly = true)
     override fun queryClasStatus(
@@ -23,13 +27,23 @@ class QueryClassStatusService(
         val classStatusList =
             queryClassStatusPort.findByGradeAndClassNum(grade, classNum)
                 .map { classStatus ->
+                    val userId = classStatus.userId
+                    val classroomName =
+                        if (existsByUserIdPort.existsByUserId(userId)) {
+                            val classroom = findOKClassroomPort.findOKClassroom(userId)
+                            classroom!!.classroomName
+                        } else {
+                            ""
+                        }
+
                     QueryClassStatusResponse(
-                        userId = classStatus.userId,
+                        userId = userId,
                         name = classStatus.username,
                         grade = classStatus.grade,
                         classNum = classStatus.classNum,
                         num = classStatus.num,
-                        status = classStatus.status
+                        status = classStatus.status,
+                        classroomName = classroomName
                     )
                 }
 
