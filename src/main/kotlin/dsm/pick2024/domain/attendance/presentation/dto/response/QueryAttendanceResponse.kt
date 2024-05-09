@@ -13,5 +13,6 @@ data class QueryAttendanceResponse(
     val status7: Status,
     val status8: Status,
     val status9: Status,
-    val status10: Status
+    val status10: Status,
+    val classroomName: String
 )
