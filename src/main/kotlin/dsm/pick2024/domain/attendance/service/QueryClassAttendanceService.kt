@@ -20,25 +20,26 @@ class QueryClassAttendanceService(
         .map { it ->
             val userId = it.userId
             val classroomName =
-                if (existsByUserIdPort.existsByUserId(userId)) {
-                    val classroom = findOKClassroomPort.findOKClassroom(userId)
-                    classroom!!.classroomName
-                } else {
-                    ""
-                }
+                existsByUserIdPort.existsByUserId(userId)
+                    .takeIf { it }
+                    ?.let {
+                        findOKClassroomPort.findOKClassroom(userId)?.classroomName
+                    } ?: ""
 
-            QueryAttendanceResponse(
-                id = it.userId,
-                username = it.name,
-                grade = it.grade,
-                classNum = it.classNum,
-                num = it.num,
-                status6 = it.period6,
-                status7 = it.period7,
-                status8 = it.period8,
-                status9 = it.period9,
-                status10 = it.period10,
-                classroomName = classroomName
-            )
+            with(it) {
+                QueryAttendanceResponse(
+                    id = userId,
+                    username = name,
+                    grade = grade,
+                    classNum = classNum,
+                    num = num,
+                    status6 = period6,
+                    status7 = period7,
+                    status8 = period8,
+                    status9 = period9,
+                    status10 = period10,
+                    classroomName = classroomName
+                )
+            }
         }
 }
