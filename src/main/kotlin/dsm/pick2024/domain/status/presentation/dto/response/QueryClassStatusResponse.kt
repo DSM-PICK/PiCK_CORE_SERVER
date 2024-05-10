@@ -14,6 +14,5 @@ data class QueryClassStatusResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val status: StatusType,
-    val classroomName: String
+    val status: StatusType
 )
