@@ -20,7 +20,7 @@ class SaveAllStatusUserService(
             xquareUserInfo.map { user ->
                 Status(
                     userId = user.id,
-                    username = user.name,
+                    userName = user.name,
                     grade = user.grade,
                     classNum = user.classNum,
                     num = user.num,

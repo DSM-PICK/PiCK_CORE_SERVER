@@ -12,7 +12,7 @@ class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy> {
         SelfStudyJpaEntity(
             id = id,
             floor = floor,
-            teacher = teacher,
+            teacherName = teacher,
             date = date
         )
     }
@@ -21,7 +21,7 @@ class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy> {
         SelfStudy(
             id = id,
             floor = floor,
-            teacher = teacher,
+            teacher = teacherName,
             date = date
         )
     }

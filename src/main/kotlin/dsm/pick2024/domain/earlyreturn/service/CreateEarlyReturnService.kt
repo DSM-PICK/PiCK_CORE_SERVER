@@ -29,7 +29,7 @@ class CreateEarlyReturnService(
 
         saveEarlyReturnPort.save(
             EarlyReturn(
-                username = user.name,
+                userName = user.name,
                 reason = request.reason,
                 startTime = request.startTime,
                 status = Status.QUIET,

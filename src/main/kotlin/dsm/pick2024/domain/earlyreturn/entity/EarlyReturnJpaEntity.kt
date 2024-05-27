@@ -23,7 +23,7 @@ class EarlyReturnJpaEntity(
     val startTime: LocalTime,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val username: String,
+    val userName: String,
 
     @Column(name = "teacher_name", nullable = true, columnDefinition = "VARCHAR(10)")
     val teacherName: String? = null,

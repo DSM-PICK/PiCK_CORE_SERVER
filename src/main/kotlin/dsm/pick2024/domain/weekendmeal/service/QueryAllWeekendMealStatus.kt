@@ -17,7 +17,7 @@ class QueryAllWeekendMealStatus(
             weekendMeal.map { meal ->
                 QueryWeekendMealResponse(
                     id = meal.userId,
-                    name = meal.username,
+                    name = meal.userName,
                     status = meal.status,
                     grade = meal.grade,
                     classNum = meal.classNum,

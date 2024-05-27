@@ -55,7 +55,7 @@ class StatusApplicationService(
             val applicationStorySave =
                 ApplicationStory(
                     reason = updatedApplication.reason,
-                    username = updatedApplication.username,
+                    userName = updatedApplication.userName,
                     startTime = updatedApplication.startTime,
                     endTime = updatedApplication.endTime,
                     date = updatedApplication.date,

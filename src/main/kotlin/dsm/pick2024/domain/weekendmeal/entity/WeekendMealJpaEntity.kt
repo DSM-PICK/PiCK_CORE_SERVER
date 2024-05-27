@@ -16,7 +16,7 @@ class WeekendMealJpaEntity(
     val userId: UUID,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val username: String,
+    val userName: String,
 
     @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
     val grade: Int,

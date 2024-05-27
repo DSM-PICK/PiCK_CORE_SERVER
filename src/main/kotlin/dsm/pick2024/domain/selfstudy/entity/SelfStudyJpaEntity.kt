@@ -14,7 +14,7 @@ class SelfStudyJpaEntity(
     val floor: Int,
 
     @Column(name = "teacher_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val teacher: String,
+    val teacherName: String,
 
     @Column(name = "date", nullable = false)
     val date: LocalDate

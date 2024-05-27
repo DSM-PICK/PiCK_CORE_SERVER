@@ -26,7 +26,7 @@ class QueryClassStatusService(
 
                     QueryClassStatusResponse(
                         userId = classStatus.userId,
-                        name = classStatus.username,
+                        name = classStatus.userName,
                         grade = classStatus.grade,
                         classNum = classStatus.classNum,
                         num = classStatus.num,

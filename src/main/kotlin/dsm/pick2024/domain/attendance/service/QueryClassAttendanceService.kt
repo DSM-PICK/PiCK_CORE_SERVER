@@ -33,7 +33,7 @@ class QueryClassAttendanceService(
             with(it) {
                 QueryAttendanceResponse(
                     id = userId,
-                    username = name,
+                    username = userName,
                     grade = grade,
                     classNum = classNum,
                     num = num,

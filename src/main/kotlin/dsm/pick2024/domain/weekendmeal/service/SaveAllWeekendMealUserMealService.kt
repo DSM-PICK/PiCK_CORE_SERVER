@@ -21,7 +21,7 @@ class SaveAllWeekendMealUserMealService(
             xquareWeekendMealUserInfo.map { user ->
                 WeekendMeal(
                     userId = user.id,
-                    username = user.name,
+                    userName = user.name,
                     grade = user.grade,
                     classNum = user.classNum,
                     num = user.num,

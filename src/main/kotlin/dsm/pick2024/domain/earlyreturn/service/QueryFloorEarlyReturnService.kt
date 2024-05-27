@@ -20,7 +20,7 @@ class QueryFloorEarlyReturnService(
             .map { it ->
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

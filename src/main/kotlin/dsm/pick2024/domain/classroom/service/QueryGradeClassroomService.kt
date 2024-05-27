@@ -20,7 +20,7 @@ class QueryGradeClassroomService(
                 it ->
             QueryClassroomResponse(
                 id = it.userId,
-                username = it.username,
+                username = it.userName,
                 classroomName = it.classroomName,
                 move = "${it.grade}-${it.classNum}",
                 grade = it.grade,

@@ -18,6 +18,6 @@ class UserMoveClassroomQueryService(
         val user = userFacadeUseCase.currentUser()
         val move = findOKClassroomPort.findOKClassroom(user.id)!!
 
-        return UserMoveClassroomResponse(move.username, move.classroomName, move.startPeriod, move.endPeriod)
+        return UserMoveClassroomResponse(move.userName, move.classroomName, move.startPeriod, move.endPeriod)
     }
 }

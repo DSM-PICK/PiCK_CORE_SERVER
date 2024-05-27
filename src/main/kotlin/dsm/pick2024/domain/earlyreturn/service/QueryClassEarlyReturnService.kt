@@ -23,7 +23,7 @@ class QueryClassEarlyReturnService(
             .map {
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,
@@ -37,7 +37,7 @@ class QueryClassEarlyReturnService(
             .map { it ->
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

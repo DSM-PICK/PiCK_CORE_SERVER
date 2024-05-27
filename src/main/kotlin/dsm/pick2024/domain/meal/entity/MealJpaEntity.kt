@@ -13,13 +13,13 @@ class MealJpaEntity(
     @Column(nullable = false, columnDefinition = "DATE")
     val mealDate: LocalDate,
 
-    @Column(nullable = true, columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val breakfast: String?,
 
-    @Column(nullable = true, columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val lunch: String?,
 
-    @Column(nullable = true, columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val dinner: String?
 
 ) : BaseUUIDEntity(id)

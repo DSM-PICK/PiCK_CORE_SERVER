@@ -14,7 +14,7 @@ class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
             content = content,
             createAt = createAt,
             adminId = adminId,
-            teacher = teacher,
+            teacherName = teacher,
             grade = grade
         )
     }
@@ -26,7 +26,7 @@ class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
             content = content,
             createAt = createAt,
             adminId = adminId,
-            teacher = teacher,
+            teacher = teacherName,
             grade = grade
         )
     }

@@ -62,7 +62,7 @@ class WeekendMealExcelService(
 
         userList.forEachIndexed { index, user ->
             val bodyRow: Row = sheet.createRow(index + 1)
-            bodyRow.createCell(0).setCellValue(user.username)
+            bodyRow.createCell(0).setCellValue(user.userName)
             bodyRow.createCell(1).setCellValue(user.grade.toDouble())
             bodyRow.createCell(2).setCellValue(user.classNum.toDouble())
             bodyRow.createCell(3).setCellValue(user.num.toDouble())

@@ -10,7 +10,7 @@ data class Classroom(
     val userId: UUID,
     val classroomName: String,
     val floor: Int,
-    val username: String,
+    val userName: String,
     val grade: Int,
     val classNum: Int,
     val num: Int,

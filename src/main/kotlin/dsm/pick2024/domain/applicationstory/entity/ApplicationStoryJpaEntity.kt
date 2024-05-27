@@ -2,7 +2,6 @@ package dsm.pick2024.domain.applicationstory.entity
 
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
-import net.bytebuddy.implementation.bind.annotation.Default
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.UUID
@@ -28,7 +27,7 @@ class ApplicationStoryJpaEntity(
     val endTime: LocalTime? = null,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val username: String,
+    val userName: String,
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "type", nullable = false, columnDefinition = "VARCHAR(20)")

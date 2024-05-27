@@ -15,8 +15,8 @@ class AfterSchoolStudentJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     val userId: UUID,
 
-    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val name: String,
+    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
+    val userName: String,
 
     @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
     val grade: Int,

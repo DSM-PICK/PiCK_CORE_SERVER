@@ -29,7 +29,7 @@ class UserMoveClassroomService(
         classroomSavePort.save(
             Classroom(
                 userId = user.id,
-                username = user.name,
+                userName = user.name,
                 classroomName = request.classroomName,
                 floor = request.floor,
                 grade = user.grade,

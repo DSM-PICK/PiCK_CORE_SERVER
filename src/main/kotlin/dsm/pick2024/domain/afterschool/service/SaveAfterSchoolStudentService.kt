@@ -31,7 +31,7 @@ class SaveAfterSchoolStudentService(
                     grade = grade,
                     classNum = classNum,
                     num = num,
-                    name = user.name,
+                    userName = user.name,
                     status1 = Status.ATTENDANCE,
                     status2 = Status.ATTENDANCE,
                     status3 = Status.ATTENDANCE

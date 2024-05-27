@@ -13,7 +13,7 @@ data class EarlyReturn(
     val reason: String,
     val startTime: LocalTime,
     val date: LocalDate,
-    val username: String,
+    val userName: String,
     val status: Status,
     val grade: Int,
     val classNum: Int,

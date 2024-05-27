@@ -30,7 +30,7 @@ class ApplicationService(
 
         saveApplicationPort.save(
             Application(
-                username = user.name,
+                userName = user.name,
                 reason = request.reason,
                 startTime = request.startTime,
                 endTime = request.endTime,

@@ -15,7 +15,7 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                name = name,
+                userName = userName,
                 status1 = status1,
                 status2 = status2,
                 status3 = status3
@@ -30,7 +30,7 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                name = name,
+                userName = userName,
                 status1 = status1,
                 status2 = status2,
                 status3 = status3

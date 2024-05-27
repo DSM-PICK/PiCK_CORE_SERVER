@@ -26,7 +26,7 @@ class QueryMyApplicationService(
 
         return QueryMyApplicationResponse(
             userId = application.userId,
-            username = application.username,
+            username = application.userName,
             teacherName = application.teacherName!!,
             startTime = application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             endTime = application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),

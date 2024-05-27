@@ -20,7 +20,7 @@ class QueryAllOKEarlyReturnService(
             .map { it ->
                 QueryAllOKEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

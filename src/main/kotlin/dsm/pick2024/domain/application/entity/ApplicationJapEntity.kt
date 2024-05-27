@@ -18,7 +18,7 @@ class ApplicationJapEntity(
     @Column(name = "user_id", columnDefinition = "BINARY(16)")
     val userId: UUID,
 
-    @Column(name = "reason", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "reason", nullable = false)
     val reason: String,
 
     @Column(name = "start_time", nullable = false)
@@ -28,7 +28,7 @@ class ApplicationJapEntity(
     val endTime: LocalTime,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val username: String,
+    val userName: String,
 
     @Column(name = "teacher_name", nullable = true, columnDefinition = "VARCHAR(10)")
     val teacherName: String? = null,
