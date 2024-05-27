@@ -14,7 +14,8 @@ class QueryGradeClassroomService(
     override fun queryGradeClassroom(
         grade: Int,
         classNum: Int
-    ) = queryGradeClassroomPort.queryGradeClassroom(grade, classNum)
+    ) =
+        queryGradeClassroomPort.queryGradeClassroom(grade, classNum)
         .map {
                 it ->
             QueryClassroomResponse(

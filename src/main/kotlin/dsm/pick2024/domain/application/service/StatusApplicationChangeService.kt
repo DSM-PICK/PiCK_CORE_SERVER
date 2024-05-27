@@ -15,7 +15,10 @@ class StatusApplicationChangeService(
 ) : StatusApplicationChangeUseCase {
     @Transactional
     override fun statusApplicationChange(applicationId: UUID) {
-        findApplicationByIdPort.findById(applicationId) ?: throw ApplicationNotFoundException
+
+        findApplicationByIdPort.findById(applicationId)
+            ?: throw ApplicationNotFoundException
+
         deleteApplicationPort.deleteById(applicationId)
     }
 }

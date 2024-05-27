@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse
 class WeekendMealExcelService(
     private val weekendMealPersistenceAdapter: WeekendMealPersistenceAdapter
 ) : WeekendMealExcelUseCase {
+
     @Transactional(readOnly = true)
     override fun execute(response: HttpServletResponse) {
         val workbook: Workbook = XSSFWorkbook()

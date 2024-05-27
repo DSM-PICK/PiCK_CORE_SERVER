@@ -13,6 +13,7 @@ class SaveAllWeekendMealUserMealService(
     private val xquareFeignClient: XquareFeignClient,
     private val weekendMealPersistenceAdapter: WeekendMealPersistenceAdapter
 ) : SaveAllWeekendMealUserUseCase {
+
     @Transactional
     override fun saveAll(key: String) {
         val xquareWeekendMealUserInfo = xquareFeignClient.userAll(key)

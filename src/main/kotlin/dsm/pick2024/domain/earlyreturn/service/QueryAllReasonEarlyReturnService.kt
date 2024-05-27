@@ -14,6 +14,7 @@ class QueryAllReasonEarlyReturnService(
 
     @Transactional(readOnly = true)
     override fun queryAllReasonEarlyReturn() =
+
         queryAllEarlyReturnPort.findAll()
             .filter { it.status == Status.OK }
             .map { it ->

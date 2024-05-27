@@ -19,6 +19,7 @@ class QueryNoticeService(
     private val findByTodayPort: FindByTodayPort
 ) : QueryAllNoticeUseCase {
     override fun queryAllSimpleNotice() =
+
         queryNoticeAllPort.findAll()
             .map { it ->
                 QuerySimpleAllNoticeResponse(
@@ -31,7 +32,9 @@ class QueryNoticeService(
             }
 
     override fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse {
-        val notice = findByNoticeIdPort.findById(noticeId) ?: throw RuntimeException()
+        val notice = findByNoticeIdPort.findById(noticeId)
+            ?: throw RuntimeException() //예외만들기
+
         return QueryAllNoticeResponse(
             title = notice.title,
             content = notice.content,
@@ -42,6 +45,7 @@ class QueryNoticeService(
     }
 
     override fun queryTodayNotice() =
+
         findByTodayPort.findByToday()
             .map { it ->
                 QueryTodayNoticeResponse(

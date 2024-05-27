@@ -15,8 +15,13 @@ class QueryFloorClassroomService(
     override fun queryFloorClassroom(
         floor: Int,
         status: Status
-    ) = queryFloorClassroomPort.queryFloorClassroom(floor)
-        .filter { if (status == Status.QUIET) it.status == Status.QUIET else it.status == Status.OK }
+    ) =
+        queryFloorClassroomPort.queryFloorClassroom(floor)
+        .filter {
+            if (status == Status.QUIET)
+                it.status == Status.QUIET
+            else it.status == Status.OK
+        }
         .map {
             QueryClassroomResponse(
                 id = it.userId,

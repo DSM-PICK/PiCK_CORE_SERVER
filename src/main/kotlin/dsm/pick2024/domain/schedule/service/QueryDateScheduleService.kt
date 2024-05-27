@@ -5,6 +5,7 @@ import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.FindScheduleByDatePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.Locale
@@ -13,8 +14,12 @@ import java.util.Locale
 class QueryDateScheduleService(
     private val findScheduleByDatePort: FindScheduleByDatePort
 ) : QueryDateScheduleUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryDateScheduleUseCase(date: LocalDate): ScheduleResponse? {
-        val schedule = findScheduleByDatePort.findByDate(date) ?: throw ScheduleNotFoundException
+        val schedule = findScheduleByDatePort.findByDate(date)
+            ?: throw ScheduleNotFoundException
+
         return schedule.let {
             ScheduleResponse(
                 id = it.id!!,

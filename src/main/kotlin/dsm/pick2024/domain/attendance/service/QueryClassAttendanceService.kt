@@ -6,6 +6,7 @@ import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceR
 import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassAttendanceService(
@@ -13,10 +14,13 @@ class QueryClassAttendanceService(
     private val findOKClassroomPort: FindOKClassroomPort,
     private val existOKByUserIdPort: ExistOKByUserIdPort
 ) : QueryClassAttendanceUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryClassAttendance(
         grade: Int,
         classNum: Int
-    ) = queryClassAttendancePort.findByGradeAndClassNum(grade, classNum)
+    ) =
+        queryClassAttendancePort.findByGradeAndClassNum(grade, classNum)
         .map { it ->
             val userId = it.userId
             val classroomName =
@@ -24,7 +28,7 @@ class QueryClassAttendanceService(
                     .takeIf { it }
                     ?.let {
                         findOKClassroomPort.findOKClassroom(userId)?.classroomName
-                    } ?: ""
+                    } ?: "" //예외처리 만들기
 
             with(it) {
                 QueryAttendanceResponse(

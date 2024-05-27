@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryUserAllService(
     private val userAllPort: UserAllPort
 ) : QueryUserAllUseCase {
+
     @Transactional(readOnly = true)
     override fun queryUserAll() =
         userAllPort.userAll()

@@ -17,7 +17,8 @@ class QueryClassApplicationService(
     override fun queryClassApplication(
         grade: Int,
         classNum: Int
-    ) = if (grade == 5 && classNum == 5) {
+    ) =
+        if (grade == 5 && classNum == 5) {
         queryAllApplicationByStatusPort.findAllByStatus(Status.QUIET)
             .map {
                 QueryApplicationResponse(

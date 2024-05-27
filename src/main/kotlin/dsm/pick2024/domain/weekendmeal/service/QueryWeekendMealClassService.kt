@@ -13,6 +13,7 @@ class QueryWeekendMealClassService(
     private val findWeekendMealClassPort: FindWeekendMealClassPort,
     private val findWeekendMealQuitClassPort: FindWeekendMealQuitClassPort
 ) : QueryWeekendMealClassUseCase {
+
     override fun queryWeekendMealClass(
         grade: Int,
         classNum: Int

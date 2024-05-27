@@ -24,6 +24,7 @@ class StatusEarlyReturnService(
 ) : StatusEarlyReturnUseCase {
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
+
         val admin = adminFacadeUseCase.currentUser()
 
         val earlyReturnUpdate = mutableListOf<EarlyReturn>()

@@ -7,6 +7,7 @@ import dsm.pick2024.domain.application.presentation.dto.response.QueryStatusAppl
 import dsm.pick2024.domain.classroom.port.out.QueryAllClassroomPort
 import dsm.pick2024.domain.earlyreturn.port.out.QueryAllEarlyReturnPort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryStatusApplicationService(
@@ -14,7 +15,10 @@ class QueryStatusApplicationService(
     private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort,
     private val queryAllClassroomPort: QueryAllClassroomPort
 ) : QueryStatusApplicationUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
+
         val out =
             queryAllApplicationPort.findAll()
                 .count { it.status == Status.OK }

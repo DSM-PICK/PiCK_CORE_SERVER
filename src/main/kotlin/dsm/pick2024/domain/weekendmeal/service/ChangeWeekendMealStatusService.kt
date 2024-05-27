@@ -14,6 +14,7 @@ class ChangeWeekendMealStatusService(
     private val saveWeekendMealPort: SaveWeekendMealPort,
     private val findWeekendMealByIdPort: FindWeekendMealByIdPort
 ) : ChangeWeekendMealStatusUseCase {
+
     @Transactional
     override fun changeWeekendMealStatus(
         id: UUID,

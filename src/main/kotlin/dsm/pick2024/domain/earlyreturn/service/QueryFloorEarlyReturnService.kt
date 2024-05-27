@@ -14,6 +14,7 @@ class QueryFloorEarlyReturnService(
 
     @Transactional(readOnly = true)
     override fun queryFloorApplication(floor: Int) =
+
         queryFloorEarlyReturnPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
             .map { it ->

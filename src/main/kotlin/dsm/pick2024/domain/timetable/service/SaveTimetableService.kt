@@ -11,6 +11,7 @@ class SaveTimetableService(
     private val saveAllTimetablePort: SaveAllTimetablePort,
     private val neisTimetableFeignClientService: NeisTimetableFeignClientService
 ) : SaveTimetableUseCase {
+
     @Transactional
     override fun saveTimetable() {
         val timetableEntities = neisTimetableFeignClientService.getNeisInfoToEntity()
