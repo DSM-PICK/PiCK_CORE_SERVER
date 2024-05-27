@@ -20,7 +20,7 @@ class QuerySelfStudyTeacherService(
                     it ->
                 QuerySelfStudyTeacherResponse(
                     floor = it!!.floor,
-                    teacher = it.teacher,
+                    teacher = it.teacherName,
                     date = it.date
                 )
             }

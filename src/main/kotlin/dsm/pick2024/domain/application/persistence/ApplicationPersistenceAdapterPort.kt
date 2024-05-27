@@ -29,7 +29,7 @@ class ApplicationPersistenceAdapterPort(
         val user = QUserJpaEntity.userJpaEntity
 
         return jpaQueryFactory.selectFrom(application)
-            .innerJoin(user).on(application.username.eq(user.name))
+            .innerJoin(user).on(application.userName.eq(user.name))
             .where(user.id.eq(userId), application.status.eq(Status.OK))
             .fetchFirst() != null
     }

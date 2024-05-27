@@ -98,7 +98,7 @@ class EarlyReturnPersistenceAdapter(
         val user = QUserJpaEntity.userJpaEntity
 
         return jpaQueryFactory.selectFrom(earlyReturn)
-            .innerJoin(user).on(earlyReturn.username.eq(user.name))
+            .innerJoin(user).on(earlyReturn.userName.eq(user.name))
             .where(user.id.eq(userId), earlyReturn.status.eq(Status.OK))
             .fetchFirst() != null
     }

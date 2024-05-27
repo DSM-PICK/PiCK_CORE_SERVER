@@ -96,7 +96,7 @@ class ClassroomPersistenceAdapter(
         val user = QUserJpaEntity.userJpaEntity
 
         return jpaQueryFactory.selectFrom(classroom)
-            .innerJoin(user).on(classroom.username.eq(user.name))
+            .innerJoin(user).on(classroom.userName.eq(user.name))
             .where(user.id.eq(userId), classroom.status.eq(Status.OK))
             .fetchFirst() != null
     }
