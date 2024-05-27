@@ -19,7 +19,6 @@ class SaveAllWeekendMealUserMealService(
         val weekendMealEntities =
             xquareWeekendMealUserInfo.map { user ->
                 WeekendMeal(
-                    id = null,
                     userId = user.id,
                     username = user.name,
                     grade = user.grade,
