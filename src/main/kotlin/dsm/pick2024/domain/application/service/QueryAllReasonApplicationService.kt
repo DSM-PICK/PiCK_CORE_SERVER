@@ -20,7 +20,7 @@ class QueryAllReasonApplicationService(
                 QueryApplicationReasonResponse(
                     it.id!!,
                     it.userId,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.endTime,
                     it.grade,

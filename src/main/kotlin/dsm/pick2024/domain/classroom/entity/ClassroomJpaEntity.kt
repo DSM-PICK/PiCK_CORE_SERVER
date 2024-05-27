@@ -11,21 +11,35 @@ import javax.persistence.Enumerated
 @Entity(name = "tbl_classroom")
 class ClassroomJpaEntity(
     id: UUID?,
-    @Column(columnDefinition = "BINARY(16)")
+
+    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     val userId: UUID,
-    @Column(name = "classroom", nullable = false)
+
+    @Column(name = "classroom", nullable = false, columnDefinition = "VARCHAR(20)")
     val classroomName: String,
-    @Column(name = "floor", nullable = false)
+
+    @Column(name = "floor", nullable = false, columnDefinition = "TINYINT(5)")
     val floor: Int,
-    val username: String,
+
+    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
+    val userName: String,
+
+    @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
     val grade: Int,
-    @Column(name = "class_num")
+
+    @Column(name = "class_num", nullable = false, columnDefinition = "TINYINT(4)")
     val classNum: Int,
+
+    @Column(name = "num", nullable = false, columnDefinition = "TINYINT(20)")
     val num: Int,
-    @Column(name = "start_period")
+
+    @Column(name = "start_period", nullable = false, columnDefinition = "TINYINT(10)")
     val startPeriod: Int,
-    @Column(name = "end_period")
+
+    @Column(name = "end_period", nullable = false, columnDefinition = "TINYINT(10)")
     val endPeriod: Int,
+
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
     val status: Status
 ) : BaseUUIDEntity(id)

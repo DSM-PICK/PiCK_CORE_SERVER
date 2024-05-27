@@ -10,16 +10,16 @@ import javax.persistence.Entity
 class MealJpaEntity(
     id: UUID?,
 
-    @Column(columnDefinition = "DATE", nullable = false)
+    @Column(nullable = false, columnDefinition = "DATE")
     val mealDate: LocalDate,
 
-    @Column(columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val breakfast: String?,
 
-    @Column(columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val lunch: String?,
 
-    @Column(columnDefinition = "VARCHAR(255)")
+    @Column(nullable = true, columnDefinition = "TEXT")
     val dinner: String?
 
 ) : BaseUUIDEntity(id)

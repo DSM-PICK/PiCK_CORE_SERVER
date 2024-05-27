@@ -11,7 +11,7 @@ data class AfterSchoolStudent(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val name: String,
+    val userName: String,
     val status1: Status,
     val status2: Status,
     val status3: Status

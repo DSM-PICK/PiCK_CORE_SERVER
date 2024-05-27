@@ -12,6 +12,7 @@ import java.time.Year
 class QueryMonthSelfStudyTeacherService(
     private val findByMonthSelfStudyTeacherPort: FindByMonthSelfStudyTeacherPort
 ) : QueryMonthSelfStudyTeacherUseCase {
+
     @Transactional(readOnly = true)
     override fun queryMonthSelfStudyTeacher(
         year: Year,

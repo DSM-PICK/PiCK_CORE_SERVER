@@ -15,6 +15,7 @@ class QueryWeekTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findTimetableByDayWeekPort: FindTimetableByDayWeekPort
 ) : QueryWeekTimetableUseCase {
+
     @Transactional(readOnly = true)
     override fun queryWeekTimetable(): List<DayTimetableResponse> {
         val user = userFacadeUseCase.currentUser()

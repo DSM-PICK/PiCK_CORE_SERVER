@@ -19,17 +19,17 @@ class ApplicationService(
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationUseCase {
+
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
-
         if (existApplicationByUseridPort.existsByUserId(user.id)) {
             throw AlreadyApplyingForPicnicException
         }
 
         saveApplicationPort.save(
             Application(
-                username = user.name,
+                userName = user.name,
                 reason = request.reason,
                 startTime = request.startTime,
                 endTime = request.endTime,

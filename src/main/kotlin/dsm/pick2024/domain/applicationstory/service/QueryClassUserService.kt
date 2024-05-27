@@ -6,12 +6,15 @@ import dsm.pick2024.domain.applicationstory.port.out.FindStoryByUserIdPort
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryUserClassResponse
 import dsm.pick2024.domain.status.service.QueryClassStatusService
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassUserService(
     private val findStoryByUserIdPort: FindStoryByUserIdPort,
     private val queryClassStatusService: QueryClassStatusService
 ) : QueryClassUserUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryClassUser(
         grade: Int,
         classNum: Int

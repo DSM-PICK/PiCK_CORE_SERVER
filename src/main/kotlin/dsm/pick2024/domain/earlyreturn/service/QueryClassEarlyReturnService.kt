@@ -13,6 +13,7 @@ class QueryClassEarlyReturnService(
     private val queryClassEarlyReturnPort: QueryClassEarlyReturnPort,
     private val queryAllEarlyReturnByStatusPort: QueryAllEarlyReturnByStatusPort
 ) : QueryClassEarlyReturnUseCase {
+
     @Transactional(readOnly = true)
     override fun queryClassApplication(
         grade: Int,
@@ -22,7 +23,7 @@ class QueryClassEarlyReturnService(
             .map {
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,
@@ -36,7 +37,7 @@ class QueryClassEarlyReturnService(
             .map { it ->
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

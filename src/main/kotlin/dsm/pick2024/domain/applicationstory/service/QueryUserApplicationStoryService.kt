@@ -29,6 +29,6 @@ class QueryUserApplicationStoryService(
                 }
             }
 
-        return (user.firstOrNull()?.username ?: null)?.let { QueryApplicationStoryResponse(it, userStory) }
+        return (user.firstOrNull()?.userName)?.let { QueryApplicationStoryResponse(it, userStory) }
     }
 }

@@ -11,7 +11,7 @@ class StatusMapper {
             StatusJpaEntity(
                 id = id,
                 userId = userId,
-                username = username,
+                userName = userName,
                 grade = grade,
                 classNum = classNum,
                 num = num,
@@ -24,7 +24,7 @@ class StatusMapper {
             Status(
                 id = id,
                 userId = userId,
-                username = username,
+                userName = userName,
                 grade = grade,
                 classNum = classNum,
                 num = num,

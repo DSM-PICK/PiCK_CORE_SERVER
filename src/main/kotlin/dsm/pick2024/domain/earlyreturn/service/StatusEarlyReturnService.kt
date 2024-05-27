@@ -52,7 +52,7 @@ class StatusEarlyReturnService(
             val applicationStorySave =
                 ApplicationStory(
                     reason = earlyReturn.reason,
-                    username = earlyReturn.username,
+                    userName = earlyReturn.userName,
                     startTime = earlyReturn.startTime,
                     date = earlyReturn.date,
                     type = Type.EARLY_RETURN,

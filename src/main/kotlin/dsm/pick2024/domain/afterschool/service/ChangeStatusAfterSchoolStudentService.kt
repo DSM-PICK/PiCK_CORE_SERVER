@@ -14,6 +14,7 @@ class ChangeStatusAfterSchoolStudentService(
     private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
     private val findAfterSchoolStudentByUserIdPort: FindAfterSchoolStudentByUserIdPort
 ) : ChangeStatusAfterSchoolStudentUseCase {
+
     @Transactional
     override fun changeStatusAfterSchoolStudent(request: List<ChangeAfterSchoolStatusRequest>) {
         val update = mutableListOf<AfterSchoolStudent>()

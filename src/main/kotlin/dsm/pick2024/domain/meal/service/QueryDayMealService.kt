@@ -17,7 +17,7 @@ class QueryDayMealService(
     override fun queryDayMeal(date: LocalDate): MealDetailsResponse? {
         val meals = findMealsByMealDatePort.findMealsByMealDate(date)
 
-        return meals?.let { mealList ->
+        return meals.let { mealList ->
             val mealResponse = MealResponse(
                 breakfast = mealList.flatMap { it.toSplit(it.breakfast) },
                 lunch = mealList.flatMap { it.toSplit(it.lunch) },

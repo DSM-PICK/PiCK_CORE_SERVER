@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 class QueryAllWeekendMealStatus(
     private val findAllWeekendMealStatusPort: FindAllWeekendMealStatusPort
 ) : QueryAllWeekendMealStatusUseCase {
+
     override fun findAll(): List<QueryWeekendMealResponse> {
         val weekendMeal = findAllWeekendMealStatusPort.findAll()
 
@@ -16,7 +17,7 @@ class QueryAllWeekendMealStatus(
             weekendMeal.map { meal ->
                 QueryWeekendMealResponse(
                     id = meal.userId,
-                    name = meal.username,
+                    name = meal.userName,
                     status = meal.status,
                     grade = meal.grade,
                     classNum = meal.classNum,

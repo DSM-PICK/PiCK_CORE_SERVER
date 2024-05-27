@@ -16,9 +16,12 @@ class SelfStudyTeacherService(
     private val findByDatePort: FindByDatePort,
     private val deleteByDatePort: DeleteByDatePort
 ) : SelfStudyTeacherUseCase {
+
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val selfStudy = findByDatePort.findByDateList(request.date)
+
         if (selfStudy.isNotEmpty()) deleteByDatePort.deleteByDate(request.date)
+
         val teacherList =
             request.teacher
                 .filter { it.teacher.isNotBlank() }

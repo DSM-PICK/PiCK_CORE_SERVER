@@ -15,6 +15,7 @@ class QueryMyEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val queryOKMyApplicationPort: QueryOKMyApplicationPort
 ) : QueryMyEarlyReturnUseCase {
+
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
         val user = userFacadeUseCase.currentUser()
@@ -23,7 +24,7 @@ class QueryMyEarlyReturnService(
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
-            username = earlyReturn.username,
+            username = earlyReturn.userName,
             teacherName = earlyReturn.teacherName!!,
             startTime = earlyReturn.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
             reason = earlyReturn.reason,

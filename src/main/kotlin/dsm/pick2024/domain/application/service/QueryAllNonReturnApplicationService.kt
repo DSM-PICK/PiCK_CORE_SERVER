@@ -18,7 +18,7 @@ class QueryAllNonReturnApplicationService(
             .map { it ->
                 QueryOKApplicationResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.endTime,
                     it.grade,
                     it.classNum,

@@ -13,7 +13,7 @@ data class ApplicationStory(
     val userId: UUID,
     val startTime: LocalTime,
     val endTime: LocalTime? = null,
-    val username: String,
+    val userName: String,
     val date: LocalDate,
     val type: Type
 )

@@ -14,6 +14,7 @@ class QueryTodaySelfStudyTeacherService(
 
     @Transactional(readOnly = true)
     override fun queryTodaySelfStudyTeacher(date: LocalDate) =
+
         findByDaySelfStudyTeacherPort.findByDaySelfStudy(date).map {
                 it ->
             QueryTodaySelfStudyTeacherResponse(it.floor, it.teacher)

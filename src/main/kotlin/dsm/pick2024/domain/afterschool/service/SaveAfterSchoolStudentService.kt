@@ -15,19 +15,22 @@ class SaveAfterSchoolStudentService(
     private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
     private val findByStudentNumPort: FindByStudentNumPort
 ) : SaveAfterSchoolStudentUseCase {
+
     @Transactional
     override fun saveAfterSchoolStudent(request: List<SaveAfterSchoolStudentRequest>) {
         val afterSchoolStudent =
             request.map { requests ->
                 val (grade, classNum, num) = parseSchoolNum(requests.studentNum)
-                val user = findByStudentNumPort.findByStudentNum(grade, classNum, num) ?: throw UserNotFoundException
+                val user = findByStudentNumPort.findByStudentNum(grade, classNum, num)
+                    ?: throw UserNotFoundException
+
                 AfterSchoolStudent(
                     id = null,
                     userId = user.id,
                     grade = grade,
                     classNum = classNum,
                     num = num,
-                    name = user.name,
+                    userName = user.name,
                     status1 = Status.ATTENDANCE,
                     status2 = Status.ATTENDANCE,
                     status3 = Status.ATTENDANCE

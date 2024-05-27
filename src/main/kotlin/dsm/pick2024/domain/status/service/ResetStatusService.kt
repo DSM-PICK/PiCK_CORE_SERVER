@@ -6,12 +6,15 @@ import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.status.port.out.FindAllStatusPort
 import dsm.pick2024.domain.status.port.out.SaveAllStatusPort
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetStatusService(
     private val findAllStatusPort: FindAllStatusPort,
     private val saveAllStatusPort: SaveAllStatusPort
 ) : ResetStatusUseCase {
+
+    @Transactional(readOnly = true)
     override fun reset() {
         val allStudent = findAllStatusPort.findAll()
         val update = mutableListOf<Status>()
