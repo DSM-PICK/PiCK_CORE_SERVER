@@ -17,6 +17,6 @@ class QueryTodaySelfStudyTeacherService(
 
         findByDaySelfStudyTeacherPort.findByDaySelfStudy(date).map {
                 it ->
-            QueryTodaySelfStudyTeacherResponse(it.floor, it.teacher)
+            QueryTodaySelfStudyTeacherResponse(it.floor, it.teacherName)
         }
 }

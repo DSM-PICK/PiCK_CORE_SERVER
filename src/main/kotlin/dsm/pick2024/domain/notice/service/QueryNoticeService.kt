@@ -26,7 +26,7 @@ class QueryNoticeService(
                     it.id!!,
                     it.title,
                     it.createAt,
-                    it.teacher,
+                    it.teacherName,
                     it.grade.split(",").map { grade -> grade.toInt() }
                 )
             }
@@ -39,7 +39,7 @@ class QueryNoticeService(
             title = notice.title,
             content = notice.content,
             createAt = notice.createAt,
-            teacher = notice.teacher,
+            teacher = notice.teacherName,
             grade = notice.grade.split(",").map { grade -> grade.toInt() }
         )
     }
@@ -52,7 +52,7 @@ class QueryNoticeService(
                     it.id!!,
                     it.title,
                     it.createAt,
-                    it.teacher
+                    it.teacherName
                 )
             }
 }

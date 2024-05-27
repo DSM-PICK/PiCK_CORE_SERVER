@@ -23,7 +23,7 @@ class CreateNoticeService(
         noticeSavePort.save(
             Notice(
                 adminId = admin.id!!,
-                teacher = admin.name,
+                teacherName = admin.name,
                 createAt = LocalDate.now(ZoneId.of("Asia/Seoul")),
                 title = request.title,
                 content = request.content,
