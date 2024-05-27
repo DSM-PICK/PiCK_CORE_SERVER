@@ -18,7 +18,6 @@ class QueryMyEarlyReturnService(
 
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
-
         val user = userFacadeUseCase.currentUser()
         val earlyReturn =
             queryOKMyApplicationPort.findOKApplication(user.id)

@@ -20,7 +20,6 @@ class UserMoveClassroomService(
 
     @Transactional
     override fun moveClassroom(request: UserMoveClassroomRequest) {
-
         val user = userFacadeUseCase.currentUser()
 
         if (existsByUserIdPort.existsByUserId(user.id)) {

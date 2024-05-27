@@ -19,7 +19,6 @@ class QueryClassUserService(
         grade: Int,
         classNum: Int
     ): List<QueryUserClassResponse> {
-
         val students = queryClassStatusService.queryClasStatus(grade, classNum).students
 
         return students.map { student ->

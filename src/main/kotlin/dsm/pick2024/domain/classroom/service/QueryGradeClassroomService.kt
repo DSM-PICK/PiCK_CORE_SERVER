@@ -16,18 +16,18 @@ class QueryGradeClassroomService(
         classNum: Int
     ) =
         queryGradeClassroomPort.queryGradeClassroom(grade, classNum)
-        .map {
-                it ->
-            QueryClassroomResponse(
-                id = it.userId,
-                username = it.userName,
-                classroomName = it.classroomName,
-                move = "${it.grade}-${it.classNum}",
-                grade = it.grade,
-                classNum = it.classNum,
-                num = it.num,
-                startPeriod = it.startPeriod,
-                endPeriod = it.endPeriod
-            )
-        }
+            .map {
+                    it ->
+                QueryClassroomResponse(
+                    id = it.userId,
+                    username = it.userName,
+                    classroomName = it.classroomName,
+                    move = "${it.grade}-${it.classNum}",
+                    grade = it.grade,
+                    classNum = it.classNum,
+                    num = it.num,
+                    startPeriod = it.startPeriod,
+                    endPeriod = it.endPeriod
+                )
+            }
 }

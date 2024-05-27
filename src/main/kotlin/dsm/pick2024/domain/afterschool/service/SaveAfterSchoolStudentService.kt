@@ -18,7 +18,6 @@ class SaveAfterSchoolStudentService(
 
     @Transactional
     override fun saveAfterSchoolStudent(request: List<SaveAfterSchoolStudentRequest>) {
-
         val afterSchoolStudent =
             request.map { requests ->
                 val (grade, classNum, num) = parseSchoolNum(requests.studentNum)

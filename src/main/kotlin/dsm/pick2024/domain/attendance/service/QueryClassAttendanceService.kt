@@ -21,29 +21,29 @@ class QueryClassAttendanceService(
         classNum: Int
     ) =
         queryClassAttendancePort.findByGradeAndClassNum(grade, classNum)
-        .map { it ->
-            val userId = it.userId
-            val classroomName =
-                existOKByUserIdPort.existOKByUserId(userId)
-                    .takeIf { it }
-                    ?.let {
-                        findOKClassroomPort.findOKClassroom(userId)?.classroomName
-                    } ?: "" //예외처리 만들기
+            .map { it ->
+                val userId = it.userId
+                val classroomName =
+                    existOKByUserIdPort.existOKByUserId(userId)
+                        .takeIf { it }
+                        ?.let {
+                            findOKClassroomPort.findOKClassroom(userId)?.classroomName
+                        } ?: "" //예외처리 만들기
 
-            with(it) {
-                QueryAttendanceResponse(
-                    id = userId,
-                    username = userName,
-                    grade = grade,
-                    classNum = classNum,
-                    num = num,
-                    status6 = period6,
-                    status7 = period7,
-                    status8 = period8,
-                    status9 = period9,
-                    status10 = period10,
-                    classroomName = classroomName
-                )
+                with(it) {
+                    QueryAttendanceResponse(
+                        id = userId,
+                        username = userName,
+                        grade = grade,
+                        classNum = classNum,
+                        num = num,
+                        status6 = period6,
+                        status7 = period7,
+                        status8 = period8,
+                        status9 = period9,
+                        status10 = period10,
+                        classroomName = classroomName
+                    )
+                }
             }
-        }
 }

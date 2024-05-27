@@ -8,11 +8,10 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
-import javax.persistence.Id
 
 @Entity(name = "tbl_user")
 class UserJpaEntity(
-     id: UUID,
+    id: UUID,
 
     @Column(name = "account_id", nullable = false, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
@@ -41,4 +40,4 @@ class UserJpaEntity(
     @Column(name = "role", nullable = false)
     @Enumerated(value = EnumType.STRING)
     val role: Role
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

@@ -18,7 +18,6 @@ class QueryStatusApplicationService(
 
     @Transactional(readOnly = true)
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
-
         val out =
             queryAllApplicationPort.findAll()
                 .count { it.status == Status.OK }

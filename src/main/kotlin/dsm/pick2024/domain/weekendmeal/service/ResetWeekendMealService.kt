@@ -16,7 +16,6 @@ class ResetWeekendMealService(
 
     @Transactional
     override fun resetWeekendMeal() {
-
         val allWeekendMeal = findAllWeekendMealStatusPort.findAll()
         val update = mutableListOf<WeekendMeal>()
 

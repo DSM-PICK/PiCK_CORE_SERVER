@@ -17,7 +17,6 @@ class AddBugService(
 
     @Async
     fun bugAlarm(request: BugRequest) {
-
         val message =
             DiscordMessageRequest(
                 content = "# 🚨 버그 제보",

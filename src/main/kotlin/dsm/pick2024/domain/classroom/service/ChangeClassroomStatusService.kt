@@ -14,7 +14,6 @@ import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.SaveAllClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -29,7 +28,6 @@ class ChangeClassroomStatusService(
 
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
-
         if (request.status == NO) {
             for (id in request.ids) {
                 val classroom = findByUserIdPort.findByUserId(id) ?: throw ClassroomNorFoundException
@@ -70,6 +68,9 @@ class ChangeClassroomStatusService(
         status: Status,
         period: Int
     ) =
-    if (period in classroom.startPeriod..classroom.endPeriod)
-        Status.MOVEMENT else status
+        if (period in classroom.startPeriod..classroom.endPeriod) {
+            Status.MOVEMENT
+        } else {
+            status
+        }
 }

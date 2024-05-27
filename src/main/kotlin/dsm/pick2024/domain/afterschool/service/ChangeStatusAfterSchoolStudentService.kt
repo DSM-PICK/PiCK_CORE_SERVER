@@ -17,7 +17,6 @@ class ChangeStatusAfterSchoolStudentService(
 
     @Transactional
     override fun changeStatusAfterSchoolStudent(request: List<ChangeAfterSchoolStatusRequest>) {
-
         val update = mutableListOf<AfterSchoolStudent>()
 
         request.map { changeRequest ->

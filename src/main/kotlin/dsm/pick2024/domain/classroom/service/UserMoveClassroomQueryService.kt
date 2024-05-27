@@ -14,7 +14,6 @@ class UserMoveClassroomQueryService(
 ) : QueryUserMoveClassroomUseCase {
     @Transactional(readOnly = true)
     override fun queryUserMoveClassroom(): UserMoveClassroomResponse {
-
         val user = userFacadeUseCase.currentUser()
         val move = findOKClassroomPort.findOKClassroom(user.id)!!
 
