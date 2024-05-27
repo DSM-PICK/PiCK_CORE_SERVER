@@ -18,7 +18,7 @@ class AdminJpaEntity(
     @Column(name = "password", nullable = false, columnDefinition = "CHAR(60)")
     val password: String,
 
-    @Column(name = "admin_id", nullable = false)
+    @Column(name = "admin_id", nullable = false, columnDefinition = "VARCHAR(30)")
     val adminId: String,
 
     @Column(name = "grade", columnDefinition = "TINYINT(3)")
