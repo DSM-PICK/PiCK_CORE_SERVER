@@ -20,8 +20,8 @@ class QueryClassUserService(
 
         return students.map { student ->
             val applicationStory = findStoryByUserIdPort.findAllByUserId(student.userId)
-            val applicationCnt = applicationStory?.count { it!!.type == Type.APPLICATION } ?: 0
-            val earlyReturnCnt = applicationStory?.count { it!!.type == Type.EARLY_RETURN } ?: 0
+            val applicationCnt = applicationStory.count { it!!.type == Type.APPLICATION } ?: 0
+            val earlyReturnCnt = applicationStory.count { it!!.type == Type.EARLY_RETURN } ?: 0
 
             QueryUserClassResponse(
                 id = student.userId,
