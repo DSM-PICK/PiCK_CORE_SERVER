@@ -10,17 +10,22 @@ import javax.persistence.Entity
 class NoticeJpaEntity(
     id: UUID?,
 
+    @Column(name = "title", nullable = false, columnDefinition = "TEXT")
     val title: String,
 
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     val content: String,
 
+    @Column(name = "create_at", nullable = false)
     val createAt: LocalDate,
 
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(name = "admin_id", nullable = false, columnDefinition = "BINARY(16)")
     val adminId: UUID,
 
-    val teacher: String,
+    @Column(name = "teacher_name", nullable = false, columnDefinition = "VARCHAR(10)")
+    val teacherName: String,
 
+    @Column(name = "grade", nullable = false)
     val grade: String
 
 ) : BaseUUIDEntity(id)

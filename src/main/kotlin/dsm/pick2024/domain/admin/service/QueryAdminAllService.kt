@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service
 class QueryAdminAllService(
     private val findAllPort: FindAllPort
 ) : QueryAdminAllUseCase {
-    override fun queryAdminAll(): List<String> = findAllPort.findAll().map { it.name }
+    override fun queryAdminAll(): List<String> =
+        findAllPort.findAll().map { it.name }
 }

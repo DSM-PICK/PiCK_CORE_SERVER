@@ -14,6 +14,7 @@ class ChangeAttendanceService(
     private val saveAll: SaveAll,
     private val findAttendanceByUserIdPort: FindAttendanceByUserIdPort
 ) : ChangeAttendanceUseCase {
+
     @Transactional
     override fun changeAttendance(request: List<ChangeAttendanceRequest>) {
         val update = mutableListOf<Attendance>()

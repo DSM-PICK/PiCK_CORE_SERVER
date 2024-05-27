@@ -11,15 +11,17 @@ import org.springframework.transaction.annotation.Transactional
 class QueryFloorApplicationService(
     private val queryFloorApplicationPort: QueryFloorApplicationPort
 ) : QueryFloorApplicationUseCase {
+
     @Transactional(readOnly = true)
     override fun queryFloorApplication(floor: Int) =
+
         queryFloorApplicationPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
             .map { it ->
                 QueryApplicationResponse(
                     it.id!!,
                     it.userId,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.endTime,
                     it.grade,

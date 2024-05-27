@@ -6,12 +6,15 @@ import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.FindAllAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAll
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetAttendanceService(
     private val findAllAttendancePort: FindAllAttendancePort,
     private val saveAll: SaveAll
 ) : ResetAttendanceUseCase {
+
+    @Transactional
     override fun reset() {
         val allStudent = findAllAttendancePort.findAll()
         val update = mutableListOf<Attendance>()

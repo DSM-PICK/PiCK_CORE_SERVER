@@ -19,6 +19,7 @@ class CreateNoticeService(
     @Transactional
     override fun createNotice(request: NoticeRequest) {
         val admin = adminFacadeUseCase.currentUser()
+
         noticeSavePort.save(
             Notice(
                 adminId = admin.id!!,

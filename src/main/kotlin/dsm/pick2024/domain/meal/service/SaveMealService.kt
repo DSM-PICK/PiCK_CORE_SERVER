@@ -41,5 +41,6 @@ class SaveMealService(
             }
     }
 
-    override fun stickMeal(meals: List<String?>) = meals.filterNotNull().distinct().joinToString("||")
+    override fun stickMeal(meals: List<String?>) =
+        meals.filterNotNull().distinct().joinToString("||")
 }

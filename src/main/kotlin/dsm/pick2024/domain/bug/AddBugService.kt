@@ -14,6 +14,7 @@ class AddBugService(
     private val fileUtil: FileUtil,
     private val discordBugClient: DiscordBugClient
 ) {
+
     @Async
     fun bugAlarm(request: BugRequest) {
         val message =

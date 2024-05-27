@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryAfterSchoolStudentAllService(
     private val queryAfterSchoolStudentAllPort: QueryAfterSchoolStudentAllPort
 ) : QueryAfterSchoolStudentAllUseCase {
+
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =
         queryAfterSchoolStudentAllPort.findAll()
@@ -20,7 +21,7 @@ class QueryAfterSchoolStudentAllService(
                     it.grade,
                     it.classNum,
                     it.num,
-                    it.name,
+                    it.userName,
                     it.status1,
                     it.status2,
                     it.status3

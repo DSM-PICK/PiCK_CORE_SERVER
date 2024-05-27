@@ -32,6 +32,7 @@ class WeekendMealController(
     private val saveAllWeekendMealUserUseCase: SaveAllWeekendMealUserUseCase,
     private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus
 ) {
+
     @Operation(summary = "주말급식 강제 상태변경")
     @PatchMapping("/status")
     fun changeWeekendMealStatus(

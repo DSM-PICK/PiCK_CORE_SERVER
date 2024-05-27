@@ -15,7 +15,7 @@ class WeekendMealMapper {
                 classNum = classNum,
                 num = num,
                 status = status,
-                username = username
+                userName = userName
             )
         }
 
@@ -28,7 +28,7 @@ class WeekendMealMapper {
                 classNum = classNum,
                 num = num,
                 status = status,
-                username = username
+                userName = userName
             )
         }
 }

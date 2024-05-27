@@ -14,12 +14,13 @@ class QueryFloorEarlyReturnService(
 
     @Transactional(readOnly = true)
     override fun queryFloorApplication(floor: Int) =
+
         queryFloorEarlyReturnPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
             .map { it ->
                 QueryEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

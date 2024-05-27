@@ -8,6 +8,6 @@ import java.util.UUID
 data class SelfStudy(
     val id: UUID? = null,
     val floor: Int,
-    var teacher: String,
+    val teacherName: String,
     val date: LocalDate
 )

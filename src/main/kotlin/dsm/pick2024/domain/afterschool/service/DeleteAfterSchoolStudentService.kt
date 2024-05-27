@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class DeleteAfterSchoolStudentService(
     private val deleteAfterSchoolStudentPort: AfterSchoolStudentPortUser
 ) : DeleteAfterSchoolStudentUseCase {
+
     @Transactional
     override fun deleteAfterSchoolStudent(request: DeleteRequest) =
         deleteAfterSchoolStudentPort.deleteById(request.id)

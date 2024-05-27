@@ -42,7 +42,7 @@ class MainService(
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                username = username,
+                username = userName,
                 endTime = endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
                 type = Main.APPLICATION
             )
@@ -54,7 +54,7 @@ class MainService(
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-                username = username,
+                username = userName,
                 type = Main.EARLYRETURN
             )
         }!!
@@ -63,7 +63,7 @@ class MainService(
     private fun findClassroom(userId: UUID): QueryMainUserMoveClassroomResponse {
         return findByUserIdPort.findByUserId(userId)?.run {
             QueryMainUserMoveClassroomResponse(
-                username = username,
+                username = userName,
                 classroom = classroomName,
                 startPeriod = startPeriod,
                 endPeriod = endPeriod,

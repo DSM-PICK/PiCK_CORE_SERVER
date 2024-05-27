@@ -33,6 +33,7 @@ class AdminLoginService(
             if (Role.SCH != xquareUser.userRole) {
                 throw NotAdminException
             }
+
             adminSavePort.save(
                 Admin(
                     adminId = xquareUser.accountId,
@@ -43,6 +44,7 @@ class AdminLoginService(
                     classNum = xquareUser.classNum
                 )
             )
+
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.SCH.toString())
         } else {
             val admin = findByAdminIdPort.findByAdminId(adminLoginRequest.adminId)

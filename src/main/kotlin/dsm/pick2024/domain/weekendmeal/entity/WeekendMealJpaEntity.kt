@@ -11,12 +11,23 @@ import javax.persistence.Enumerated
 @Entity(name = "tbl_weekend_meal")
 class WeekendMealJpaEntity(
     id: UUID?,
-    @Column(columnDefinition = "BINARY(16)")
+
+    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     val userId: UUID,
-    val username: String,
+
+    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
+    val userName: String,
+
+    @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
     val grade: Int,
+
+    @Column(name = "class_num", nullable = false, columnDefinition = "TINYINT(4)")
     val classNum: Int,
+
+    @Column(name = "num", nullable = false, columnDefinition = "TINYINT(20)")
     val num: Int,
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     val status: Status
 ) : BaseUUIDEntity(id)

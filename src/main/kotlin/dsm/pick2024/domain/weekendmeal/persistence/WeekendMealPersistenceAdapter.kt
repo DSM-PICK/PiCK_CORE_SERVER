@@ -3,7 +3,6 @@ package dsm.pick2024.domain.weekendmeal.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.entity.QWeekendMealJpaEntity
-import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealMapper
 import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealRepository
@@ -21,8 +20,10 @@ class WeekendMealPersistenceAdapter(
         weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
     }
 
-    override fun saveAll(weekendMeals: MutableList<WeekendMealJpaEntity>) {
-        weekendMealRepository.saveAll(weekendMeals)
+    override fun saveAll(weekendMeals: MutableList<WeekendMeal>) {
+        val entities = weekendMeals.map { weekendMealMapper.toEntity(it) }
+
+        weekendMealRepository.saveAll(entities)
     }
 
     override fun findByUserId(id: UUID) = weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }

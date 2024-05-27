@@ -11,14 +11,16 @@ import org.springframework.transaction.annotation.Transactional
 class QueryAllOKEarlyReturnService(
     private val queryAllEarlyReturnPort: QueryAllEarlyReturnPort
 ) : QueryAllOKEarlyReturnUseCase {
+
     @Transactional(readOnly = true)
     override fun queryAllOKEarlyReturn() =
+
         queryAllEarlyReturnPort.findAll()
             .filter { it.status == Status.OK }
             .map { it ->
                 QueryAllOKEarlyReturnResponse(
                     it.id!!,
-                    it.username,
+                    it.userName,
                     it.startTime,
                     it.grade,
                     it.classNum,

@@ -29,7 +29,11 @@ class UserLoginService(
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
-            val xquareUser = xquareFeignClient.xquareUser(userLoginRequest.accountId, userLoginRequest.password)
+            val xquareUser = xquareFeignClient.xquareUser(
+                userLoginRequest.accountId,
+                userLoginRequest.password
+            )
+
             userSavePort.save(
                 User(
                     id = xquareUser.id,
@@ -43,6 +47,7 @@ class UserLoginService(
                     role = xquareUser.userRole
                 )
             )
+
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.STU.toString())
         } else {
             val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)

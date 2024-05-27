@@ -13,7 +13,7 @@ class ApplicationStoryMapper {
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
-                username = username,
+                userName = userName,
                 date = date,
                 type = type,
                 userId = userId
@@ -27,7 +27,7 @@ class ApplicationStoryMapper {
                 reason = reason,
                 startTime = startTime,
                 endTime = endTime,
-                username = username,
+                userName = userName,
                 date = date,
                 type = type,
                 userId = userId

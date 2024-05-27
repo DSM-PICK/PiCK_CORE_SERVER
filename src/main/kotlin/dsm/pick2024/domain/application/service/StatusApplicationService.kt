@@ -24,6 +24,7 @@ class StatusApplicationService(
     private val applicationStorySaveAllPort: ApplicationStorySavePort,
     private val deleteApplicationPort: DeleteApplicationPort
 ) : StatusApplicationUseCase {
+
     @Transactional
     override fun statusApplication(request: ApplicationStatusRequest?) {
         val admin = adminFacadeUseCase.currentUser()
@@ -53,7 +54,7 @@ class StatusApplicationService(
             val applicationStorySave =
                 ApplicationStory(
                     reason = updatedApplication.reason,
-                    username = updatedApplication.username,
+                    userName = updatedApplication.userName,
                     startTime = updatedApplication.startTime,
                     endTime = updatedApplication.endTime,
                     date = updatedApplication.date,

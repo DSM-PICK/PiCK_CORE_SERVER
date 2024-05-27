@@ -7,6 +7,7 @@ import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAttendanceService(
@@ -14,6 +15,8 @@ class QueryClubAttendanceService(
     private val findOKClassroomPort: FindOKClassroomPort,
     private val existsByUserIdPort: ExistsByUserIdPort
 ) : QueryClubAttendanceUseCase {
+
+    @Transactional(readOnly = true)
     override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
         val students = queryClubAttendancePort.findByClub(club)
 
@@ -22,18 +25,19 @@ class QueryClubAttendanceService(
         }
 
         return students.map { it ->
+
             val userId = it.userId
             val classroomName =
                 if (existsByUserIdPort.existsByUserId(userId)) {
                     val classroom = findOKClassroomPort.findOKClassroom(userId)
                     classroom!!.classroomName
                 } else {
-                    ""
+                    "" //예외처리
                 }
 
             QueryAttendanceResponse(
                 id = it.userId,
-                username = it.name,
+                username = it.userName,
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num,

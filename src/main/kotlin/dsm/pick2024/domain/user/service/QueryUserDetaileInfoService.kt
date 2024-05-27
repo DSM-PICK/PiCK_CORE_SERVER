@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryUserDetaileInfoService(
     private val userFacadeUseCase: UserFacadeUseCase
 ) : QueryUserDetailsInfoUseCase {
+
     @Transactional(readOnly = true)
     override fun queryUserDetailsInfo(): QueryUserDetailsInfoResponse {
         val user = userFacadeUseCase.currentUser()
