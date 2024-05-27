@@ -27,7 +27,7 @@ class WeekendMealJpaEntity(
     @Column(name = "num", nullable = false, columnDefinition = "TINYINT(20)")
     val num: Int,
 
-    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val status: Status
 ) : BaseUUIDEntity(id)

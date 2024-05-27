@@ -28,5 +28,6 @@ class AdminJpaEntity(
     val classNum: Int? = null,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val role: Role
 ) : BaseUUIDEntity(id)
