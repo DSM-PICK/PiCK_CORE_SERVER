@@ -40,7 +40,7 @@ class EarlyReturnJpaEntity(
     @Column(name = "num", nullable = false, columnDefinition = "TINYINT(20)")
     val num: Int,
 
-    @Column(name = "status", nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "status", nullable = false)
     val status: Status
 ) : BaseUUIDEntity(id)

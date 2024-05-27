@@ -27,27 +27,32 @@ class AttendanceJpaEntity(
     @Column(name = "num", nullable = false, columnDefinition = "TINYINT(20)")
     val num: Int,
 
-    @Column(name = "club")
+    @Column(name = "club", nullable = true)
     val club: String? = null,
 
-    @Column(name = "place")
+    @Column(name = "place", nullable = true)
     val place: String? = null,
 
-    @Column(name = "floor")
+    @Column(name = "floor", nullable = true)
     val floor: Int? = null,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val period6: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val period7: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val period8: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val period9: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val period10: Status
 ) : BaseUUIDEntity(id)

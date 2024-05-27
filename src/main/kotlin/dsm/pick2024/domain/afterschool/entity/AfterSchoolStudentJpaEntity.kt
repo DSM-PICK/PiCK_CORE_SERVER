@@ -28,12 +28,15 @@ class AfterSchoolStudentJpaEntity(
     val num: Int,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val status1: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val status2: Status,
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val status3: Status
 
 ) : BaseUUIDEntity(id)
