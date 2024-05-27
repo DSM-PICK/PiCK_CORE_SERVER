@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.weekendmeal.service
 
-import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.persistence.WeekendMealPersistenceAdapter
 import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUserUseCase
@@ -18,7 +18,7 @@ class SaveAllWeekendMealUserMealService(
         val xquareWeekendMealUserInfo = xquareFeignClient.userAll(key)
         val weekendMealEntities =
             xquareWeekendMealUserInfo.map { user ->
-                WeekendMealJpaEntity(
+                WeekendMeal(
                     id = null,
                     userId = user.id,
                     username = user.name,
