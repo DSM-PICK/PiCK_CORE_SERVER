@@ -37,7 +37,7 @@ class UserJpaEntity(
     @Column(name = "profile_file_name", nullable = true)
     val profile: String ? = null,
 
-    @Column(name = "role", nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     val role: Role
 ) : BaseUUIDEntity(id)
