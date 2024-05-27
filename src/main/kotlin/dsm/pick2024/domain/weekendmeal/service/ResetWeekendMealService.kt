@@ -13,7 +13,7 @@ class ResetWeekendMealService(
     private val findAllWeekendMealStatusPort: FindAllWeekendMealStatusPort,
     private val saveAllWeekendMealPort: SaveAllWeekendMealPort
 ) : ResetWeekendMealUseCase {
-    
+
     @Transactional
     override fun resetWeekendMeal() {
 

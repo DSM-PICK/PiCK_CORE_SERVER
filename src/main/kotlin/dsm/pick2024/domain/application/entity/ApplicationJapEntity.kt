@@ -15,10 +15,10 @@ import javax.persistence.Enumerated
 class ApplicationJapEntity(
     id: UUID?,
 
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(name = "user_id", columnDefinition = "BINARY(16)")
     val userId: UUID,
 
-    @Column(name = "reason", nullable = false)
+    @Column(name = "reason", nullable = false, columnDefinition = "TEXT")
     val reason: String,
 
     @Column(name = "start_time", nullable = false)
@@ -27,21 +27,22 @@ class ApplicationJapEntity(
     @Column(name = "end_time", nullable = false)
     val endTime: LocalTime,
 
-    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(60)")
+    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val username: String,
 
+    @Column(name = "teacher_name", nullable = true, columnDefinition = "VARCHAR(10)")
     val teacherName: String? = null,
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     val date: LocalDate,
 
-    @Column(nullable = false)
+    @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
     val grade: Int,
 
-    @Column(name = "class_num", nullable = false)
+    @Column(name = "class_num", nullable = false, columnDefinition = "TINYINT(4)")
     val classNum: Int,
 
-    @Column(nullable = false)
+    @Column(name = "num", nullable = false, columnDefinition = "TINYINT(30)")
     val num: Int,
 
     @Enumerated(value = EnumType.STRING)

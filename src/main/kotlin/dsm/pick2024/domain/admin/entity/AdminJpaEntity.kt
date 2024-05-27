@@ -12,7 +12,7 @@ import javax.persistence.Enumerated
 class AdminJpaEntity(
     id: UUID?,
 
-    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(255)")
+    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(10)")
     val name: String,
 
     @Column(name = "password", nullable = false, columnDefinition = "CHAR(60)")
@@ -21,10 +21,10 @@ class AdminJpaEntity(
     @Column(name = "admin_id", nullable = false)
     val adminId: String,
 
-    @Column(name = "grade", columnDefinition = "TINYINT")
+    @Column(name = "grade", columnDefinition = "TINYINT(3)")
     val grade: Int? = null,
 
-    @Column(name = "class_num", columnDefinition = "TINYINT")
+    @Column(name = "class_num", columnDefinition = "TINYINT(4)")
     val classNum: Int? = null,
 
     @Enumerated(value = EnumType.STRING)
