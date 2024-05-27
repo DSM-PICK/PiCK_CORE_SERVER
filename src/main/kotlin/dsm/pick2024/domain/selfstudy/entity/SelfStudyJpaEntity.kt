@@ -13,10 +13,10 @@ class SelfStudyJpaEntity(
     @Column(nullable = false)
     val floor: Int,
 
-    @Column(nullable = false)
+    @Column(name = "teacher_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val teacher: String,
 
-    @Column(nullable = false)
+    @Column(name = "date", nullable = false)
     val date: LocalDate
 
 ) : BaseUUIDEntity(id)
