@@ -51,7 +51,7 @@ class SelfStudyPersistenceAdapter(
                 .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
                 .where(
                     QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(day),
-                    QSelfStudyJpaEntity.selfStudyJpaEntity.teacher.eq(teacher)
+                    QSelfStudyJpaEntity.selfStudyJpaEntity.teacherName.eq(teacher)
                 )
                 .fetchOne()
 
