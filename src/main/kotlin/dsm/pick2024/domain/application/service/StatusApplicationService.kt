@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.domain.TempApplicationModel
 import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
@@ -29,6 +30,7 @@ class StatusApplicationService(
     override fun statusApplication(request: ApplicationStatusRequest?) {
         val admin = adminFacadeUseCase.currentUser()
 
+        val tempApplications = mutableListOf<TempApplicationModel>()
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
@@ -49,7 +51,6 @@ class StatusApplicationService(
                     status = Status.OK,
                     applicationStatus = ApplicationStatus.NON_RETURN
                 )
-            applicationUpdate.add(updatedApplication)
 
             val applicationStorySave =
                 ApplicationStory(
@@ -61,10 +62,9 @@ class StatusApplicationService(
                     type = Type.APPLICATION,
                     userId = updatedApplication.userId
                 )
-            applicationStory.add(applicationStorySave)
+            tempApplications.add(TempApplicationModel(updatedApplication, applicationStorySave))
         }
 
-        saveAllApplicationPort.saveAll(applicationUpdate)
-        applicationStorySaveAllPort.saveAll(applicationStory)
+        saveAllApplicationPort.saveAll(tempApplications)
     }
 }
