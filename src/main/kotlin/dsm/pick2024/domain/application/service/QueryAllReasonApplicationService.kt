@@ -16,17 +16,5 @@ class QueryAllReasonApplicationService(
     override fun queryAllReasonApplication() =
         queryAllApplicationPort.findAll()
             .filter { it.status == Status.OK }
-            .map { it ->
-                QueryApplicationReasonResponse(
-                    it.id!!,
-                    it.userId,
-                    it.userName,
-                    it.startTime,
-                    it.endTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
-            }
+            .map { QueryApplicationReasonResponse(it) }
 }

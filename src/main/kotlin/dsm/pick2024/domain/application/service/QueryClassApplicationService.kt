@@ -20,34 +20,10 @@ class QueryClassApplicationService(
     ) =
         if (grade == 5 && classNum == 5) {
             queryAllApplicationByStatusPort.findAllByStatus(Status.QUIET)
-                .map {
-                    QueryApplicationResponse(
-                        it.id!!,
-                        it.userId,
-                        it.userName,
-                        it.startTime,
-                        it.endTime,
-                        it.grade,
-                        it.classNum,
-                        it.num,
-                        it.reason
-                    )
-                }
+                .map { QueryApplicationResponse(it) }
         } else {
             queryClassApplicationPort.findByGradeAndClassNum(grade, classNum)
                 .filter { it.status == Status.QUIET }
-                .map { it ->
-                    QueryApplicationResponse(
-                        it.id!!,
-                        it.userId,
-                        it.userName,
-                        it.startTime,
-                        it.endTime,
-                        it.grade,
-                        it.classNum,
-                        it.num,
-                        it.reason
-                    )
-                }
+                .map { QueryApplicationResponse(it) }
         }
 }

@@ -15,15 +15,5 @@ class QueryAllNonReturnApplicationService(
     override fun queryAllNonReturnApplication() =
         queryAllApplicationPort.findAll()
             .filter { it.applicationStatus == ApplicationStatus.NON_RETURN }
-            .map { it ->
-                QueryOKApplicationResponse(
-                    it.id!!,
-                    it.userName,
-                    it.endTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
-            }
+            .map { QueryOKApplicationResponse(it) }
 }
