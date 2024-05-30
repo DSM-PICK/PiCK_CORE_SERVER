@@ -12,6 +12,7 @@ import java.util.UUID
 class QueryUserApplicationStoryService(
     private val findStoryByUserIdPort: FindStoryByUserIdPort
 ) : QueryUserApplicationUseCase {
+
     @Transactional(readOnly = true)
     override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse? {
         val user = findStoryByUserIdPort.findAllByUserId(userId)
