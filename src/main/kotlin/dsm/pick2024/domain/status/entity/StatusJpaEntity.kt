@@ -15,7 +15,7 @@ class StatusJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     val userId: UUID,
 
-    @Column(name = "user_name", nullable = false, columnDefinition = "BINARY(10)")
+    @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,
 
     @Column(name = "grade", nullable = false, columnDefinition = "TINYINT(3)")
