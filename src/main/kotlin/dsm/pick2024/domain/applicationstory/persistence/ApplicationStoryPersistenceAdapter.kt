@@ -18,6 +18,6 @@ class ApplicationStoryPersistenceAdapter(
     }
 
     override fun findAllByUserId(userId: UUID) =
-        applicationStoryRepository.findAllByUserIdOrderByDateDesc(userId)
-            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }
+        applicationStoryRepository.findAllByUserId(userId)
+            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }.sortedByDescending { it?.date }
 }

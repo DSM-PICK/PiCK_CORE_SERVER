@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ApplicationStoryRepository : JpaRepository<ApplicationStoryJpaEntity, UUID> {
-    fun findAllByUserIdOrderByDateDesc(userId: UUID): List<ApplicationStoryJpaEntity?>
+    fun findAllByUserId(userId: UUID): List<ApplicationStoryJpaEntity?>
 }
