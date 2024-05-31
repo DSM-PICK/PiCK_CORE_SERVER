@@ -4,22 +4,21 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.`in`.QueryClassUserUseCase
 import dsm.pick2024.domain.applicationstory.port.out.FindStoryByUserIdPort
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryUserClassResponse
-import dsm.pick2024.domain.status.service.QueryClassStatusService
+import dsm.pick2024.domain.status.port.out.QueryClassStatusPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassUserService(
     private val findStoryByUserIdPort: FindStoryByUserIdPort,
-    private val queryClassStatusService: QueryClassStatusService
+    private val queryClassStatusPort: QueryClassStatusPort
 ) : QueryClassUserUseCase {
-
     @Transactional(readOnly = true)
     override fun queryClassUser(
         grade: Int,
         classNum: Int
     ): List<QueryUserClassResponse> {
-        val students = queryClassStatusService.queryClasStatus(grade, classNum).students
+        val students = queryClassStatusPort.findByGradeAndClassNum(grade, classNum)
 
         return students.map { student ->
             val applicationStory = findStoryByUserIdPort.findAllByUserId(student.userId)
@@ -28,7 +27,7 @@ class QueryClassUserService(
 
             QueryUserClassResponse(
                 id = student.userId,
-                name = student.name,
+                name = student.userName,
                 grade = student.grade,
                 classNum = student.classNum,
                 num = student.num,
