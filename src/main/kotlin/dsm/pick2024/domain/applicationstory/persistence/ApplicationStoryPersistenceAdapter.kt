@@ -5,7 +5,7 @@ import dsm.pick2024.domain.applicationstory.mapper.ApplicationStoryMapper
 import dsm.pick2024.domain.applicationstory.persistence.repository.ApplicationStoryRepository
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStoryPort
 import org.springframework.stereotype.Component
-import java.util.*
+import java.util.UUID
 
 @Component
 class ApplicationStoryPersistenceAdapter(
@@ -19,5 +19,5 @@ class ApplicationStoryPersistenceAdapter(
 
     override fun findAllByUserId(userId: UUID) =
         applicationStoryRepository.findAllByUserId(userId)
-            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }
+            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }.sortedByDescending { it?.date }
 }
