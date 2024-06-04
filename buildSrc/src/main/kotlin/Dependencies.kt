@@ -50,4 +50,6 @@ object Dependencies {
     const val AWS = "com.amazonaws:aws-java-sdk-s3:${DependencyVersions.AWS}"
 
     const val CLOUD = "org.springframework.cloud:spring-cloud-starter-loadbalancer"
+
+    const val CACHE = "org.springframework.boot:spring-boot-starter-cache"
 }
