@@ -5,7 +5,7 @@ import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.entity.QStatusJpaEntity
 import dsm.pick2024.domain.status.mapper.StatusMapper
 import dsm.pick2024.domain.status.persistence.repository.StatusRepository
-import dsm.pick2024.domain.status.port.out.StatusPortPort
+import dsm.pick2024.domain.status.port.out.StatusPort
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -14,7 +14,7 @@ class StatusPersistenceAdapterPort(
     private val statusRepository: StatusRepository,
     private val jpaQueryFactory: JPAQueryFactory,
     private val statusMapper: StatusMapper
-) : StatusPortPort {
+) : StatusPort {
     override fun saveAll(statuses: MutableList<Status>) {
         val entities = statuses.map { statusMapper.toEntity(it) }
         statusRepository.saveAll(entities)

@@ -5,7 +5,7 @@ import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.entity.QAdminJpaEntity
 import dsm.pick2024.domain.admin.mapper.AdminMapper
 import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
-import dsm.pick2024.domain.admin.port.out.AdminPortAdminPort
+import dsm.pick2024.domain.admin.port.out.AdminPort
 import org.springframework.stereotype.Component
 
 @Component
@@ -13,7 +13,7 @@ class AdminPersistenceAdapter(
     private val adminRepository: AdminRepository,
     private val adminMapper: AdminMapper,
     private val jpaQueryFactory: JPAQueryFactory
-) : AdminPortAdminPort {
+) : AdminPort {
     override fun findByName(name: String) = adminRepository.findByName(name).let { adminMapper.toDomain(it) }
 
     override fun findByAdminId(adminId: String) =

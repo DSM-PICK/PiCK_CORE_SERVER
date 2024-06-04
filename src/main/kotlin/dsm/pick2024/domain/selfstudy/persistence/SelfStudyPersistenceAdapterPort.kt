@@ -5,7 +5,7 @@ import dsm.pick2024.domain.selfstudy.domain.SelfStudy
 import dsm.pick2024.domain.selfstudy.entity.QSelfStudyJpaEntity
 import dsm.pick2024.domain.selfstudy.mapper.SelfStudyMapper
 import dsm.pick2024.domain.selfstudy.persistence.repository.SelfStudyRepository
-import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPortPort
+import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.Month
@@ -17,7 +17,7 @@ class SelfStudyPersistenceAdapterPort(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyMapper: SelfStudyMapper,
     private val jpaQueryFactory: JPAQueryFactory
-) : SelfStudyPortPort {
+) : SelfStudyPort {
     override fun save(selfStudy: SelfStudy) {
         selfStudyRepository.save(selfStudyMapper.toEntity(selfStudy))
     }

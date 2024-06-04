@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.status.port.out
 
-interface StatusPortPort :
+interface StatusPort :
     SaveAllStatusPort,
     QueryClassStatusPort,
     FindStatusByUserIdPort,
