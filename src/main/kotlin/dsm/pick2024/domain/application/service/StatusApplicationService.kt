@@ -27,7 +27,7 @@ class StatusApplicationService(
 
     @Transactional
     override fun statusApplication(request: ApplicationStatusRequest?) {
-        val admin = adminFacadeUseCase.currentUser()
+        val admin = adminFacadeUseCase.currentAdmin()
 
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()

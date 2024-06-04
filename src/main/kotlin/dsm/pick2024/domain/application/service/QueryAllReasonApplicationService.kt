@@ -3,7 +3,7 @@ package dsm.pick2024.domain.application.service
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryAllReasonApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
-import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationReasonResponse
+import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -16,17 +16,5 @@ class QueryAllReasonApplicationService(
     override fun queryAllReasonApplication() =
         queryAllApplicationPort.findAll()
             .filter { it.status == Status.OK }
-            .map { it ->
-                QueryApplicationReasonResponse(
-                    it.id!!,
-                    it.userId,
-                    it.userName,
-                    it.startTime,
-                    it.endTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
-            }
+            .map { QueryApplicationResponse(it) }
 }

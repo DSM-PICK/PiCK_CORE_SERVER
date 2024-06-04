@@ -17,17 +17,6 @@ class QueryFloorApplicationService(
 
         queryFloorApplicationPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
-            .map { it ->
-                QueryApplicationResponse(
-                    it.id!!,
-                    it.userId,
-                    it.userName,
-                    it.startTime,
-                    it.endTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
+            .map { QueryApplicationResponse(it)
             }
 }
