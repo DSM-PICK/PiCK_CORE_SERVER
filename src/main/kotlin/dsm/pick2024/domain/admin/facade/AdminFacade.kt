@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component
 class AdminFacade(
     private val findByAdminIdPort: FindByAdminIdPort
 ) : AdminFacadeUseCase {
-    override fun currentUser(): Admin {
+
+    override fun currentAdmin(): Admin {
         val name = SecurityContextHolder.getContext().authentication.name
         return getAdminByAdminId(name)
     }
