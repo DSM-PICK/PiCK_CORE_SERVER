@@ -17,6 +17,5 @@ class QueryFloorApplicationService(
 
         queryFloorApplicationPort.findByFloor(floor)
             .filter { it.status == Status.QUIET }
-            .map { QueryApplicationResponse(it)
-            }
+            .map { QueryApplicationResponse(it) }
 }

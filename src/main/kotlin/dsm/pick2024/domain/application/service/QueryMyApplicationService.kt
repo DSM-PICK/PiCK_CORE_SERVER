@@ -18,6 +18,7 @@ class QueryMyApplicationService(
 
     @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {
+
         val user = userFacadeUseCase.currentUser()
         val application =
             queryOKMyApplicationPort.findOKApplication(user.id)
