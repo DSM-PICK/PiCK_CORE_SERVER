@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ApplicationPersistenceAdapterPort(
+class ApplicationPersistenceAdapter(
     private val applicationRepository: ApplicationRepository,
     private val applicationMapper: ApplicationMapper,
     private val jpaQueryFactory: JPAQueryFactory

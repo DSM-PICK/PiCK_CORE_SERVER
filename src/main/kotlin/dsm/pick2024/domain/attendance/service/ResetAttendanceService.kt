@@ -4,16 +4,15 @@ import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.FindAllAttendancePort
-import dsm.pick2024.domain.attendance.port.out.SaveAll
+import dsm.pick2024.domain.attendance.port.out.SaveAllPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetAttendanceService(
     private val findAllAttendancePort: FindAllAttendancePort,
-    private val saveAll: SaveAll
+    private val saveAllPort: SaveAllPort
 ) : ResetAttendanceUseCase {
-
     @Transactional
     override fun reset() {
         val allStudent = findAllAttendancePort.findAll()
@@ -31,7 +30,7 @@ class ResetAttendanceService(
             update.add(updatedAttendance)
         }
 
-        saveAll.saveAll(update)
+        saveAllPort.saveAll(update)
     }
 
     private fun getStatus(currentStatus: Status) =

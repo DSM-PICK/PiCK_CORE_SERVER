@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.attendance.port.out
 
 interface AttendancePort :
-    SaveAll,
+    SaveAllPort,
     FindAttendanceByUserIdPort,
     QueryClassAttendancePort,
     QueryClubAttendancePort,

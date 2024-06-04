@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.selfstudy.port.out
 
-interface SelfStudyPort :
+interface SelfStudyPortPort :
     SelfStudySavePort,
-    SelfStudyByDateAndFloor,
+    SelfStudyByDateAndFloorPort,
     FindByDaySelfStudyTeacherPort,
     FindByMonthSelfStudyTeacherPort,
     FindByDatePort,

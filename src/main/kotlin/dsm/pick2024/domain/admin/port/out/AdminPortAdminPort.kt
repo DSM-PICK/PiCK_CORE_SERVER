@@ -1,9 +1,9 @@
 package dsm.pick2024.domain.admin.port.out
 
-interface AdminPortAdmin :
+interface AdminPortAdminPort :
     FindAdminByNamePort,
     FindByAdminIdPort,
     ExistsByAdminIdPort,
     AdminSavePort,
-    FindAdminByGradeAndClassNum,
+    FindAdminByGradeAndClassNumPort,
     FindAllPort
