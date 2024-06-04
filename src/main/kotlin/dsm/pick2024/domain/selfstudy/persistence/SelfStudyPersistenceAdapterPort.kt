@@ -13,7 +13,7 @@ import java.time.Year
 import java.time.temporal.TemporalAdjusters
 
 @Component
-class SelfStudyPersistenceAdapter(
+class SelfStudyPersistenceAdapterPort(
     private val selfStudyRepository: SelfStudyRepository,
     private val selfStudyMapper: SelfStudyMapper,
     private val jpaQueryFactory: JPAQueryFactory
