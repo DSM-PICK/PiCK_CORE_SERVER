@@ -5,16 +5,16 @@ import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.entity.QAfterSchoolStudentJpaEntity
 import dsm.pick2024.domain.afterschool.mapper.AfterSchoolStudentMapper
 import dsm.pick2024.domain.afterschool.persistence.repository.AfterSchoolStudentRepository
-import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPortUser
+import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPort
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class AfterSchoolStudentPersistenceAdapter(
+class AfterSchoolStudentPersistenceAdapterStudent(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository,
     private val jpaQueryFactory: JPAQueryFactory
-) : AfterSchoolStudentPortUser {
+) : AfterSchoolStudentPort {
     override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
         val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
         afterSchoolStudentRepository.saveAll(entities)

@@ -1,6 +1,5 @@
 package dsm.pick2024.infrastructure.schedule
 
-import dsm.pick2024.domain.afterschool.port.out.DeleteAllSchoolStudentPort
 import dsm.pick2024.domain.application.port.out.DeleteAllApplicationPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteAllClassRoomPort

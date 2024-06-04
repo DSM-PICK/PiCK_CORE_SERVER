@@ -3,7 +3,7 @@ package dsm.pick2024.domain.afterschool.service
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
-import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.FindByStudentNumPort
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SaveAfterSchoolStudentService(
-    private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
+    private val saveAfterSchoolStudentPort: SaveAfterSchoolStudentPort,
     private val findByStudentNumPort: FindByStudentNumPort
 ) : SaveAfterSchoolStudentUseCase {
 
@@ -25,7 +25,6 @@ class SaveAfterSchoolStudentService(
                     ?: throw UserNotFoundException
 
                 AfterSchoolStudent(
-                    id = null,
                     userId = user.id,
                     grade = grade,
                     classNum = classNum,
@@ -36,7 +35,7 @@ class SaveAfterSchoolStudentService(
                     status3 = Status.ATTENDANCE
                 )
             }
-        saveAllAfterSchoolStudentPort.saveAll(afterSchoolStudent)
+        saveAfterSchoolStudentPort.saveAll(afterSchoolStudent)
     }
 
     private fun parseSchoolNum(schoolNum: String): Triple<Int, Int, Int> {
