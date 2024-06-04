@@ -5,7 +5,7 @@ import dsm.pick2024.domain.application.enums.Status.NO
 import dsm.pick2024.domain.application.enums.Status.OK
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.out.FindAttendanceByUserIdPort
-import dsm.pick2024.domain.attendance.port.out.SaveAll
+import dsm.pick2024.domain.attendance.port.out.SaveAllPort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
@@ -23,9 +23,8 @@ class ChangeClassroomStatusService(
     private val classroomDeletePort: ClassroomDeletePort,
     private val saveAllClassroomPort: SaveAllClassroomPort,
     private val findAttendanceByUserIdPort: FindAttendanceByUserIdPort,
-    private val saveAll: SaveAll
+    private val saveAllPort: SaveAllPort
 ) : ChangeClassroomStatusUseCase {
-
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         if (request.status == NO) {
@@ -60,17 +59,16 @@ class ChangeClassroomStatusService(
         }
 
         saveAllClassroomPort.saveAll(update)
-        saveAll.saveAll(updateAttendanceList)
+        saveAllPort.saveAll(updateAttendanceList)
     }
 
     private fun getStatus(
         classroom: Classroom,
         status: Status,
         period: Int
-    ) =
-        if (period in classroom.startPeriod..classroom.endPeriod) {
-            Status.MOVEMENT
-        } else {
-            status
-        }
+    ) = if (period in classroom.startPeriod..classroom.endPeriod) {
+        Status.MOVEMENT
+    } else {
+        status
+    }
 }
