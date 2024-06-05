@@ -8,6 +8,7 @@ import dsm.pick2024.domain.earlyreturn.port.out.DeleteAllEarlyReturnPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.ResetWeekendMealUseCase
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
@@ -41,4 +42,12 @@ class ScheduleService(
         resetAttendanceUseCase.reset()
         resetStatusUseCase.reset()
     }
+
+    @CacheEvict(value = ["dayTimetableCache", "weekTimetableCache"], allEntries = true)
+    @Scheduled(fixedDelay = 30 * 60 * 1000)
+    fun deleteTimetableCache() {}
+
+    @CacheEvict(value = ["dayMealCache"], allEntries = true)
+    @Scheduled(cron = "0 0 0 * * *")
+    fun deleteMealCache() {}
 }
