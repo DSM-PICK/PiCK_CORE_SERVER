@@ -13,7 +13,7 @@ import java.time.LocalDate
 class QueryDayMealService(
     private val findMealsByMealDatePort: FindMealsByMealDatePort
 ) : QueryDayMealUseCase {
-    
+
     @Cacheable(value = ["dayMealCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
     override fun queryDayMeal(date: LocalDate): MealDetailsResponse? {
