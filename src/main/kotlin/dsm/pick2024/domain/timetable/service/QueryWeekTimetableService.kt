@@ -5,6 +5,7 @@ import dsm.pick2024.domain.timetable.port.out.FindTimetableByDayWeekPort
 import dsm.pick2024.domain.timetable.presentation.dto.DayTimetableResponse
 import dsm.pick2024.domain.timetable.presentation.dto.PeriodTimetableResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -15,7 +16,7 @@ class QueryWeekTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findTimetableByDayWeekPort: FindTimetableByDayWeekPort
 ) : QueryWeekTimetableUseCase {
-
+    @Cacheable(value = ["weekTimetableCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
     override fun queryWeekTimetable(): List<DayTimetableResponse> {
         val user = userFacadeUseCase.currentUser()
