@@ -12,7 +12,7 @@ import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
-import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
+import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -21,7 +21,7 @@ class StatusApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val queryApplicationPort: QueryApplicationPort,
     private val saveApplicationPort: SaveApplicationPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteApplicationPort: DeleteApplicationPort
 ) : StatusApplicationUseCase {
 

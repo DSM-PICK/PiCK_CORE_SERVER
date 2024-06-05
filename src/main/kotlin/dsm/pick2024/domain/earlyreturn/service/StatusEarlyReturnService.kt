@@ -4,7 +4,7 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
-import dsm.pick2024.domain.applicationstory.port.out.ApplicationStorySavePort
+import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
@@ -19,7 +19,7 @@ class StatusEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
     private val findEarlyReturnByIdPort: FindEarlyReturnByIdPort,
-    private val applicationStorySaveAllPort: ApplicationStorySavePort,
+    private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteEarlyReturnByIdPort: FindEarlyReturnByIdPort
 ) : StatusEarlyReturnUseCase {
     @Transactional
