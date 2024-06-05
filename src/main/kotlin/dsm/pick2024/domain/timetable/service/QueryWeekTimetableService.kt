@@ -16,6 +16,7 @@ class QueryWeekTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val findTimetableByDayWeekPort: FindTimetableByDayWeekPort
 ) : QueryWeekTimetableUseCase {
+
     @Cacheable(value = ["weekTimetableCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
     override fun queryWeekTimetable(): List<DayTimetableResponse> {
