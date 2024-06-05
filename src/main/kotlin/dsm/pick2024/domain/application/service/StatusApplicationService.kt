@@ -7,8 +7,8 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
-import dsm.pick2024.domain.application.port.out.FindApplicationByIdPort
-import dsm.pick2024.domain.application.port.out.SaveAllApplicationPort
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
+import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class StatusApplicationService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val findApplicationByIdPort: FindApplicationByIdPort,
-    private val saveAllApplicationPort: SaveAllApplicationPort,
+    private val queryApplicationPort: QueryApplicationPort,
+    private val saveApplicationPort: SaveApplicationPort,
     private val applicationStorySaveAllPort: ApplicationStorySavePort,
     private val deleteApplicationPort: DeleteApplicationPort
 ) : StatusApplicationUseCase {
@@ -34,14 +34,14 @@ class StatusApplicationService(
 
         if (request!!.status == Status.NO) {
             for (id in request.ids) {
-                val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
+                val application = queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
                 deleteApplicationPort.deleteById(application.id!!)
             }
             return
         }
 
         for (id in request.ids) {
-            val application = findApplicationByIdPort.findById(id) ?: throw ApplicationNotFoundException
+            val application = queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
 
             val updatedApplication =
                 application.copy(
@@ -64,7 +64,7 @@ class StatusApplicationService(
             applicationStory.add(applicationStorySave)
         }
 
-        saveAllApplicationPort.saveAll(applicationUpdate)
+        saveApplicationPort.saveAll(applicationUpdate)
         applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

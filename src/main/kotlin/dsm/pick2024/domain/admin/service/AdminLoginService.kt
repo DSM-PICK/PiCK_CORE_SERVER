@@ -29,7 +29,6 @@ class AdminLoginService(
 
     @Transactional
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
             val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
             if (Role.SCH != xquareUser.userRole) throw NotAdminException
@@ -47,7 +46,6 @@ class AdminLoginService(
 
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.SCH.toString())
         } else {
-
             val admin = queryAdminPort.findByAdminId(adminLoginRequest.adminId)
                 ?: throw AdminNotFoundException
 

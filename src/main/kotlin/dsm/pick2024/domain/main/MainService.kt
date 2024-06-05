@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.main
 
-import dsm.pick2024.domain.application.port.out.ExistsOKApplicationByUserIdPort
-import dsm.pick2024.domain.application.port.out.QueryOKMyApplicationPort
+import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
@@ -18,9 +18,9 @@ import java.util.UUID
 @Service
 class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryOKMyApplicationPort: QueryOKMyApplicationPort,
+    private val queryApplicationPort: QueryApplicationPort,
     private val findByUserIdPort: FindByUserIdPort,
-    private val existsOKApplicationByUserIdPort: ExistsOKApplicationByUserIdPort,
+    private val existApplicationPort: ExistsApplicationPort,
     private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
     private val existOKByUserIdPort: ExistOKByUserIdPort,
     private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
@@ -30,7 +30,7 @@ class MainService(
         val userId = userFacadeUseCase.currentUser().id
 
         return when {
-            existsOKApplicationByUserIdPort.existsOKByUserId(userId) -> findApplication(userId)
+            existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
             existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existOKByUserIdPort.existOKByUserId(userId) -> findClassroom(userId)
             else -> null
@@ -38,7 +38,7 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryOKMyApplicationPort.findOKApplication(userId)?.run {
+        return queryApplicationPort.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),

@@ -1,7 +1,10 @@
 package dsm.pick2024.domain.application.port.out
 
-import java.util.UUID
+import java.util.*
 
-interface ExistsOKApplicationByUserIdPort {
+interface ExistsApplicationPort {
+
+    fun existsByUserId(userId: UUID): Boolean
+
     fun existsOKByUserId(userId: UUID): Boolean
 }

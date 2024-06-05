@@ -16,7 +16,7 @@ data class QueryAfterSchoolStudentAllResponse(
 ) {
     constructor(
         afterSchoolStudent: AfterSchoolStudent
-    ): this (
+    ) : this (
         afterSchoolStudent.id!!,
         afterSchoolStudent.grade,
         afterSchoolStudent.classNum,
