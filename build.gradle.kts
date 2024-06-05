@@ -77,6 +77,8 @@ dependencies {
     implementation(Dependencies.AWS)
 
     implementation(Dependencies.CLOUD)
+
+    implementation(Dependencies.CACHE)
 }
 
 tasks.withType<KotlinCompile> {
