@@ -1,19 +1,19 @@
 package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.port.`in`.QueryUserAllUseCase
-import dsm.pick2024.domain.user.port.out.UserAllPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.domain.user.presentation.dto.response.QueryUserSimpleInfoResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryUserAllService(
-    private val userAllPort: UserAllPort
+    private val queryUserPort: QueryUserPort
 ) : QueryUserAllUseCase {
 
     @Transactional(readOnly = true)
     override fun queryUserAll() =
-        userAllPort.userAll()
+        queryUserPort.userAll()
             .map {
                     it ->
                 QueryUserSimpleInfoResponse(
