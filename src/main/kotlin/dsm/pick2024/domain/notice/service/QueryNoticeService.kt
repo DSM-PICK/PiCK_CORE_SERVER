@@ -12,7 +12,7 @@ import java.util.UUID
 @Service
 @Transactional(readOnly = true)
 class QueryNoticeService(
-    private val queryNoticePort: QueryNoticePort,
+    private val queryNoticePort: QueryNoticePort
 ) : QueryAllNoticeUseCase {
     override fun queryAllSimpleNotice() =
 

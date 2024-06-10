@@ -8,6 +8,6 @@ interface QueryNoticePort {
     fun findById(noticeId: UUID): Notice?
 
     fun findByToday(): List<Notice>
-    
+
     fun findAll(): List<Notice>
 }
