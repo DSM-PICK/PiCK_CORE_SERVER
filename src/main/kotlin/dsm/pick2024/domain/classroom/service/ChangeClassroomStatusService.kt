@@ -4,7 +4,6 @@ import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.domain.application.enums.Status.NO
 import dsm.pick2024.domain.application.enums.Status.OK
 import dsm.pick2024.domain.attendance.domain.Attendance
-import dsm.pick2024.domain.attendance.port.out.FindAttendanceByUserIdPort
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAllPort
 import dsm.pick2024.domain.classroom.domain.Classroom

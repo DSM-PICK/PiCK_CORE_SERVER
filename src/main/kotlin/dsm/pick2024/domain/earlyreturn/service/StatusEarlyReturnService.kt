@@ -10,7 +10,7 @@ import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundE
 import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.DeleteEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
-import dsm.pick2024.domain.earlyreturn.port.out.SaveAllEarlyReturnPort
+import dsm.pick2024.domain.earlyreturn.port.out.SaveEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class StatusEarlyReturnService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val saveAllEarlyReturnPort: SaveAllEarlyReturnPort,
+    private val saveEarlyReturnPort: SaveEarlyReturnPort,
     private val queryEarlyReturnPort: QueryEarlyReturnPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteEarlyReturnPort: DeleteEarlyReturnPort
@@ -62,7 +62,7 @@ class StatusEarlyReturnService(
             applicationStory.add(applicationStorySave)
         }
 
-        saveAllEarlyReturnPort.saveAll(earlyReturnUpdate)
+        saveEarlyReturnPort.saveAll(earlyReturnUpdate)
         applicationStorySaveAllPort.saveAll(applicationStory)
     }
 }

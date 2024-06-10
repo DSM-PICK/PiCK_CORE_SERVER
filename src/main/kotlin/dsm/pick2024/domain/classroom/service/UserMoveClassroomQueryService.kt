@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.classroom.service
 
-import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.`in`.QueryUserMoveClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse

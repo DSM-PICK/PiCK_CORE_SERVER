@@ -12,5 +12,4 @@ interface QueryEarlyReturnPort {
     fun findByFloor(floor: Int): List<EarlyReturn>
 
     fun findByGradeAndClassNum(grade: Int, classNum: Int): List<EarlyReturn>
-
 }

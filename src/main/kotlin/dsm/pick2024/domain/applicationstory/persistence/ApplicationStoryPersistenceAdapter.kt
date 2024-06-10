@@ -6,7 +6,6 @@ import dsm.pick2024.domain.applicationstory.persistence.repository.ApplicationSt
 import dsm.pick2024.domain.applicationstory.port.out.ApplicationStoryPort
 import org.springframework.stereotype.Component
 import java.util.UUID
-import kotlin.math.E
 
 @Component
 class ApplicationStoryPersistenceAdapter(
