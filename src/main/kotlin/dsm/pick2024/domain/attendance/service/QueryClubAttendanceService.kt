@@ -3,7 +3,6 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryClubAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.stereotype.Service

@@ -6,17 +6,17 @@ import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.entity.QClassroomJpaEntity
 import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
 import dsm.pick2024.domain.classroom.persistence.repository.ClassroomRepository
-import dsm.pick2024.domain.classroom.port.out.ClassroomPort
+import dsm.pick2024.domain.classroom.port.out.ClassRoomPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 import java.util.UUID
 
 @Component
-class ClassroomPersistenceAdapter(
+class PersistenceAdapterClassRoom(
     private val classroomMapper: ClassroomMapper,
     private val classroomRepository: ClassroomRepository,
     private val jpaQueryFactory: JPAQueryFactory
-) : ClassroomPort {
+) : ClassRoomPort {
     override fun save(classroom: Classroom) {
         classroomRepository.save(classroomMapper.toEntity(classroom))
     }

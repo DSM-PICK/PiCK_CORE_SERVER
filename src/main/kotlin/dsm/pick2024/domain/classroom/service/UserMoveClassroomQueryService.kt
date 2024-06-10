@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.classroom.service
 
+import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.`in`.QueryUserMoveClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.UserMoveClassroomResponse
@@ -15,7 +16,7 @@ class UserMoveClassroomQueryService(
     @Transactional(readOnly = true)
     override fun queryUserMoveClassroom(): UserMoveClassroomResponse {
         val user = userFacadeUseCase.currentUser()
-        val move = findOKClassroomPort.findOKClassroom(user.id)!!
+        val move = findOKClassroomPort.findOKClassroom(user.id) ?: throw Exception()
 
         return UserMoveClassroomResponse(move.userName, move.classroomName, move.startPeriod, move.endPeriod)
     }

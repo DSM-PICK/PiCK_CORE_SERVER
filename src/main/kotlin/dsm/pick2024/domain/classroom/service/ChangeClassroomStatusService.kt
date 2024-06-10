@@ -9,9 +9,8 @@ import dsm.pick2024.domain.attendance.port.out.SaveAllPort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
-import dsm.pick2024.domain.classroom.port.out.ClassroomDeletePort
+import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
-import dsm.pick2024.domain.classroom.port.out.SaveAllClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
@@ -20,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ChangeClassroomStatusService(
     private val findByUserIdPort: FindByUserIdPort,
-    private val classroomDeletePort: ClassroomDeletePort,
+    private val deleteClassRoomPort: DeleteClassRoomPort,
     private val saveAllClassroomPort: SaveAllClassroomPort,
     private val findAttendanceByUserIdPort: FindAttendanceByUserIdPort,
     private val saveAllPort: SaveAllPort
@@ -30,7 +29,7 @@ class ChangeClassroomStatusService(
         if (request.status == NO) {
             for (id in request.ids) {
                 val classroom = findByUserIdPort.findByUserId(id) ?: throw ClassroomNorFoundException
-                classroomDeletePort.deleteByUserId(classroom.userId)
+                deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
             return
         }

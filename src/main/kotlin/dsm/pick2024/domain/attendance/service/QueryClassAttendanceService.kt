@@ -3,7 +3,7 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryClassAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
+import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 class QueryClassAttendanceService(
     private val queryClassAttendancePort: QueryClassAttendancePort,
     private val findOKClassroomPort: FindOKClassroomPort,
-    private val existOKByUserIdPort: ExistOKByUserIdPort
+    private val existClassRoomPort: ExistClassRoomPort
 ) : QueryClassAttendanceUseCase {
 
     @Transactional(readOnly = true)
@@ -24,7 +24,7 @@ class QueryClassAttendanceService(
             .map { it ->
                 val userId = it.userId
                 val classroomName =
-                    existOKByUserIdPort.existOKByUserId(userId)
+                    existClassRoomPort.existOKByUserId(userId)
                         .takeIf { it }
                         ?.let {
                             findOKClassroomPort.findOKClassroom(userId)?.classroomName
