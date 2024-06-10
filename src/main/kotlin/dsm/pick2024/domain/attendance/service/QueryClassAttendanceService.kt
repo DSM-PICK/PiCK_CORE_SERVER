@@ -2,10 +2,8 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
-import dsm.pick2024.domain.attendance.port.out.QueryClassAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
-import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
