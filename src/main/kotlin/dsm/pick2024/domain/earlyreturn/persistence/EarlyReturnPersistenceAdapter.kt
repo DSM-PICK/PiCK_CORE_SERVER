@@ -29,9 +29,6 @@ class EarlyReturnPersistenceAdapter(
     override fun findById(earlyReturnId: UUID) =
         earlyReturnRepository.findById(earlyReturnId).let { earlyReturnMapper.toDomain(it) }
 
-    override fun findByUserId(userId: UUID) =
-        earlyReturnRepository.findByUserId(userId).let { earlyReturnMapper.toDomain(it) }
-
     override fun deleteById(id: UUID) {
         earlyReturnRepository.deleteById(id)
     }
