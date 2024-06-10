@@ -3,14 +3,14 @@ package dsm.pick2024.domain.earlyreturn.service
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.QueryAllEarlyReturnByStatusPort
-import dsm.pick2024.domain.earlyreturn.port.out.QueryClassEarlyReturnPort
+import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryEarlyReturnResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassEarlyReturnService(
-    private val queryClassEarlyReturnPort: QueryClassEarlyReturnPort,
+    private val queryEarlyReturnPort: QueryEarlyReturnPort
     private val queryAllEarlyReturnByStatusPort: QueryAllEarlyReturnByStatusPort
 ) : QueryClassEarlyReturnUseCase {
 
@@ -32,7 +32,7 @@ class QueryClassEarlyReturnService(
                 )
             }
     } else {
-        queryClassEarlyReturnPort.findByGradeAndClassNum(grade, classNum)
+        queryEarlyReturnPort.findByGradeAndClassNum(grade, classNum)
             .filter { it.status == Status.QUIET }
             .map { it ->
                 QueryEarlyReturnResponse(

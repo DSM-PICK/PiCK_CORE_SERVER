@@ -4,11 +4,10 @@ import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
-import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
-import dsm.pick2024.domain.earlyreturn.port.out.ExistsOKEarlyReturnByUserIDPort
-import dsm.pick2024.domain.earlyreturn.port.out.QueryOKMyEarlyReturn
+import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnPort
+import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
@@ -22,9 +21,9 @@ class MainService(
     private val queryApplicationPort: QueryApplicationPort,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
-    private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
+    private val existsEarlyReturnPort: ExistsEarlyReturnPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
+    private val queryEarlyReturnPort: QueryEarlyReturnPort
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
@@ -32,7 +31,7 @@ class MainService(
 
         return when {
             existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
-            existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
+            existsEarlyReturnPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
             else -> null
         }
@@ -51,7 +50,7 @@ class MainService(
     }
 
     private fun findEarlyReturn(userId: UUID): QuerySimpleMyEarlyResponse {
-        return queryOKMyEarlyReturn.findByOKEarlyReturn(userId)?.run {
+        return queryEarlyReturnPort.findByOKEarlyReturn(userId)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
