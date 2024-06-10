@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class QueryWeekendMealClassService(
-    private val queryWeekendMealPort: QueryWeekendMealPort,
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : QueryWeekendMealClassUseCase {
 
     override fun queryWeekendMealClass(
