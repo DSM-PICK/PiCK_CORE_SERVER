@@ -2,7 +2,7 @@ package dsm.pick2024.domain.status.service
 
 import dsm.pick2024.domain.admin.persistence.AdminPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
-import dsm.pick2024.domain.status.port.out.QueryClassStatusPort
+import dsm.pick2024.domain.status.port.out.QueryStatusPort
 import dsm.pick2024.domain.status.presentation.dto.response.QueryClassResponse
 import dsm.pick2024.domain.status.presentation.dto.response.QueryClassStatusResponse
 import org.springframework.stereotype.Service
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassStatusService(
-    private val queryClassStatusPort: QueryClassStatusPort,
+    private val queryStatusPort: QueryStatusPort,
     private val adminPersistenceAdapter: AdminPersistenceAdapter
 ) : QueryClassStatusUseCase {
     @Transactional(readOnly = true)
@@ -21,7 +21,7 @@ class QueryClassStatusService(
         val teacher = adminPersistenceAdapter.findByGradeAndClassNum(grade, classNum)
 
         val classStatusList =
-            queryClassStatusPort.findByGradeAndClassNum(grade, classNum)
+            queryStatusPort.findByGradeAndClassNum(grade, classNum)
                 .map { classStatus ->
 
                     QueryClassStatusResponse(
