@@ -1,8 +1,7 @@
 package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
-import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealClassPort
-import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealQuitClassPort
+import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMealResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -10,14 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class QueryWeekendMealClassService(
-    private val findWeekendMealClassPort: FindWeekendMealClassPort,
-    private val findWeekendMealQuitClassPort: FindWeekendMealQuitClassPort
+    private val queryWeekendMealPort: QueryWeekendMealPort,
 ) : QueryWeekendMealClassUseCase {
 
     override fun queryWeekendMealClass(
         grade: Int,
         classNum: Int
-    ) = findWeekendMealClassPort.findByGradeAndClassNum(grade, classNum)
+    ) = queryWeekendMealPort.findByGradeAndClassNum(grade, classNum)
         .map {
                 it ->
             QueryWeekendMealResponse(
@@ -33,7 +31,7 @@ class QueryWeekendMealClassService(
     override fun queryWeekendMealQuitClass(
         grade: Int,
         classNum: Int
-    ) = findWeekendMealQuitClassPort.findQuitByGradeAndClassNum(grade, classNum)
+    ) = queryWeekendMealPort.findQuitByGradeAndClassNum(grade, classNum)
         .map {
                 it ->
             QueryWeekendMealResponse(

@@ -1,12 +1,6 @@
 package dsm.pick2024.domain.weekendmeal.port.out
 
 interface WeekendMealPort :
-    FindWeekendMealByUserIdPort,
     SaveWeekendMealPort,
-    FindWeekendMealClassPort,
-    FindWeekendMealQuitClassPort,
-    ExistsByUserIdPort,
-    FindWeekendMealByStatusPort,
-    SaveAllWeekendMealPort,
-    FindWeekendMealByIdPort,
-    FindAllWeekendMealStatusPort
+    ExistsWeekendMealPort,
+    QueryWeekendMealPort

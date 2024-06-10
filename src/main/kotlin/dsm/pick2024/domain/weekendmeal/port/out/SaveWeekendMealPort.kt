@@ -4,4 +4,6 @@ import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 
 interface SaveWeekendMealPort {
     fun save(weekendMeal: WeekendMeal)
+
+    fun saveAll(weekendMeals: MutableList<WeekendMeal>)
 }
