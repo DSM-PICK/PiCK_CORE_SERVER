@@ -22,11 +22,6 @@ class SelfStudyPersistenceAdapterPort(
         selfStudyRepository.save(selfStudyMapper.toEntity(selfStudy))
     }
 
-    override fun findByDate(
-        date: LocalDate,
-        floor: Int
-    ) = selfStudyRepository.findByDateAndFloor(date, floor).let { selfStudyMapper.toDomain(it) }
-
     override fun findByDateList(date: LocalDate) =
         jpaQueryFactory.selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(
