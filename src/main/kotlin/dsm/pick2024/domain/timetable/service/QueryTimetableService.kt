@@ -15,17 +15,17 @@ class QueryTimetableService(
     private val findTimetableByDatePort: FindTimetableByDayWeekPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : QueryDayTimetableUseCase {
-
+    // @Cacheable(value = ["dayTimetableCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
     override fun queryDayTimetable(): DayTimetableResponse {
         val user = userFacadeUseCase.currentUser()
         val date = LocalDate.now(ZoneId.of("Asia/Seoul"))
 
         val tables = findTimetableByDatePort.findTimetableByDayWeekPort(date.dayOfWeek.value, user.grade, user.classNum)
-        val dayeResponses = mutableListOf<PeriodTimetableResponse>()
+        val dayResponses = mutableListOf<PeriodTimetableResponse>()
 
-        DayTimetableResponse(date, dayeResponses).addTimetable(tables, dayeResponses)
+        DayTimetableResponse(date, dayResponses).addTimetable(tables, dayResponses)
 
-        return DayTimetableResponse(date, dayeResponses)
+        return DayTimetableResponse(date, dayResponses)
     }
 }
