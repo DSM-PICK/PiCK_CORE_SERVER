@@ -2,6 +2,6 @@ package dsm.pick2024.domain.timetable.port.out
 
 import dsm.pick2024.domain.timetable.entity.TimetableJpaEntity
 
-interface SaveAllTimetablePort {
+interface SaveTimetablePort {
     fun saveAll(timetables: MutableList<TimetableJpaEntity>)
 }
