@@ -2,7 +2,6 @@ package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.classroom.port.`in`.QueryGradeClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
-import dsm.pick2024.domain.classroom.port.out.QueryGradeClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryClassroomResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
