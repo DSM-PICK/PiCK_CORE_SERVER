@@ -86,7 +86,10 @@ class EarlyReturnPersistenceAdapter(
         earlyReturnRepository.deleteAll(entities)
     }
 
-    override fun findAll() = earlyReturnRepository.findAll().map { earlyReturnMapper.toDomain(it) }
+    override fun findAll() =
+        earlyReturnRepository.findAll().map {
+            earlyReturnMapper.toDomain(it)
+        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 
     override fun findByOKEarlyReturn(userId: UUID) =
         earlyReturnRepository.findByUserIdAndStatus(userId, Status.OK).let {
