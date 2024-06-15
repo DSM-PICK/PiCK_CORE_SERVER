@@ -47,7 +47,6 @@ class ApplicationPersistenceAdapter(
     override fun findAll() =
         applicationRepository.findAll().map { applicationMapper.toDomain(it) }
 
-
     override fun findByUserId(userId: UUID) =
         applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
 
