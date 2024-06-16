@@ -25,5 +25,5 @@ class QueryAllNonReturnApplicationService(
                     it.num,
                     it.reason
                 )
-            }
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }
