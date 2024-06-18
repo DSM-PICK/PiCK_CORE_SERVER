@@ -2,7 +2,7 @@ package dsm.pick2024.domain.afterschool.presentation
 
 import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.DeleteAfterSchoolStudentUseCase
-import dsm.pick2024.domain.afterschool.port.`in`.QueryAfterSchoolStudentAllUseCase
+import dsm.pick2024.domain.afterschool.port.`in`.QueryAllAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.QueryAllUserUseCase
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 class AfterSchoolStudentController(
     private val changeStatusAfterSchoolStudentUseCase: ChangeStatusAfterSchoolStudentUseCase,
     private val deleteAfterSchoolStudentUseCase: DeleteAfterSchoolStudentUseCase,
-    private val queryAfterSchoolStudentAllUseCase: QueryAfterSchoolStudentAllUseCase,
+    private val queryAllAfterSchoolStudentUseCase: QueryAllAfterSchoolStudentUseCase,
     private val saveAfterSchoolStudentUseCase: SaveAfterSchoolStudentUseCase,
     private val queryAllUserUseCase: QueryAllUserUseCase
 ) {
@@ -52,7 +52,7 @@ class AfterSchoolStudentController(
 
     @Operation(summary = "방과후 창조실 학생 조회 API")
     @GetMapping("/all")
-    fun queryAfterSchoolAll() = queryAfterSchoolStudentAllUseCase.queryAfterSchoolStudentAll()
+    fun queryAfterSchoolAll() = queryAllAfterSchoolStudentUseCase.queryAfterSchoolStudentAll()
 
     @Operation(summary = "방과후 등록 자동완성 API")
     @GetMapping("/search")

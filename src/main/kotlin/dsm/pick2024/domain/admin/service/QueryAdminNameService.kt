@@ -13,7 +13,7 @@ class QueryAdminNameService(
 
     @Transactional(readOnly = true)
     override fun queryAdminName(): QueryAdminNameResponse {
-        val admin = adminFacadeUseCase.currentUser()
+        val admin = adminFacadeUseCase.currentAdmin()
         return QueryAdminNameResponse(
             name = admin.name,
             grade = admin.grade,

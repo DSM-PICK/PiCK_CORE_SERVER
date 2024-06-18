@@ -2,9 +2,9 @@ package dsm.pick2024.domain.selfstudy.service
 
 import dsm.pick2024.domain.selfstudy.domain.SelfStudy
 import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
-import dsm.pick2024.domain.selfstudy.port.out.DeleteByDatePort
-import dsm.pick2024.domain.selfstudy.port.out.FindByDatePort
-import dsm.pick2024.domain.selfstudy.port.out.SelfStudySaveAllPort
+import dsm.pick2024.domain.selfstudy.port.out.DeleteSelfStudyPort
+import dsm.pick2024.domain.selfstudy.port.out.QuerySelfStudyPort
+import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,15 +12,15 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 @Service
 class SelfStudyTeacherService(
-    private val selfStudySaveAllPort: SelfStudySaveAllPort,
-    private val findByDatePort: FindByDatePort,
-    private val deleteByDatePort: DeleteByDatePort
+    private val selfStudyPort: SelfStudyPort,
+    private val querySelfStudyPort: QuerySelfStudyPort,
+    private val deleteSelfStudyPort: DeleteSelfStudyPort
 ) : SelfStudyTeacherUseCase {
 
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
-        val selfStudy = findByDatePort.findByDateList(request.date)
+        val selfStudy = querySelfStudyPort.findByDateList(request.date)
 
-        if (selfStudy.isNotEmpty()) deleteByDatePort.deleteByDate(request.date)
+        if (selfStudy.isNotEmpty()) deleteSelfStudyPort.deleteByDate(request.date)
 
         val teacherList =
             request.teacher
@@ -34,6 +34,6 @@ class SelfStudyTeacherService(
                     )
                 }
 
-        selfStudySaveAllPort.saveAll(teacherList)
+        selfStudyPort.saveAll(teacherList)
     }
 }

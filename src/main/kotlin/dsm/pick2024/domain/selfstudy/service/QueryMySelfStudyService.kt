@@ -2,21 +2,21 @@ package dsm.pick2024.domain.selfstudy.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryMySelfStudyUseCase
-import dsm.pick2024.domain.selfstudy.port.out.FindByTodaySelfStudyTeacherPort
+import dsm.pick2024.domain.selfstudy.port.out.QuerySelfStudyPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryMySelfStudyService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val findByTodaySelfStudyTeacherPort: FindByTodaySelfStudyTeacherPort
+    private val querySelfStudyPort: QuerySelfStudyPort
 ) : QueryMySelfStudyUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMySelfStudy(): String {
-        val admin = adminFacadeUseCase.currentUser()
+        val admin = adminFacadeUseCase.currentAdmin()
 
-        val selfStudy = findByTodaySelfStudyTeacherPort.findByTodayTeacher(admin.name)
+        val selfStudy = querySelfStudyPort.findByTodayTeacher(admin.name)
         val floor = selfStudy?.floor
 
         return if (floor != null) {

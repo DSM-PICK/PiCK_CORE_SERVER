@@ -1,24 +1,24 @@
 package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
-import dsm.pick2024.domain.attendance.port.out.QueryClubAttendancePort
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.ExistsByUserIdPort
-import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
+import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
+import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAttendanceService(
-    private val queryClubAttendancePort: QueryClubAttendancePort,
-    private val findOKClassroomPort: FindOKClassroomPort,
-    private val existsByUserIdPort: ExistsByUserIdPort
+    private val queryAttendancePort: QueryAttendancePort,
+    private val queryClassRoomPort: QueryClassroomPort,
+    private val existClassRoomPort: ExistClassRoomPort
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
     override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
-        val students = queryClubAttendancePort.findByClub(club)
+        val students = queryAttendancePort.findByClub(club)
 
         if (students.isEmpty()) {
             throw ClubNotFoundException
@@ -28,11 +28,12 @@ class QueryClubAttendanceService(
 
             val userId = it.userId
             val classroomName =
-                if (existsByUserIdPort.existsByUserId(userId)) {
-                    val classroom = findOKClassroomPort.findOKClassroom(userId)
-                    classroom!!.classroomName
+                if (existClassRoomPort.existsByUserId(userId)) {
+                    val classroom = queryClassRoomPort.findOKClassroom(userId)
+                        ?: throw Exception()
+                    classroom.classroomName
                 } else {
-                    "" //예외처리
+                    throw Exception()
                 }
 
             QueryAttendanceResponse(

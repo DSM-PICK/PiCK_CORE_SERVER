@@ -1,9 +1,6 @@
 package dsm.pick2024.domain.schedule.port.out
 
 interface SchedulePort :
-    ScheduleMonthPort,
-    ScheduleSavePort,
-    FindScheduleByIdPort,
+    SaveSchedulePort,
     DeleteSchedulePort,
-    SaveFeignSchedulePort,
-    FindScheduleByDatePort
+    QuerySchedulePort

@@ -1,16 +1,8 @@
 package dsm.pick2024.domain.application.port.out
 
 interface ApplicationPort :
-    ExistApplicationByUserIdPort,
-    SaveAllApplicationPort,
-    FindApplicationByIdPort,
+    ExistsApplicationPort,
     DeleteApplicationPort,
-    QueryFloorApplicationPort,
-    QueryClassApplicationPort,
     SaveApplicationPort,
     QueryAllApplicationPort,
-    FindApplicationByUserIdPort,
-    DeleteAllApplicationPort,
-    QueryOKMyApplicationPort,
-    ExistsOKApplicationByUserIdPort,
-    QueryAllApplicationByStatusPort
+    QueryApplicationPort

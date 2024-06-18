@@ -2,8 +2,8 @@ package dsm.pick2024.domain.afterschool.service
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.port.`in`.ChangeStatusAfterSchoolStudentUseCase
-import dsm.pick2024.domain.afterschool.port.out.FindAfterSchoolStudentByUserIdPort
-import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.QueryAfterSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.ChangeAfterSchoolStatusRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeStatusAfterSchoolStudentService(
-    private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
-    private val findAfterSchoolStudentByUserIdPort: FindAfterSchoolStudentByUserIdPort
+    private val saveAfterSchoolStudentPort: SaveAfterSchoolStudentPort,
+    private val queryAfterSchoolPort: QueryAfterSchoolStudentPort
 ) : ChangeStatusAfterSchoolStudentUseCase {
 
     @Transactional
@@ -21,7 +21,7 @@ class ChangeStatusAfterSchoolStudentService(
 
         request.map { changeRequest ->
             val student =
-                findAfterSchoolStudentByUserIdPort.findByUserId(changeRequest.id)
+                queryAfterSchoolPort.findByUserId(changeRequest.id)
                     ?: throw UserNotFoundException
 
             val newStatusList = changeRequest.statusList
@@ -33,6 +33,6 @@ class ChangeStatusAfterSchoolStudentService(
                 )
             update.add(updatedStudent)
         }
-        saveAllAfterSchoolStudentPort.saveAll(update)
+        saveAfterSchoolStudentPort.saveAll(update)
     }
 }

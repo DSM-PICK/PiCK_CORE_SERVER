@@ -3,7 +3,7 @@ package dsm.pick2024.domain.weekendmeal.service
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
-import dsm.pick2024.domain.weekendmeal.port.out.FindWeekendMealByIdPort
+import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,7 +12,7 @@ import java.util.UUID
 @Service
 class ChangeWeekendMealStatusService(
     private val saveWeekendMealPort: SaveWeekendMealPort,
-    private val findWeekendMealByIdPort: FindWeekendMealByIdPort
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : ChangeWeekendMealStatusUseCase {
 
     @Transactional
@@ -21,7 +21,7 @@ class ChangeWeekendMealStatusService(
         status: Status
     ) {
         val weekendMeal =
-            findWeekendMealByIdPort.findById(id)
+            queryWeekendMealPort.findById(id)
                 ?: throw UserNotFoundException
 
         saveWeekendMealPort.save(

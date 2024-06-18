@@ -1,9 +1,7 @@
 package dsm.pick2024.domain.notice.service
 
 import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
-import dsm.pick2024.domain.notice.port.out.FindByNoticeIdPort
-import dsm.pick2024.domain.notice.port.out.FindByTodayPort
-import dsm.pick2024.domain.notice.port.out.QueryNoticeAllPort
+import dsm.pick2024.domain.notice.port.out.QueryNoticePort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryTodayNoticeResponse
@@ -14,13 +12,11 @@ import java.util.UUID
 @Service
 @Transactional(readOnly = true)
 class QueryNoticeService(
-    private val queryNoticeAllPort: QueryNoticeAllPort,
-    private val findByNoticeIdPort: FindByNoticeIdPort,
-    private val findByTodayPort: FindByTodayPort
+    private val queryNoticePort: QueryNoticePort
 ) : QueryAllNoticeUseCase {
     override fun queryAllSimpleNotice() =
 
-        queryNoticeAllPort.findAll()
+        queryNoticePort.findAll()
             .map { it ->
                 QuerySimpleAllNoticeResponse(
                     it.id!!,
@@ -32,7 +28,7 @@ class QueryNoticeService(
             }
 
     override fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse {
-        val notice = findByNoticeIdPort.findById(noticeId)
+        val notice = queryNoticePort.findById(noticeId)
             ?: throw RuntimeException() //예외만들기
 
         return QueryAllNoticeResponse(
@@ -46,7 +42,7 @@ class QueryNoticeService(
 
     override fun queryTodayNotice() =
 
-        findByTodayPort.findByToday()
+        queryNoticePort.findByToday()
             .map { it ->
                 QueryTodayNoticeResponse(
                     it.id!!,

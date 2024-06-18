@@ -2,7 +2,7 @@ package dsm.pick2024.domain.schedule.service
 
 import dsm.pick2024.domain.schedule.exception.ScheduleNotFoundException
 import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
-import dsm.pick2024.domain.schedule.port.out.FindScheduleByDatePort
+import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -12,12 +12,12 @@ import java.util.Locale
 
 @Service
 class QueryDateScheduleService(
-    private val findScheduleByDatePort: FindScheduleByDatePort
+    private val querySchedulePort: QuerySchedulePort
 ) : QueryDateScheduleUseCase {
 
     @Transactional(readOnly = true)
     override fun queryDateScheduleUseCase(date: LocalDate): ScheduleResponse? {
-        val schedule = findScheduleByDatePort.findByDate(date)
+        val schedule = querySchedulePort.findByDate(date)
             ?: throw ScheduleNotFoundException
 
         return schedule.let {

@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.timetable.service
 
 import dsm.pick2024.domain.timetable.port.`in`.QueryDayTimetableUseCase
-import dsm.pick2024.domain.timetable.port.out.FindTimetableByDayWeekPort
+import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
 import dsm.pick2024.domain.timetable.presentation.dto.DayTimetableResponse
 import dsm.pick2024.domain.timetable.presentation.dto.PeriodTimetableResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -12,7 +12,7 @@ import java.time.ZoneId
 
 @Service
 class QueryTimetableService(
-    private val findTimetableByDatePort: FindTimetableByDayWeekPort,
+    private val findTimetableByDatePort: QueryTimeTablePort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : QueryDayTimetableUseCase {
     // @Cacheable(value = ["dayTimetableCache"], key = "#root.methodName")

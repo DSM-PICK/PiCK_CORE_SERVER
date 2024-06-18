@@ -5,8 +5,8 @@ import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.LoginUseCase
-import dsm.pick2024.domain.user.port.out.ExistsByAccountIdPort
-import dsm.pick2024.domain.user.port.out.FindByAccountIdPort
+import dsm.pick2024.domain.user.port.out.ExistsUserPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
@@ -19,16 +19,16 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class UserLoginService(
     private val passwordEncoder: PasswordEncoder,
-    private val findByAccountIdPort: FindByAccountIdPort,
+    private val queryUserPort: QueryUserPort,
     private val jwtTokenProvider: JwtTokenProvider,
     private val xquareFeignClient: XquareFeignClient,
-    private val existsByAccountIdPort: ExistsByAccountIdPort,
+    private val existsUserPort: ExistsUserPort,
     private val userSavePort: UserSavePort
 ) : LoginUseCase {
 
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
-        if (!existsByAccountIdPort.existsByAccountId(userLoginRequest.accountId)) {
+        if (!existsUserPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(
                 userLoginRequest.accountId,
                 userLoginRequest.password
@@ -50,7 +50,7 @@ class UserLoginService(
 
             return jwtTokenProvider.generateToken(xquareUser.accountId, Role.STU.toString())
         } else {
-            val user = findByAccountIdPort.findByAccountId(userLoginRequest.accountId)
+            val user = queryUserPort.findByAccountId(userLoginRequest.accountId)
                 ?: throw UserNotFoundException
 
             if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {

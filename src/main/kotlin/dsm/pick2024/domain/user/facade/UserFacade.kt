@@ -3,13 +3,13 @@ package dsm.pick2024.domain.user.facade
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.user.port.out.FindByAccountIdPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 @Component
 class UserFacade(
-    private val findByAccountIdPort: FindByAccountIdPort
+    private val queryUserPort: QueryUserPort
 ) : UserFacadeUseCase {
 
     override fun currentUser(): User {
@@ -18,5 +18,5 @@ class UserFacade(
     }
 
     override fun getUserByAccountId(accountId: String) =
-        findByAccountIdPort.findByAccountId(accountId) ?: throw UserNotFoundException
+        queryUserPort.findByAccountId(accountId) ?: throw UserNotFoundException
 }

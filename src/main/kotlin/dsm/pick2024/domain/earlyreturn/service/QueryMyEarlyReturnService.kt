@@ -3,7 +3,7 @@ package dsm.pick2024.domain.earlyreturn.service
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.out.QueryOKMyEarlyReturn
+import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryMyEarlyReturnResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
@@ -13,14 +13,14 @@ import java.time.format.DateTimeFormatter
 @Service
 class QueryMyEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryMyOKMyEarlyReturn: QueryOKMyEarlyReturn
+    private val queryEarlyReturnPort: QueryEarlyReturnPort
 ) : QueryMyEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
         val user = userFacadeUseCase.currentUser()
         val earlyReturn =
-            queryMyOKMyEarlyReturn.findByOKEarlyReturn(user.id)
+            queryEarlyReturnPort.findByOKEarlyReturn(user.id)
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
