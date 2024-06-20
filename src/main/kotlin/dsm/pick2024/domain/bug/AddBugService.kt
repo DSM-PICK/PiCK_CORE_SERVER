@@ -31,9 +31,7 @@ class AddBugService(
                                 ### 🔗 버그 내용
                                 ${request.content}
                                 ### 📄 이미지
-                                ```
-                                ${request.fileName?.let { fileUtil.generateObjectUrl(request.fileName, PathList.BUG) }}
-                                ```
+                                ${request.fileName?.let { fileUtil.generateObjectUrl(it, PathList.BUG) }}
                                 ### 🧑🏻‍💻 버그 제보자
                                 ${SecurityContextHolder.getContext().authentication.name}
                         """.trimIndent()

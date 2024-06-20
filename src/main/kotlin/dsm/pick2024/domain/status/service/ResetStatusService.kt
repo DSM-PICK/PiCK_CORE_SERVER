@@ -3,20 +3,20 @@ package dsm.pick2024.domain.status.service
 import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.entity.enum.StatusType
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
-import dsm.pick2024.domain.status.port.out.FindAllStatusPort
-import dsm.pick2024.domain.status.port.out.SaveAllStatusPort
+import dsm.pick2024.domain.status.port.out.QueryStatusPort
+import dsm.pick2024.domain.status.port.out.SaveStatusPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetStatusService(
-    private val findAllStatusPort: FindAllStatusPort,
-    private val saveAllStatusPort: SaveAllStatusPort
+    private val querystatusPort: QueryStatusPort,
+    private val saveStatusPort: SaveStatusPort
 ) : ResetStatusUseCase {
 
     @Transactional(readOnly = true)
     override fun reset() {
-        val allStudent = findAllStatusPort.findAll()
+        val allStudent = querystatusPort.findAll()
         val update = mutableListOf<Status>()
 
         allStudent.map { it ->
@@ -27,7 +27,7 @@ class ResetStatusService(
             update.add(updatedStatus)
         }
 
-        saveAllStatusPort.saveAll(update)
+        saveStatusPort.saveAll(update)
     }
 
     private fun getStatus(currentStatus: StatusType) =

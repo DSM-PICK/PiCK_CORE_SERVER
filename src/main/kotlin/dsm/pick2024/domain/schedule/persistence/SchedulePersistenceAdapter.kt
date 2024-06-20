@@ -3,7 +3,6 @@ package dsm.pick2024.domain.schedule.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.schedule.domain.Schedule
 import dsm.pick2024.domain.schedule.entity.QScheduleJpaEntity
-import dsm.pick2024.domain.schedule.entity.ScheduleJpaEntity
 import dsm.pick2024.domain.schedule.mapper.ScheduleMapper
 import dsm.pick2024.domain.schedule.persistence.repository.ScheduleRepository
 import dsm.pick2024.domain.schedule.port.out.SchedulePort
@@ -49,7 +48,8 @@ class SchedulePersistenceAdapter(
             .sortedBy { it.date }
     }
 
-    override fun saveFeignSchedule(schedule: MutableList<ScheduleJpaEntity>) {
-        scheduleRepository.saveAll(schedule)
+    override fun saveFeignSchedule(schedule: MutableList<Schedule>) {
+        val entities = schedule.map { scheduleMapper.toEntity(it) }
+        scheduleRepository.saveAll(entities)
     }
 }

@@ -3,17 +3,17 @@ package dsm.pick2024.domain.afterschool.service
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.enums.Status
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
-import dsm.pick2024.domain.afterschool.port.out.SaveAllAfterSchoolStudentPort
+import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
-import dsm.pick2024.domain.user.port.out.FindByStudentNumPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SaveAfterSchoolStudentService(
-    private val saveAllAfterSchoolStudentPort: SaveAllAfterSchoolStudentPort,
-    private val findByStudentNumPort: FindByStudentNumPort
+    private val saveAfterSchoolStudentPort: SaveAfterSchoolStudentPort,
+    private val queryUserPort: QueryUserPort
 ) : SaveAfterSchoolStudentUseCase {
 
     @Transactional
@@ -21,11 +21,10 @@ class SaveAfterSchoolStudentService(
         val afterSchoolStudent =
             request.map { requests ->
                 val (grade, classNum, num) = parseSchoolNum(requests.studentNum)
-                val user = findByStudentNumPort.findByStudentNum(grade, classNum, num)
+                val user = queryUserPort.findByStudentNum(grade, classNum, num)
                     ?: throw UserNotFoundException
 
                 AfterSchoolStudent(
-                    id = null,
                     userId = user.id,
                     grade = grade,
                     classNum = classNum,
@@ -36,7 +35,7 @@ class SaveAfterSchoolStudentService(
                     status3 = Status.ATTENDANCE
                 )
             }
-        saveAllAfterSchoolStudentPort.saveAll(afterSchoolStudent)
+        saveAfterSchoolStudentPort.saveAll(afterSchoolStudent)
     }
 
     private fun parseSchoolNum(schoolNum: String): Triple<Int, Int, Int> {

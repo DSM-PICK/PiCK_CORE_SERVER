@@ -12,6 +12,7 @@ class ApplicationStoryPersistenceAdapter(
     private val applicationStoryMapper: ApplicationStoryMapper,
     private val applicationStoryRepository: ApplicationStoryRepository
 ) : ApplicationStoryPort {
+
     override fun saveAll(applicationStory: List<ApplicationStory>) {
         val entities = applicationStory.map { applicationStoryMapper.toEntity(it) }
         applicationStoryRepository.saveAll(entities)
@@ -19,5 +20,6 @@ class ApplicationStoryPersistenceAdapter(
 
     override fun findAllByUserId(userId: UUID) =
         applicationStoryRepository.findAllByUserId(userId)
-            .map { it?.let { story -> applicationStoryMapper.toDomain(story) } }.sortedByDescending { it?.date }
+            .map { it.let { story -> applicationStoryMapper.toDomain(story) } }
+            .sortedByDescending { it.date }
 }

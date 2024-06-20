@@ -1,10 +1,10 @@
 package dsm.pick2024.infrastructure.feign
 
 import com.google.gson.Gson
-import dsm.pick2024.domain.meal.entity.MealJpaEntity
+import dsm.pick2024.domain.meal.domain.Meal
 import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
 import dsm.pick2024.infrastructure.feign.client.dto.response.NeisFeignClientMealServiceDietInfoResponse
+import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.LocalDate
@@ -16,7 +16,7 @@ class NeisMealFeignClientService(
     private val neisKey: String,
     private val neisFeignClient: NeisFeignClient
 ) {
-    fun getNeisInfoToEntity(): MutableList<MealJpaEntity> {
+    fun getNeisInfoToEntity(): MutableList<Meal> {
         val nextMonth = LocalDate.now().plusMonths(1)
 
         val neisMealServiceDietInfoString =
@@ -38,7 +38,7 @@ class NeisMealFeignClientService(
             )
         val mealTotalCount = mealJson.mealServiceDietInfo.first().head.first().list_total_count
 
-        val mealEntities = mutableListOf<MealJpaEntity>()
+        val mealEntities = mutableListOf<Meal>()
         val mealCodes = mutableListOf<String>()
 
         val breakfastMap = mutableMapOf<LocalDate, Pair<String, String>>()
@@ -66,8 +66,7 @@ class NeisMealFeignClientService(
             }
 
             mealEntities.add(
-                MealJpaEntity(
-                    id = null,
+                Meal(
                     mealDate = mealLocalDate,
                     breakfast = breakfastMap[mealLocalDate]?.first.orEmpty(),
                     lunch = lunchMap[mealLocalDate]?.first.orEmpty(),

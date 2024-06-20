@@ -1,13 +1,13 @@
 package dsm.pick2024.domain.main
 
-import dsm.pick2024.domain.application.port.out.ExistsOKApplicationByUserIdPort
-import dsm.pick2024.domain.application.port.out.QueryOKMyApplicationPort
+import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
-import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
-import dsm.pick2024.domain.classroom.port.out.FindByUserIdPort
+import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
+import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
-import dsm.pick2024.domain.earlyreturn.port.out.ExistsOKEarlyReturnByUserIDPort
-import dsm.pick2024.domain.earlyreturn.port.out.QueryOKMyEarlyReturn
+import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnPort
+import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
@@ -18,27 +18,27 @@ import java.util.UUID
 @Service
 class MainService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryOKMyApplicationPort: QueryOKMyApplicationPort,
-    private val findByUserIdPort: FindByUserIdPort,
-    private val existsOKApplicationByUserIdPort: ExistsOKApplicationByUserIdPort,
-    private val existsOKEarlyReturnByUserIDPort: ExistsOKEarlyReturnByUserIDPort,
-    private val existOKByUserIdPort: ExistOKByUserIdPort,
-    private val queryOKMyEarlyReturn: QueryOKMyEarlyReturn
+    private val queryApplicationPort: QueryApplicationPort,
+    private val queryClassroomPort: QueryClassroomPort,
+    private val existApplicationPort: ExistsApplicationPort,
+    private val existsEarlyReturnPort: ExistsEarlyReturnPort,
+    private val existClassRoomPort: ExistClassRoomPort,
+    private val queryEarlyReturnPort: QueryEarlyReturnPort
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
         val userId = userFacadeUseCase.currentUser().id
 
         return when {
-            existsOKApplicationByUserIdPort.existsOKByUserId(userId) -> findApplication(userId)
-            existsOKEarlyReturnByUserIDPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
-            existOKByUserIdPort.existOKByUserId(userId) -> findClassroom(userId)
+            existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
+            existsEarlyReturnPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
+            existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
             else -> null
         }
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryOKMyApplicationPort.findOKApplication(userId)?.run {
+        return queryApplicationPort.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
@@ -50,7 +50,7 @@ class MainService(
     }
 
     private fun findEarlyReturn(userId: UUID): QuerySimpleMyEarlyResponse {
-        return queryOKMyEarlyReturn.findByOKEarlyReturn(userId)?.run {
+        return queryEarlyReturnPort.findByOKEarlyReturn(userId)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
@@ -61,7 +61,7 @@ class MainService(
     }
 
     private fun findClassroom(userId: UUID): QueryMainUserMoveClassroomResponse {
-        return findByUserIdPort.findByUserId(userId)?.run {
+        return queryClassroomPort.findByUserId(userId)?.run {
             QueryMainUserMoveClassroomResponse(
                 username = userName,
                 classroom = classroomName,

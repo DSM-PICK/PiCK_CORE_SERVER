@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.applicationstory.service
 
 import dsm.pick2024.domain.applicationstory.port.`in`.QueryUserApplicationUseCase
-import dsm.pick2024.domain.applicationstory.port.out.FindStoryByUserIdPort
+import dsm.pick2024.domain.applicationstory.port.out.QueryAllApplicationStoryPort
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.ApplicationStoryResponse
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryApplicationStoryResponse
 import org.springframework.stereotype.Service
@@ -10,12 +10,12 @@ import java.util.UUID
 
 @Service
 class QueryUserApplicationStoryService(
-    private val findStoryByUserIdPort: FindStoryByUserIdPort
+    private val queryAllApplicationStoryPort: QueryAllApplicationStoryPort
 ) : QueryUserApplicationUseCase {
 
     @Transactional(readOnly = true)
     override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse? {
-        val user = findStoryByUserIdPort.findAllByUserId(userId)
+        val user = queryAllApplicationStoryPort.findAllByUserId(userId) ?: throw Exception()
 
         val userStory =
             user.map { story ->

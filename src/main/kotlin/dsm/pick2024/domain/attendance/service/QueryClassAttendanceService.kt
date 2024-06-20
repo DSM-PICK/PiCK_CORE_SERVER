@@ -1,18 +1,18 @@
 package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
-import dsm.pick2024.domain.attendance.port.out.QueryClassAttendancePort
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.ExistOKByUserIdPort
-import dsm.pick2024.domain.classroom.port.out.FindOKClassroomPort
+import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
+import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassAttendanceService(
-    private val queryClassAttendancePort: QueryClassAttendancePort,
-    private val findOKClassroomPort: FindOKClassroomPort,
-    private val existOKByUserIdPort: ExistOKByUserIdPort
+    private val queryAttendancePort: QueryAttendancePort,
+    private val queryClassroomPort: QueryClassroomPort,
+    private val existClassRoomPort: ExistClassRoomPort
 ) : QueryClassAttendanceUseCase {
 
     @Transactional(readOnly = true)
@@ -20,14 +20,14 @@ class QueryClassAttendanceService(
         grade: Int,
         classNum: Int
     ) =
-        queryClassAttendancePort.findByGradeAndClassNum(grade, classNum)
+        queryAttendancePort.findByGradeAndClassNum(grade, classNum)
             .map { it ->
                 val userId = it.userId
                 val classroomName =
-                    existOKByUserIdPort.existOKByUserId(userId)
+                    existClassRoomPort.existOKByUserId(userId)
                         .takeIf { it }
                         ?.let {
-                            findOKClassroomPort.findOKClassroom(userId)?.classroomName
+                            queryClassroomPort.findOKClassroom(userId)?.classroomName
                         } ?: "" //예외처리 만들기
 
                 with(it) {

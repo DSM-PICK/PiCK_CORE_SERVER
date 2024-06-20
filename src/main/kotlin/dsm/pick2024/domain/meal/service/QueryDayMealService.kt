@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.meal.service
 
 import dsm.pick2024.domain.meal.port.`in`.QueryDayMealUseCase
-import dsm.pick2024.domain.meal.port.out.FindMealsByMealDatePort
+import dsm.pick2024.domain.meal.port.out.QueryMealPort
 import dsm.pick2024.domain.meal.presentation.dto.response.MealDetailsResponse
 import dsm.pick2024.domain.meal.presentation.dto.response.MealResponse
 import org.springframework.stereotype.Service
@@ -10,11 +10,11 @@ import java.time.LocalDate
 
 @Service
 class QueryDayMealService(
-    private val findMealsByMealDatePort: FindMealsByMealDatePort
+    private val queryMealPort: QueryMealPort
 ) : QueryDayMealUseCase {
     @Transactional(readOnly = true)
     override fun queryDayMeal(date: LocalDate): MealDetailsResponse? {
-        val meals = findMealsByMealDatePort.findMealsByMealDate(date)
+        val meals = queryMealPort.findMealsByMealDate(date)
 
         return meals.let { mealList ->
             val mealResponse =

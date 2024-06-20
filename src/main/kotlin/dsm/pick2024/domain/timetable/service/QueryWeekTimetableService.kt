@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.timetable.service
 
 import dsm.pick2024.domain.timetable.port.`in`.QueryWeekTimetableUseCase
-import dsm.pick2024.domain.timetable.port.out.FindTimetableByDayWeekPort
+import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
 import dsm.pick2024.domain.timetable.presentation.dto.DayTimetableResponse
 import dsm.pick2024.domain.timetable.presentation.dto.PeriodTimetableResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -14,7 +14,7 @@ import java.time.DayOfWeek
 @Service
 class QueryWeekTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val findTimetableByDayWeekPort: FindTimetableByDayWeekPort
+    private val queryTimeTablePort: QueryTimeTablePort
 ) : QueryWeekTimetableUseCase {
     // @Cacheable(value = ["weekTimetableCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
@@ -24,7 +24,7 @@ class QueryWeekTimetableService(
 
         return (0 until 5).map { i ->
             val date = startOfWeek.plusDays(i.toLong()) //주의 시작날부터 i일 후의 날짜까지 를 계산
-            val tables = findTimetableByDayWeekPort.findTimetableByDayWeekPort(
+            val tables = queryTimeTablePort.findTimetableByDayWeekPort(
                 date.dayOfWeek.value,
                 user.grade,
                 user.classNum
