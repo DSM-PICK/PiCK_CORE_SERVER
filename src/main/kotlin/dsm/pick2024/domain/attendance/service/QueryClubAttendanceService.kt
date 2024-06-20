@@ -3,39 +3,32 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
+import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val queryClassRoomPort: QueryClassroomPort,
-    private val existClassRoomPort: ExistClassRoomPort
+    private val queryClassRoomPort: QueryClassroomPort
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
     override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
-
-        if (students.isEmpty()) {
-            throw ClubNotFoundException
-        }
+            ?: throw ClubNotFoundException
 
         return students.map { it ->
-
-            val userId = it.userId
-            val classroomName =
-                if (existClassRoomPort.existsByUserId(userId)) {
-                    val classroom = queryClassRoomPort.findOKClassroom(userId)
-                        ?: throw Exception()
-                    classroom.classroomName
-                } else {
-                    throw Exception()
-                }
-
+            val classroomName = try {
+                val classroom = queryClassRoomPort.findByUserId(it.userId)
+                    ?: throw ClassroomNorFoundException
+                classroom.classroomName
+            } catch (e: EmptyResultDataAccessException) {
+                it.place.toString()
+            }
             QueryAttendanceResponse(
                 id = it.userId,
                 username = it.userName,
