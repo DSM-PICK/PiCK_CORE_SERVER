@@ -6,6 +6,7 @@ import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceR
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
+import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -13,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional
 class QueryClubAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
     private val queryClassRoomPort: QueryClassroomPort,
-    private val existClassRoomPort: ExistClassRoomPort
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
@@ -22,17 +22,12 @@ class QueryClubAttendanceService(
             ?: throw ClubNotFoundException
 
         return students.map { it ->
-
-            val userId = it.userId
-            val classroomName =
-                if (existClassRoomPort.existsByUserId(userId)) {
-                    val classroom = queryClassRoomPort.findOKClassroom(userId)
-                        ?: throw Exception()
-                    classroom.classroomName
-                } else {
-                    throw Exception()
-                }
-
+            val classroomName = try {
+                val classroom = queryClassRoomPort.findByUserId(it.userId)
+                classroom?.classroomName ?: it.place.toString()
+            } catch (e: EmptyResultDataAccessException) {
+                it.place.toString()
+            }
             QueryAttendanceResponse(
                 id = it.userId,
                 username = it.userName,
