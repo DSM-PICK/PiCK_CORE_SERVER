@@ -19,10 +19,7 @@ class QueryClubAttendanceService(
     @Transactional(readOnly = true)
     override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
-
-        if (students.isEmpty()) {
-            throw ClubNotFoundException
-        }
+            ?: throw ClubNotFoundException
 
         return students.map { it ->
 
