@@ -51,7 +51,6 @@ class PersistenceAdapterClassRoom(
     override fun findAllByStatus(status: Status): List<Classroom> =
         classroomRepository.findAllByStatus(status).map { classroomMapper.toDomain(it) }
 
-
     override fun queryFloorClassroom(floor: Int) =
         jpaQueryFactory
             .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
