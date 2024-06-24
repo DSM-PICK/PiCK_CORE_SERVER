@@ -27,7 +27,7 @@ class QueryClubAttendanceService(
                     ?: throw ClassroomNorFoundException
                 classroom.classroomName
             } catch (e: EmptyResultDataAccessException) {
-                it.place.toString()
+                ""
             }
             QueryAttendanceResponse(
                 id = it.userId,
