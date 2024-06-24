@@ -67,12 +67,14 @@ class ClassroomController(
 
     @Operation(summary = "교실이동 전체 조회 API")
     @GetMapping("/all")
-    fun queryAllClassroom(@RequestParam(name = "status") status: Status) = queryAllClassroomUseCase.queryAllClassroom(status)
+    fun queryAllClassroom(@RequestParam(name = "status") status: Status) = queryAllClassroomUseCase.queryAllClassroom(
+        status
+    )
 
     @Operation(summary = "교실이동 수락또는 거절 API")
     @PatchMapping("/status")
     fun
-        statusClassroom(
+    statusClassroom(
         @RequestBody request: ClassroomStatusRequest
     ) = changeClassroomStatusUseCase.changeClassroomStatus(request)
 }

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryAllClassroomService(
     private val queryClassroomPort: QueryClassroomPort
-): QueryAllClassroomUseCase {
+) : QueryAllClassroomUseCase {
     @Transactional(readOnly = true)
     override fun queryAllClassroom(status: Status): List<QueryClassroomResponse> =
         queryClassroomPort.findAllByStatus(status).map {
@@ -26,5 +26,4 @@ class QueryAllClassroomService(
                 endPeriod = it.endPeriod
             )
         }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
-
 }
