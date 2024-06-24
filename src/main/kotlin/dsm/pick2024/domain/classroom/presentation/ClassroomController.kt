@@ -2,6 +2,7 @@ package dsm.pick2024.domain.classroom.presentation
 
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
+import dsm.pick2024.domain.classroom.port.`in`.QueryAllClassroomUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryGradeClassroomUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryUserMoveClassroomUseCase
@@ -31,7 +32,8 @@ class ClassroomController(
     private val queryUserMoveClassroomUseCase: QueryUserMoveClassroomUseCase,
     private val queryFloorClassroomUseCase: QueryFloorClassroomUseCase,
     private val queryGradeClassroomUseCase: QueryGradeClassroomUseCase,
-    private val changeClassroomStatusUseCase: ChangeClassroomStatusUseCase
+    private val changeClassroomStatusUseCase: ChangeClassroomStatusUseCase,
+    private val queryAllClassroomUseCase: QueryAllClassroomUseCase
 ) {
     @Operation(summary = "교실이동 API")
     @PostMapping("/move")
@@ -63,9 +65,16 @@ class ClassroomController(
         @RequestParam(name = "class_num") classNum: Int
     ) = queryGradeClassroomUseCase.queryGradeClassroom(grade, classNum)
 
+    @Operation(summary = "교실이동 전체 조회 API")
+    @GetMapping("/all")
+    fun queryAllClassroom(@RequestParam(name = "status") status: Status) = queryAllClassroomUseCase.queryAllClassroom(
+        status
+    )
+
     @Operation(summary = "교실이동 수락또는 거절 API")
     @PatchMapping("/status")
-    fun statusClassroom(
+    fun
+    statusClassroom(
         @RequestBody request: ClassroomStatusRequest
     ) = changeClassroomStatusUseCase.changeClassroomStatus(request)
 }

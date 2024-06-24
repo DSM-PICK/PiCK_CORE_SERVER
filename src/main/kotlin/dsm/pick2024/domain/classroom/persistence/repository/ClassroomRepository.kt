@@ -16,4 +16,6 @@ interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
         id: UUID,
         status: Status
     ): ClassroomJpaEntity
+
+    fun findAllByStatus(status: Status): List<ClassroomJpaEntity>
 }
