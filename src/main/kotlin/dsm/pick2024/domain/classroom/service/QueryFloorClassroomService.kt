@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryClassroomResponse
@@ -17,11 +18,15 @@ class QueryFloorClassroomService(
         floor: Int,
         status: Status
     ): List<QueryClassroomResponse> {
-        val classrooms = if (floor == 5) {
-            queryClassroomPort.findAllByStatus(status)
-        } else {
-            queryClassroomPort.queryFloorClassroom(floor)
-                .filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
+        val classrooms = when (floor) {
+            2, 3, 4 -> {
+                queryClassroomPort.queryFloorClassroom(floor)
+                    .filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
+            }
+            5 -> {
+                queryClassroomPort.findAllByStatus(status)
+            }
+            else -> throw FloorNotFoundException
         }
 
         return classrooms.map {
