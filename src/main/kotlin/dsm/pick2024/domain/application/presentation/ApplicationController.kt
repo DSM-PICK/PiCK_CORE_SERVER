@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -53,9 +52,9 @@ class ApplicationController(
     ) = statusApplicationUseCase.statusApplication(applicationStatusRequest)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
-    @PatchMapping("/change/{applicationId}")
+    @PatchMapping("/return")
     fun statusApplicationChange(
-        @PathVariable(name = "applicationId") applicationId: UUID
+        @RequestBody applicationId: List<UUID>
     ) = statusApplicationChangeUseCase.statusApplicationChange(applicationId)
 
     @Operation(summary = "층별로 외출신청자 조회 API")

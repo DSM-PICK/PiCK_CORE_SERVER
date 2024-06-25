@@ -14,10 +14,12 @@ class StatusApplicationChangeService(
     private val deleteApplicationPort: DeleteApplicationPort
 ) : StatusApplicationChangeUseCase {
     @Transactional
-    override fun statusApplicationChange(applicationId: UUID) {
-        queryApplicationPort.findById(applicationId)
-            ?: throw ApplicationNotFoundException
+    override fun statusApplicationChange(applicationId: List<UUID>) {
+        applicationId.map {
+            queryApplicationPort.findById(it)
+                ?: throw ApplicationNotFoundException
 
-        deleteApplicationPort.deleteById(applicationId)
+            deleteApplicationPort.deleteById(it)
+        }
     }
 }
