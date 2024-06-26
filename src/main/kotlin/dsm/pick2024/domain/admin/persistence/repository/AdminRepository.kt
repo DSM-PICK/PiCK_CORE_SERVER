@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface AdminRepository : JpaRepository<AdminJpaEntity, UUID> {
-    fun findByName(name: String): AdminJpaEntity
+    fun existsByName(name: String): Boolean
 
     fun findByAdminId(adminId: String): AdminJpaEntity
 
