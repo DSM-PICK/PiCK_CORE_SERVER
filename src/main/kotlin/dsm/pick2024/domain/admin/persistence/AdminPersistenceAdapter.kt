@@ -14,7 +14,7 @@ class AdminPersistenceAdapter(
     private val adminMapper: AdminMapper,
     private val jpaQueryFactory: JPAQueryFactory
 ) : AdminPort {
-    override fun findByName(name: String) = adminRepository.findByName(name).let { adminMapper.toDomain(it) }
+    override fun existByName(name: String) = adminRepository.existsByName(name)
 
     override fun findByAdminId(adminId: String) =
         adminRepository.findByAdminId(adminId).let { adminMapper.toDomain(it) }
