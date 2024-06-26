@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.selfstudy.service
 
+import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
 import dsm.pick2024.domain.selfstudy.domain.SelfStudy
+import dsm.pick2024.domain.selfstudy.exception.TeacherNotFoundException
 import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.DeleteSelfStudyPort
 import dsm.pick2024.domain.selfstudy.port.out.QuerySelfStudyPort
@@ -14,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional
 class SelfStudyTeacherService(
     private val selfStudyPort: SelfStudyPort,
     private val querySelfStudyPort: QuerySelfStudyPort,
-    private val deleteSelfStudyPort: DeleteSelfStudyPort
+    private val deleteSelfStudyPort: DeleteSelfStudyPort,
+    private val existsByAdminIdPort: ExistsByAdminIdPort
+
 ) : SelfStudyTeacherUseCase {
 
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
@@ -33,6 +37,12 @@ class SelfStudyTeacherService(
                         date = request.date
                     )
                 }
+
+        teacherList.forEach {
+            if (!existsByAdminIdPort.existsByAdminId(it.teacherName)) {
+                throw TeacherNotFoundException
+            }
+        }
 
         selfStudyPort.saveAll(teacherList)
     }
