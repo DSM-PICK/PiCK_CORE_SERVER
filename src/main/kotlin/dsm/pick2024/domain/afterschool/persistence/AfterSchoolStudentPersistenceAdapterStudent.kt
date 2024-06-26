@@ -24,7 +24,7 @@ class AfterSchoolStudentPersistenceAdapterStudent(
         afterSchoolStudentRepository.findByUserId(id).let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun deleteById(id: UUID) {
-        afterSchoolStudentRepository.deleteByUserId(id)
+        afterSchoolStudentRepository.deleteById(id)
     }
 
     override fun save(afterSchoolStudent: AfterSchoolStudent) {
