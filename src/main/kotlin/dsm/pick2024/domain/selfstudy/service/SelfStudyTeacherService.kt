@@ -39,7 +39,7 @@ class SelfStudyTeacherService(
                 }
 
         teacherList.forEach {
-            if (!existsByAdminIdPort.existsByAdminId(it.teacherName)) {
+            if (!existsByAdminIdPort.existByName(it.teacherName)) {
                 throw TeacherNotFoundException
             }
         }
