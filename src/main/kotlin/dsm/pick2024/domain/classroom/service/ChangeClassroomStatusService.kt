@@ -7,7 +7,7 @@ import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAllPort
 import dsm.pick2024.domain.classroom.domain.Classroom
-import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
+import dsm.pick2024.domain.classroom.exception.ClassroomNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
@@ -29,7 +29,7 @@ class ChangeClassroomStatusService(
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         if (request.status == NO) {
             for (id in request.ids) {
-                val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNorFoundException
+                val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
             return
@@ -39,7 +39,7 @@ class ChangeClassroomStatusService(
         val updateAttendanceList = mutableListOf<Attendance>()
 
         request.ids.forEach { id ->
-            val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNorFoundException
+            val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
 
             val updatedClassroom = classroom.copy(status = OK)
             update.add(updatedClassroom)
