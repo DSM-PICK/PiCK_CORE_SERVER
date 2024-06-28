@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.notice.service
 
+import dsm.pick2024.domain.notice.exception.NoticeNotFoundException
 import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.QueryNoticePort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
@@ -29,7 +30,7 @@ class QueryNoticeService(
 
     override fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse {
         val notice = queryNoticePort.findById(noticeId)
-            ?: throw RuntimeException() //예외만들기
+            ?: throw NoticeNotFoundException
 
         return QueryAllNoticeResponse(
             title = notice.title,
