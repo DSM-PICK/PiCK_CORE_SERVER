@@ -13,6 +13,8 @@ class QueryAllWeekendMealStatus(
     override fun findAll(): List<QueryWeekendMealResponse> {
         val weekendMeal = queryWeekendMealPort.findAll()
 
+        if (weekendMeal.isEmpty()) return emptyList()
+
         val responseList =
             weekendMeal.map { meal ->
                 QueryWeekendMealResponse(
