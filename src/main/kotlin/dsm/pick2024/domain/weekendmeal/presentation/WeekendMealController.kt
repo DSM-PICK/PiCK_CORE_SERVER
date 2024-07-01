@@ -36,7 +36,7 @@ class WeekendMealController(
     @Operation(summary = "주말급식 강제 상태변경")
     @PatchMapping("/status")
     fun changeWeekendMealStatus(
-        @RequestParam(name = "userId")
+        @RequestParam(name = "id")
         userId: UUID,
         @RequestParam(name = "status")
         status: Status
