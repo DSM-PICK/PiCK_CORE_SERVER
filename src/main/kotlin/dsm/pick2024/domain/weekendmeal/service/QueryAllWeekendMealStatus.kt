@@ -16,7 +16,7 @@ class QueryAllWeekendMealStatus(
         val responseList =
             weekendMeal.map { meal ->
                 QueryWeekendMealResponse(
-                    id = meal.userId,
+                    id = meal.id!!,
                     name = meal.userName,
                     status = meal.status,
                     grade = meal.grade,
