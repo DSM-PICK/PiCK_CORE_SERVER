@@ -77,9 +77,8 @@ class WeekendMealPersistenceAdapter(
     override fun findById(id: UUID): WeekendMeal? {
         return weekendMealRepository.findById(id).let { weekendMealMapper.toDomain(it) }
     }
-
-    override fun findAll(): List<WeekendMeal> {
-        return jpaQueryFactory
+    override fun findAll(): List<WeekendMeal> =
+        jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
             .orderBy(
                 QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
@@ -87,6 +86,7 @@ class WeekendMealPersistenceAdapter(
                 QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
             )
             .fetch()
-            .map { weekendMealMapper.toDomain(it) }
-    }
+            .let { result ->
+                result?.map { weekendMealMapper.toDomain(it) } ?: emptyList()
+            }
 }
