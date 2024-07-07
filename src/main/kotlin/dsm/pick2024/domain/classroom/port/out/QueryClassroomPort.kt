@@ -20,4 +20,6 @@ interface QueryClassroomPort {
     fun queryFloorClassroom(floor: Int): List<Classroom>
 
     fun findAllByStatus(status: Status): List<Classroom>
+
+    fun queryFloorClassroomWithAttendance(floor: Int): List<Classroom>
 }
