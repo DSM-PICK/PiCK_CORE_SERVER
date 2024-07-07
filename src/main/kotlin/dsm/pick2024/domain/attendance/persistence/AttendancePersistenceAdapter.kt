@@ -25,6 +25,12 @@ class AttendancePersistenceAdapter(
 
     override fun findAll() = attendanceJpaRepository.findAll().map { attendanceMapper.toDomain(it) }
 
+    override fun findByFloor(floor: Int): List<Attendance>? = attendanceJpaRepository.findByFloor(floor).map {
+        attendanceMapper.toDomain(
+            it
+        )
+    }
+
     override fun findByGradeAndClassNum(
         grade: Int,
         classNum: Int

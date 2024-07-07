@@ -15,4 +15,6 @@ interface QueryAttendancePort {
     fun findByClub(club: String): List<Attendance>?
 
     fun findByUserId(userId: UUID): Attendance?
+
+    fun findByFloor(floor: Int): List<Attendance>?
 }
