@@ -16,11 +16,11 @@ class QueryDateScheduleService(
 ) : QueryDateScheduleUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryDateScheduleUseCase(date: LocalDate): ScheduleResponse? {
-        val schedule = querySchedulePort.findByDate(date)
+    override fun queryDateScheduleUseCase(date: LocalDate): List<ScheduleResponse>? {
+        val schedule = querySchedulePort.findAllByDate(date)
             ?: throw ScheduleNotFoundException
 
-        return schedule.let {
+        return schedule.map {
             ScheduleResponse(
                 id = it.id!!,
                 eventName = it.eventName,
