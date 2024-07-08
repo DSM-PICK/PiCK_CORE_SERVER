@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.schedule.service
 
+import dsm.pick2024.domain.schedule.exception.ScheduleNotFoundException
 import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
@@ -16,7 +17,7 @@ class ModifyScheduleService(
     @Transactional
     override fun modifyModify(request: ModifyScheduleRequest) {
         val schedule = querySchedulePort.findById(request.id)
-            ?: throw RuntimeException("")
+            ?: throw ScheduleNotFoundException
 
         saveSchedulePort.save(
             schedule.copy(
