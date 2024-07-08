@@ -29,7 +29,11 @@ class SchedulePersistenceAdapter(
         scheduleRepository.deleteById(id)
     }
 
-    override fun findByDate(date: LocalDate) = scheduleRepository.findByDate(date)
+    override fun findByDate(date: LocalDate): List<Schedule>? = scheduleRepository.findByDate(date).map {
+        scheduleMapper.toDomain(
+            it
+        )
+    }
 
     override fun scheduleMonth(
         year: Year,
