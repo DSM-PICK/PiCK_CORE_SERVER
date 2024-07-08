@@ -3,7 +3,6 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.exception.ClassroomNorFoundException
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.dao.EmptyResultDataAccessException
@@ -24,11 +23,11 @@ class QueryClubAttendanceService(
         return students.map { it ->
             val classroomName = try {
                 val classroom = queryClassRoomPort.findByUserId(it.userId)
-                    ?: throw ClassroomNorFoundException
-                classroom.classroomName
+                classroom?.classroomName
             } catch (e: EmptyResultDataAccessException) {
-                it.place.toString()
+                ""
             }
+
             QueryAttendanceResponse(
                 id = it.userId,
                 username = it.userName,
@@ -40,7 +39,7 @@ class QueryClubAttendanceService(
                 status8 = it.period8,
                 status9 = it.period9,
                 status10 = it.period10,
-                classroomName = classroomName
+                classroomName = classroomName!!
             )
         }
     }

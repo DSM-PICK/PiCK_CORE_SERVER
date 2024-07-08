@@ -1,27 +1,34 @@
 package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryClassroomResponse
+import org.joda.time.LocalDate
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryFloorClassroomService(
-    private val queryClassroomPort: QueryClassroomPort
+    private val queryClassroomPort: QueryClassroomPort,
+    private val queryAttendancePort: QueryAttendancePort
 ) : QueryFloorClassroomUseCase {
 
-    @Transactional(readOnly = true)
     override fun queryFloorClassroom(
         floor: Int,
         status: Status
     ): List<QueryClassroomResponse> {
+        val today = LocalDate.now().dayOfWeek
+
         val classrooms = when (floor) {
             2, 3, 4 -> {
-                queryClassroomPort.queryFloorClassroom(floor)
-                    .filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
+                val filteredClassrooms = if (today == 2 || today == 5) {
+                    queryClassroomPort.queryFloorClassroomWithAttendance(floor)
+                } else {
+                    queryClassroomPort.queryFloorClassroom(floor)
+                }
+                filteredClassrooms.filter { it.status == status }
             }
             5 -> {
                 queryClassroomPort.findAllByStatus(status)
@@ -29,17 +36,23 @@ class QueryFloorClassroomService(
             else -> throw FloorNotFoundException
         }
 
-        return classrooms.map {
+        return classrooms.map { classroom ->
+            val move = if (today == 2 || today == 5) {
+                queryAttendancePort.findByUserId(classroom.userId)?.place ?: ""
+            } else {
+                "${classroom.grade}-${classroom.classNum}"
+            }
+
             QueryClassroomResponse(
-                id = it.userId,
-                username = it.userName,
-                classroomName = it.classroomName,
-                move = "${it.grade}-${it.classNum}",
-                grade = it.grade,
-                classNum = it.classNum,
-                num = it.num,
-                startPeriod = it.startPeriod,
-                endPeriod = it.endPeriod
+                id = classroom.userId,
+                username = classroom.userName,
+                classroomName = classroom.classroomName,
+                move = move,
+                grade = classroom.grade,
+                classNum = classroom.classNum,
+                num = classroom.num,
+                startPeriod = classroom.startPeriod,
+                endPeriod = classroom.endPeriod
             )
         }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
