@@ -2,7 +2,7 @@ package dsm.pick2024.domain.classroom.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.attendance.persistence.repository.AttendanceRepository
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.entity.QClassroomJpaEntity
 import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
@@ -17,7 +17,7 @@ class PersistenceAdapterClassRoom(
     private val classroomMapper: ClassroomMapper,
     private val classroomRepository: ClassroomRepository,
     private val jpaQueryFactory: JPAQueryFactory,
-    private val attendanceRepository: AttendanceRepository
+    private val attendancePort: QueryAttendancePort
 ) : ClassRoomPort {
     override fun save(classroom: Classroom) {
         classroomRepository.save(classroomMapper.toEntity(classroom))
@@ -72,10 +72,6 @@ class PersistenceAdapterClassRoom(
                     }
                 )
             )
-            .orderBy(
-                QClassroomJpaEntity.classroomJpaEntity.classNum.asc(),
-                QClassroomJpaEntity.classroomJpaEntity.num.asc()
-            )
             .fetch()
             .map { classroomMapper.toDomain(it) }
 
@@ -107,8 +103,8 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun queryFloorClassroomWithAttendance(floor: Int): List<Classroom> {
-        val attendances = attendanceRepository.findByFloor(floor)
-        val userIds = attendances.map { it.userId }
+        val attendances = attendancePort.findByFloor(floor)
+        val userIds = attendances?.map { it.userId }
 
         val classrooms = jpaQueryFactory
             .selectFrom(QClassroomJpaEntity.classroomJpaEntity)
