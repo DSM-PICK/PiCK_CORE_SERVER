@@ -28,7 +28,7 @@ class QueryFloorClassroomService(
                 } else {
                     queryClassroomPort.queryFloorClassroom(floor)
                 }
-                filteredClassrooms.filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
+                filteredClassrooms.filter { it.status == status }
             }
             5 -> {
                 queryClassroomPort.findAllByStatus(status)
