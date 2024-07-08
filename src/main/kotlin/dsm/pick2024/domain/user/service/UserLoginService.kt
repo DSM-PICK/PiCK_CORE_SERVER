@@ -30,7 +30,7 @@ class UserLoginService(
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         if (!existsUserPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(
-                    userLoginRequest,
+                userLoginRequest
             )
 
             userSavePort.save(
