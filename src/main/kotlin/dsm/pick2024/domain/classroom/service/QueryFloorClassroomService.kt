@@ -19,42 +19,41 @@ class QueryFloorClassroomService(
         floor: Int,
         status: Status
     ): List<QueryClassroomResponse> {
-        when (floor) {
-            2, 3, 4, 5 -> {
-                val today = LocalDate.now().dayOfWeek
+        val today = LocalDate.now().dayOfWeek
 
-                val dayFilter = if (today == 2 || today == 5) {
+        val classrooms = when (floor) {
+            2, 3, 4 -> {
+                val filteredClassrooms = if (today == 2 || today == 5) {
                     queryClassroomPort.queryFloorClassroomWithAttendance(floor)
-                        .filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
                 } else {
                     queryClassroomPort.queryFloorClassroom(floor)
-                        .filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
                 }
-
-                return dayFilter.map { classroom ->
-                    val move = if (today == 2 || today == 5) {
-                        queryAttendancePort.findByUserId(classroom.userId)?.place ?: ""
-                    } else {
-                        "${classroom.grade}-${classroom.classNum}"
-                    }
-
-                    QueryClassroomResponse(
-                        id = classroom.userId,
-                        username = classroom.userName,
-                        classroomName = classroom.classroomName,
-                        move = move,
-                        grade = classroom.grade,
-                        classNum = classroom.classNum,
-                        num = classroom.num,
-                        startPeriod = classroom.startPeriod,
-                        endPeriod = classroom.endPeriod
-                    )
-                }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+                filteredClassrooms.filter { it.status == if (status == Status.QUIET) Status.QUIET else Status.OK }
             }
-
-            else -> {
-                throw FloorNotFoundException
+            5 -> {
+                queryClassroomPort.findAllByStatus(status)
             }
+            else -> throw FloorNotFoundException
         }
+
+        return classrooms.map { classroom ->
+            val move = if (today == 2 || today == 5) {
+                queryAttendancePort.findByUserId(classroom.userId)?.place ?: ""
+            } else {
+                "${classroom.grade}-${classroom.classNum}"
+            }
+
+            QueryClassroomResponse(
+                id = classroom.userId,
+                username = classroom.userName,
+                classroomName = classroom.classroomName,
+                move = move,
+                grade = classroom.grade,
+                classNum = classroom.classNum,
+                num = classroom.num,
+                startPeriod = classroom.startPeriod,
+                endPeriod = classroom.endPeriod
+            )
+        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }
