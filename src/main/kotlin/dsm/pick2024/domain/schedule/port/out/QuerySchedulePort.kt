@@ -7,7 +7,7 @@ import java.time.Year
 import java.util.*
 
 interface QuerySchedulePort {
-    fun findByDate(date: LocalDate): List<Schedule>?
+    fun findAllByDate(date: LocalDate): List<Schedule>?
 
     fun findById(id: UUID): Schedule?
 
