@@ -12,6 +12,7 @@ import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
+import dsm.pick2024.infrastructure.feign.client.dto.request.XquareRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -30,7 +31,7 @@ class UserLoginService(
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         if (!existsUserPort.existsByAccountId(userLoginRequest.accountId)) {
             val xquareUser = xquareFeignClient.xquareUser(
-                userLoginRequest
+                XquareRequest(userLoginRequest.accountId, userLoginRequest.password)
             )
 
             userSavePort.save(
