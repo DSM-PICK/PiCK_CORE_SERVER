@@ -1,6 +1,6 @@
 package dsm.pick2024.infrastructure.feign.client
 
-import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
+import dsm.pick2024.infrastructure.feign.client.dto.request.XquareRequest
 import dsm.pick2024.infrastructure.feign.client.dto.response.XquareResponse
 import dsm.pick2024.infrastructure.feign.client.dto.response.XquareUserAllResponse
 import org.springframework.cloud.openfeign.FeignClient
@@ -13,7 +13,7 @@ interface XquareFeignClient {
 
     @GetMapping("/user-data")
     fun xquareUser(
-        @RequestBody userLoginRequest: UserLoginRequest
+        @RequestBody xquareRequest: XquareRequest
     ): XquareResponse
 
     @GetMapping("/user-all")

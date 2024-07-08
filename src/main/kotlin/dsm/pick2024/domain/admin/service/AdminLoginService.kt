@@ -13,6 +13,7 @@ import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
+import dsm.pick2024.infrastructure.feign.client.dto.request.XquareRequest
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -30,7 +31,9 @@ class AdminLoginService(
     @Transactional
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
         if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
-            val xquareUser = xquareFeignClient.xquareUser(adminLoginRequest.adminId, adminLoginRequest.password)
+            val xquareUser = xquareFeignClient.xquareUser(
+                XquareRequest(adminLoginRequest.adminId, adminLoginRequest.password)
+            )
             if (Role.SCH != xquareUser.userRole) throw NotAdminException
 
             adminSavePort.save(
