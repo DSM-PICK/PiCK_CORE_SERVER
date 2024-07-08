@@ -10,4 +10,6 @@ interface AttendanceRepository : Repository<AttendanceJpaEntity, UUID> {
     fun findByUserId(userId: UUID): AttendanceJpaEntity
 
     fun findAll(): List<AttendanceJpaEntity>
+
+    fun findByFloor(floor: Int): List<AttendanceJpaEntity>
 }
