@@ -1,10 +1,11 @@
 package dsm.pick2024.domain.application.presentation
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryAllOKApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryAllReasonApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryFloorApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.QueryFloorAndStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.StatusApplicationChangeUseCase
@@ -31,7 +32,7 @@ class ApplicationController(
     private val applicationUseCase: ApplicationUseCase,
     private val statusApplicationUseCase: StatusApplicationUseCase,
     private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
-    private val queryFloorApplicationUseCase: QueryFloorApplicationUseCase,
+    private val queryFloorApplicationUseCase: QueryFloorAndStatusApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
@@ -57,11 +58,12 @@ class ApplicationController(
         @RequestBody applicationId: List<UUID>
     ) = statusApplicationChangeUseCase.statusApplicationChange(applicationId)
 
-    @Operation(summary = "층별로 외출신청자 조회 API")
+    @Operation(summary = "층별로 외출자/신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorApplication(
-        @RequestParam(name = "floor") floor: Int
-    ) = queryFloorApplicationUseCase.queryFloorApplication(floor)
+        @RequestParam(name = "floor") floor: Int,
+        @RequestParam(name = "status") status: Status
+    ) = queryFloorApplicationUseCase.queryFloorAndStatusApplication(floor, status)
 
     @Operation(summary = "반별로 외출신청자 조회 API")
     @GetMapping("/grade")
