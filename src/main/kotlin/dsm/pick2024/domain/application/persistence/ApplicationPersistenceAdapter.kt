@@ -7,6 +7,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
 import dsm.pick2024.domain.application.port.out.ApplicationPort
+import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
 import org.springframework.stereotype.Component
 import java.util.UUID
@@ -71,7 +72,7 @@ class ApplicationPersistenceAdapter(
                         4 -> 1
                         3 -> 2
                         2 -> 3
-                        else -> throw IllegalArgumentException("Invalid floor number")
+                        else -> throw FloorNotFoundException
                     }
                 ),
                 QApplicationJapEntity.applicationJapEntity.status.eq(Status.QUIET)
