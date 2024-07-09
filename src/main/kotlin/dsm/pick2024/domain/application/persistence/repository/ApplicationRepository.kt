@@ -18,6 +18,8 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
 
     fun findAll(): List<ApplicationJapEntity>
 
+    fun findAllByStatus(status: Status): List<ApplicationJapEntity>
+
     fun findByUserId(userId: UUID): ApplicationJapEntity
 
     fun deleteAll()
