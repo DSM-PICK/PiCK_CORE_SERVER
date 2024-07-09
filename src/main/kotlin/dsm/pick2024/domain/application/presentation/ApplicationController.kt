@@ -2,7 +2,6 @@ package dsm.pick2024.domain.application.presentation
 
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.QueryAllOKApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryAllReasonApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryFloorAndStatusApplicationUseCase
@@ -36,7 +35,6 @@ class ApplicationController(
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
     private val queryMyApplicationUseCase: QueryMyApplicationUseCase,
-    private val queryAllOKApplicationUseCase: QueryAllOKApplicationUseCase,
     private val queryStatusApplicationUseCase: QueryStatusApplicationUseCase
 ) {
     @Operation(summary = "외출 신청 API")
@@ -79,10 +77,6 @@ class ApplicationController(
     @Operation(summary = "내 외출증 조회 API")
     @GetMapping("/my")
     fun queryMyApplication() = queryMyApplicationUseCase.queryMyApplication()
-
-    @Operation(summary = "외출중인 학생 조회 API")
-    @GetMapping("/non-return")
-    fun queryNonReturnApplication() = queryAllOKApplicationUseCase.queryAllNonReturnApplication()
 
     @Operation(summary = "학생 조회 API")
     @GetMapping("/status")
