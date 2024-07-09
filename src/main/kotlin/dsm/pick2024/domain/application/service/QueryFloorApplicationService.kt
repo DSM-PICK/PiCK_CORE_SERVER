@@ -25,7 +25,7 @@ class QueryFloorApplicationService(
                 val filteredClassrooms = if (today == 2 || today == 5) {
                     queryApplicationPort.queryApplicationWithAttendance(floor)
                 } else {
-                    queryApplicationPort.findByFloorAndStatus(floor, status)
+                    queryApplicationPort.findByFloor(floor)
                 }
                 filteredClassrooms.filter { it.status == status }
             }

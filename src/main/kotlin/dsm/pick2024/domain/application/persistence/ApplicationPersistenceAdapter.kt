@@ -59,7 +59,7 @@ class ApplicationPersistenceAdapter(
 
     override fun save(application: Application) = applicationRepository.save(applicationMapper.toEntity(application))
 
-    override fun findByFloorAndStatus(floor: Int, status: Status) =
+    override fun findByFloor(floor: Int) =
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -75,8 +75,7 @@ class ApplicationPersistenceAdapter(
                         2 -> 3
                         else -> throw IllegalArgumentException("Invalid floor number")
                     }
-                ),
-                QApplicationJapEntity.applicationJapEntity.status.eq(status)
+                )
             )
             .fetch()
             .map { applicationMapper.toDomain(it) }
