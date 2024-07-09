@@ -14,4 +14,6 @@ interface QueryApplicationPort {
     fun findOKApplication(id: UUID): Application?
 
     fun findByUserId(userId: UUID): Application?
+
+    fun queryApplicationWithAttendance(floor: Int): List<Application>
 }
