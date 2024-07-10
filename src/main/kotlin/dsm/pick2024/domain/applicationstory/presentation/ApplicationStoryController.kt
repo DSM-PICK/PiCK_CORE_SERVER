@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.applicationstory.presentation
 
+import dsm.pick2024.domain.applicationstory.port.`in`.QueryAllUserApplicationStoryUseCase
 import dsm.pick2024.domain.applicationstory.port.`in`.QueryClassUserUseCase
 import dsm.pick2024.domain.applicationstory.port.`in`.QueryUserApplicationUseCase
 import io.swagger.v3.oas.annotations.Operation
@@ -16,8 +17,14 @@ import java.util.UUID
 @RequestMapping("/story")
 class ApplicationStoryController(
     private val queryUserApplicationUseCase: QueryUserApplicationUseCase,
-    private val queryClassUserUseCase: QueryClassUserUseCase
+    private val queryClassUserUseCase: QueryClassUserUseCase,
+    private val queryAllUserApplicationStoryUseCase: QueryAllUserApplicationStoryUseCase
 ) {
+
+    @Operation(summary = "외출기록 전체 조회 기능")
+    @GetMapping("/all")
+    fun queryAllUserApplicationStory() = queryAllUserApplicationStoryUseCase.queryAllUSerApplicationStory()
+
     @Operation(summary = "외출기록 조회 기능")
     @GetMapping("/query/{userId}")
     fun queryUserApplicationStory(

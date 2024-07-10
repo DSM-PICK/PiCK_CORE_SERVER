@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.applicationstory.service
 
 import dsm.pick2024.domain.applicationstory.enums.Type
-import dsm.pick2024.domain.applicationstory.port.`in`.QueryClassUserUseCase
+import dsm.pick2024.domain.applicationstory.port.`in`.QueryAllUserApplicationStoryUseCase
 import dsm.pick2024.domain.applicationstory.port.out.QueryAllApplicationStoryPort
 import dsm.pick2024.domain.applicationstory.presentation.dto.response.QueryUserClassResponse
 import dsm.pick2024.domain.status.port.out.QueryStatusPort
@@ -10,16 +10,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class QueryClassUserService(
-    private val queryAllApplicationStoryPort: QueryAllApplicationStoryPort,
-    private val queryStatusPort: QueryStatusPort
-) : QueryClassUserUseCase {
+class QueryAllUserApplicationStoryService(
+    private val queryStatusPort: QueryStatusPort,
+    private val queryAllApplicationStoryPort: QueryAllApplicationStoryPort
+) : QueryAllUserApplicationStoryUseCase {
     @Transactional(readOnly = true)
-    override fun queryClassUser(
-        grade: Int,
-        classNum: Int
-    ): List<QueryUserClassResponse> {
-        val students = queryStatusPort.findByGradeAndClassNum(grade, classNum)
+    override fun queryAllUSerApplicationStory(): List<QueryUserClassResponse> {
+        val students = queryStatusPort.findAll()
 
         return students.map { student ->
             val applicationStory =
@@ -36,6 +33,6 @@ class QueryClassUserService(
                 applicationCnt = applicationCnt,
                 earlyReturnCnt = earlyReturnCnt
             )
-        }
+        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }
