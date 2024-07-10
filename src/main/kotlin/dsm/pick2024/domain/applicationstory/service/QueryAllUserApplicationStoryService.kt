@@ -19,7 +19,8 @@ class QueryAllUserApplicationStoryService(
         val students = queryStatusPort.findAll()
 
         return students.map { student ->
-            val applicationStory = queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
+            val applicationStory =
+                queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
             val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0
             val earlyReturnCnt = applicationStory.count { it.type == Type.EARLY_RETURN } ?: 0
 
