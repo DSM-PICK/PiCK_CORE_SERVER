@@ -28,10 +28,12 @@ class AddBugService(
                         """
                                 ### 🕖 버그 제목
                                 ${request.title}
+                                ### 📱유형
+                                ${request.model}
                                 ### 🔗 버그 내용
                                 ${request.content}
                                 ### 📄 이미지
-                                ${request.fileName?.let { fileUtil.generateObjectUrl(it, PathList.BUG) }}
+                                ${request.fileName?.map { fileUtil.generateObjectUrl(it, PathList.BUG) } ?: emptyList()}
                                 ### 🧑🏻‍💻 버그 제보자
                                 ${SecurityContextHolder.getContext().authentication.name}
                         """.trimIndent()

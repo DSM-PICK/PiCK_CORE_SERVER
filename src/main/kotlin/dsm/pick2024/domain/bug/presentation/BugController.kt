@@ -26,7 +26,7 @@ class BugController(
     @ResponseStatus(value = HttpStatus.OK)
     @PostMapping("/upload")
     fun uploadBugImage(
-        @RequestPart(name = "file") file: MultipartFile
+        @RequestPart(name = "file") file: List<MultipartFile>
     ) =
         uploadBugImageService.uploadBugImage(file)
 
