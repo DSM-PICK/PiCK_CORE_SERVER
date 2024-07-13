@@ -33,7 +33,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers("/admin/login", "/user/login").permitAll()
+            .antMatchers("/admin/login", "/admin/refresh", "/user/login", "/user/refresh").permitAll()
             .antMatchers("/bug/**").hasAnyRole(Role.SCH.name, Role.STU.name)
             .antMatchers(
                 HttpMethod.POST,
