@@ -20,7 +20,8 @@ class QueryStatusApplicationService(
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
         val out =
             queryAllApplicationPort.findAll()
-                .count { it.status == Status.OK }
+                .count { it.status == Status.OK } +
+                queryAllEarlyReturnPort.findAll().count() { it.status == Status.OK }
 
         val request =
             queryAllEarlyReturnPort.findAll().count { it.status == Status.QUIET } +
