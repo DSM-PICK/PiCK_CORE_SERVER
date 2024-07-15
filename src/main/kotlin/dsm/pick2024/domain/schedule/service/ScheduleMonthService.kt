@@ -9,12 +9,14 @@ import java.time.Month
 import java.time.Year
 import java.time.format.TextStyle
 import java.util.Locale
+import org.springframework.cache.annotation.Cacheable
 
 @Service
 class ScheduleMonthService(
     private val querySchedulePort: QuerySchedulePort
 ) : ScheduleMonthUseCase {
 
+    @Cacheable(value = ["monthScheduleCache"], key = "#month.value")
     @Transactional(readOnly = true)
     override fun scheduleMonth(
         year: Year,
