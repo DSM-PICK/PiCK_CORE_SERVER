@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Configuration
 class CacheConfig {
     @Bean
     fun cacheManager(): CacheManager {
-        return ConcurrentMapCacheManager("dayTimetableCache", "weekTimetableCache", "dayMealCache")
+        return ConcurrentMapCacheManager("dayMealCache", "monthScheduleCache", "dayScheduleCache")
     }
 }
