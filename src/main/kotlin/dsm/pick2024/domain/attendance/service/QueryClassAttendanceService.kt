@@ -24,7 +24,7 @@ class QueryClassAttendanceService(
                 val userId = it.userId
                 val classroomName = try {
                     val classroom = queryClassroomPort.findByUserId(userId)
-                    classroom?.classroomName
+                    classroom?.classroomName ?: ""
                 } catch (e: EmptyResultDataAccessException) {
                     ""
                 }
