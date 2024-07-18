@@ -17,8 +17,8 @@ class QueryClassApplicationService(
     override fun queryClassApplication(
         grade: Int,
         classNum: Int
-    ) =
-        if (grade == 5 && classNum == 5) {
+    ): List<QueryApplicationResponse> {
+        val applications = if (grade == 5 && classNum == 5) {
             queryAllApplicationPort.findAllByStatus(Status.QUIET)
                 .map { QueryApplicationResponse(it) }
         } else {
@@ -26,4 +26,9 @@ class QueryClassApplicationService(
                 .filter { it.status == Status.QUIET }
                 .map { QueryApplicationResponse(it) }
         }
+
+        return applications.sortedWith(
+            compareBy({ it.grade }, { it.classNum }, { it.num })
+        )
+    }
 }
