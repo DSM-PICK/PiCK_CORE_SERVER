@@ -8,7 +8,6 @@ import dsm.pick2024.domain.earlyreturn.port.out.DeleteEarlyReturnPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.ResetWeekendMealUseCase
-import org.springframework.cache.annotation.CacheEvict
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
