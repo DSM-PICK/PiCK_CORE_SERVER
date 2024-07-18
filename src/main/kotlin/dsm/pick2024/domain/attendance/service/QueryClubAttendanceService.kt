@@ -23,7 +23,7 @@ class QueryClubAttendanceService(
         return students.map { it ->
             val classroomName = try {
                 val classroom = queryClassRoomPort.findOKClassroom(it.userId)
-                classroom?.classroomName
+                classroom?.classroomName ?: ""
             } catch (e: EmptyResultDataAccessException) {
                 ""
             }
