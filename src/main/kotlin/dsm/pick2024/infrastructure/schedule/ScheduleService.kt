@@ -41,8 +41,4 @@ class ScheduleService(
         resetAttendanceUseCase.reset()
         resetStatusUseCase.reset()
     }
-
-    /*@CacheEvict(value = ["dayTimetableCache", "weekTimetableCache"], allEntries = true)
-    @Scheduled(fixedDelay = 30 * 60 * 1000)
-    fun deleteTimetableCache() {}*/
 }
