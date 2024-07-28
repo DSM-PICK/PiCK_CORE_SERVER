@@ -8,8 +8,10 @@ import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
+import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -72,11 +74,13 @@ class ScheduleController(
         @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
 
+
+    @Cacheable(value = ["dayScheduleCache"], key = "#date")
     @Operation(summary = "일 별 학사일정조회 api")
     @GetMapping("/date")
     fun queryDateSchedule(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         @RequestParam(name = "date")
         date: LocalDate
-    ) = queryDateScheduleUseCase.queryDateScheduleUseCase(date)
+    ): List<ScheduleResponse> = queryDateScheduleUseCase.queryDateScheduleUseCase(date)
 }

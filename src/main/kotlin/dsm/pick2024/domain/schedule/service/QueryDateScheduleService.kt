@@ -16,9 +16,9 @@ class QueryDateScheduleService(
     private val querySchedulePort: QuerySchedulePort
 ) : QueryDateScheduleUseCase {
 
-    @Cacheable(value = ["dayScheduleCache"], key = "#date")
+
     @Transactional(readOnly = true)
-    override fun queryDateScheduleUseCase(date: LocalDate): List<ScheduleResponse>? {
+    override fun queryDateScheduleUseCase(date: LocalDate): List<ScheduleResponse> {
         val schedule = querySchedulePort.findAllByDate(date)
             ?: throw ScheduleNotFoundException
 
