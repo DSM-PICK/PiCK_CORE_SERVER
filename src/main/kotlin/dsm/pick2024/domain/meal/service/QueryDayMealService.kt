@@ -7,15 +7,14 @@ import dsm.pick2024.domain.meal.presentation.dto.response.MealResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import org.springframework.cache.annotation.Cacheable
 
 @Service
 class QueryDayMealService(
     private val queryMealPort: QueryMealPort
 ) : QueryDayMealUseCase {
-    @Cacheable(value = ["dayMealCache"], key = "#date")
+
     @Transactional(readOnly = true)
-    override fun queryDayMeal(date: LocalDate): MealDetailsResponse? {
+    override fun queryDayMeal(date: LocalDate): MealDetailsResponse {
         val meals = queryMealPort.findMealsByMealDate(date)
 
         return meals.let { mealList ->
