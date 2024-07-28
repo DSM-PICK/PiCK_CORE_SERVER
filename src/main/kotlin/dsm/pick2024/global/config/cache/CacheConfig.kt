@@ -8,25 +8,24 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+import org.springframework.data.redis.serializer.RedisSerializationContext
+import org.springframework.data.redis.serializer.StringRedisSerializer
 
 @EnableCaching
 @Configuration
 class CacheConfig {
+
     @Bean
-    fun redisCacheManager(redisConnectionFactory: LettuceConnectionFactory): CacheManager {
-        val redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(60))
-            .disableCachingNullValues()
-
-        val dayMeal = redisCacheConfiguration.entryTtl(Duration.ofMinutes(30))
-        val daySchedule = redisCacheConfiguration.entryTtl(Duration.ofHours(1))
-        val monthSchedule = redisCacheConfiguration.entryTtl(Duration.ofHours(1))
-
-        return RedisCacheManager.builder(redisConnectionFactory)
-            .cacheDefaults(redisCacheConfiguration)
-            .withCacheConfiguration("dayMealCache", dayMeal)
-            .withCacheConfiguration("dayScheduleCache", daySchedule)
-            .withCacheConfiguration("monthScheduleCache", monthSchedule)
-            .build()
+    fun redisCacheConfiguration(): RedisCacheConfiguration {
+        return RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofSeconds(60)) // 기본 TTL 60
+            .disableCachingNullValues() // NULL 은 저장 안 됨
+            .serializeKeysWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer())
+            )
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(GenericJackson2JsonRedisSerializer())
+            )
     }
 }
