@@ -2,7 +2,9 @@ package dsm.pick2024.domain.meal.presentation
 
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.meal.port.`in`.QueryDayMealUseCase
+import dsm.pick2024.domain.meal.presentation.dto.response.MealDetailsResponse
 import io.swagger.v3.oas.annotations.Operation
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -23,11 +25,13 @@ class MealController(
         mealUseCase.saveNeisInfoToDatabase()
     }
 
+
+    @Cacheable(value = ["dayMealCache"], key = "#date")
     @Operation(summary = "급식 조회 API")
     @GetMapping("/date")
     fun dateMeal(
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         @RequestParam(name = "date")
         date: LocalDate
-    ) = queryDayMealUseCase.queryDayMeal(date)
+    ): MealDetailsResponse = queryDayMealUseCase.queryDayMeal(date)
 }

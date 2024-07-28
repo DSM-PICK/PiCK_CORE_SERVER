@@ -3,12 +3,12 @@ package dsm.pick2024.domain.meal.presentation.dto.response
 import java.time.LocalDate
 
 data class MealDetailsResponse(
-    val date: LocalDate,
-    val meals: MealResponse
+    val date: LocalDate? = null,
+    val meals: MealResponse? = null
 )
 
 data class MealResponse(
-    val breakfast: List<String>,
-    val lunch: List<String>,
-    val dinner: List<String>
+    val breakfast: List<String>? = null,
+    val lunch: List<String>? = null,
+    val dinner: List<String>? = null
 )
