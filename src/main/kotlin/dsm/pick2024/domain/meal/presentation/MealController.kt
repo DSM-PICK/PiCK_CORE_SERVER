@@ -25,7 +25,6 @@ class MealController(
         mealUseCase.saveNeisInfoToDatabase()
     }
 
-
     @Cacheable(value = ["dayMealCache"], key = "#date")
     @Operation(summary = "급식 조회 API")
     @GetMapping("/date")
