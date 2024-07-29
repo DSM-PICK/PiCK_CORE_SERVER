@@ -57,7 +57,7 @@ class ChangeStatusService(
         return when (statusType) {
             PICNIC -> AttendanceStatus.PICNIC
             EMPLOYMENT -> AttendanceStatus.EMPLOYMENT
-            else -> TODO()
+            else -> AttendanceStatus.ATTENDANCE
         }
     }
 }
