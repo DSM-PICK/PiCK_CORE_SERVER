@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.afterschool.service
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
-import dsm.pick2024.domain.afterschool.enums.Status
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.afterschool.port.`in`.SaveAfterSchoolStudentUseCase
 import dsm.pick2024.domain.afterschool.port.out.SaveAfterSchoolStudentPort
 import dsm.pick2024.domain.afterschool.presentation.dto.request.SaveAfterSchoolStudentRequest
@@ -30,9 +30,9 @@ class SaveAfterSchoolStudentService(
                     classNum = classNum,
                     num = num,
                     userName = user.name,
-                    status1 = Status.ATTENDANCE,
-                    status2 = Status.ATTENDANCE,
-                    status3 = Status.ATTENDANCE
+                    status1 = AttendanceStatus.ATTENDANCE,
+                    status2 = AttendanceStatus.ATTENDANCE,
+                    status3 = AttendanceStatus.ATTENDANCE
                 )
             }
         saveAfterSchoolStudentPort.saveAll(afterSchoolStudent)

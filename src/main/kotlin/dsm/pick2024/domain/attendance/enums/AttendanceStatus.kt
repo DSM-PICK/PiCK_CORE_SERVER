@@ -1,6 +1,6 @@
-package dsm.pick2024.domain.afterschool.enums
+package dsm.pick2024.domain.attendance.enums
 
-enum class Status {
+enum class AttendanceStatus {
     ATTENDANCE, // 출석
     MOVEMENT, // 이동
     GO_OUT, // 외출
