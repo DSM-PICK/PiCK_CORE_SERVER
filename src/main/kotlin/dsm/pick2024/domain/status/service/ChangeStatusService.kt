@@ -35,7 +35,7 @@ class ChangeStatusService(
             )
             updateStatuses.add(updatedStatus)
 
-            if (requests.statusType == EMPLOYMENT || requests.statusType == PICNIC) {
+            if (requests.statusType == EMPLOYMENT || requests.statusType == PICNIC || requests.statusType == ATTENDANCE) {
                 val attendance = queryAttendancePort.findByUserId(requests.userId)
                     ?: throw UserNotFoundException
 
