@@ -1,11 +1,11 @@
 package dsm.pick2024.domain.classroom.service
 
-import dsm.pick2024.domain.afterschool.enums.Status
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.application.enums.Status.NO
 import dsm.pick2024.domain.application.enums.Status.OK
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
-import dsm.pick2024.domain.attendance.port.out.SaveAllPort
+import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.ClassroomNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
@@ -23,7 +23,7 @@ class ChangeClassroomStatusService(
     private val deleteClassRoomPort: DeleteClassRoomPort,
     private val saveClassRoomPort: SaveClassRoomPort,
     private val queryAttendancePort: QueryAttendancePort,
-    private val saveAllPort: SaveAllPort
+    private val saveAttendancePort: SaveAttendancePort
 ) : ChangeClassroomStatusUseCase {
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
@@ -59,15 +59,15 @@ class ChangeClassroomStatusService(
         }
 
         saveClassRoomPort.saveAll(update)
-        saveAllPort.saveAll(updateAttendanceList)
+        saveAttendancePort.saveAll(updateAttendanceList)
     }
 
     private fun getStatus(
         classroom: Classroom,
-        status: Status,
+        status: AttendanceStatus,
         period: Int
     ) = if (period in classroom.startPeriod..classroom.endPeriod) {
-        Status.MOVEMENT
+        AttendanceStatus.MOVEMENT
     } else {
         status
     }

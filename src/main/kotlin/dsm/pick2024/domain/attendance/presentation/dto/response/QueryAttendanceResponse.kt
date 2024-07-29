@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.attendance.presentation.dto.response
 
-import dsm.pick2024.domain.afterschool.enums.Status
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import java.util.UUID
 
 data class QueryAttendanceResponse(
@@ -9,10 +9,10 @@ data class QueryAttendanceResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val status6: Status,
-    val status7: Status,
-    val status8: Status,
-    val status9: Status,
-    val status10: Status,
+    val status6: AttendanceStatus,
+    val status7: AttendanceStatus,
+    val status8: AttendanceStatus,
+    val status9: AttendanceStatus,
+    val status10: AttendanceStatus,
     val classroomName: String
 )

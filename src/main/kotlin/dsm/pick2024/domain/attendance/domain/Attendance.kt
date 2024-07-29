@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.attendance.domain
 
-import dsm.pick2024.domain.afterschool.enums.Status
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.global.annotation.Aggregate
 import java.util.UUID
 
@@ -15,9 +15,9 @@ data class Attendance(
     val place: String? = null,
     val floor: Int? = null,
     val club: String? = null,
-    val period6: Status,
-    val period7: Status,
-    val period8: Status,
-    val period9: Status,
-    val period10: Status
+    val period6: AttendanceStatus,
+    val period7: AttendanceStatus,
+    val period8: AttendanceStatus,
+    val period9: AttendanceStatus,
+    val period10: AttendanceStatus
 )
