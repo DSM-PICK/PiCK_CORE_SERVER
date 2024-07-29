@@ -16,8 +16,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 class CacheConfig {
 
     @Bean
-    fun redisCacheConfiguration(): RedisCacheConfiguration {
-        return RedisCacheConfiguration.defaultCacheConfig()
+    fun redisCacheManagerBuilderCustomizer(): RedisCacheManagerBuilderCustomizer {
+        val defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofHours(2)) // 기본 TTL 2시간
             .disableCachingNullValues() // NULL 은 저장 안 됨
             .serializeKeysWith(
@@ -26,11 +26,6 @@ class CacheConfig {
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(GenericJackson2JsonRedisSerializer())
             )
-    }
-
-    @Bean
-    fun redisCacheManagerBuilderCustomizer(): RedisCacheManagerBuilderCustomizer {
-        val defaultCacheConfig = redisCacheConfiguration()
 
         val dayScheduleCacheConfig = defaultCacheConfig.entryTtl(Duration.ofMinutes(30))
         val monthScheduleCacheConfig = defaultCacheConfig.entryTtl(Duration.ofMinutes(30))
