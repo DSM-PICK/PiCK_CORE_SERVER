@@ -5,6 +5,8 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface AttendanceRepository : Repository<AttendanceJpaEntity, UUID> {
+    fun save(entity: AttendanceJpaEntity)
+
     fun saveAll(entity: Iterable<AttendanceJpaEntity>)
 
     fun findByUserId(userId: UUID): AttendanceJpaEntity
