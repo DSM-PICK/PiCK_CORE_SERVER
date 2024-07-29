@@ -1,17 +1,17 @@
 package dsm.pick2024.domain.attendance.service
 
-import dsm.pick2024.domain.afterschool.enums.Status
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
-import dsm.pick2024.domain.attendance.port.out.SaveAllPort
+import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val saveAllPort: SaveAllPort
+    private val saveAttendancePort: SaveAttendancePort
 ) : ResetAttendanceUseCase {
     @Transactional
     override fun reset() {
@@ -30,12 +30,12 @@ class ResetAttendanceService(
             update.add(updatedAttendance)
         }
 
-        saveAllPort.saveAll(update)
+        saveAttendancePort.saveAll(update)
     }
 
-    private fun getStatus(currentStatus: Status) =
+    private fun getStatus(currentStatus: AttendanceStatus) =
         when (currentStatus) {
-            Status.PICNIC, Status.EMPLOYMENT -> currentStatus
-            else -> Status.ATTENDANCE
+            AttendanceStatus.PICNIC, AttendanceStatus.EMPLOYMENT -> currentStatus
+            else -> AttendanceStatus.ATTENDANCE
         }
 }
