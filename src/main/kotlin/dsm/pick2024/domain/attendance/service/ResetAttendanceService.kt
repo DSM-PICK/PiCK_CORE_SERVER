@@ -14,7 +14,7 @@ class ResetAttendanceService(
     private val saveAttendancePort: SaveAttendancePort
 ) : ResetAttendanceUseCase {
     @Transactional
-    override fun reset() {
+    override fun resetAttendance() {
         val allStudent = queryAttendancePort.findAll()
         val update = mutableListOf<Attendance>()
 
