@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserBackClassroomService(
+class BackUserClassroomService(
     private val deleteClassRoomPort: DeleteClassRoomPort,
     private val userFacadeUseCase: UserFacadeUseCase
 ) : UserBackClassroomUseCase {
