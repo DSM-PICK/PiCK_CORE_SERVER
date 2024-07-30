@@ -1,6 +1,5 @@
 # PICK2024_SERVER
 ### RULE
-+ 클래스 이름 앞에는 항상 동사가 온다
 + 커밋명 앞에 refactor, modify, add, bug 를 붙인다 ex): add :: application dto
 + PR 올리기 전에  ./gradlew ktlintFormat 하기
 + 1명 이상 approve를 눌러야 merge 가능
