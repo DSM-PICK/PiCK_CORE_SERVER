@@ -38,7 +38,7 @@ class ScheduleService(
 
     @Scheduled(cron = "0 00 21 * * ?", zone = "Asia/Seoul")
     fun resetTable() {
-        resetAttendanceUseCase.reset()
+        resetAttendanceUseCase.resetAttendance()
         resetStatusUseCase.reset()
     }
 }

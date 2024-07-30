@@ -5,8 +5,8 @@ import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryGradeClassroomUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryUserMoveClassroomUseCase
-import dsm.pick2024.domain.classroom.port.`in`.UserBackClassroomUseCase
-import dsm.pick2024.domain.classroom.port.`in`.UserMoveClassroomUseCase
+import dsm.pick2024.domain.classroom.port.`in`.BackUserClassroomUseCase
+import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/class-room")
 class ClassroomController(
-    private val userMoveClassroomUseCase: UserMoveClassroomUseCase,
-    private val userBackClassroomUseCase: UserBackClassroomUseCase,
+    private val moveClassroomApplicationUseCase: MoveClassroomApplicationUseCase,
+    private val userBackClassroomUseCase: BackUserClassroomUseCase,
     private val queryUserMoveClassroomUseCase: QueryUserMoveClassroomUseCase,
     private val queryFloorClassroomUseCase: QueryFloorClassroomUseCase,
     private val queryGradeClassroomUseCase: QueryGradeClassroomUseCase,
@@ -38,7 +38,7 @@ class ClassroomController(
     @ResponseStatus(value = HttpStatus.CREATED)
     fun moveClassroom(
         @RequestBody userMoveClassroomRequest: UserMoveClassroomRequest
-    ) = userMoveClassroomUseCase.moveClassroom(userMoveClassroomRequest)
+    ) = moveClassroomApplicationUseCase.moveClassroomApplication(userMoveClassroomRequest)
 
     @Operation(summary = "교실복귀 API")
     @DeleteMapping("/return")

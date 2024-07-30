@@ -6,7 +6,7 @@ import dsm.pick2024.domain.earlyreturn.port.`in`.QueryAllREarlyEarlyReturnUseCas
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryFloorEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
+import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/early-return")
 class EarlyReturnController(
     private val createEarlyReturnUseCase: CreateEarlyReturnUseCase,
-    private val statusEarlyReturnUseCase: StatusEarlyReturnUseCase,
+    private val changeEarlyReturnStatusUseCase: ChangeEarlyReturnStatusUseCase,
     private val queryClassEarlyReturnUseCase: QueryClassEarlyReturnUseCase,
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
@@ -44,7 +44,7 @@ class EarlyReturnController(
     @PatchMapping("/status")
     fun statusNOEarlyReturn(
         @RequestBody statusEarlyReturnRequest: StatusEarlyReturnRequest
-    ) = statusEarlyReturnUseCase.statusEarlyReturn(statusEarlyReturnRequest)
+    ) = changeEarlyReturnStatusUseCase.statusEarlyReturn(statusEarlyReturnRequest)
 
     @Operation(summary = "반별로 조기귀가 신청자 조회 API")
     @GetMapping("/grade")

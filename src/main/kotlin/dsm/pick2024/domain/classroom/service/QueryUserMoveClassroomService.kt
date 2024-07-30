@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class UserMoveClassroomQueryService(
+class QueryUserMoveClassroomService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val queryClassroomPort: QueryClassroomPort
 ) : QueryUserMoveClassroomUseCase {
