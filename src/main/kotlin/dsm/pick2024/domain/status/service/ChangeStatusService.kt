@@ -48,8 +48,8 @@ class ChangeStatusService(
                 )
 
                 saveAttendancePort.save(updatedAttendance)
-                saveStatusPort.saveAll(updateStatuses)
             }
+            saveStatusPort.saveAll(updateStatuses)
         }
     }
 
