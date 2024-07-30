@@ -3,7 +3,7 @@ package dsm.pick2024.domain.selfstudy.service
 import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
 import dsm.pick2024.domain.selfstudy.domain.SelfStudy
 import dsm.pick2024.domain.selfstudy.exception.TeacherNotFoundException
-import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.DeleteSelfStudyPort
 import dsm.pick2024.domain.selfstudy.port.out.QuerySelfStudyPort
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Transactional
 @Service
-class SelfStudyTeacherService(
+class RegistrationSelfStudyTeacherService(
     private val selfStudyPort: SelfStudyPort,
     private val querySelfStudyPort: QuerySelfStudyPort,
     private val deleteSelfStudyPort: DeleteSelfStudyPort,
     private val existsByAdminIdPort: ExistsByAdminIdPort
 
-) : SelfStudyTeacherUseCase {
+) : RegistrationSelfStudyTeacherUseCase {
 
     override fun registrationSelfStudyTeacher(request: RegistrationSelfStudyTeacherRequest) {
         val selfStudy = querySelfStudyPort.findByDateList(request.date)

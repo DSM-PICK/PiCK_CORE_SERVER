@@ -4,7 +4,7 @@ import dsm.pick2024.domain.selfstudy.port.`in`.QueryDateSelfStudyUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryMonthSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryMySelfStudyUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.QueryTodaySelfStudyTeacherUseCase
-import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.RegistrationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.presentation.dto.request.RegistrationSelfStudyTeacherRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -19,7 +19,7 @@ import java.time.Year
 @RestController
 @RequestMapping("/self-study")
 class SelfStudyController(
-    private val selfStudyTeacherUseCase: SelfStudyTeacherUseCase,
+    private val registrationSelfStudyTeacherUseCase: RegistrationSelfStudyTeacherUseCase,
     private val queryTodaySelfStudyTeacherUseCase: QueryTodaySelfStudyTeacherUseCase,
     private val querySelfStudyTeacherUseCase: QueryMonthSelfStudyTeacherUseCase,
     private val queryDateSelfStudyUseCase: QueryDateSelfStudyUseCase,
@@ -30,7 +30,7 @@ class SelfStudyController(
     @PostMapping("/register")
     fun selfStudyTeacherRegister(
         @RequestBody registrationSelfStudyTeacherRequest: RegistrationSelfStudyTeacherRequest
-    ) = selfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
+    ) = registrationSelfStudyTeacherUseCase.registrationSelfStudyTeacher(registrationSelfStudyTeacherRequest)
 
     @Operation(summary = "당일 자습감독 선생님 조회")
     @GetMapping("/today")
