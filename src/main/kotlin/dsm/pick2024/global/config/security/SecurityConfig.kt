@@ -103,7 +103,8 @@ class SecurityConfig(
             .antMatchers(
                 HttpMethod.PATCH,
                 "/application/status",
-                "/weekend-meal/my-status"
+                "/weekend-meal/my-status",
+                "/user/profile"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,

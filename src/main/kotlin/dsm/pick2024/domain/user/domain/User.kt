@@ -17,4 +17,8 @@ data class User(
     val birthDay: LocalDate,
     val profile: String ? = null,
     val role: Role
-)
+) {
+    fun updateProfileFileName(fileName: String?): User {
+        return this.copy(profile = fileName)
+    }
+}
