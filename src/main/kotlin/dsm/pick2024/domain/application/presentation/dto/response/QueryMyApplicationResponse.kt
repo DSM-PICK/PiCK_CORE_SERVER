@@ -11,5 +11,6 @@ data class QueryMyApplicationResponse(
     val endTime: String,
     val reason: String,
     val schoolNum: Int,
-    val type: Type
+    val type: Type,
+    val profile: String? = null
 )
