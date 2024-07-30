@@ -7,7 +7,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
-import dsm.pick2024.domain.earlyreturn.port.`in`.StatusEarlyReturnUseCase
+import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.port.out.DeleteEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.port.out.SaveEarlyReturnPort
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class StatusEarlyReturnService(
+class ChangeEarlyReturnStatusService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val saveEarlyReturnPort: SaveEarlyReturnPort,
     private val queryEarlyReturnPort: QueryEarlyReturnPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteEarlyReturnPort: DeleteEarlyReturnPort
-) : StatusEarlyReturnUseCase {
+) : ChangeEarlyReturnStatusUseCase {
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()

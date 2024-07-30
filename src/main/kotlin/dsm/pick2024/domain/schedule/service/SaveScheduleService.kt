@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.schedule.service
 
-import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
+import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
 import dsm.pick2024.infrastructure.feign.NeisScheduleFeignClientService
 import org.springframework.stereotype.Service
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class SaveScheduleService(
     private val saveSchedulePort: SaveSchedulePort,
     private val neisScheduleFeignClientService: NeisScheduleFeignClientService
-) : ScheduleUseCase {
+) : SaveScheduleUseCase {
 
     @Transactional
     override fun saveNeisInfoToDatabase(start: String, end: String) {

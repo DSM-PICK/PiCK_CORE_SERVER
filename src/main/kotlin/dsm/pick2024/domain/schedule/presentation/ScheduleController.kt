@@ -4,8 +4,8 @@ import dsm.pick2024.domain.schedule.port.`in`.CreateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.DeleteScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.ModifyScheduleUseCase
 import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
-import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
-import dsm.pick2024.domain.schedule.port.`in`.ScheduleUseCase
+import dsm.pick2024.domain.schedule.port.`in`.QueryMonthScheduleUseCase
+import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
 import dsm.pick2024.domain.schedule.presentation.dto.request.CreateScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
@@ -35,9 +35,9 @@ import java.util.UUID
 class ScheduleController(
     private val createScheduleUseCase: CreateScheduleUseCase,
     private val modifyScheduleUseCase: ModifyScheduleUseCase,
-    private val scheduleMonthUseCase: ScheduleMonthUseCase,
+    private val queryMOnthScheduleUseCase: QueryMonthScheduleUseCase,
     private val deleteScheduleUseCase: DeleteScheduleUseCase,
-    private val scheduleUseCase: ScheduleUseCase,
+    private val scheduleUseCase: SaveScheduleUseCase,
     private val queryDateScheduleUseCase: QueryDateScheduleUseCase
 ) {
     @Operation(summary = "학사일정 추가")
@@ -59,7 +59,7 @@ class ScheduleController(
     fun scheduleMonth(
         @RequestParam(name = "year") year: Year,
         @RequestParam(name = "month") month: Month
-    ) = scheduleMonthUseCase.scheduleMonth(year, month)
+    ) = queryMOnthScheduleUseCase.scheduleMonth(year, month)
 
     @Operation(summary = "학사일정 삭제 api")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)

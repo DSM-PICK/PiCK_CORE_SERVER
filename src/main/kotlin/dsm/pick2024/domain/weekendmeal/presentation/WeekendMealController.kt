@@ -6,7 +6,7 @@ import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUserUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealExcelUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryStatusResponse
 import dsm.pick2024.domain.weekendmeal.service.QueryAllWeekendMealStatus
 import io.swagger.v3.oas.annotations.Operation
@@ -27,7 +27,7 @@ class WeekendMealController(
     private val weekendMealUseCase: CreateWeekendMealUseCase,
     private val queryWeekendMealClassUseCase: QueryWeekendMealClassUseCase,
     private val queryMyWeekendMealStatusUseCase: QueryMyWeekendMealStatusUseCase,
-    private val weekendMealExcelUseCase: WeekendMealExcelUseCase,
+    private val printExcelWeekendMealUseCase: PrintExcelWeekendMealUseCase,
     private val changeWeekendMealStatusUseCase: ChangeWeekendMealStatusUseCase,
     private val saveAllWeekendMealUserUseCase: SaveAllWeekendMealUserUseCase,
     private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus
@@ -68,7 +68,7 @@ class WeekendMealController(
 
     @Operation(summary = "주말급식 신청자 엑셀 파일 출력 API")
     @GetMapping("/excel")
-    fun getExcel(httpServletResponse: HttpServletResponse) = weekendMealExcelUseCase.execute(httpServletResponse)
+    fun getExcel(httpServletResponse: HttpServletResponse) = printExcelWeekendMealUseCase.execute(httpServletResponse)
 
     @Operation(summary = "주말급식 유저 정보 저장 API")
     @PostMapping("/saveAll")

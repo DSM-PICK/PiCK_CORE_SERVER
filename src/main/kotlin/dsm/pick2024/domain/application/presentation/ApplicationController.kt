@@ -7,8 +7,8 @@ import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryFloorAndStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryStatusApplicationUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusApplicationChangeUseCase
-import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
+import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import io.swagger.v3.oas.annotations.Operation
@@ -29,8 +29,8 @@ import java.util.UUID
 @RequestMapping("/application")
 class ApplicationController(
     private val applicationUseCase: ApplicationUseCase,
-    private val statusApplicationUseCase: StatusApplicationUseCase,
-    private val statusApplicationChangeUseCase: StatusApplicationChangeUseCase,
+    private val changeApplicationStatusUseCase: ChangeApplicationStatusUseCase,
+    private val returnApplicationStatusUseCase: ReturnApplicationStatusUseCase,
     private val queryFloorApplicationUseCase: QueryFloorAndStatusApplicationUseCase,
     private val queryClassApplicationUseCase: QueryClassApplicationUseCase,
     private val queryAllReasonApplicationUseCase: QueryAllReasonApplicationUseCase,
@@ -48,13 +48,13 @@ class ApplicationController(
     @PatchMapping("/status")
     fun statusOKApplication(
         @RequestBody applicationStatusRequest: ApplicationStatusRequest
-    ) = statusApplicationUseCase.statusApplication(applicationStatusRequest)
+    ) = changeApplicationStatusUseCase.changeStatusApplication(applicationStatusRequest)
 
     @Operation(summary = "외출상태 복귀로 변경하기 API")
     @PatchMapping("/return")
     fun statusApplicationChange(
         @RequestBody applicationId: List<UUID>
-    ) = statusApplicationChangeUseCase.statusApplicationChange(applicationId)
+    ) = returnApplicationStatusUseCase.returnApplicationStatus(applicationId)
 
     @Operation(summary = "층별로 외출자/신청자 조회 API")
     @GetMapping("/floor")

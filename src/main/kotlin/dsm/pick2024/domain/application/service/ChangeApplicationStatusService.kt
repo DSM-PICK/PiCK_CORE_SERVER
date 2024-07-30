@@ -5,7 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
-import dsm.pick2024.domain.application.port.`in`.StatusApplicationUseCase
+import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
@@ -17,22 +17,22 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class StatusApplicationService(
+class ChangeApplicationStatusService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val queryApplicationPort: QueryApplicationPort,
     private val saveApplicationPort: SaveApplicationPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteApplicationPort: DeleteApplicationPort
-) : StatusApplicationUseCase {
+) : ChangeApplicationStatusUseCase {
 
     @Transactional
-    override fun statusApplication(request: ApplicationStatusRequest?) {
+    override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
 
         val applicationUpdate = mutableListOf<Application>()
         val applicationStory = mutableListOf<ApplicationStory>()
 
-        if (request!!.status == Status.NO) {
+        if (request.status == Status.NO) {
             for (id in request.ids) {
                 val application = queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
                 deleteApplicationPort.deleteById(application.id!!)
