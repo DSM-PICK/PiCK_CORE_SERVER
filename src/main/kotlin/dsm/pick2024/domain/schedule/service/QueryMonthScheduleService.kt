@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.schedule.service
 
-import dsm.pick2024.domain.schedule.port.`in`.ScheduleMonthUseCase
+import dsm.pick2024.domain.schedule.port.`in`.QueryMonthScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
 import org.springframework.stereotype.Service
@@ -11,9 +11,9 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Service
-class ScheduleMonthService(
+class QueryMonthScheduleService(
     private val querySchedulePort: QuerySchedulePort
-) : ScheduleMonthUseCase {
+) : QueryMonthScheduleUseCase {
 
     @Transactional(readOnly = true)
     override fun scheduleMonth(

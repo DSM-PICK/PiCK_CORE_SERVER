@@ -1,5 +1,5 @@
 package dsm.pick2024.domain.schedule.port.`in`
 
-interface ScheduleUseCase {
+interface SaveScheduleUseCase {
     fun saveNeisInfoToDatabase(start: String, end: String)
 }
