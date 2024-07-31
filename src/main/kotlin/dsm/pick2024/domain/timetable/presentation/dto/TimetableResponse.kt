@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.timetable.presentation.dto
 
 import dsm.pick2024.domain.timetable.domain.Timetable
+import dsm.pick2024.infrastructure.s3.FileUtil
+import dsm.pick2024.infrastructure.s3.PathList
 import java.time.LocalDate
 import java.util.UUID
 
@@ -10,7 +12,8 @@ data class DayTimetableResponse(
 ) {
     fun addTimetable(
         tables: List<Timetable>,
-        dayTimetableResponses: MutableList<PeriodTimetableResponse>
+        dayTimetableResponses: MutableList<PeriodTimetableResponse>,
+        fileUtil: FileUtil
     ) {
         for (period in 1..7) {
             val timetable = tables.find { it.period == period }
@@ -21,7 +24,10 @@ data class DayTimetableResponse(
                 break
             }
 
-            dayTimetableResponses.add(PeriodTimetableResponse(id, period, subjectName))
+            val imageUrl =
+                fileUtil.generateObjectUrl("$subjectName.svg", PathList.TIMETABLE)
+
+            dayTimetableResponses.add(PeriodTimetableResponse(id, period, subjectName, imageUrl))
         }
     }
 }
@@ -29,5 +35,6 @@ data class DayTimetableResponse(
 data class PeriodTimetableResponse(
     val id: UUID,
     val period: Int?,
-    val subjectName: String?
+    val subjectName: String?,
+    val image: String? = null
 )
