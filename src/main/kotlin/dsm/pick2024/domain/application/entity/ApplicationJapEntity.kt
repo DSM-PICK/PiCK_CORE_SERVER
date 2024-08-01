@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.application.entity
 
-import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
@@ -47,9 +46,5 @@ class ApplicationJapEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val status: Status,
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(nullable = true)
-    val applicationStatus: ApplicationStatus? = null
+    val status: Status
 ) : BaseUUIDEntity(id)

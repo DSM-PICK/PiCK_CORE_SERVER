@@ -20,7 +20,6 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                applicationStatus = applicationStatus,
                 userId = userId
             )
         }
@@ -39,7 +38,6 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                applicationStatus = applicationStatus,
                 userId = userId
             )
         }
