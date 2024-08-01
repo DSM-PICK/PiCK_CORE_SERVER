@@ -23,9 +23,6 @@ class NoticeJpaEntity(
     val adminId: UUID,
 
     @Column(name = "teacher_name", nullable = false, columnDefinition = "VARCHAR(10)")
-    val teacherName: String,
-
-    @Column(name = "grade", nullable = false)
-    val grade: String
+    val teacherName: String
 
 ) : BaseUUIDEntity(id)

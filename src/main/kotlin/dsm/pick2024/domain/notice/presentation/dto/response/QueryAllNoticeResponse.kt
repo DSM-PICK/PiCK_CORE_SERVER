@@ -6,6 +6,5 @@ data class QueryAllNoticeResponse(
     val title: String,
     val content: String,
     val createAt: LocalDate,
-    val teacher: String,
-    val grade: List<Int>
+    val teacher: String
 )

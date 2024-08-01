@@ -4,8 +4,7 @@ import dsm.pick2024.domain.notice.exception.NoticeNotFoundException
 import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.QueryNoticePort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
-import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
-import dsm.pick2024.domain.notice.presentation.dto.response.QueryTodayNoticeResponse
+import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleNoticeResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -19,12 +18,11 @@ class QueryNoticeService(
 
         queryNoticePort.findAll()
             .map { it ->
-                QuerySimpleAllNoticeResponse(
+                QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
                     it.createAt,
-                    it.teacherName,
-                    it.grade.split(",").map { grade -> grade.toInt() }
+                    it.teacherName
                 )
             }
 
@@ -36,8 +34,7 @@ class QueryNoticeService(
             title = notice.title,
             content = notice.content,
             createAt = notice.createAt,
-            teacher = notice.teacherName,
-            grade = notice.grade.split(",").map { grade -> grade.toInt() }
+            teacher = notice.teacherName
         )
     }
 
@@ -45,7 +42,7 @@ class QueryNoticeService(
 
         queryNoticePort.findByToday()
             .map { it ->
-                QueryTodayNoticeResponse(
+                QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
                     it.createAt,
