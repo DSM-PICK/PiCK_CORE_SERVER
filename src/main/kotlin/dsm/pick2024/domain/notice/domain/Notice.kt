@@ -11,6 +11,5 @@ data class Notice(
     val content: String,
     val createAt: LocalDate,
     val adminId: UUID,
-    val teacherName: String,
-    val grade: String
+    val teacherName: String
 )

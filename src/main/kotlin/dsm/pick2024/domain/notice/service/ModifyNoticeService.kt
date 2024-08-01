@@ -22,8 +22,7 @@ class ModifyNoticeService(
         val update =
             notice.copy(
                 title = request.title,
-                content = request.content,
-                grade = request.grade.joinToString(separator = ",")
+                content = request.content
             )
 
         noticeSavePort.save(update)
