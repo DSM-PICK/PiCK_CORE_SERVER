@@ -4,3 +4,4 @@
 + PR 올리기 전에  ./gradlew ktlintFormat 하기
 + 1명 이상 approve를 눌러야 merge 가능
 + brench 이름은 이슈번호-이슈이름 으로 한다
++ test
