@@ -7,9 +7,9 @@ import java.util.UUID
 
 interface QueryAllNoticeUseCase {
 
-    fun queryAllSimpleNotice(): List<QuerySimpleAllNoticeResponse>
+    fun queryAllSimpleNotice(pageSize: Long, noticeId: UUID?): List<QuerySimpleAllNoticeResponse>
 
-    fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse
+    fun queryDetailNotice(noticeId: UUID): QueryAllNoticeResponse
 
     fun queryTodayNotice(): List<QueryTodayNoticeResponse>
 }

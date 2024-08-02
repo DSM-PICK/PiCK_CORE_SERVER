@@ -1,5 +1,7 @@
 package dsm.pick2024.domain.notice.persistence
 
+import com.querydsl.core.BooleanBuilder
+import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.QNoticeJpaEntity
@@ -32,11 +34,19 @@ class NoticePersistenceAdapter(
             .fetch()
             .map { noticeMapper.toDomain(it) }
     }
+    override fun findAll(pageSize: Long, noticeId: UUID?): List<Notice> {
+        val dynamicBuilder = BooleanBuilder()
 
-    override fun findAll() =
-        jpaQueryFactory
-            .selectFrom(QNoticeJpaEntity.noticeJpaEntity)
-            .orderBy(QNoticeJpaEntity.noticeJpaEntity.createAt.desc())
-            .fetch()
-            .map { noticeMapper.toDomain(it) }
+        if (noticeId != null) {
+            dynamicBuilder.and(QNoticeJpaEntity.noticeJpaEntity.id.lt(noticeId))
+        }
+
+        return jpaQueryFactory
+                .selectFrom(QNoticeJpaEntity.noticeJpaEntity)
+                .orderBy(QNoticeJpaEntity.noticeJpaEntity.createAt.desc())
+                .where(dynamicBuilder)
+                .limit(pageSize) // 페이지 크기만큼 결과를 제한
+                .fetch()
+                .map { noticeMapper.toDomain(it) }
+    }
 }

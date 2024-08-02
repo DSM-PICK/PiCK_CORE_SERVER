@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
@@ -48,13 +49,16 @@ class NoticeController(
 
     @Operation(summary = "공지 간편 조회 API")
     @GetMapping("/simple")
-    fun queryTitleNotice() =
-        queryAllNoticeUseCase.queryAllSimpleNotice()
+    fun queryTitleNotice(
+        @RequestParam("size") pageSize: Long,
+        @RequestParam("notice-id") noticeId: UUID?,
+    ) =
+        queryAllNoticeUseCase.queryAllSimpleNotice(pageSize,noticeId)
 
     @Operation(summary = "공지 상세 조회 API")
     @GetMapping("/{noticeId}")
     fun queryDetailNotice(@PathVariable noticeId: UUID) =
-        queryAllNoticeUseCase.queryAllNotice(noticeId)
+        queryAllNoticeUseCase.queryDetailNotice(noticeId)
 
     @Operation(summary = "오늘 공지 조회 API")
     @GetMapping("/today")

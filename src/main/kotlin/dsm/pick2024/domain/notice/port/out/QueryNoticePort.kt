@@ -9,5 +9,5 @@ interface QueryNoticePort {
 
     fun findByToday(): List<Notice>
 
-    fun findAll(): List<Notice>
+    fun findAll(pageSize: Long,  noticeId: UUID?): List<Notice>
 }
