@@ -2,7 +2,6 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.enums.ApplicationStatus
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
@@ -46,8 +45,7 @@ class ChangeApplicationStatusService(
             val updatedApplication =
                 application.copy(
                     teacherName = admin.name,
-                    status = Status.OK,
-                    applicationStatus = ApplicationStatus.NON_RETURN
+                    status = Status.OK
                 )
             applicationUpdate.add(updatedApplication)
 
