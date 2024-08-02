@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
-class ReturnApplicationReturnService(
+class ReturnApplicationStatusService(
     private val queryApplicationPort: QueryApplicationPort,
     private val deleteApplicationPort: DeleteApplicationPort
 ) : ReturnApplicationStatusUseCase {
