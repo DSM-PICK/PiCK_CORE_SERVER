@@ -15,9 +15,9 @@ import java.util.UUID
 class QueryNoticeService(
     private val queryNoticePort: QueryNoticePort
 ) : QueryAllNoticeUseCase {
-    override fun queryAllSimpleNotice() =
+    override fun queryAllSimpleNotice(pageSize: Long, noticeId: UUID?) =
 
-        queryNoticePort.findAll()
+        queryNoticePort.findAll(pageSize, noticeId)
             .map { it ->
                 QuerySimpleAllNoticeResponse(
                     it.id!!,
@@ -28,7 +28,7 @@ class QueryNoticeService(
                 )
             }
 
-    override fun queryAllNotice(noticeId: UUID): QueryAllNoticeResponse {
+    override fun queryDetailNotice(noticeId: UUID): QueryAllNoticeResponse {
         val notice = queryNoticePort.findById(noticeId)
             ?: throw NoticeNotFoundException
 
