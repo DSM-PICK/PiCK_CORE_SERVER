@@ -38,7 +38,7 @@ class NoticePersistenceAdapter(
         val dynamicBuilder = BooleanBuilder()
 
         if (noticeId != null) {
-            dynamicBuilder.and(QNoticeJpaEntity.noticeJpaEntity.id.lt(noticeId))
+            dynamicBuilder.and(QNoticeJpaEntity.noticeJpaEntity.id.gt(noticeId))
         }
 
         return jpaQueryFactory
