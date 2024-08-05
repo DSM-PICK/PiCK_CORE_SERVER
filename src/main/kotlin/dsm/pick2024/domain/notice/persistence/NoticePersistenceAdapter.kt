@@ -32,6 +32,7 @@ class NoticePersistenceAdapter(
             .where(QNoticeJpaEntity.noticeJpaEntity.createAt.between(start, endOfDay))
             .fetch()
             .map { noticeMapper.toDomain(it) }
+            .sortedByDescending { it.createAt }
     }
 
     override fun findAll() =
