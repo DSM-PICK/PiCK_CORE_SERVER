@@ -5,6 +5,8 @@ import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.QueryNoticePort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
 import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleNoticeResponse
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -21,7 +23,7 @@ class QueryNoticeService(
                 QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt,
+                    format(it.createAt),
                     it.teacherName
                 )
             }
@@ -33,7 +35,7 @@ class QueryNoticeService(
         return QueryAllNoticeResponse(
             title = notice.title,
             content = notice.content,
-            createAt = notice.createAt,
+            createAt = format(notice.createAt),
             teacher = notice.teacherName
         )
     }
@@ -45,8 +47,12 @@ class QueryNoticeService(
                 QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt,
+                    format(it.createAt),
                     it.teacherName
                 )
             }
+
+    private fun format(date: LocalDateTime): String {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
 }
