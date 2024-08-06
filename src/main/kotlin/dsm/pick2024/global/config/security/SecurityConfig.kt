@@ -33,8 +33,16 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers("/admin/login", "/admin/refresh", "/user/login", "/user/refresh").permitAll()
-            .antMatchers("/bug/**").hasAnyRole(Role.SCH.name, Role.STU.name)
+            .antMatchers(
+                "/admin/login",
+                "/admin/refresh",
+                "/user/login",
+                "/user/refresh",
+                "/", "/swagger-ui/**",
+                "/v3/api-docs/**",
+                "/dsm-pick/swagger-ui/index.html",
+                "/dsm-pick/swagger-ui/index.html/**"
+            ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
                 "/after/**",

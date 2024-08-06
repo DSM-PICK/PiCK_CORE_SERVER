@@ -14,10 +14,12 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
 import dsm.pick2024.infrastructure.feign.client.dto.request.XquareRequest
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+@Tag(name = "Admin API'")
 @Service
 class AdminLoginService(
     private val queryAdminPort: QueryAdminPort,
