@@ -23,7 +23,6 @@ spring:
     jackson:
         property-naming-strategy : SNAKE_CASE
 
-
     cache:
         type: simple
 
