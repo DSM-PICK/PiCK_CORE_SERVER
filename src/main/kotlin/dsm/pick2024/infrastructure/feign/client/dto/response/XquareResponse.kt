@@ -14,5 +14,6 @@ data class XquareResponse(
     val num: Int,
     val userRole: Role,
     val clubName: String? = null,
+    val profileImageUrl: String? = null,
     val birthDay: LocalDate
 )
