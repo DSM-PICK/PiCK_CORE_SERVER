@@ -8,6 +8,7 @@ import dsm.pick2024.domain.notice.persistence.repository.NoticeRepository
 import dsm.pick2024.domain.notice.port.out.NoticePort
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
 
@@ -24,16 +25,20 @@ class NoticePersistenceAdapter(
     override fun deleteById(id: UUID) = noticeRepository.deleteById(id)
 
     override fun findByToday(): List<Notice> {
-        val start = LocalDate.now(ZoneId.of("Asia/Seoul")).atStartOfDay()
-        val endOfDay = start.plusDays(1)
+        val today = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
 
         return jpaQueryFactory
             .selectFrom(QNoticeJpaEntity.noticeJpaEntity)
-            .where(QNoticeJpaEntity.noticeJpaEntity.createAt.between(start, endOfDay))
+            .where(
+                QNoticeJpaEntity.noticeJpaEntity.createAt.year().eq(today.year)
+                    .and(QNoticeJpaEntity.noticeJpaEntity.createAt.month().eq(today.monthValue))
+                    .and(QNoticeJpaEntity.noticeJpaEntity.createAt.dayOfMonth().eq(today.dayOfMonth))
+            )
             .fetch()
             .map { noticeMapper.toDomain(it) }
             .sortedByDescending { it.createAt }
     }
+
 
     override fun findAll() =
         jpaQueryFactory
