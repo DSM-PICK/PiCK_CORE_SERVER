@@ -41,7 +41,6 @@ class QueryNoticeService(
     }
 
     override fun queryTodayNotice() =
-
         queryNoticePort.findByToday()
             .map { it ->
                 QuerySimpleNoticeResponse(
@@ -52,7 +51,7 @@ class QueryNoticeService(
                 )
             }
 
-    private fun format(date: LocalDateTime): LocalDateTime {
-        return LocalDateTime.parse(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+    private fun format(date: LocalDateTime): String {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
     }
 }
