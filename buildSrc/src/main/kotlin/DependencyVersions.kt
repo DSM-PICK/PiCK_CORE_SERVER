@@ -6,7 +6,7 @@ object DependencyVersions {
     const val OPEN_FEIGN_VERSION = "3.1.4"
     const val JSON_VERSION = "20200518"
     const val JWT_VERSION = "0.9.1"
-    const val SWAGGER_VERSION = "1.6.11"
+    const val SWAGGER_VERSION = "1.6.9"
     const val QUERYDSL = "5.0.0"
     const val APACHE_POI = "5.2.5"
     const val GSON = "2.8.7"
