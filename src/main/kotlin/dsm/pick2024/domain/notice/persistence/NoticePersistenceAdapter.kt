@@ -7,7 +7,6 @@ import dsm.pick2024.domain.notice.mapper.NoticeMapper
 import dsm.pick2024.domain.notice.persistence.repository.NoticeRepository
 import dsm.pick2024.domain.notice.port.out.NoticePort
 import org.springframework.stereotype.Component
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.*
@@ -38,7 +37,6 @@ class NoticePersistenceAdapter(
             .map { noticeMapper.toDomain(it) }
             .sortedByDescending { it.createAt }
     }
-
 
     override fun findAll() =
         jpaQueryFactory
