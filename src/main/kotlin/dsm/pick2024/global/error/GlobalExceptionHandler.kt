@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.multipart.MaxUploadSizeExceededException
 import javax.servlet.http.HttpServletResponse
@@ -31,8 +30,8 @@ class GlobalExceptionHandler() {
             ErrorResponse(error.errorCode.status, error.errorCode.message),
             HttpStatus.BAD_REQUEST
         )
-
     }
+
     @ExceptionHandler(AccessDeniedException::class)
     fun handleAccessDeniedException(e: AccessDeniedException, response: HttpServletResponse) {
         response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied")
