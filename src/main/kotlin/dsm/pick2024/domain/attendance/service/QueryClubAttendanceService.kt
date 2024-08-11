@@ -1,5 +1,8 @@
 package dsm.pick2024.domain.attendance.service
 
+import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
+import dsm.pick2024.domain.attendance.exception.PeriodNotFoundException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
@@ -16,7 +19,7 @@ class QueryClubAttendanceService(
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
+    override fun queryClubAttendance(period: Int, club: String): List<QueryAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
             ?: throw ClubNotFoundException
 
@@ -27,6 +30,7 @@ class QueryClubAttendanceService(
             } catch (e: EmptyResultDataAccessException) {
                 ""
             }
+            val returnStatus = returnStatus(period, it)
 
             QueryAttendanceResponse(
                 id = it.userId,
@@ -34,13 +38,19 @@ class QueryClubAttendanceService(
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num,
-                status6 = it.period6,
-                status7 = it.period7,
-                status8 = it.period8,
-                status9 = it.period9,
-                status10 = it.period10,
+                status = returnStatus,
                 classroomName = classroomName!!
             )
+        }
+    }
+    fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
+        return when (period) {
+            6 -> user!!.period6
+            7 -> user!!.period7
+            8 -> user!!.period8
+            9 -> user!!.period9
+            10 -> user!!.period10
+            else -> throw PeriodNotFoundException
         }
     }
 }

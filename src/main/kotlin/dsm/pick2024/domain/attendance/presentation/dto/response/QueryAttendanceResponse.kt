@@ -9,10 +9,6 @@ data class QueryAttendanceResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val status6: AttendanceStatus,
-    val status7: AttendanceStatus,
-    val status8: AttendanceStatus,
-    val status9: AttendanceStatus,
-    val status10: AttendanceStatus,
+    val status: AttendanceStatus,
     val classroomName: String
 )

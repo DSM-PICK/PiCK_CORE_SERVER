@@ -30,13 +30,15 @@ class AttendanceController(
     @Operation(summary = "자습 교실 별 조회 api")
     @GetMapping("/grade")
     fun queryClassAttendance(
+        @RequestParam(name = "period") period: Int,
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "class_num") classNum: Int
-    ) = queryClassAttendanceUseCase.queryClassAttendance(grade, classNum)
+    ) = queryClassAttendanceUseCase.queryClassAttendance(period, grade, classNum)
 
     @Operation(summary = "동아리실 별 조회 api")
     @GetMapping("/club")
     fun queryClubAttendance(
+        @RequestParam(name = "period") period: Int,
         @RequestParam(name = "club") club: String
-    ) = queryClubAttendanceUseCase.queryClubAttendance(club)
+    ) = queryClubAttendanceUseCase.queryClubAttendance(period, club)
 }

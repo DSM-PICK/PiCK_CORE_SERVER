@@ -1,5 +1,8 @@
 package dsm.pick2024.domain.attendance.service
 
+import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
+import dsm.pick2024.domain.attendance.exception.PeriodNotFoundException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
@@ -16,6 +19,7 @@ class QueryClassAttendanceService(
 
     @Transactional(readOnly = true)
     override fun queryClassAttendance(
+        peirod: Int,
         grade: Int,
         classNum: Int
     ) =
@@ -28,6 +32,7 @@ class QueryClassAttendanceService(
                 } catch (e: EmptyResultDataAccessException) {
                     ""
                 }
+                val returnStatus = returnStatus(peirod, it)
 
                 with(it) {
                     QueryAttendanceResponse(
@@ -36,13 +41,19 @@ class QueryClassAttendanceService(
                         grade = grade,
                         classNum = classNum,
                         num = num,
-                        status6 = period6,
-                        status7 = period7,
-                        status8 = period8,
-                        status9 = period9,
-                        status10 = period10,
+                        status = returnStatus,
                         classroomName = classroomName!!
                     )
                 }
             }
+    fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
+        return when (period) {
+            6 -> user!!.period6
+            7 -> user!!.period7
+            8 -> user!!.period8
+            9 -> user!!.period9
+            10 -> user!!.period10
+            else -> throw PeriodNotFoundException
+        }
+    }
 }
