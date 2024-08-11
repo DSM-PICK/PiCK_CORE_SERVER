@@ -19,7 +19,7 @@ class QueryClassAttendanceService(
 
     @Transactional(readOnly = true)
     override fun queryClassAttendance(
-        peirod: Int,
+        period: Int,
         grade: Int,
         classNum: Int
     ) =
@@ -32,7 +32,7 @@ class QueryClassAttendanceService(
                 } catch (e: EmptyResultDataAccessException) {
                     ""
                 }
-                val returnStatus = returnStatus(peirod, it)
+                val returnStatus = returnStatus(period, it)
 
                 with(it) {
                     QueryAttendanceResponse(
