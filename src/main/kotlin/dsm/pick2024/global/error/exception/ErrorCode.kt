@@ -36,6 +36,7 @@ enum class ErrorCode(
     FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
     FILE_IS_EMPTY(400, "File does not exist"),
     BAD_FILE_EXTENSION(400, "File Extension is invalid"),
+    MAX_UPLOAD_FILE(400, "Max Upload File Size"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
