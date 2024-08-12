@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
+import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.ChangeAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
@@ -14,26 +16,27 @@ class ChangeAttendanceService(
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort
 ) : ChangeAttendanceUseCase {
-    @Transactional
-    override fun changeAttendance(request: List<ChangeAttendanceRequest>) {
-        val update = mutableListOf<Attendance>()
 
-        request.map {
-                it ->
-            val attendance =
-                queryAttendancePort.findByUserId(it.userId)
-                    ?: throw UserNotFoundException
-            val list = it.statusList
-            val add =
-                attendance.copy(
-                    period6 = list.getOrElse(0) { attendance.period6 },
-                    period7 = list.getOrElse(1) { attendance.period7 },
-                    period8 = list.getOrElse(2) { attendance.period8 },
-                    period9 = list.getOrElse(3) { attendance.period9 },
-                    period10 = list.getOrElse(4) { attendance.period10 }
-                )
-            update.add(add)
+    @Transactional
+    override fun changeAttendance(period: Int, request: List<ChangeAttendanceRequest>) {
+        val updatedAttendances = request.map { req ->
+            val attendance = queryAttendancePort.findByUserId(req.userId)
+                ?: throw UserNotFoundException
+
+            updateAttendance(period, attendance, req.status)
+        }.toMutableList()
+
+        saveAttendancePort.saveAll(updatedAttendances)
+    }
+
+    private fun updateAttendance(period: Int, attendance: Attendance, status: AttendanceStatus): Attendance {
+        return when (period) {
+            6 -> attendance.copy(period6 = status)
+            7 -> attendance.copy(period7 = status)
+            8 -> attendance.copy(period8 = status)
+            9 -> attendance.copy(period9 = status)
+            10 -> attendance.copy(period10 = status)
+            else -> throw InvalidPeriodException
         }
-        saveAttendancePort.saveAll(update)
     }
 }
