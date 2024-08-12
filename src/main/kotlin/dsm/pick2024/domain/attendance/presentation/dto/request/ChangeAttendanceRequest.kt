@@ -5,5 +5,5 @@ import java.util.UUID
 
 data class ChangeAttendanceRequest(
     val userId: UUID,
-    val statusList: List<AttendanceStatus>
+    val status: AttendanceStatus
 )

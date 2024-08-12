@@ -24,8 +24,9 @@ class AttendanceController(
     @Operation(summary = "자습 or 동아리 상태관리")
     @PatchMapping("/modify")
     fun changeAttendance(
+        @RequestParam(name = "period") period: Int,
         @RequestBody changeAttendanceRequest: List<ChangeAttendanceRequest>
-    ) = changeAttendanceUseCase.changeAttendance(changeAttendanceRequest)
+    ) = changeAttendanceUseCase.changeAttendance(period, changeAttendanceRequest)
 
     @Operation(summary = "자습 교실 별 조회 api")
     @GetMapping("/grade")
