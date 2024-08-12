@@ -2,7 +2,7 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
-import dsm.pick2024.domain.attendance.exception.PeriodNotFoundException
+import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
@@ -53,7 +53,7 @@ class QueryClassAttendanceService(
             8 -> user!!.period8
             9 -> user!!.period9
             10 -> user!!.period10
-            else -> throw PeriodNotFoundException
+            else -> throw InvalidPeriodException
         }
     }
 }

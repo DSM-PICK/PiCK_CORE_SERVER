@@ -2,7 +2,7 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
-import dsm.pick2024.domain.attendance.exception.PeriodNotFoundException
+import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.ChangeAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
@@ -36,7 +36,7 @@ class ChangeAttendanceService(
             8 -> attendance.copy(period8 = status)
             9 -> attendance.copy(period9 = status)
             10 -> attendance.copy(period10 = status)
-            else -> throw PeriodNotFoundException
+            else -> throw InvalidPeriodException
         }
     }
 }

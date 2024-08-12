@@ -29,7 +29,6 @@ enum class ErrorCode(
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
     FLOOR_NOT_FOUND(404, "Floor Not Found"),
     TEACHER_NOT_FOUND(404, "Teacher Not Found"),
-    PERIOD_NOT_FOUND(404, "Period Not Found"),
 
     NOT_ADMIN(403, "Not an Admin"),
     NOT_STUDENT(403, "Not an Student"),
@@ -38,6 +37,7 @@ enum class ErrorCode(
     FILE_IS_EMPTY(400, "File does not exist"),
     BAD_FILE_EXTENSION(400, "File Extension is invalid"),
     MAX_UPLOAD_FILE(400, "Max Upload File Size"),
+    INVALID_PERIOD(400, "Invalid period"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
