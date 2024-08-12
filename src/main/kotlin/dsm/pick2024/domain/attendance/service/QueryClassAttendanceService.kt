@@ -46,7 +46,7 @@ class QueryClassAttendanceService(
                     )
                 }
             }
-    fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
+    private fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
         return when (period) {
             6 -> user!!.period6
             7 -> user!!.period7

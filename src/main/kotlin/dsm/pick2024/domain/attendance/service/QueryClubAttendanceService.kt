@@ -43,13 +43,13 @@ class QueryClubAttendanceService(
             )
         }
     }
-    fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
+    private fun returnStatus(period: Int, attendance: Attendance): AttendanceStatus {
         return when (period) {
-            6 -> user!!.period6
-            7 -> user!!.period7
-            8 -> user!!.period8
-            9 -> user!!.period9
-            10 -> user!!.period10
+            6 -> attendance!!.period6
+            7 -> attendance!!.period7
+            8 -> attendance!!.period8
+            9 -> attendance!!.period9
+            10 -> attendance!!.period10
             else -> throw InvalidPeriodException
         }
     }
