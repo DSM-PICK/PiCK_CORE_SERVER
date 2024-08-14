@@ -8,6 +8,7 @@ import java.util.UUID
 @Aggregate
 data class User(
     val id: UUID,
+    val xquareId: UUID,
     val accountId: String,
     val password: String,
     val name: String,

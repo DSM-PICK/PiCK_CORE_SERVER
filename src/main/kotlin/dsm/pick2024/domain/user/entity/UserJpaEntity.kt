@@ -13,6 +13,12 @@ import javax.persistence.Enumerated
 class UserJpaEntity(
     id: UUID,
 
+    @Column(
+        columnDefinition = "BINARY(16)",
+        nullable = false
+    )
+    val xquareId: UUID,
+
     @Column(name = "account_id", nullable = false, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
 
