@@ -17,7 +17,7 @@ class CreateWeekendMealService(
 ) : CreateWeekendMealUseCase {
 
     @Transactional
-    override fun changeWeekendMeal(status: Status) {
+    override fun changeWeekendMeal(status: String) {
         val user = userFacadeUseCase.currentUser()
         val weekendMeal =
             queryWeekendMealPort.findByUserId(user.id)
@@ -25,7 +25,7 @@ class CreateWeekendMealService(
 
         saveWeekendMealPort.save(
             weekendMeal.copy(
-                status = status
+                status = Status.valueOf(status)
             )
         )
     }
