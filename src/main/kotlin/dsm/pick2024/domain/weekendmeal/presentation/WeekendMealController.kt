@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -46,7 +45,7 @@ class WeekendMealController(
     @Operation(summary = "내 주말급식 상태변경 API")
     @PatchMapping("/my-status")
     fun changeStatus(
-        @RequestBody status: String
+        @RequestParam(name = "status") status: Status
     ) = weekendMealUseCase.changeWeekendMeal(status)
 
     @Operation(summary = "주말급식 응답자 반별로 조회 API")

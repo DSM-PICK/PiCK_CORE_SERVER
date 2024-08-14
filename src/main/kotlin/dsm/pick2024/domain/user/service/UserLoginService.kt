@@ -55,6 +55,7 @@ class UserLoginService(
             num = xquareUser.num,
             birthDay = xquareUser.birthDay,
             role = xquareUser.userRole,
+            profile = xquareUser.profileImageUrl,
             xquareId = xquareUser.id
         )
 

@@ -17,15 +17,15 @@ class CreateWeekendMealService(
 ) : CreateWeekendMealUseCase {
 
     @Transactional
-    override fun changeWeekendMeal(status: String) {
+    override fun changeWeekendMeal(status: Status) {
         val user = userFacadeUseCase.currentUser()
         val weekendMeal =
-            queryWeekendMealPort.findByUserId(user.id)
+            queryWeekendMealPort.findByUserId(user.xquareId)
                 ?: throw UserNotFoundException
 
         saveWeekendMealPort.save(
             weekendMeal.copy(
-                status = Status.valueOf(status)
+                status = status
             )
         )
     }
