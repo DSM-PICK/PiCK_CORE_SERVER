@@ -78,5 +78,4 @@ class UserLoginService(
     private fun generateToken(accountId: String): TokenResponse {
         return jwtTokenProvider.generateToken(accountId, Role.STU.toString())
     }
-
 }
