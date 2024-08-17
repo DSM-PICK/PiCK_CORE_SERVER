@@ -7,6 +7,8 @@ interface QueryEarlyReturnPort {
 
     fun findById(earlyReturnId: UUID): EarlyReturn?
 
+    fun findByUserId(userId: UUID): EarlyReturn?
+
     fun findByOKEarlyReturn(userId: UUID): EarlyReturn?
 
     fun findByFloor(floor: Int): List<EarlyReturn>
