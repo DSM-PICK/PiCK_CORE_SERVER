@@ -76,14 +76,17 @@ class MainService(
         }!!
     }
 
-    private fun waiting(userId: UUID, type: Main): Any {
-        when (type) {
-            Main.APPLICATION -> queryApplicationPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
-            Main.EARLYRETURN -> queryEarlyReturnPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
-            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
+    private fun waiting(userId: UUID, type: Main): WaitingResponse? {
+        val status = when (type) {
+            Main.APPLICATION -> queryApplicationPort.findByUserId(userId)?.status
+            Main.EARLYRETURN -> queryEarlyReturnPort.findByUserId(userId)?.status
+            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
         }
-        return WaitingResponse(
-            type
-        )
+
+        return if (status == Status.QUIET) {
+            WaitingResponse(type)
+        } else {
+            null
+        }
     }
 }
