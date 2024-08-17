@@ -14,6 +14,6 @@ data class Meal(
     val cal: String?
 ) {
     fun toSplit(meal: String?): List<String> {
-        return meal?.split("||") ?: emptyList()
+        return meal?.split("||")?.map { it.trim() } ?: emptyList()
     }
 }

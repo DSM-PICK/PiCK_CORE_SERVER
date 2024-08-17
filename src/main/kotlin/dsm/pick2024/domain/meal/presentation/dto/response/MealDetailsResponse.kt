@@ -8,12 +8,12 @@ data class MealDetailsResponse(
 )
 
 data class MealResponse(
-    val breakfast: List<MealDetail>? = null,
-    val lunch: List<MealDetail>? = null,
-    val dinner: List<MealDetail>? = null
+    val breakfast: MealDetail? = null,
+    val lunch: MealDetail? = null,
+    val dinner: MealDetail? = null
 )
 
 data class MealDetail(
-    val menu: String?,
-    val cal: String?
+    val menu: List<String> = emptyList(),
+    val cal: String? = ""
 )
