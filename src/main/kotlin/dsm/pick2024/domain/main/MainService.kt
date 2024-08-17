@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.main
 
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -33,6 +34,9 @@ class MainService(
             existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
             existsEarlyReturnPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
+            existApplicationPort.existsByUserId(userId) -> waiting(userId, Main.APPLICATION)
+            existsEarlyReturnPort.existsByUserId(userId) -> waiting(userId, Main.EARLYRETURN)
+            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
             else -> null
         }
     }
@@ -70,5 +74,16 @@ class MainService(
                 type = Main.CLASSROOM
             )
         }!!
+    }
+
+    private fun waiting(userId: UUID, type: Main): Any {
+        when (type) {
+            Main.APPLICATION -> queryApplicationPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
+            Main.EARLYRETURN -> queryEarlyReturnPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
+            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId).takeIf { it!!.status == Status.QUIET }
+        }
+        return WaitingResponse(
+            type
+        )
     }
 }
