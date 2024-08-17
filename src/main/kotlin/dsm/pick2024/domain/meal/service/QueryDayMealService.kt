@@ -20,11 +20,11 @@ class QueryDayMealService(
     override fun queryDayMeal(date: LocalDate): MealDetailsResponse {
         val meals = queryMealPort.findMealsByMealDate(date)
 
-        val grouped = meals.groupBy { it.mealType }
+        val groupMeal = meals.groupBy { it.mealType }
 
-        val breakfasts = grouped[MealType.BREAKFAST]?.flatMap { changeMealDate(it) } ?: emptyList()
-        val lunches = grouped[MealType.LUNCH]?.flatMap { changeMealDate(it) } ?: emptyList()
-        val dinners = grouped[MealType.DINNER]?.flatMap { changeMealDate(it) } ?: emptyList()
+        val breakfasts = groupMeal[MealType.BREAKFAST]?.flatMap { it.toMealDetails() } ?: emptyList()
+        val lunches = groupMeal[MealType.LUNCH]?.flatMap { it.toMealDetails() } ?: emptyList()
+        val dinners = groupMeal[MealType.DINNER]?.flatMap { it.toMealDetails() } ?: emptyList()
 
         val mealResponse = MealResponse(
             breakfast = breakfasts,
@@ -35,9 +35,13 @@ class QueryDayMealService(
         return MealDetailsResponse(date, mealResponse)
     }
 
-    private fun changeMealDate(meal: Meal): List<MealDetail> {
-        return meal.toSplit(meal.menu).map { menuItem ->
-            MealDetail(menu = menuItem, cal = meal.cal)
-        }
+    private fun Meal.toMealDetails(): List<MealDetail> {
+        val menus = toSplit(menu).joinToString(separator = ", ")
+        return listOf(
+            MealDetail(
+                menu = menus,
+                cal = this.cal
+            )
+        )
     }
 }
