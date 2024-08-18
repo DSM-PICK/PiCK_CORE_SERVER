@@ -6,6 +6,7 @@ import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendan
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassAllAttendanceService(
@@ -13,6 +14,7 @@ class QueryClassAllAttendanceService(
     private val queryClassroomPort: QueryClassroomPort
 
 ) : QueryClassAllAttendanceUseCase {
+    @Transactional(readOnly = true)
     override fun queryClassAllAttendance(grade: Int, classNum: Int) =
         queryAttendancePort.findByGradeAndClassNum(grade, classNum)
             .map { it ->

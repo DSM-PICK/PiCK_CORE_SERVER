@@ -7,12 +7,14 @@ import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAllAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
     private val queryClassRoomPort: QueryClassroomPort
 ) : QueryClubAllAttendanceUseCase {
+    @Transactional(readOnly = true)
     override fun queryClubAllAttendance(club: String): List<QueryAllAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
             ?: throw ClubNotFoundException

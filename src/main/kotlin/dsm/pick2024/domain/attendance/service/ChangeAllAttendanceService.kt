@@ -7,12 +7,14 @@ import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.request.ChangeAllAttendanceRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeAllAttendanceService(
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort
 ) : ChangeAllAttendanceUseCase {
+    @Transactional
     override fun changeAllAttendance(request: List<ChangeAllAttendanceRequest>) {
         val update = mutableListOf<Attendance>()
 
