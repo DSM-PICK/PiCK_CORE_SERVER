@@ -20,7 +20,7 @@ class QueryMyApplicationService(
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            queryApplicationPort.findOKApplication(user.id)
+            queryApplicationPort.findOKApplication(user.xquareId)
                 ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(

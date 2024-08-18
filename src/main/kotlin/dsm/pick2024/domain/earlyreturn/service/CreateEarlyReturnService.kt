@@ -23,7 +23,7 @@ class CreateEarlyReturnService(
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existsEarlyReturnPort.existsByUserId(user.id)) {
+        if (existsEarlyReturnPort.existsByUserId(user.xquareId)) {
             throw AlreadyApplyingForEarlyReturnException
         }
 
