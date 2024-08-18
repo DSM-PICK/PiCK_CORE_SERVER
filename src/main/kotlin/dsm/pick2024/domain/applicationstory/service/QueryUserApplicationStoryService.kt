@@ -18,8 +18,8 @@ class QueryUserApplicationStoryService(
 
     @Transactional(readOnly = true)
     override fun queryUserApplicationStory(userId: UUID): QueryApplicationStoryResponse {
-        val user = queryUserPort.findById(userId) ?: throw UserNotFoundException
-        val userStories = queryAllApplicationStoryPort.findAllByUserId(user.id) ?: emptyList()
+        val user = queryUserPort.findByXquareId(userId) ?: throw UserNotFoundException
+        val userStories = queryAllApplicationStoryPort.findAllByUserId(user.xquareId) ?: emptyList()
 
         val userStory = userStories.map { story ->
             story?.let {
