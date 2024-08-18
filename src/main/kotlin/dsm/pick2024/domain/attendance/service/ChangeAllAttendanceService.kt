@@ -21,14 +21,21 @@ class ChangeAllAttendanceService(
                 queryAttendancePort.findByUserId(it.userId)
                     ?: throw UserNotFoundException
             val list = it.statusList
-            val add =
-                attendance.copy(
-                    period6 = list.getOrElse(0) { attendance.period6 },
-                    period7 = list.getOrElse(1) { attendance.period7 },
-                    period8 = list.getOrElse(2) { attendance.period8 },
-                    period9 = list.getOrElse(3) { attendance.period9 },
-                    period10 = list.getOrElse(4) { attendance.period10 }
-                )
+
+            val defaultPeriods = listOf(
+                attendance.period6,
+                attendance.period7,
+                attendance.period8,
+                attendance.period9,
+                attendance.period10
+            )
+            val add = attendance.copy(
+                period6 = list.getOrElse(0) { defaultPeriods[0] },
+                period7 = list.getOrElse(1) { defaultPeriods[1] },
+                period8 = list.getOrElse(2) { defaultPeriods[2] },
+                period9 = list.getOrElse(3) { defaultPeriods[3] },
+                period10 = list.getOrElse(4) { defaultPeriods[4] }
+            )
             update.add(add)
         }
         saveAttendancePort.saveAll(update)
