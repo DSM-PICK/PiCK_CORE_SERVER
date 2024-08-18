@@ -28,7 +28,7 @@ class MainService(
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
-        val userId = userFacadeUseCase.currentUser().id
+        val userId = userFacadeUseCase.currentUser().xquareId
 
         return when {
             existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
