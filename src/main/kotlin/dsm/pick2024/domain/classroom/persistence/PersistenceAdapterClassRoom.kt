@@ -30,9 +30,11 @@ class PersistenceAdapterClassRoom(
     override fun findByUserId(userId: UUID) =
         classroomRepository.findByUserId(userId).let { classroomMapper.toDomain(it) }
 
-    override fun existsByUserId(userId: UUID): Boolean {
-        return classroomRepository.existsByUserId(userId)
-    }
+    override fun existsByUserId(userId: UUID) =
+        classroomRepository.existsByUserId(userId)
+
+    override fun existOKByUserId(userId: UUID) =
+        classroomRepository.existsByStatusAndUserId(Status.OK, userId)
 
     override fun findAll() = classroomRepository.findAll().map { classroomMapper.toDomain(it) }
 
@@ -91,16 +93,6 @@ class PersistenceAdapterClassRoom(
         )
         .fetch()
         .map { classroomMapper.toDomain(it) }
-
-    override fun existOKByUserId(userId: UUID): Boolean {
-        val classroom = QClassroomJpaEntity.classroomJpaEntity
-        val user = QUserJpaEntity.userJpaEntity
-
-        return jpaQueryFactory.selectFrom(classroom)
-            .innerJoin(user).on(classroom.userName.eq(user.name))
-            .where(user.id.eq(userId), classroom.status.eq(Status.OK))
-            .fetchFirst() != null
-    }
 
     override fun queryFloorClassroomWithAttendance(floor: Int): List<Classroom> {
         val attendances = attendancePort.findByFloor(floor)
