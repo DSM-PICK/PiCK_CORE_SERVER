@@ -35,7 +35,6 @@ class AdminPersistenceAdapter(
     override fun findAll(): List<Admin> =
         jpaQueryFactory
             .selectFrom(QAdminJpaEntity.adminJpaEntity)
-            .orderBy(QAdminJpaEntity.adminJpaEntity.name.asc())
             .fetch()
             .map { adminMapper.toDomain(it) }
 }
