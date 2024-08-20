@@ -8,6 +8,8 @@ import java.util.UUID
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun existsByUserId(userId: UUID): Boolean
 
+    fun existsByStatusAndUserId(status: Status, userId: UUID): Boolean
+
     fun saveAll(entity: Iterable<ApplicationJapEntity>)
 
     fun findById(id: UUID): ApplicationJapEntity

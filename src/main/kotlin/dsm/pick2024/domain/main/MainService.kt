@@ -41,7 +41,7 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryApplicationPort.findOKApplication(userFacadeUseCase.currentUser().xquareId)?.run {
+        return queryApplicationPort.findOKApplication(userId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),

@@ -10,6 +10,8 @@ interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
 
     fun existsByUserId(userId: UUID): Boolean
 
+    fun existsByStatusAndUserId(status: Status, userId: UUID): Boolean
+
     fun deleteByUserId(userId: UUID)
 
     fun findByUserIdAndStatus(

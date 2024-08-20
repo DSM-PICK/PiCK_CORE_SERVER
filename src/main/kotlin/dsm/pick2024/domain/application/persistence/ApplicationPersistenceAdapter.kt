@@ -27,15 +27,8 @@ class ApplicationPersistenceAdapter(
 
     override fun existsByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
-    override fun existsOKByUserId(userId: UUID): Boolean {
-        val application = QApplicationJapEntity.applicationJapEntity
-        val user = QUserJpaEntity.userJpaEntity
-
-        return jpaQueryFactory.selectFrom(application)
-            .innerJoin(user).on(application.userName.eq(user.name))
-            .where(user.id.eq(userId), application.status.eq(Status.OK))
-            .fetchFirst() != null
-    }
+    override fun existsOKByUserId(userId: UUID) =
+        applicationRepository.existsByStatusAndUserId(Status.OK, userId)
 
     override fun findById(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
 

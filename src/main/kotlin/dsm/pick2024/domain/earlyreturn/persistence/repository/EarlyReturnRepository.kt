@@ -8,6 +8,8 @@ import java.util.UUID
 interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun existsByUserId(userId: UUID): Boolean
 
+    fun existsByStatusAndUserId(status: Status, userId: UUID): Boolean
+
     fun findById(earlyReturnId: UUID): EarlyReturnJpaEntity
 
     fun saveAll(entity: Iterable<EarlyReturnJpaEntity>)
