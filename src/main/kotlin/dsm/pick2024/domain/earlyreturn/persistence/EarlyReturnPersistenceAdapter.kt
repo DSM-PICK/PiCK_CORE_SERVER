@@ -34,8 +34,8 @@ class EarlyReturnPersistenceAdapter(
             it
         )
     }
-    override fun deleteById(id: UUID) {
-        earlyReturnRepository.deleteById(id)
+    override fun deleteByUserId(userId: UUID) {
+        earlyReturnRepository.deleteByUserId(userId)
     }
 
     override fun deleteAll() {
