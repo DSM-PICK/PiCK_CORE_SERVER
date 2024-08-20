@@ -93,7 +93,7 @@ class ApplicationPersistenceAdapter(
                     .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
                     .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
             ).where(
-                QUserJpaEntity.userJpaEntity.id.`in`(userIds)
+                QUserJpaEntity.userJpaEntity.xquareId.`in`(userIds)
             )
             .fetch()
 
