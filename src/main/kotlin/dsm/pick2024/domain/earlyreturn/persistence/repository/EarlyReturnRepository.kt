@@ -10,8 +10,6 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
 
     fun findById(earlyReturnId: UUID): EarlyReturnJpaEntity
 
-    fun deleteById(id: UUID)
-
     fun saveAll(entity: Iterable<EarlyReturnJpaEntity>)
 
     fun save(entity: EarlyReturnJpaEntity)
@@ -19,6 +17,8 @@ interface EarlyReturnRepository : Repository<EarlyReturnJpaEntity, UUID> {
     fun findAll(): List<EarlyReturnJpaEntity>
 
     fun findByUserId(userId: UUID): EarlyReturnJpaEntity
+
+    fun deleteByUserId(userId: UUID)
 
     fun deleteAll()
 
