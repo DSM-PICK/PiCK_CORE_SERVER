@@ -4,7 +4,7 @@ import java.time.LocalTime
 import java.util.UUID
 
 data class QueryEarlyReturnResponse(
-    val id: UUID,
+    val userId: UUID,
     val username: String,
     val startTime: LocalTime,
     val grade: Int,
