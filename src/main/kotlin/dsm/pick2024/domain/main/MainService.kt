@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.main
 
-import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -34,15 +33,15 @@ class MainService(
             existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
             existsEarlyReturnPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
             existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
-            existApplicationPort.existsByUserId(userId) -> waiting(userId, Main.APPLICATION)
+            /*existApplicationPort.existsByUserId(userId) -> waiting(userId, Main.APPLICATION)
             existsEarlyReturnPort.existsByUserId(userId) -> waiting(userId, Main.EARLYRETURN)
-            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
+            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)*/
             else -> null
         }
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryApplicationPort.findOKApplication(userId)?.run {
+        return queryApplicationPort.findOKApplication(userFacadeUseCase.currentUser().xquareId)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
@@ -76,7 +75,7 @@ class MainService(
         }!!
     }
 
-    private fun waiting(userId: UUID, type: Main): WaitingResponse? {
+    /*private fun waiting(userId: UUID, type: Main): WaitingResponse? {
         val status = when (type) {
             Main.APPLICATION -> queryApplicationPort.findByUserId(userId)?.status
             Main.EARLYRETURN -> queryEarlyReturnPort.findByUserId(userId)?.status
@@ -88,5 +87,5 @@ class MainService(
         } else {
             null
         }
-    }
+    }*/
 }
