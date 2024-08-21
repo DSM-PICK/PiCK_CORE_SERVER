@@ -40,6 +40,6 @@ class QueryClubAllAttendanceService(
                 status10 = it.period10,
                 classroomName = classroomName!!
             )
-        }
+        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }

@@ -30,7 +30,7 @@ class QueryClassEarlyReturnService(
                     it.num,
                     it.reason
                 )
-            }
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
         queryEarlyReturnPort.findByGradeAndClassNum(grade, classNum)
             .filter { it.status == Status.QUIET }

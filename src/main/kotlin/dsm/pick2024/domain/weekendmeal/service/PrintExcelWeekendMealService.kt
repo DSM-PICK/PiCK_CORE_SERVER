@@ -58,7 +58,9 @@ class PrintExcelWeekendMealService(
                 setBorderStyle(BorderStyle.THIN)
             }
 
-        val userList: List<WeekendMeal> = weekendMealPersistenceAdapter.findByStatus(Status.OK)
+        val userList: List<WeekendMeal> = weekendMealPersistenceAdapter.findByStatus(Status.OK).sortedWith(
+            compareBy({ it.grade }, { it.classNum }, { it.num })
+        )
 
         userList.forEachIndexed { index, user ->
             val bodyRow: Row = sheet.createRow(index + 1)
