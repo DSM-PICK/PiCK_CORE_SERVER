@@ -57,7 +57,6 @@ class SelfStudyPersistenceAdapterPort(
         jpaQueryFactory
             .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
             .where(QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(date))
-            .orderBy(QSelfStudyJpaEntity.selfStudyJpaEntity.floor.asc())
             .fetch()
             .map { selfStudyMapper.toDomain(it) }
 

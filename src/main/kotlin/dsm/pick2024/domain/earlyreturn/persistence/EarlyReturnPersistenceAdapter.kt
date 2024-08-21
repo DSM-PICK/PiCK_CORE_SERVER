@@ -105,11 +105,6 @@ class EarlyReturnPersistenceAdapter(
             .where(
                 QEarlyReturnJpaEntity.earlyReturnJpaEntity.status.eq(status)
             )
-            .orderBy(
-                QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.asc(),
-                QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.asc(),
-                QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.asc()
-            )
             .fetch()
             .map { earlyReturnMapper.toDomain(it) }
 }

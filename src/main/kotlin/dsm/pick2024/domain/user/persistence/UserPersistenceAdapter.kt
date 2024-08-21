@@ -36,11 +36,6 @@ class UserPersistenceAdapter(
     override fun userAll() =
         jpaQueryFactory
             .selectFrom(QUserJpaEntity.userJpaEntity)
-            .orderBy(
-                QUserJpaEntity.userJpaEntity.grade.asc(),
-                QUserJpaEntity.userJpaEntity.classNum.asc(),
-                QUserJpaEntity.userJpaEntity.num.asc()
-            )
             .fetch()
             .map { userMapper.toDomain(it) }
 

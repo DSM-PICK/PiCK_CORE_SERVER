@@ -42,9 +42,6 @@ class AttendancePersistenceAdapter(
             QAttendanceJpaEntity.attendanceJpaEntity.grade.eq(grade),
             QAttendanceJpaEntity.attendanceJpaEntity.classNum.eq(classNum)
         )
-        .orderBy(
-            QAttendanceJpaEntity.attendanceJpaEntity.num.asc()
-        )
         .fetch()
         .map { attendanceMapper.toDomain(it) }
 
@@ -53,11 +50,6 @@ class AttendancePersistenceAdapter(
             .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
             .where(
                 QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club)
-            )
-            .orderBy(
-                QAttendanceJpaEntity.attendanceJpaEntity.grade.asc(),
-                QAttendanceJpaEntity.attendanceJpaEntity.classNum.asc(),
-                QAttendanceJpaEntity.attendanceJpaEntity.num.asc()
             )
             .fetch()
             .map { attendanceMapper.toDomain(it) }
