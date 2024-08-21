@@ -41,5 +41,5 @@ class QueryClassAllAttendanceService(
                         classroomName = classroomName!!
                     )
                 }
-            }
+            }.sortedWith(compareBy { it.num })
 }

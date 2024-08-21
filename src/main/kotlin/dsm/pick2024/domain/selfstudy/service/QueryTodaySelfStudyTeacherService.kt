@@ -18,5 +18,5 @@ class QueryTodaySelfStudyTeacherService(
         querySelfStudyPort.findByDaySelfStudy(date).map {
                 it ->
             QueryTodaySelfStudyTeacherResponse(it.floor, it.teacherName)
-        }
+        }.sortedWith(compareBy { it.floor })
 }

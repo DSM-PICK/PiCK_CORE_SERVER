@@ -38,11 +38,6 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     override fun findAll() =
         jpaQueryFactory
             .selectFrom(QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity)
-            .orderBy(
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.grade.asc(),
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.classNum.asc(),
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.num.asc()
-            )
             .fetch()
             .map { afterSchoolStudentMapper.toDomain(it) }
 }

@@ -26,6 +26,6 @@ class QueryAllSearchStudentService(
                     classNum = it.classNum,
                     num = it.num
                 )
-            }
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }

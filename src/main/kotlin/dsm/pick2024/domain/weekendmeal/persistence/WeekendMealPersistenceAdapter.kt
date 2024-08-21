@@ -65,11 +65,6 @@ class WeekendMealPersistenceAdapter(
             .where(
                 QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(status)
             )
-            .orderBy(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
-            )
             .fetch()
             .map { weekendMealMapper.toDomain(it) }
     }
@@ -80,11 +75,6 @@ class WeekendMealPersistenceAdapter(
     override fun findAll(): List<WeekendMeal> =
         jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
-            .orderBy(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
-            )
             .fetch()
             .let { result ->
                 result?.map { weekendMealMapper.toDomain(it) } ?: emptyList()
