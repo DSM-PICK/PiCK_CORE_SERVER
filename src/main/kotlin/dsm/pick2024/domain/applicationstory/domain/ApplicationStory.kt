@@ -11,8 +11,8 @@ data class ApplicationStory(
     val id: UUID? = null,
     val reason: String,
     val userId: UUID,
-    val startTime: LocalTime,
-    val endTime: LocalTime? = null,
+    val start: String,
+    val end: String? = null,
     val userName: String,
     val date: LocalDate,
     val type: Type

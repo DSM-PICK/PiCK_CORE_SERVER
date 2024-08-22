@@ -16,9 +16,8 @@ class QueryAllUserApplicationStoryService(
 ) : QueryAllUserApplicationStoryUseCase {
     @Transactional(readOnly = true)
     override fun queryAllUSerApplicationStory(): List<QueryUserClassResponse> {
-        val students = queryStatusPort.findAll()
-
-        return students.map { student ->
+        return queryStatusPort.findAll()
+            .map { student ->
             val applicationStory =
                 queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
             val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0

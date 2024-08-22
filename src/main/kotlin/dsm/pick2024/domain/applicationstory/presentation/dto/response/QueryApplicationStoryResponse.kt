@@ -11,8 +11,8 @@ data class QueryApplicationStoryResponse(
 
 data class ApplicationStoryResponse(
     val reason: String,
-    val startTime: LocalTime,
-    val endTime: LocalTime? = null,
+    val startTime: String,
+    val endTime: String? = null,
     val date: LocalDate,
     val type: Type
 )
