@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
@@ -17,6 +18,7 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalTime
 import java.util.UUID
 
 @Service
@@ -44,13 +46,15 @@ class ChangeApplicationStatusService(
             createUpdatedApplication(application, admin.name)
         }
 
-        val applicationStories = updatedApplications.map { application ->
-            createApplicationStory(application)
+        val applicationStories = updatedApplications.map { it ->
+
+            createApplicationStory(it)
         }
+
 
         val attendance = updatedApplications.map { it ->
             val attendanceId = queryAttendancePort.findByUserId(it.userId)
-            attendanceService.translateApplicationTime(it.startTime, it.endTime, attendanceId!!)
+          attendanceService.updateAttendance(it.start, it.end, it.applicationType, attendanceId!!)
         }.toMutableList()
 
         saveApplicationPort.saveAll(updatedApplications)
@@ -77,11 +81,12 @@ class ChangeApplicationStatusService(
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
+        val startAndEnd = attendanceService.translateApplication(application.start, application.end, application.applicationType)
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,
-            startTime = application.startTime,
-            endTime = application.endTime,
+            start = startAndEnd[0],
+            end = startAndEnd[1],
             date = application.date,
             type = Type.APPLICATION,
             userId = application.userId
