@@ -8,13 +8,18 @@ import java.time.LocalTime
 @Component
 class AttendanceService {
 
+    companion object {
+        val period6 = LocalTime.of(14, 30) to LocalTime.of(15, 20) // 6교시
+        val period7 = LocalTime.of(15, 30) to LocalTime.of(16, 20) // 7교시
+        val period8 = LocalTime.of(16, 40) to LocalTime.of(17, 30) // 8교시
+        val period9 = LocalTime.of(18, 40) to LocalTime.of(19, 30) // 9교시
+        val period10 = LocalTime.of(19, 40) to LocalTime.of(20, 30) // 10교시
+
+    }
+
      fun translateApplicationTime(startTime: LocalTime, endTime: LocalTime, attendance: Attendance): Attendance {
         val periods = listOf(
-            LocalTime.of(14, 30) to LocalTime.of(15, 20), // 6교시
-            LocalTime.of(15, 30) to LocalTime.of(16, 20), // 7교시
-            LocalTime.of(16, 40) to LocalTime.of(17, 30), // 8교시
-            LocalTime.of(18, 40) to LocalTime.of(19, 30), // 9교시
-            LocalTime.of(19, 40) to LocalTime.of(20, 30), // 10교시
+            period6, period7, period8, period9, period10
         )
 
         var updatedAttendance = attendance
