@@ -18,20 +18,20 @@ class QueryAllUserApplicationStoryService(
     override fun queryAllUSerApplicationStory(): List<QueryUserClassResponse> {
         return queryStatusPort.findAll()
             .map { student ->
-            val applicationStory =
-                queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
-            val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0
-            val earlyReturnCnt = applicationStory.count { it.type == Type.EARLY_RETURN } ?: 0
+                val applicationStory =
+                    queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
+                val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0
+                val earlyReturnCnt = applicationStory.count { it.type == Type.EARLY_RETURN } ?: 0
 
-            QueryUserClassResponse(
-                id = student.userId,
-                name = student.userName,
-                grade = student.grade,
-                classNum = student.classNum,
-                num = student.num,
-                applicationCnt = applicationCnt,
-                earlyReturnCnt = earlyReturnCnt
-            )
-        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+                QueryUserClassResponse(
+                    id = student.userId,
+                    name = student.userName,
+                    grade = student.grade,
+                    classNum = student.classNum,
+                    num = student.num,
+                    applicationCnt = applicationCnt,
+                    earlyReturnCnt = earlyReturnCnt
+                )
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }

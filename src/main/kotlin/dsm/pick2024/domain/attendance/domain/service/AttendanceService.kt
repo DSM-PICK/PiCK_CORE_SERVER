@@ -33,10 +33,13 @@ class AttendanceService {
         }
     }
 
-
-
     // 주어진 교시 혹은 시간에 해당하는 출석 상태를 업데이트하는 함수
-    fun updateAttendance(start: String, end: String, applicationType: ApplicationType, attendance: Attendance): Attendance {
+    fun updateAttendance(
+        start: String,
+        end: String,
+        applicationType: ApplicationType,
+        attendance: Attendance
+    ): Attendance {
         val matchingPeriods = when (applicationType) {
             ApplicationType.PERIOD -> listOf(getPeriodTime(start), getPeriodTime(end))
             ApplicationType.TIME -> {
@@ -68,7 +71,13 @@ class AttendanceService {
 
     private fun getMatchingPeriods(startTime: LocalTime, endTime: LocalTime): List<String> {
         return periods
-            .mapIndexed { index, period -> if (startTime <= period.second && endTime >= period.first) periodNames[index] else null }
+            .mapIndexed { index, period ->
+                if (startTime <= period.second && endTime >= period.first) {
+                    periodNames[index]
+                } else {
+                    null
+                }
+            }
             .filterNotNull()
     }
 }
