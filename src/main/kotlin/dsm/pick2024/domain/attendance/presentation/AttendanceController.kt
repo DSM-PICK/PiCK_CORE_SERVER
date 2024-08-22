@@ -35,7 +35,7 @@ class AttendanceController(
         @RequestBody changeAttendanceRequest: List<ChangeAttendanceRequest>
     ) = changeAttendanceUseCase.changeAttendance(period, changeAttendanceRequest)
 
-    @PatchMapping("/alltime/modify")
+    @PatchMapping("/total-time/modify")
     fun changeAllAttendance(
         @RequestBody changeAllAttendanceRequest: List<ChangeAllAttendanceRequest>
     ) = changeAllAttendanceUseCase.changeAllAttendance(changeAllAttendanceRequest)
@@ -49,7 +49,7 @@ class AttendanceController(
     ) = queryClassAttendanceUseCase.queryClassAttendance(period, grade, classNum)
 
     @Operation(summary = "어드민 자습 교실 별 조회 api")
-    @GetMapping("/alltime/grade")
+    @GetMapping("/total-time/grade")
     fun queryClassAllAttendance(
         @RequestParam(name = "grade") grade: Int,
         @RequestParam(name = "class_num") classNum: Int
@@ -63,7 +63,7 @@ class AttendanceController(
     ) = queryClubAttendanceUseCase.queryClubAttendance(period, club)
 
     @Operation(summary = "동아리실 별 조회 api")
-    @GetMapping("/alltime/club")
+    @GetMapping("/total-time/club")
     fun queryClubAttendance(
         @RequestParam(name = "club") club: String
     ) = queryClubAllAttendanceUseCase.queryClubAllAttendance(club)
