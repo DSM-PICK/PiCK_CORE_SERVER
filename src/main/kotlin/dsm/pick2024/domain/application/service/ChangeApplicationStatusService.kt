@@ -12,14 +12,11 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatu
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
-import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
-import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalTime
 import java.util.UUID
 
 @Service
