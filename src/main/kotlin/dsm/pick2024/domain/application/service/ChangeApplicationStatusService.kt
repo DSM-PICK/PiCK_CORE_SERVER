@@ -14,6 +14,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class ChangeApplicationStatusService(
@@ -26,43 +27,52 @@ class ChangeApplicationStatusService(
 
     @Transactional
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
-        val admin = adminFacadeUseCase.currentAdmin()
-
-        val applicationUpdate = mutableListOf<Application>()
-        val applicationStory = mutableListOf<ApplicationStory>()
-
         if (request.status == Status.NO) {
-            for (id in request.ids) {
-                val application = queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
-                deleteApplicationPort.deleteById(application.id!!)
-            }
+            handleStatusNo(request.ids)
             return
         }
 
-        for (id in request.ids) {
-            val application = queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
-
-            val updatedApplication =
-                application.copy(
-                    teacherName = admin.name,
-                    status = Status.OK
-                )
-            applicationUpdate.add(updatedApplication)
-
-            val applicationStorySave =
-                ApplicationStory(
-                    reason = updatedApplication.reason,
-                    userName = updatedApplication.userName,
-                    startTime = updatedApplication.startTime,
-                    endTime = updatedApplication.endTime,
-                    date = updatedApplication.date,
-                    type = Type.APPLICATION,
-                    userId = updatedApplication.userId
-                )
-            applicationStory.add(applicationStorySave)
+        val admin = adminFacadeUseCase.currentAdmin()
+        val updatedApplications = request.ids.map { id ->
+            val application = findApplicationById(id)
+            createUpdatedApplication(application, admin.name)
         }
 
-        saveApplicationPort.saveAll(applicationUpdate)
-        applicationStorySaveAllPort.saveAll(applicationStory)
+        val applicationStories = updatedApplications.map { application ->
+            createApplicationStory(application)
+        }
+
+        saveApplicationPort.saveAll(updatedApplications)
+        applicationStorySaveAllPort.saveAll(applicationStories)
+    }
+
+    private fun handleStatusNo(ids: List<UUID>) {
+        ids.forEach { id ->
+            val application = findApplicationById(id)
+            deleteApplicationPort.deleteById(application.id!!)
+        }
+    }
+
+    private fun findApplicationById(id: UUID): Application {
+        return queryApplicationPort.findById(id) ?: throw ApplicationNotFoundException
+    }
+
+    private fun createUpdatedApplication(application: Application, adminName: String): Application {
+        return application.copy(
+            teacherName = adminName,
+            status = Status.OK
+        )
+    }
+
+    private fun createApplicationStory(application: Application): ApplicationStory {
+        return ApplicationStory(
+            reason = application.reason,
+            userName = application.userName,
+            startTime = application.startTime,
+            endTime = application.endTime,
+            date = application.date,
+            type = Type.APPLICATION,
+            userId = application.userId
+        )
     }
 }
