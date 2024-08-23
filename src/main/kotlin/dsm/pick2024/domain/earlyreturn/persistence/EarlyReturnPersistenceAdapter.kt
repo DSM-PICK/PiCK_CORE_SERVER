@@ -44,16 +44,17 @@ class EarlyReturnPersistenceAdapter(
     override fun deleteAll() {
         earlyReturnRepository.deleteAll()
     }
-
     override fun findByFloor(floor: Int) =
         jpaQueryFactory
             .select(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
+            .from(QEarlyReturnJpaEntity.earlyReturnJpaEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
             .on(
                 QEarlyReturnJpaEntity.earlyReturnJpaEntity.grade.eq(QUserJpaEntity.userJpaEntity.grade)
                     .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
                     .and(QEarlyReturnJpaEntity.earlyReturnJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
-            ).where(
+            )
+            .where(
                 QUserJpaEntity.userJpaEntity.grade.eq(
                     when (floor) {
                         4 -> 1
