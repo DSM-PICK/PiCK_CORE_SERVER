@@ -18,13 +18,6 @@ class QueryAllReasonEarlyReturnService(
         queryAllEarlyReturnPort.findAll()
             .filter { it.status == Status.OK }
             .map { it ->
-                QueryEarlyReturnReasonResponse(
-                    it.userName,
-                    it.startTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
+                QueryEarlyReturnReasonResponse(it)
             }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }
