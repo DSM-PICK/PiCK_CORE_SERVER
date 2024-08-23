@@ -19,7 +19,7 @@ class QueryFloorEarlyReturnService(
             .filter { it.status == Status.QUIET }
             .map { it ->
                 QueryEarlyReturnResponse(
-                    it.userId,
+                    it.id!!,
                     it.userName,
                     it.startTime,
                     it.grade,

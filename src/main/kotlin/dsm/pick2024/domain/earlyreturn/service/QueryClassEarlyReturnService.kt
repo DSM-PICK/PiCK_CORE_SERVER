@@ -22,7 +22,7 @@ class QueryClassEarlyReturnService(
         queryAllEarlyReturnPort.findAllByStatus(Status.QUIET)
             .map {
                 QueryEarlyReturnResponse(
-                    it.userId,
+                    it.id!!,
                     it.userName,
                     it.startTime,
                     it.grade,

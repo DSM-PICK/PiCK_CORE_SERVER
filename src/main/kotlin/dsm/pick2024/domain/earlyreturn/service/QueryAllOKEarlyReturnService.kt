@@ -19,7 +19,7 @@ class QueryAllOKEarlyReturnService(
             .filter { it.status == Status.OK }
             .map { it ->
                 QueryAllOKEarlyReturnResponse(
-                    it.userId,
+                    it.id!!,
                     it.userName,
                     it.startTime,
                     it.grade,
