@@ -30,38 +30,6 @@ class ChangeEarlyReturnStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.NO) {
-<<<<<<< Updated upstream
-            for (id in request.ids) {
-                queryEarlyReturnPort.findByUserId(id)
-                    ?: throw EarlyReturnApplicationNotFoundException
-                deleteEarlyReturnPort.deleteByUserId(id)
-            }
-            return
-        }
-
-        for (earlyReturnId in request.ids) {
-            val earlyReturn =
-                queryEarlyReturnPort.findByUserId(earlyReturnId)
-                    ?: throw EarlyReturnApplicationNotFoundException
-
-            val updateEarlyReturn =
-                earlyReturn.copy(
-                    teacherName = admin.name,
-                    status = Status.OK
-                )
-            earlyReturnUpdate.add(updateEarlyReturn)
-
-            val applicationStorySave =
-                ApplicationStory(
-                    reason = earlyReturn.reason,
-                    userName = earlyReturn.userName,
-                    startTime = earlyReturn.startTime,
-                    date = earlyReturn.date,
-                    type = Type.EARLY_RETURN,
-                    userId = updateEarlyReturn.userId
-                )
-            applicationStory.add(applicationStorySave)
-=======
             handleRejection(request.ids)
         } else {
             handleApproval(request.ids, admin.name)
@@ -86,8 +54,8 @@ class ChangeEarlyReturnStatusService(
 
         if (earlyReturns.isEmpty()) {
             throw EarlyReturnApplicationNotFoundException
->>>>>>> Stashed changes
         }
+    }
 
         val applicationStories = earlyReturns.map { earlyReturn ->
             createApplicationStoryFromEarlyReturn(earlyReturn)
