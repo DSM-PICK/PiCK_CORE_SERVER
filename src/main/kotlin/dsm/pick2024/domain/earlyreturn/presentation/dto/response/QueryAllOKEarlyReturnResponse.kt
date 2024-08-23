@@ -6,7 +6,6 @@ import java.util.UUID
 
 data class QueryAllOKEarlyReturnResponse(
     val id: UUID,
-    val userId: UUID,
     val username: String,
     val startTime: LocalTime,
     val grade: Int,
@@ -18,7 +17,6 @@ data class QueryAllOKEarlyReturnResponse(
         earlyReturn: EarlyReturn
     ) : this(
         earlyReturn.id!!,
-        earlyReturn.userId,
         earlyReturn.userName,
         earlyReturn.startTime,
         earlyReturn.grade,
