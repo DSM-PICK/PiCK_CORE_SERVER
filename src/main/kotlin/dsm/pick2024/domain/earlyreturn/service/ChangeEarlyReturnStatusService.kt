@@ -32,7 +32,7 @@ class ChangeEarlyReturnStatusService(
 
         if (request.status == Status.NO) {
             for (id in request.ids) {
-                queryEarlyReturnPort.findByUserId(id)
+                queryEarlyReturnPort.findById(id)
                     ?: throw EarlyReturnApplicationNotFoundException
                 deleteEarlyReturnPort.deleteByUserId(id)
             }
@@ -41,7 +41,7 @@ class ChangeEarlyReturnStatusService(
 
         for (earlyReturnId in request.ids) {
             val earlyReturn =
-                queryEarlyReturnPort.findByUserId(earlyReturnId)
+                queryEarlyReturnPort.findById(earlyReturnId)
                     ?: throw EarlyReturnApplicationNotFoundException
 
             val updateEarlyReturn =
