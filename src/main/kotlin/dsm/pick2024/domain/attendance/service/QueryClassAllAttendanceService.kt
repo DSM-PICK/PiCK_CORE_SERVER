@@ -28,17 +28,8 @@ class QueryClassAllAttendanceService(
 
                 with(it) {
                     QueryAllAttendanceResponse(
-                        id = userId,
-                        username = userName,
-                        grade = grade,
-                        classNum = classNum,
-                        num = num,
-                        status6 = period6,
-                        status7 = period7,
-                        status8 = period8,
-                        status9 = period9,
-                        status10 = period10,
-                        classroomName = classroomName!!
+                        it,
+                        classroomName
                     )
                 }
             }.sortedWith(compareBy { it.num })
