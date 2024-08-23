@@ -58,7 +58,7 @@ class QueryClubAllAttendanceService(
             now.isAfter(start) && now.isBefore(end)
         }
 
-        if (currentPeriod == null) InvalidTimeException
+        if (currentPeriod == null) throw InvalidTimeException
 
         val currentPeriodIndex = periods.indexOf(currentPeriod)
 
