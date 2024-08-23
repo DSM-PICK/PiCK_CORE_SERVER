@@ -7,6 +7,8 @@ import java.util.UUID
 interface AfterSchoolStudentRepository : Repository<AfterSchoolStudentJpaEntity, UUID> {
     fun findByUserId(id: UUID): AfterSchoolStudentJpaEntity
 
+    fun findById(id: UUID): AfterSchoolStudentJpaEntity
+
     fun saveAll(entity: Iterable<AfterSchoolStudentJpaEntity>)
 
     fun deleteById(id: UUID)
