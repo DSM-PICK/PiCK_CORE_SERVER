@@ -18,14 +18,6 @@ class QueryAllOKEarlyReturnService(
         queryAllEarlyReturnPort.findAll()
             .filter { it.status == Status.OK }
             .map { it ->
-                QueryAllOKEarlyReturnResponse(
-                    it.userId,
-                    it.userName,
-                    it.startTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
+                QueryAllOKEarlyReturnResponse(it)
             }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }

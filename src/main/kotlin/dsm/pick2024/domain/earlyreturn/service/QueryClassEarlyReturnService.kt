@@ -21,29 +21,13 @@ class QueryClassEarlyReturnService(
     ) = if (grade == 5 && classNum == 5) {
         queryAllEarlyReturnPort.findAllByStatus(Status.QUIET)
             .map {
-                QueryEarlyReturnResponse(
-                    it.userId,
-                    it.userName,
-                    it.startTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
+                QueryEarlyReturnResponse(it)
             }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
         queryEarlyReturnPort.findByGradeAndClassNum(grade, classNum)
             .filter { it.status == Status.QUIET }
             .map { it ->
-                QueryEarlyReturnResponse(
-                    it.id!!,
-                    it.userName,
-                    it.startTime,
-                    it.grade,
-                    it.classNum,
-                    it.num,
-                    it.reason
-                )
+                QueryEarlyReturnResponse(it)
             }
     }
 }
