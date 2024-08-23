@@ -21,16 +21,16 @@ class ChangeEarlyReturnStatusService(
     private val saveEarlyReturnPort: SaveEarlyReturnPort,
     private val queryEarlyReturnPort: QueryEarlyReturnPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
-    private val deleteEarlyReturnPort: DeleteEarlyReturnPort
+    private val deleteEarlyReturnPort: DeleteEarlyReturnPort,
+    
 ) : ChangeEarlyReturnStatusUseCase {
+
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
 
-        val earlyReturnUpdate = mutableListOf<EarlyReturn>()
-        val applicationStory = mutableListOf<ApplicationStory>()
-
         if (request.status == Status.NO) {
+<<<<<<< Updated upstream
             for (id in request.ids) {
                 queryEarlyReturnPort.findByUserId(id)
                     ?: throw EarlyReturnApplicationNotFoundException
@@ -61,9 +61,50 @@ class ChangeEarlyReturnStatusService(
                     userId = updateEarlyReturn.userId
                 )
             applicationStory.add(applicationStorySave)
+=======
+            handleRejection(request.ids)
+        } else {
+            handleApproval(request.ids, admin.name)
+        }
+    }
+
+    private fun handleRejection(ids: List<String>) {
+        ids.forEach { id ->
+            queryEarlyReturnPort.findByUserId(id)
+                ?: throw EarlyReturnApplicationNotFoundException
+            deleteEarlyReturnPort.deleteByUserId(id)
+        }
+    }
+
+    private fun handleApproval(ids: List<String>, teacherName: String) {
+        val earlyReturns = ids.mapNotNull { id ->
+            queryEarlyReturnPort.findByUserId(id)?.copy(
+                teacherName = teacherName,
+                status = Status.OK
+            )
         }
 
-        saveEarlyReturnPort.saveAll(earlyReturnUpdate)
-        applicationStorySaveAllPort.saveAll(applicationStory)
+        if (earlyReturns.isEmpty()) {
+            throw EarlyReturnApplicationNotFoundException
+>>>>>>> Stashed changes
+        }
+
+        val applicationStories = earlyReturns.map { earlyReturn ->
+            createApplicationStoryFromEarlyReturn(earlyReturn)
+        }
+
+        saveEarlyReturnPort.saveAll(earlyReturns)
+        applicationStorySaveAllPort.saveAll(applicationStories)
+    }
+
+    private fun createApplicationStoryFromEarlyReturn(earlyReturn: EarlyReturn): ApplicationStory {
+        return ApplicationStory(
+            reason = earlyReturn.reason,
+            userName = earlyReturn.userName,
+            start = earlyReturn.,
+            date = earlyReturn.date,
+            type = Type.EARLY_RETURN,
+            userId = earlyReturn.userId
+        )
     }
 }
