@@ -1,10 +1,8 @@
 package dsm.pick2024.domain.earlyreturn.presentation.dto.response
 
-import java.time.LocalTime
-
 data class QueryEarlyReturnReasonResponse(
     val username: String,
-    val startTime: LocalTime,
+    val start: String,
     val grade: Int,
     val classNum: Int,
     val num: Int,

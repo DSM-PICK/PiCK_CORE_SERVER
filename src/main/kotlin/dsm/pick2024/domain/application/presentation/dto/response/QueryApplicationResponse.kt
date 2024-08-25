@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.application.presentation.dto.response
 
 import dsm.pick2024.domain.application.domain.Application
-import java.time.LocalTime
 import java.util.UUID
 
 data class QueryApplicationResponse(
@@ -22,7 +21,7 @@ data class QueryApplicationResponse(
         application.userId,
         application.userName,
         application.start,
-        application.end,
+        application.end!!,
         application.grade,
         application.classNum,
         application.num,

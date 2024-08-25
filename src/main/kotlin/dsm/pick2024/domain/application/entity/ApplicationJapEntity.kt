@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.entity
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
@@ -23,7 +24,7 @@ class ApplicationJapEntity(
     @Column(name = "start", nullable = false)
     val start: String,
 
-    @Column(name = "end", nullable = false)
+    @Column(name = "end", nullable = true)
     val end: String,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
@@ -50,5 +51,9 @@ class ApplicationJapEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val applicationType: ApplicationType
+    val applicationType: ApplicationType,
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    val applicationKind: ApplicationKind
 ) : BaseUUIDEntity(id)

@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
@@ -16,10 +17,10 @@ class ReturnApplicationReturnService(
     @Transactional
     override fun returnApplicationStatus(applicationId: List<UUID>) {
         applicationId.map {
-            queryApplicationPort.findById(it)
+            queryApplicationPort.findByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
                 ?: throw ApplicationNotFoundException
 
-            deleteApplicationPort.deleteById(it)
+            deleteApplicationPort.deleteByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
         }
     }
 }

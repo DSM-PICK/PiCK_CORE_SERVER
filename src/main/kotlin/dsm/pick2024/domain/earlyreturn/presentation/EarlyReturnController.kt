@@ -57,7 +57,7 @@ class EarlyReturnController(
     @GetMapping("/floor")
     fun queryFloorEarlyReturn(
         @RequestParam(name = "floor") floor: Int
-    ) = queryFloorEarlyReturnUseCase.queryFloorApplication(floor)
+    ) = queryFloorEarlyReturnUseCase.queryFloorEarlyReturn(floor)
 
     @Operation(summary = "조기귀가 확인된 사람 사유 전체확인 API")
     @GetMapping("/reason/ok-all")

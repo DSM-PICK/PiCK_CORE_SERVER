@@ -22,12 +22,12 @@ class AttendanceService {
     }
 
     // 교시 혹은 시간을 기반으로 교시 목록을 반환하는 함수
-    fun translateApplication(start: String, end: String, applicationType: ApplicationType): List<String> {
+    fun translateApplication(start: String, end: String?, applicationType: ApplicationType): List<String> {
         return when (applicationType) {
-            ApplicationType.PERIOD -> listOf(start, end)
+            ApplicationType.PERIOD -> listOf(start, end!!)
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
-                val endTime = LocalTime.parse(end)
+                val endTime = end?.let { LocalTime.parse(it) }
                 getMatchingPeriods(startTime, endTime)
             }
         }
@@ -69,10 +69,10 @@ class AttendanceService {
         return periodMap[periodName]
     }
 
-    private fun getMatchingPeriods(startTime: LocalTime, endTime: LocalTime): List<String> {
+    private fun getMatchingPeriods(startTime: LocalTime, endTime: LocalTime?): List<String> {
         return periods
             .mapIndexed { index, period ->
-                if (startTime <= period.second && endTime >= period.first) {
+                if (startTime <= period.second && (endTime == null || endTime >= period.first)) {
                     periodNames[index]
                 } else {
                     null
@@ -80,4 +80,5 @@ class AttendanceService {
             }
             .filterNotNull()
     }
+
 }

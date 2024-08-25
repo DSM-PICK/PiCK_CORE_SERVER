@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.AlreadyApplyingForPicnicException
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
@@ -23,7 +24,7 @@ class ApplicationService(
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
-        if (existsApplicationPort.existsByUserId(user.xquareId)) {
+        if (existsApplicationPort.existsByUserId(user.xquareId, ApplicationKind.APPLICATION)) {
             throw AlreadyApplyingForPicnicException
         }
 
@@ -39,7 +40,8 @@ class ApplicationService(
                 classNum = user.classNum,
                 num = user.num,
                 userId = user.xquareId,
-                applicationType = request.applicationType
+                applicationType = request.applicationType,
+                applicationKind = ApplicationKind.APPLICATION
             )
         )
     }

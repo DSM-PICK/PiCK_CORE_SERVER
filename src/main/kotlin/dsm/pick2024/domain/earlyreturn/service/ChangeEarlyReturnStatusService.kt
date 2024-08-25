@@ -1,28 +1,33 @@
 package dsm.pick2024.domain.earlyreturn.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
+import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
-import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
+import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
-import dsm.pick2024.domain.earlyreturn.port.out.DeleteEarlyReturnPort
-import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
-import dsm.pick2024.domain.earlyreturn.port.out.SaveEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class ChangeEarlyReturnStatusService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val saveEarlyReturnPort: SaveEarlyReturnPort,
-    private val queryEarlyReturnPort: QueryEarlyReturnPort,
+    private val saveApplicationPort: SaveApplicationPort,
+    private val queryApplicationPort: QueryApplicationPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
-    private val deleteEarlyReturnPort: DeleteEarlyReturnPort,
-    
+    private val deleteApplicationPort: DeleteApplicationPort,
+    private val attendanceService: AttendanceService
+
 ) : ChangeEarlyReturnStatusUseCase {
 
     @Transactional
@@ -36,17 +41,17 @@ class ChangeEarlyReturnStatusService(
         }
     }
 
-    private fun handleRejection(ids: List<String>) {
+    private fun handleRejection(ids: List<UUID>) {
         ids.forEach { id ->
-            queryEarlyReturnPort.findByUserId(id)
+            queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
                 ?: throw EarlyReturnApplicationNotFoundException
-            deleteEarlyReturnPort.deleteByUserId(id)
+            deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
     }
 
-    private fun handleApproval(ids: List<String>, teacherName: String) {
+    private fun handleApproval(ids: List<UUID>, teacherName: String) {
         val earlyReturns = ids.mapNotNull { id ->
-            queryEarlyReturnPort.findByUserId(id)?.copy(
+            queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)?.copy(
                 teacherName = teacherName,
                 status = Status.OK
             )
@@ -55,24 +60,24 @@ class ChangeEarlyReturnStatusService(
         if (earlyReturns.isEmpty()) {
             throw EarlyReturnApplicationNotFoundException
         }
-    }
 
         val applicationStories = earlyReturns.map { earlyReturn ->
-            createApplicationStoryFromEarlyReturn(earlyReturn)
+            createApplicationStory(earlyReturn)
         }
 
-        saveEarlyReturnPort.saveAll(earlyReturns)
+        saveApplicationPort.saveAll(earlyReturns)
         applicationStorySaveAllPort.saveAll(applicationStories)
     }
 
-    private fun createApplicationStoryFromEarlyReturn(earlyReturn: EarlyReturn): ApplicationStory {
+    private fun createApplicationStory(application: Application): ApplicationStory {
+        val start = attendanceService.translateApplication(application.start,null, ApplicationType.TIME)
         return ApplicationStory(
-            reason = earlyReturn.reason,
-            userName = earlyReturn.userName,
-            start = earlyReturn.,
-            date = earlyReturn.date,
+            reason = application.reason,
+            userName = application.userName,
+            start = start[0],
+            date = application.date,
             type = Type.EARLY_RETURN,
-            userId = earlyReturn.userId
+            userId = application.userId
         )
     }
 }

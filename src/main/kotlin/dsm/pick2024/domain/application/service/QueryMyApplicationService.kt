@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -8,7 +9,6 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.format.DateTimeFormatter
 
 @Service
 class QueryMyApplicationService(
@@ -20,15 +20,15 @@ class QueryMyApplicationService(
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            queryApplicationPort.findOKApplication(user.xquareId)
+            queryApplicationPort.findByUserIdAndStatusAndApplicationKind(user.xquareId, ApplicationKind.APPLICATION)
                 ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
             userId = application.userId,
             username = application.userName,
             teacherName = application.teacherName!!,
-            startTime = application.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-            endTime = application.endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            start = application.start,
+            end = application.end!!,
             reason = application.reason,
             schoolNum = (user.grade * 1000) + (user.classNum * 100) + user.num,
             type = Type.APPLICATION

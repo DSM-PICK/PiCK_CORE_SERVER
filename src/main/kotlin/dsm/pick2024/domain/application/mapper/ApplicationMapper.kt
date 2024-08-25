@@ -12,7 +12,7 @@ class ApplicationMapper {
                 id = id,
                 reason = reason,
                 start = start,
-                end = end,
+                end = end!!,
                 userName = userName,
                 status = status,
                 teacherName = teacherName,
@@ -21,7 +21,8 @@ class ApplicationMapper {
                 classNum = classNum,
                 num = num,
                 userId = userId,
-                applicationType = applicationType
+                applicationType = applicationType,
+                applicationKind = applicationKind
             )
         }
 
@@ -40,7 +41,8 @@ class ApplicationMapper {
                 classNum = classNum,
                 num = num,
                 userId = userId,
-                applicationType = applicationType
+                applicationType = applicationType,
+                applicationKind = applicationKind
             )
         }
 }
