@@ -36,6 +36,8 @@ class QueryClassUserService(
                 applicationCnt = applicationCnt,
                 earlyReturnCnt = earlyReturnCnt
             )
-        }
+        }.sortedWith(
+            compareBy { it.num }
+        )
     }
 }
