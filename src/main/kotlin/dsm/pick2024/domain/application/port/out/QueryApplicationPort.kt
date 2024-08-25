@@ -8,7 +8,11 @@ interface QueryApplicationPort {
 
     fun findByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind): Application?
 
-    fun findByGradeAndClassNumAndApplicationKind(grade: Int, classNum: Int, applicationKind: ApplicationKind): List<Application>
+    fun findByGradeAndClassNumAndApplicationKind(
+        grade: Int,
+        classNum: Int,
+        applicationKind: ApplicationKind
+    ): List<Application>
 
     fun findByFloorAndApplicationKind(floor: Int, applicationKind: ApplicationKind): List<Application>
 

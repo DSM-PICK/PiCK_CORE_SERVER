@@ -32,9 +32,8 @@ class ApplicationPersistenceAdapter(
     override fun existsOKByUserId(userId: UUID, applicationKind: ApplicationKind) =
         applicationRepository.existsByStatusAndUserIdAndApplicationKind(Status.OK, userId, applicationKind)
 
-    override fun findByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind) = applicationRepository.findById(
-        id
-    ).let { applicationMapper.toDomain(it) }
+    override fun findByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
 
     override fun deleteByIdAndApplicationKind(applicationId: UUID, applicationKind: ApplicationKind) {
         applicationRepository.deleteByIdAndApplicationKind(applicationId, applicationKind)

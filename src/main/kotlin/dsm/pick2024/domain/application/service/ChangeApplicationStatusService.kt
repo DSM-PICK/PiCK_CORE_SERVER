@@ -68,7 +68,8 @@ class ChangeApplicationStatusService(
     }
 
     private fun findApplicationById(id: UUID): Application {
-        return queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.APPLICATION) ?: throw ApplicationNotFoundException
+        return queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.APPLICATION)
+            ?: throw ApplicationNotFoundException
     }
 
     private fun createUpdatedApplication(application: Application, adminName: String): Application {
