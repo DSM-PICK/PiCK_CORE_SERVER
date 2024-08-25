@@ -11,8 +11,8 @@ class ApplicationStoryMapper {
             ApplicationStoryJpaEntity(
                 id = id,
                 reason = reason,
-                startTime = startTime,
-                endTime = endTime,
+                start = start,
+                end = end,
                 userName = userName,
                 date = date,
                 type = type,
@@ -25,8 +25,8 @@ class ApplicationStoryMapper {
             ApplicationStory(
                 id = id,
                 reason = reason,
-                startTime = startTime,
-                endTime = endTime,
+                start = start,
+                end = end,
                 userName = userName,
                 date = date,
                 type = type,

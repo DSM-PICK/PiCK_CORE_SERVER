@@ -2,7 +2,6 @@ package dsm.pick2024.domain.applicationstory.presentation.dto.response
 
 import dsm.pick2024.domain.applicationstory.enums.Type
 import java.time.LocalDate
-import java.time.LocalTime
 
 data class QueryApplicationStoryResponse(
     val username: String,
@@ -11,8 +10,8 @@ data class QueryApplicationStoryResponse(
 
 data class ApplicationStoryResponse(
     val reason: String,
-    val startTime: LocalTime,
-    val endTime: LocalTime? = null,
+    val startTime: String,
+    val endTime: String? = null,
     val date: LocalDate,
     val type: Type
 )

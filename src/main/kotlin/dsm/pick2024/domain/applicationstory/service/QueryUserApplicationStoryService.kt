@@ -25,8 +25,8 @@ class QueryUserApplicationStoryService(
             story?.let {
                 ApplicationStoryResponse(
                     reason = story.reason,
-                    startTime = story.startTime,
-                    endTime = story.endTime,
+                    startTime = story.start,
+                    endTime = story.end,
                     date = story.date,
                     type = story.type
                 )

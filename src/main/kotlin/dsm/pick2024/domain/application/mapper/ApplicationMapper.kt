@@ -11,8 +11,8 @@ class ApplicationMapper {
             ApplicationJapEntity(
                 id = id,
                 reason = reason,
-                startTime = startTime,
-                endTime = endTime,
+                start = start,
+                end = end,
                 userName = userName,
                 status = status,
                 teacherName = teacherName,
@@ -20,7 +20,9 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                userId = userId
+                userId = userId,
+                applicationType = applicationType,
+                applicationKind = applicationKind
             )
         }
 
@@ -29,8 +31,8 @@ class ApplicationMapper {
             Application(
                 id = id,
                 reason = reason,
-                startTime = startTime,
-                endTime = endTime,
+                start = start,
+                end = end,
                 userName = userName,
                 status = status,
                 teacherName = teacherName,
@@ -38,7 +40,9 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                userId = userId
+                userId = userId,
+                applicationType = applicationType,
+                applicationKind = applicationKind
             )
         }
 }

@@ -1,10 +1,10 @@
 package dsm.pick2024.infrastructure.schedule
 
 import dsm.pick2024.domain.afterschool.port.out.DeleteAfterSchoolStudentPort
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
-import dsm.pick2024.domain.earlyreturn.port.out.DeleteEarlyReturnPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.ResetWeekendMealUseCase
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component
 @Component
 class ScheduleService(
     private val deleteClassRoomPort: DeleteClassRoomPort,
-    private val deleteEarlyReturnPort: DeleteEarlyReturnPort,
     private val deleteApplicationPort: DeleteApplicationPort,
     private val deleteAfterSchoolStudentPort: DeleteAfterSchoolStudentPort,
     private val mealUseCase: MealUseCase,
@@ -25,8 +24,8 @@ class ScheduleService(
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
         deleteClassRoomPort.deleteAll()
-        deleteEarlyReturnPort.deleteAll()
-        deleteApplicationPort.deleteAll()
+        deleteApplicationPort.deleteAllByApplicationKind(ApplicationKind.EARLY_RETURN)
+        deleteApplicationPort.deleteAllByApplicationKind(ApplicationKind.APPLICATION)
         deleteAfterSchoolStudentPort.deleteAll()
     }
 

@@ -1,9 +1,10 @@
 package dsm.pick2024.domain.application.entity
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -20,11 +21,11 @@ class ApplicationJapEntity(
     @Column(name = "reason", nullable = false)
     val reason: String,
 
-    @Column(name = "start_time", nullable = false)
-    val startTime: LocalTime,
+    @Column(name = "start", nullable = false)
+    val start: String,
 
-    @Column(name = "end_time", nullable = false)
-    val endTime: LocalTime,
+    @Column(name = "end", nullable = true)
+    val end: String?,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,
@@ -46,5 +47,13 @@ class ApplicationJapEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val status: Status
+    val status: Status,
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    val applicationType: ApplicationType,
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    val applicationKind: ApplicationKind
 ) : BaseUUIDEntity(id)

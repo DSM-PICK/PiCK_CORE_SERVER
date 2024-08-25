@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
@@ -19,10 +20,10 @@ class QueryClassApplicationService(
         classNum: Int
     ): List<QueryApplicationResponse> {
         val applications = if (grade == 5 && classNum == 5) {
-            queryAllApplicationPort.findAllByStatus(Status.QUIET)
+            queryAllApplicationPort.findAllByStatusAndApplicationKind(Status.QUIET, ApplicationKind.APPLICATION)
                 .map { QueryApplicationResponse(it) }
         } else {
-            queryApplicationPort.findByGradeAndClassNum(grade, classNum)
+            queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.APPLICATION)
                 .filter { it.status == Status.QUIET }
                 .map { QueryApplicationResponse(it) }
         }
