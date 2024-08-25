@@ -1,18 +1,16 @@
 package dsm.pick2024.domain.main
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
-import dsm.pick2024.domain.earlyreturn.port.out.ExistsEarlyReturnPort
-import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 @Service
@@ -21,17 +19,15 @@ class MainService(
     private val queryApplicationPort: QueryApplicationPort,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
-    private val existsEarlyReturnPort: ExistsEarlyReturnPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val queryEarlyReturnPort: QueryEarlyReturnPort
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
         val userId = userFacadeUseCase.currentUser().xquareId
 
         return when {
-            existApplicationPort.existsOKByUserId(userId) -> findApplication(userId)
-            existsEarlyReturnPort.existsOKByUserId(userId) -> findEarlyReturn(userId)
+            existApplicationPort.existsOKByUserId(userId, ApplicationKind.APPLICATION) -> findApplication(userId)
+            existApplicationPort.existsOKByUserId(userId, ApplicationKind.EARLY_RETURN) -> findEarlyReturn(userId)
             existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
             /*existApplicationPort.existsByUserId(userId) -> waiting(userId, Main.APPLICATION)
             existsEarlyReturnPort.existsByUserId(userId) -> waiting(userId, Main.EARLYRETURN)
@@ -41,22 +37,22 @@ class MainService(
     }
 
     private fun findApplication(userId: UUID): QueryMainMyApplicationResponse {
-        return queryApplicationPort.findOKApplication(userId)?.run {
+        return queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.APPLICATION)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
-                startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                start = start,
                 username = userName,
-                endTime = endTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                end = end!!,
                 type = Main.APPLICATION
             )
         }!!
     }
 
     private fun findEarlyReturn(userId: UUID): QuerySimpleMyEarlyResponse {
-        return queryEarlyReturnPort.findByOKEarlyReturn(userId)?.run {
+        return queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.EARLY_RETURN)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
-                startTime = startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                start = start,
                 username = userName,
                 type = Main.EARLYRETURN
             )
