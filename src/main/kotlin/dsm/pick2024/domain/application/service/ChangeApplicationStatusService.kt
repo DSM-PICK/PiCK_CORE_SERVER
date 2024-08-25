@@ -79,19 +79,19 @@ class ChangeApplicationStatusService(
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
-        val startAndEnd = attendanceService.translateApplication(
-            application.start,
-            application.end!!,
-            application.applicationType
-        )
-        return ApplicationStory(
-            reason = application.reason,
-            userName = application.userName,
-            start = startAndEnd[0],
-            end = startAndEnd[1],
-            date = application.date,
-            type = Type.APPLICATION,
-            userId = application.userId
-        )
+            val startAndEnd = attendanceService.translateApplication(
+                application.start,
+                application.end!!,
+                application.applicationType
+            )
+            return ApplicationStory(
+                reason = application.reason,
+                userName = application.userName,
+                start = startAndEnd.first(),
+                end = startAndEnd.last(),
+                date = application.date,
+                type = Type.APPLICATION,
+                userId = application.userId
+            )
     }
 }
