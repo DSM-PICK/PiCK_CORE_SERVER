@@ -25,7 +25,7 @@ class ApplicationJapEntity(
     val start: String,
 
     @Column(name = "end", nullable = true)
-    val end: String,
+    val end: String?,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,

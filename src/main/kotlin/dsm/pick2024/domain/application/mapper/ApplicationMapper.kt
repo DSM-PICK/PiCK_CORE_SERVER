@@ -12,7 +12,7 @@ class ApplicationMapper {
                 id = id,
                 reason = reason,
                 start = start,
-                end = end!!,
+                end = end,
                 userName = userName,
                 status = status,
                 teacherName = teacherName,

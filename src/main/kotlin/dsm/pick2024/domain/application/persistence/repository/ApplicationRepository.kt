@@ -7,7 +7,7 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
-    fun existsByUserIdAndApplicationKind(userId: UUID, applicationKind: ApplicationKind): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
     fun existsByStatusAndUserIdAndApplicationKind(status: Status, userId: UUID, applicationKind: ApplicationKind): Boolean
 

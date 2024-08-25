@@ -5,7 +5,7 @@ import java.util.*
 
 interface ExistsApplicationPort {
 
-    fun existsByUserId(userId: UUID, applicationKind: ApplicationKind): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
     fun existsOKByUserId(userId: UUID, applicationKind: ApplicationKind): Boolean
 }

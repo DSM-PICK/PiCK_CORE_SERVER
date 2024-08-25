@@ -26,8 +26,8 @@ class ApplicationPersistenceAdapter(
         applicationRepository.saveAll(entities)
     }
 
-    override fun existsByUserId(userId: UUID, applicationKind: ApplicationKind) =
-        applicationRepository.existsByUserIdAndApplicationKind(userId, applicationKind)
+    override fun existsByUserId(userId: UUID) =
+        applicationRepository.existsByUserId(userId)
 
     override fun existsOKByUserId(userId: UUID, applicationKind: ApplicationKind) =
         applicationRepository.existsByStatusAndUserIdAndApplicationKind(Status.OK, userId, applicationKind)
