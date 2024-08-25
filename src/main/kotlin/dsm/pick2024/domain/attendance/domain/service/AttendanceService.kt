@@ -41,11 +41,17 @@ class AttendanceService {
         attendance: Attendance
     ): Attendance {
         val matchingPeriods = when (applicationType) {
-            ApplicationType.PERIOD -> listOf(getPeriodTime(start), getPeriodTime(end))
+            ApplicationType.PERIOD -> {
+                val startIndex = periodNames.indexOf(start)
+                val endIndex = periodNames.indexOf(end)
+                (startIndex.takeIf { it != -1 } to endIndex.takeIf { it != -1 })
+                    .takeIf { it.first != null && it.second != null && it.first!! <= it.second!! }
+                    ?.let { periods.subList(it.first!!, it.second!! + 1) } ?: emptyList()
+            }
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
                 val endTime = LocalTime.parse(end)
-                periods.filter { startTime <= it.second && endTime >= it.first }
+                periods.filter { startTime <= it.second && endTime > it.first }
             }
         }
 
@@ -64,6 +70,7 @@ class AttendanceService {
 
         return updatedAttendance
     }
+
 
     private fun getPeriodTime(periodName: String): Pair<LocalTime, LocalTime>? {
         return periodMap[periodName]
