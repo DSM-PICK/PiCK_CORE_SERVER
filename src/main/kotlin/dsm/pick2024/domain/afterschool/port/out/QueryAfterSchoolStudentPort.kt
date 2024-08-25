@@ -8,4 +8,6 @@ interface QueryAfterSchoolStudentPort {
     fun findByUserId(id: UUID): AfterSchoolStudent?
 
     fun findAll(): List<AfterSchoolStudent>
+
+    fun findById(id: UUID): AfterSchoolStudent?
 }

@@ -19,6 +19,7 @@ class QueryAllOKEarlyReturnService(
         queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.OK }
             .map { it ->
+<<<<<<< HEAD
                 QueryAllOKEarlyReturnResponse(
                     it.userId,
                     it.userName,
@@ -28,5 +29,8 @@ class QueryAllOKEarlyReturnService(
                     it.num,
                     it.reason
                 )
+=======
+                QueryAllOKEarlyReturnResponse(it)
+>>>>>>> origin/develop
             }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }

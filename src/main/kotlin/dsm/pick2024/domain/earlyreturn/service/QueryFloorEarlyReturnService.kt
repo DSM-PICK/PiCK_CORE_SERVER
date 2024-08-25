@@ -19,6 +19,7 @@ class QueryFloorEarlyReturnService(
         queryApplicationPort.findByFloorAndApplicationKind(floor, ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.QUIET }
             .map { it ->
+<<<<<<< HEAD
                 QueryEarlyReturnResponse(
                     it.userId,
                     it.userName,
@@ -28,5 +29,8 @@ class QueryFloorEarlyReturnService(
                     it.num,
                     it.reason
                 )
+=======
+                QueryEarlyReturnResponse(it)
+>>>>>>> origin/develop
             }
 }

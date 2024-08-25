@@ -22,6 +22,7 @@ class QueryClassEarlyReturnService(
     ) = if (grade == 5 && classNum == 5) {
         queryAllApplicationPort.findAllByStatusAndApplicationKind(Status.QUIET, ApplicationKind.EARLY_RETURN)
             .map {
+<<<<<<< HEAD
                 QueryEarlyReturnResponse(
                     it.userId,
                     it.userName,
@@ -31,11 +32,15 @@ class QueryClassEarlyReturnService(
                     it.num,
                     it.reason
                 )
+=======
+                QueryEarlyReturnResponse(it)
+>>>>>>> origin/develop
             }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
         queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.QUIET }
             .map { it ->
+<<<<<<< HEAD
                 QueryEarlyReturnResponse(
                     it.id!!,
                     it.userName,
@@ -45,6 +50,9 @@ class QueryClassEarlyReturnService(
                     it.num,
                     it.reason
                 )
+=======
+                QueryEarlyReturnResponse(it)
+>>>>>>> origin/develop
             }
     }
 }
