@@ -1,11 +1,7 @@
 package dsm.pick2024.domain.earlyreturn.presentation.dto.response
 
-<<<<<<< HEAD
-=======
-import dsm.pick2024.domain.earlyreturn.domain.EarlyReturn
-import java.time.LocalTime
+import dsm.pick2024.domain.application.domain.Application
 
->>>>>>> origin/develop
 data class QueryEarlyReturnReasonResponse(
     val username: String,
     val start: String,
@@ -15,13 +11,13 @@ data class QueryEarlyReturnReasonResponse(
     val reason: String
 ) {
     constructor(
-        earlyReturn: EarlyReturn
+        application: Application
     ) : this (
-        username = earlyReturn.userName,
-        startTime = earlyReturn.startTime,
-        grade = earlyReturn.grade,
-        classNum = earlyReturn.classNum,
-        num = earlyReturn.num,
-        reason = earlyReturn.reason
+        application.userName,
+        application.start,
+        application.grade,
+        application.classNum,
+        application.num,
+        application.reason
     )
 }
