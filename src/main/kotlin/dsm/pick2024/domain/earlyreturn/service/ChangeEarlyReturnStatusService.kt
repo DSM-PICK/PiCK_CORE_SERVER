@@ -59,7 +59,6 @@ class ChangeEarlyReturnStatusService(
 
         if (earlyReturns.isEmpty()) {
             throw EarlyReturnApplicationNotFoundException
-
         }
 
         val applicationStories = earlyReturns.map { earlyReturn ->
@@ -71,7 +70,7 @@ class ChangeEarlyReturnStatusService(
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
-        val start = attendanceService.translateApplication(application.start,null, ApplicationType.TIME)
+        val start = attendanceService.translateApplication(application.start, null, ApplicationType.TIME)
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,

@@ -6,7 +6,6 @@ import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
-import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
@@ -20,7 +19,7 @@ import java.time.ZoneId
 class CreateEarlyReturnService(
     private val saveApplicationPort: SaveApplicationPort,
     private val existsApplicationPort: ExistsApplicationPort,
-    private val userFacadeUseCase: UserFacadeUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase
 ) : CreateEarlyReturnUseCase {
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {

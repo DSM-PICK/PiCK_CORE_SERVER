@@ -19,7 +19,7 @@ class MainService(
     private val queryApplicationPort: QueryApplicationPort,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
-    private val existClassRoomPort: ExistClassRoomPort,
+    private val existClassRoomPort: ExistClassRoomPort
 ) {
     @Transactional(readOnly = true)
     fun main(): Any? {
