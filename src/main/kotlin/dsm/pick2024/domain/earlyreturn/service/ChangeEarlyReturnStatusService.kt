@@ -74,7 +74,7 @@ class ChangeEarlyReturnStatusService(
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,
-            start = start[0],
+            start = start.first(),
             date = application.date,
             type = Type.EARLY_RETURN,
             userId = application.userId
