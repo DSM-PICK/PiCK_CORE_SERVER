@@ -34,29 +34,28 @@ class ChangeApplicationStatusService(
 
     @Transactional
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
+        val admin = adminFacadeUseCase.currentAdmin()
         if (request.status == Status.NO) {
             handleStatusNo(request.ids)
             return
         }
-
-        val admin = adminFacadeUseCase.currentAdmin()
-        val updatedApplications = request.ids.map { id ->
+        
+        val updateApplications = request.ids.map { id ->
             val application = findApplicationById(id)
-            createUpdatedApplication(application, admin.name)
+            updateApplication(application, admin.name)
         }
 
-        val applicationStories = updatedApplications.map { it ->
-
+        val applicationStory = updateApplications.map { it ->
             createApplicationStory(it)
         }
 
-        val attendance = updatedApplications.map { it ->
+        val attendance = updateApplications.map { it ->
             val attendanceId = queryAttendancePort.findByUserId(it.userId)
-            attendanceService.updateAttendance(it.start, it.end!!, it.applicationType, attendanceId!!)
+            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
         }.toMutableList()
 
-        saveApplicationPort.saveAll(updatedApplications)
-        applicationStorySaveAllPort.saveAll(applicationStories)
+        saveApplicationPort.saveAll(updateApplications)
+        applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendance)
     }
 
@@ -72,7 +71,7 @@ class ChangeApplicationStatusService(
             ?: throw ApplicationNotFoundException
     }
 
-    private fun createUpdatedApplication(application: Application, adminName: String): Application {
+    private fun updateApplication(application: Application, adminName: String): Application {
         return application.copy(
             teacherName = adminName,
             status = Status.OK
