@@ -5,6 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
@@ -39,35 +40,45 @@ class ChangeEarlyReturnStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.NO) {
-            handleRejection(request.ids)
-        } else {
-            handleApproval(request.ids, admin.name)
+            handleStatusNo(request.ids)
         }
+
+        val updateEarlyReturns = request.ids.map { id ->
+            val application = findApplicationById(id)
+            updateEarlyReturn(application, admin.name)
+        }
+
+        val applicationStory = updateEarlyReturns.map { earlyReturn ->
+            createApplicationStory(earlyReturn)
+        }
+
+        val attendances = updateEarlyReturns.map { it ->
+            val attendanceId = queryAttendancePort.findByUserId(it.userId)
+            attendanceService.updateAttendanceToEarlyReturn(it.start, attendanceId!!)
+        }.toMutableList()
+
+        saveApplicationPort.saveAll(updateEarlyReturns)
+        applicationStorySaveAllPort.saveAll(applicationStory)
+        saveAttendancePort.saveAll(attendances)
     }
 
-    private fun handleRejection(ids: List<UUID>) {
+    private fun handleStatusNo(ids: List<UUID>) {
         ids.forEach { id ->
-            queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
-                ?: throw EarlyReturnApplicationNotFoundException
+            findApplicationById(id)
             deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
     }
 
-    private fun handleApproval(ids: List<UUID>, teacherName: String) {
-        val earlyReturns = ids.mapNotNull { id ->
-            queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)?.copy(
-                teacherName = teacherName,
-                status = Status.OK
-            )
-        }
+    private fun updateEarlyReturn(application: Application, adminName: String): Application {
+        return application.copy(
+            teacherName = adminName,
+            status = Status.OK
+        )
+    }
 
-
-        val applicationStories = earlyReturns.map { earlyReturn ->
-            createApplicationStory(earlyReturn)
-        }
-
-        saveApplicationPort.saveAll(earlyReturns)
-        applicationStorySaveAllPort.saveAll(applicationStories)
+    private fun findApplicationById(id: UUID): Application {
+        return queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
+            ?: throw ApplicationNotFoundException
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
