@@ -2,6 +2,7 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryStatusApplicationResponse
@@ -18,7 +19,9 @@ class QueryStatusApplicationService(
     @Transactional(readOnly = true)
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
         val allApplications = queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.APPLICATION)
+            ?: throw ApplicationNotFoundException
         val allEarlyReturns = queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.EARLY_RETURN)
+            ?: throw ApplicationNotFoundException
 
         val out = allApplications.count { it.status == Status.OK } +
             allEarlyReturns.count { it.status == Status.OK }
