@@ -12,6 +12,8 @@ import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
@@ -26,6 +28,8 @@ class ChangeEarlyReturnStatusService(
     private val queryApplicationPort: QueryApplicationPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
     private val deleteApplicationPort: DeleteApplicationPort,
+    private val saveAttendancePort: SaveAttendancePort,
+    private val queryAttendancePort: QueryAttendancePort,
     private val attendanceService: AttendanceService
 
 ) : ChangeEarlyReturnStatusUseCase {
@@ -57,9 +61,6 @@ class ChangeEarlyReturnStatusService(
             )
         }
 
-        if (earlyReturns.isEmpty()) {
-            throw EarlyReturnApplicationNotFoundException
-        }
 
         val applicationStories = earlyReturns.map { earlyReturn ->
             createApplicationStory(earlyReturn)

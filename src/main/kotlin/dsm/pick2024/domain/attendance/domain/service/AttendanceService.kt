@@ -41,7 +41,7 @@ class AttendanceService {
     }
 
     // 주어진 교시 혹은 시간에 해당하는 출석 상태를 업데이트하는 함수
-    fun updateAttendance(
+    fun updateAttendanceToApplication(
         start: String,
         end: String,
         applicationType: ApplicationType,
@@ -82,6 +82,26 @@ class AttendanceService {
             }
         }
         return updatedAttendance
+    }
+
+    fun updateAttendanceToEarlyReturn(
+        start: String,
+        attendance: Attendance
+    ): Attendance {
+        val startTime = LocalTime.parse(start)
+        periods.filter {  it.second.isAfter(startTime) }
+        var updateAttendance = attendance
+        periods.forEach {  period ->
+            updateAttendance = when (period) {
+                periods[5] -> updateAttendance.copy(period6 = AttendanceStatus.GO_HOME)
+                periods[6] -> updateAttendance.copy(period7 = AttendanceStatus.GO_HOME)
+                periods[7] -> updateAttendance.copy(period8 = AttendanceStatus.GO_HOME)
+                periods[8] -> updateAttendance.copy(period9 = AttendanceStatus.GO_HOME)
+                periods[9] -> updateAttendance.copy(period10 = AttendanceStatus.GO_HOME)
+                else -> updateAttendance
+            }
+        }
+        return updateAttendance
     }
 
     private fun getMatchPeriods(startTime: LocalTime, endTime: LocalTime?): List<String> {
