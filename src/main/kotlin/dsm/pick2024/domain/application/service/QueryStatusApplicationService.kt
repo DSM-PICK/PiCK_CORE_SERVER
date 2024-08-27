@@ -19,9 +19,7 @@ class QueryStatusApplicationService(
     @Transactional(readOnly = true)
     override fun queryStatusApplication(): QueryStatusApplicationResponse {
         val allApplications = queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.APPLICATION)
-            ?: throw ApplicationNotFoundException
         val allEarlyReturns = queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.EARLY_RETURN)
-            ?: throw ApplicationNotFoundException
 
         val out = allApplications.count { it.status == Status.OK } +
             allEarlyReturns.count { it.status == Status.OK }
