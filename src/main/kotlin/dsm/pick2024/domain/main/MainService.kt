@@ -40,9 +40,9 @@ class MainService(
         return queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.APPLICATION)?.run {
             QueryMainMyApplicationResponse(
                 userId = userId,
-                start = start,
+                start = start.take(5),
                 username = userName,
-                end = end!!,
+                end = end!!.take(5),
                 type = Main.APPLICATION
             )
         }!!
@@ -52,7 +52,7 @@ class MainService(
         return queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.EARLY_RETURN)?.run {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
-                start = start,
+                start = start.take(5),
                 username = userName,
                 type = Main.EARLYRETURN
             )
