@@ -39,7 +39,7 @@ class ChangeApplicationStatusService(
             handleStatusNo(request.ids)
             return
         }
-        
+
         val updateApplications = request.ids.map { id ->
             val application = findApplicationById(id)
             updateApplication(application, admin.name)

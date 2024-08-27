@@ -89,9 +89,9 @@ class AttendanceService {
         attendance: Attendance
     ): Attendance {
         val startTime = LocalTime.parse(start)
-        periods.filter { it.second.isAfter(startTime) || it.second == startTime }
+        val list = periods.filter { it.first.isAfter(startTime) || it.first == startTime }
         var updateAttendance = attendance
-        periods.forEach {  period ->
+        list.forEach { period ->
             updateAttendance = when (period) {
                 periods[5] -> updateAttendance.copy(period6 = AttendanceStatus.GO_HOME)
                 periods[6] -> updateAttendance.copy(period7 = AttendanceStatus.GO_HOME)
