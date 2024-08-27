@@ -89,7 +89,7 @@ class AttendanceService {
         attendance: Attendance
     ): Attendance {
         val startTime = LocalTime.parse(start)
-        periods.filter {  it.second.isAfter(startTime) }
+        periods.filter { it.second.isAfter(startTime) || it.second == startTime }
         var updateAttendance = attendance
         periods.forEach {  period ->
             updateAttendance = when (period) {
