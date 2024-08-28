@@ -27,8 +27,8 @@ class QueryMyApplicationService(
             userId = application.userId,
             username = application.userName,
             teacherName = application.teacherName!!,
-            start = application.start.take(5),
-            end = application.end!!.take(5),
+            start = application.start,
+            end = application.end!!,
             reason = application.reason,
             schoolNum = (user.grade * 1000) + (user.classNum * 100) + user.num,
             type = Type.APPLICATION
