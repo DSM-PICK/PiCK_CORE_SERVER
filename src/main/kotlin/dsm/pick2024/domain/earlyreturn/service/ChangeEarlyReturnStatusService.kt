@@ -40,6 +40,7 @@ class ChangeEarlyReturnStatusService(
 
         if (request.status == Status.NO) {
             handleStatusNo(request.ids)
+            return
         }
 
         val updateEarlyReturns = request.ids.map { id ->
@@ -63,7 +64,6 @@ class ChangeEarlyReturnStatusService(
 
     private fun handleStatusNo(ids: List<UUID>) {
         ids.forEach { id ->
-            findApplicationById(id)
             deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
     }
