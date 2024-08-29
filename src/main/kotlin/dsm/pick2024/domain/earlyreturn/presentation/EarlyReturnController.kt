@@ -38,7 +38,8 @@ class EarlyReturnController(
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/create")
     fun createEarlyReturn(
-        @Valid @RequestBody createEarlyReturnRequest: CreateEarlyReturnRequest
+        @Valid @RequestBody
+        createEarlyReturnRequest: CreateEarlyReturnRequest
     ) = createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
     @Operation(summary = "조기귀가 신청 수락또는 거절 API")

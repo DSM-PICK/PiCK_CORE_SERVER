@@ -42,7 +42,8 @@ class ApplicationController(
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     fun application(
-        @Valid @RequestBody applicationRequest: ApplicationRequest
+        @Valid @RequestBody
+        applicationRequest: ApplicationRequest
     ) = applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락또는 거절 API")
