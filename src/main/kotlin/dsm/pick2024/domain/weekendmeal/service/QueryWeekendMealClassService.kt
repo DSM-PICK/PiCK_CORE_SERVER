@@ -27,20 +27,4 @@ class QueryWeekendMealClassService(
                 num = it.num
             )
         }
-
-    override fun queryWeekendMealQuitClass(
-        grade: Int,
-        classNum: Int
-    ) = queryWeekendMealPort.findQuitByGradeAndClassNum(grade, classNum)
-        .map {
-                it ->
-            QueryWeekendMealResponse(
-                it.id!!,
-                it.userName,
-                it.status,
-                it.grade,
-                it.classNum,
-                it.num
-            )
-        }
 }

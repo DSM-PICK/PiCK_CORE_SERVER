@@ -55,13 +55,6 @@ class WeekendMealController(
         @RequestParam(name = "class_num") classNum: Int
     ) = queryWeekendMealClassUseCase.queryWeekendMealClass(grade, classNum)
 
-    @Operation(summary = "주말급식 미응답자 반별로 조회 API")
-    @GetMapping("/quit")
-    fun queryQuitGradeAndClassNum(
-        @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "class_num") classNum: Int
-    ) = queryWeekendMealClassUseCase.queryWeekendMealQuitClass(grade, classNum)
-
     @Operation(summary = "내 주말급식 신청상태 조회 API")
     @GetMapping("/my")
     fun queryMyWeekendMealStatus(): QueryStatusResponse = queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()

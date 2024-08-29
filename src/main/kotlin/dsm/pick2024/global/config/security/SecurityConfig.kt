@@ -76,7 +76,6 @@ class SecurityConfig(
                 "/self-study/date",
                 "/self-study/admin",
                 "/weekend-meal/all",
-                "/weekend-meal/quit",
                 "/weekend-meal/hey",
                 "/status/**",
                 "/user/all",
@@ -136,7 +135,8 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/weekend-meal/excel"
+                "/weekend-meal/excel",
+                "/weekend-meal/excel/grade"
             ).hasRole(Role.SCH.name)
             .anyRequest().authenticated()
             .and()
