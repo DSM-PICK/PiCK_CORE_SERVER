@@ -20,4 +20,6 @@ interface WeekendMealRepository : Repository<WeekendMealJpaEntity, UUID> {
     fun findById(id: UUID): WeekendMealJpaEntity
 
     fun findAll(): List<WeekendMealJpaEntity>
+
+    fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status): List<WeekendMeal>?
 }
