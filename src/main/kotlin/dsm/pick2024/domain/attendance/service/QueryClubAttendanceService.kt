@@ -41,7 +41,9 @@ class QueryClubAttendanceService(
                 status = returnStatus,
                 classroomName = classroomName!!
             )
-        }
+        }.sortedWith(
+            compareBy({ it.grade }, { it.classNum }, { it.num })
+        )
     }
     private fun returnStatus(period: Int, attendance: Attendance): AttendanceStatus {
         return when (period) {
