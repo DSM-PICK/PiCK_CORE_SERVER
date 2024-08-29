@@ -3,6 +3,7 @@ package dsm.pick2024.domain.weekendmeal.presentation
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelClassWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUserUseCase
@@ -30,7 +31,8 @@ class WeekendMealController(
     private val printExcelWeekendMealUseCase: PrintExcelWeekendMealUseCase,
     private val changeWeekendMealStatusUseCase: ChangeWeekendMealStatusUseCase,
     private val saveAllWeekendMealUserUseCase: SaveAllWeekendMealUserUseCase,
-    private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus
+    private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus,
+    private val printExcelClassWeekendMealUseCase: PrintExcelClassWeekendMealUseCase
 ) {
 
     @Operation(summary = "주말급식 강제 상태변경")
@@ -55,13 +57,6 @@ class WeekendMealController(
         @RequestParam(name = "class_num") classNum: Int
     ) = queryWeekendMealClassUseCase.queryWeekendMealClass(grade, classNum)
 
-    @Operation(summary = "주말급식 미응답자 반별로 조회 API")
-    @GetMapping("/quit")
-    fun queryQuitGradeAndClassNum(
-        @RequestParam(name = "grade") grade: Int,
-        @RequestParam(name = "class_num") classNum: Int
-    ) = queryWeekendMealClassUseCase.queryWeekendMealQuitClass(grade, classNum)
-
     @Operation(summary = "내 주말급식 신청상태 조회 API")
     @GetMapping("/my")
     fun queryMyWeekendMealStatus(): QueryStatusResponse = queryMyWeekendMealStatusUseCase.queryMyWeekendMealStatus()
@@ -69,6 +64,17 @@ class WeekendMealController(
     @Operation(summary = "주말급식 신청자 엑셀 파일 출력 API")
     @GetMapping("/excel")
     fun getExcel(httpServletResponse: HttpServletResponse) = printExcelWeekendMealUseCase.execute(httpServletResponse)
+
+    @Operation(summary = "반별 주말급식 신청자 엑셀 파일 출력 API")
+    @GetMapping("/excel/grade")
+    fun getClassExcel(
+        httpServletResponse: HttpServletResponse,
+        @RequestParam(name = "grade") grade: Int,
+        @RequestParam(
+            name = "class_num"
+        )classNum: Int
+    ) =
+        printExcelClassWeekendMealUseCase.execute(httpServletResponse, grade, classNum)
 
     @Operation(summary = "주말급식 유저 정보 저장 API")
     @PostMapping("/saveAll")
