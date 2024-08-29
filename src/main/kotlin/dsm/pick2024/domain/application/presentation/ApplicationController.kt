@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
+import javax.validation.Valid
 
 @Tag(name = "application API")
 @RestController
@@ -41,7 +42,8 @@ class ApplicationController(
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     fun application(
-        @RequestBody applicationRequest: ApplicationRequest
+        @Valid @RequestBody
+        applicationRequest: ApplicationRequest
     ) = applicationUseCase.application(applicationRequest)
 
     @Operation(summary = "외출신청 수락또는 거절 API")
