@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @Tag(name = "early API")
 @RestController
@@ -37,7 +38,7 @@ class EarlyReturnController(
     @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping("/create")
     fun createEarlyReturn(
-        @RequestBody createEarlyReturnRequest: CreateEarlyReturnRequest
+        @Valid @RequestBody createEarlyReturnRequest: CreateEarlyReturnRequest
     ) = createEarlyReturnUseCase.createEarlyReturn(createEarlyReturnRequest)
 
     @Operation(summary = "조기귀가 신청 수락또는 거절 API")
