@@ -25,7 +25,7 @@ class SaveAllWeekendMealUserMealService(
                     grade = user.grade,
                     classNum = user.classNum,
                     num = user.num,
-                    status = Status.QUIET
+                    status = Status.NO
                 )
             }.toMutableList()
         weekendMealPersistenceAdapter.saveAll(weekendMealEntities)

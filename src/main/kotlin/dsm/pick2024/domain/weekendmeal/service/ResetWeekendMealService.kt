@@ -22,7 +22,7 @@ class ResetWeekendMealService(
         allWeekendMeal.map { weekendMeal ->
             val updateWeekendMeal =
                 weekendMeal.copy(
-                    status = Status.QUIET
+                    status = Status.NO
                 )
             update.add(updateWeekendMeal)
         }
