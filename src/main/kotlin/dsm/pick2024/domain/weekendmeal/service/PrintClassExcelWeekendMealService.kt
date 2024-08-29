@@ -43,13 +43,13 @@ class PrintClassExcelWeekendMealService(
 
         // Title Style
         val titleCellStyle: CellStyle = workbook.createCellStyle().apply {
-            setBorderStyle(BorderStyle.THIN)
+            setBorderStyle(BorderStyle.NONE)
             fillForegroundColor = IndexedColors.WHITE.index
             alignment = HorizontalAlignment.CENTER
             setFont(
                 workbook.createFont().apply {
                     color = IndexedColors.BLACK.index
-                    fontHeightInPoints = 16
+                    fontHeightInPoints = 20
                 }
             )
         }
@@ -72,24 +72,45 @@ class PrintClassExcelWeekendMealService(
             verticalAlignment = VerticalAlignment.CENTER
         }
 
+        // teacher Row
+        val teacherStyle: CellStyle = workbook.createCellStyle().apply {
+            setBorderStyle(BorderStyle.NONE)
+            alignment = HorizontalAlignment.RIGHT
+            verticalAlignment = VerticalAlignment.CENTER
+        }
+
+        // Title Row
         val titleRowIndex = 0
         val titleRow: Row = sheet.createRow(titleRowIndex)
-
-        //Title Row
         val titleCell = titleRow.createCell(0)
         titleCell.setCellValue("$month 월 주말급식 신청서")
         titleCell.cellStyle = titleCellStyle
-        sheet.addMergedRegion(CellRangeAddress(titleRowIndex, titleRowIndex + 1, 0, 5))
+        sheet.addMergedRegion(CellRangeAddress(titleRowIndex, titleRowIndex, 0, 5))
 
-        val descriptionRowIndex = 2
-        val descriptionRow: Row = sheet.createRow(descriptionRowIndex)
-        val descriptionCell = descriptionRow.createCell(0)
-        descriptionCell.setCellValue("급식 먹는 학생: 신청에 \"1\"표시")
-        descriptionCell.cellStyle = bodyCellStyle
-        sheet.addMergedRegion(CellRangeAddress(descriptionRowIndex, descriptionRowIndex, 0, 5))
+        // Explain Row
+        val explainRowIndex = 1
+        val explainRow: Row = sheet.createRow(explainRowIndex)
+        val explainCell = explainRow.createCell(0)
+        explainCell.setCellValue("급식 먹는 학생: 신청에 \"1\" 표시")
+        explainCell.cellStyle = bodyCellStyle
+        sheet.addMergedRegion(CellRangeAddress(explainRowIndex, explainRowIndex, 0, 5))
+
+        val teacherRowIndex = 2
+        val teacherRow: Row = sheet.createRow(teacherRowIndex)
+        val teacherCell = teacherRow.createCell(4)
+        teacherCell.setCellValue("담임")
+        teacherCell.cellStyle = teacherStyle
 
         // Header Row
-        val headerNames = arrayOf("학년", "반", "번호", "이름", "주말급식 신청여부\n\"1\"", "급식 관련 기타 특이사항\n(예: 휴학, 병결, 파견 등)")
+        val headerNames = arrayOf(
+            "학년",
+            "반",
+            "번호",
+            "이름",
+            "주말급식 신청여부\n\"1\"",
+            "급식 관련 기타 특이사항\n(예: 휴학, 병결, 파견 등)"
+        )
+
         val headerRow: Row = sheet.createRow(3)
         headerNames.forEachIndexed { i, header ->
             val cell = headerRow.createCell(i)
@@ -97,19 +118,18 @@ class PrintClassExcelWeekendMealService(
             cell.cellStyle = headerCellStyle
         }
 
-        // Body
+        // Body Rows
         val userList: List<WeekendMeal> =
             queryWeekendMealPort.findByGradeAndClassNum(grade, classNum).sortedBy { it.num }
 
         userList.forEachIndexed { index, user ->
-            val bodyRow: Row = sheet.createRow(index + 4) // Adjusted to start from row index 4
+            val bodyRow: Row = sheet.createRow(index + 4)
             bodyRow.createCell(0).setCellValue(user.grade.toDouble())
             bodyRow.createCell(1).setCellValue(user.classNum.toDouble())
             bodyRow.createCell(2).setCellValue(user.num.toDouble())
             bodyRow.createCell(3).setCellValue(user.userName)
             bodyRow.createCell(4).setCellValue(statusChange(user.status)?.toString())
             bodyRow.createCell(5)
-
             bodyRow.forEach { cell ->
                 cell.cellStyle = bodyCellStyle
             }
