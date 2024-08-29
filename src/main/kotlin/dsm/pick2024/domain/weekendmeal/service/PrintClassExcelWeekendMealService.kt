@@ -33,12 +33,10 @@ class PrintClassExcelWeekendMealService(
         val workbook: Workbook = XSSFWorkbook()
         val sheet: Sheet = workbook.createSheet("주말급식-신청명단").apply {
             defaultColumnWidth = 15
-            setColumnWidth(0, 5 * 256)
-            setColumnWidth(1, 5 * 256)
-            setColumnWidth(2, 5 * 256)
-            setColumnWidth(3, 10 * 256)
-            setColumnWidth(4, 20 * 256)
-            setColumnWidth(5, 30 * 256)
+            val columnWidths = arrayOf(5, 5, 5, 10, 20, 30)
+            columnWidths.forEachIndexed { index, width ->
+                setColumnWidth(index, width * 256)
+            }
         }
 
         // Title Style
