@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpServletResponse
 
 @Service
-class PrintExcelWeekendMealService(
+class PrintAllExcelWeekendMealService(
     private val weekendMealPersistenceAdapter: WeekendMealPersistenceAdapter
 ) : PrintExcelWeekendMealUseCase {
 
@@ -25,7 +25,7 @@ class PrintExcelWeekendMealService(
     override fun execute(response: HttpServletResponse) {
         val workbook: Workbook = XSSFWorkbook()
         val sheet: Sheet =
-            workbook.createSheet("weekendMeal_apply").apply {
+            workbook.createSheet("주말급식-신청명단").apply {
                 defaultColumnWidth = 30
             }
 
