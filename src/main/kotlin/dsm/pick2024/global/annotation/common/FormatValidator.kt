@@ -2,30 +2,37 @@ package dsm.pick2024.global.annotation.common
 
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.global.annotation.ValidFormat
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 import java.time.LocalTime
+import java.time.format.DateTimeParseException
 
-class FormatValidator : ConstraintValidator<ValidFormat, ApplicationRequest> {
+class FormatValidator : ConstraintValidator<ValidFormat, Any> {
 
-    override fun isValid(request: ApplicationRequest, context: ConstraintValidatorContext): Boolean {
-        return when (request.applicationType) {
-            ApplicationType.TIME -> isValidTimeFormat(request.start) && isValidTimeFormat(request.end)
-            ApplicationType.PERIOD -> isValidPeriodFormat(request.start) && isValidPeriodFormat(request.end)
+    override fun isValid(request: Any, context: ConstraintValidatorContext): Boolean {
+        return when (request) {
+            is ApplicationRequest -> validateApplicationRequest(request)
+            is CreateEarlyReturnRequest -> validateCreateEarlyReturnRequest(request)
+            else -> false
         }
+    }
+
+    private fun validateApplicationRequest(request: ApplicationRequest): Boolean {
+        return isValidTimeFormat(request.start) && isValidTimeFormat(request.end)
+    }
+
+    private fun validateCreateEarlyReturnRequest(request: CreateEarlyReturnRequest): Boolean {
+        return isValidTimeFormat(request.start)
     }
 
     private fun isValidTimeFormat(time: String): Boolean {
         return try {
             LocalTime.parse(time)
             true
-        } catch (e: Exception) {
+        } catch (e: DateTimeParseException) {
             false
         }
-    }
-
-    private fun isValidPeriodFormat(period: String): Boolean {
-        return Regex("""\d+교시""").matches(period)
     }
 }
