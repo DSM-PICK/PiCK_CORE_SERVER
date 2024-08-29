@@ -59,7 +59,7 @@ class WeekendMealPersistenceAdapter(
         return weekendMealRepository.findById(id).let { weekendMealMapper.toDomain(it) }
     }
 
-    fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status) =
+    override fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status) =
         weekendMealRepository.findByGradeAndClassNumAndStatus(
             grade,
             classNum,
