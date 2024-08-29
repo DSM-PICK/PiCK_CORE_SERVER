@@ -20,11 +20,19 @@ class FormatValidator : ConstraintValidator<ValidFormat, Any> {
     }
 
     private fun validateApplicationRequest(request: ApplicationRequest): Boolean {
-        return isValidTimeFormat(request.start) && isValidTimeFormat(request.end)
+        return if (request.applicationType == ApplicationType.PERIOD) {
+            isValidPeriodFormat(request.start) && isValidPeriodFormat(request.end)
+        } else {
+            isValidTimeFormat(request.start) && isValidTimeFormat(request.end)
+        }
     }
 
     private fun validateCreateEarlyReturnRequest(request: CreateEarlyReturnRequest): Boolean {
         return isValidTimeFormat(request.start)
+    }
+
+    private fun isValidPeriodFormat(period: String): Boolean {
+        return Regex("""\d+교시""").matches(period)
     }
 
     private fun isValidTimeFormat(time: String): Boolean {
