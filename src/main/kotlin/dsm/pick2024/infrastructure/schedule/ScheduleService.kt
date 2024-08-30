@@ -1,7 +1,6 @@
 package dsm.pick2024.infrastructure.schedule
 
 import dsm.pick2024.domain.afterschool.port.out.DeleteAfterSchoolStudentPort
-import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
@@ -24,8 +23,7 @@ class ScheduleService(
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
         deleteClassRoomPort.deleteAll()
-        deleteApplicationPort.deleteAllByApplicationKind(ApplicationKind.EARLY_RETURN)
-        deleteApplicationPort.deleteAllByApplicationKind(ApplicationKind.APPLICATION)
+        deleteApplicationPort.deleteAll()
         deleteAfterSchoolStudentPort.deleteAll()
     }
 
