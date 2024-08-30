@@ -81,7 +81,7 @@ class PrintClassExcelWeekendMealService(
         val titleRowIndex = 0
         val titleRow: Row = sheet.createRow(titleRowIndex)
         val titleCell = titleRow.createCell(0)
-        titleCell.setCellValue("$month 월 주말급식 신청서")
+        titleCell.setCellValue("10 월 주말급식 신청서")
         titleCell.cellStyle = titleCellStyle
         sheet.addMergedRegion(CellRangeAddress(titleRowIndex, titleRowIndex, 0, 5))
 
