@@ -6,5 +6,7 @@ import java.util.UUID
 interface DeleteApplicationPort {
     fun deleteByIdAndApplicationKind(applicationId: UUID, applicationKind: ApplicationKind)
 
+    fun deleteAll()
+
     fun deleteAllByApplicationKind(applicationKind: ApplicationKind)
 }

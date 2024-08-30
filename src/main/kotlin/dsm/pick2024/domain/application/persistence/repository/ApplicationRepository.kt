@@ -29,6 +29,8 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
 
     fun findByUserId(userId: UUID): ApplicationJapEntity
 
+    fun deleteAll()
+
     fun deleteAllByApplicationKind(applicationKind: ApplicationKind)
 
     fun findByUserIdAndStatusAndApplicationKind(

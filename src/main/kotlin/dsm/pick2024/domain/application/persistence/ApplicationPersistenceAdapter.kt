@@ -39,6 +39,9 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteByIdAndApplicationKind(applicationId, applicationKind)
     }
 
+    override fun deleteAll() =
+        applicationRepository.deleteAll()
+
     override fun deleteAllByApplicationKind(applicationKind: ApplicationKind) {
         applicationRepository.deleteAllByApplicationKind(applicationKind)
     }
