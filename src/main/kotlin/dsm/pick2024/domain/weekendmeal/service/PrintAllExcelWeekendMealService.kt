@@ -6,6 +6,7 @@ import dsm.pick2024.domain.weekendmeal.enums.Status.NO
 import dsm.pick2024.domain.weekendmeal.enums.Status.OK
 import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
+import java.time.LocalDate
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.FillPatternType
@@ -28,6 +29,7 @@ class PrintAllExcelWeekendMealService(
 ) : PrintExcelWeekendMealUseCase {
     @Transactional(readOnly = true)
     override fun execute(response: HttpServletResponse) {
+        val month = LocalDate.now().monthValue + 1
         val workbook: Workbook = XSSFWorkbook()
 
         // 주말급식 정보
@@ -84,7 +86,7 @@ class PrintAllExcelWeekendMealService(
         val titleRow: Row = sheet.createRow(0)
         val titleCell = titleRow.createCell(0)
         titleCell.cellStyle = titleCellStyle
-        titleCell.setCellValue("10월 주말급식 신청자 명단")
+        titleCell.setCellValue("$month 월 주말급식 신청자 명단")
         sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 15))
 
         // 데이터가 작성될 행 번호
