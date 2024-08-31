@@ -18,7 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.servlet.http.HttpServletResponse
-import kotlin.time.times
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 import org.apache.poi.ss.usermodel.VerticalAlignment
 import org.apache.poi.ss.util.CellRangeAddress
@@ -27,6 +26,7 @@ import org.apache.poi.ss.util.CellRangeAddress
 class PrintAllExcelWeekendMealService(
     private val weekendMealPort: QueryWeekendMealPort
 ) : PrintExcelWeekendMealUseCase {
+
     @Transactional(readOnly = true)
     override fun execute(response: HttpServletResponse) {
         val month = LocalDate.now().monthValue + 1
@@ -40,9 +40,10 @@ class PrintAllExcelWeekendMealService(
         // 반별 그룹화
         val groupedByGradeClass = userList.groupBy { it.grade to it.classNum }
 
-        val sheet: Sheet = workbook.createSheet("주말급식-신청명단").apply {
+        // 주말급식 신청명단
+        val mainSheet: Sheet = workbook.createSheet("주말급식-신청명단").apply {
             // 기본 열 너비 설정 (반별로 4개의 열)
-            val columnWidths = arrayOf(10, 10, 10, 15)
+            val columnWidths = arrayOf(10, 10, 15, 15)
             (0 until 16).forEach { index ->
                 setColumnWidth(index, columnWidths[index % 4] * 256)
             }
@@ -83,29 +84,27 @@ class PrintAllExcelWeekendMealService(
             verticalAlignment = VerticalAlignment.CENTER
         }
 
-        val titleRow: Row = sheet.createRow(0)
+        val titleRow: Row = mainSheet.createRow(0)
         val titleCell = titleRow.createCell(0)
         titleCell.cellStyle = titleCellStyle
-        titleCell.setCellValue("$month 월 주말급식 신청자 명단")
-        sheet.addMergedRegion(CellRangeAddress(0, 0, 0, 15))
+        titleCell.setCellValue("${month}월 주말급식 신청자 명단")
+        mainSheet.addMergedRegion(CellRangeAddress(0, 0, 0, 15))
 
         // 데이터가 작성될 행 번호
         var nowRow = 1
 
         // 학년별로 반복
         (1..3).forEach { grade ->
-            // Header 작성 (반별로 가로로 배치)
-            val headerRow: Row = sheet.createRow(nowRow)
+            val headerRow: Row = mainSheet.createRow(nowRow)
             (1..4).forEach { classNum ->
-                val headerNames = listOf("학번", "이름", "주말급식", "금액")
-                headerNames.forEachIndexed { index, header ->
+                val headers = listOf("학번", "이름", "주말급식", "금액")
+                headers.forEachIndexed { index, header ->
                     val cell = headerRow.createCell((classNum - 1) * 4 + index)
                     cell.setCellValue(header)
                     cell.cellStyle = headerCellStyle
                 }
             }
 
-            // 학년 별 행 이동
             nowRow++
 
             // 최대 학생 수(학년 별 한 반의)
@@ -113,13 +112,10 @@ class PrintAllExcelWeekendMealService(
                 groupedByGradeClass[grade to classNum]?.size ?: 0
             }.maxOrNull() ?: 0
 
-            // 반별 데이터 배치
             (0 until maxClassSize).forEach { index ->
-                val row: Row = sheet.createRow(nowRow + index)
-
+                val row: Row = mainSheet.createRow(nowRow + index)
                 (1..4).forEach { classNum ->
                     val users = groupedByGradeClass[grade to classNum] ?: emptyList()
-
                     if (index < users.size) {
                         val user = users[index]
                         row.createCell((classNum - 1) * 4)
@@ -135,8 +131,64 @@ class PrintAllExcelWeekendMealService(
                 }
             }
 
-            // 다음 학년으로 넘어가기 전에 행 띄우기
+            // 학년 별 행 이동
             nowRow += maxClassSize + 1
+        }
+
+        // 합계 테이블
+        val summarySheet: Sheet = workbook.createSheet("합계").apply {
+            defaultColumnWidth = 10
+        }
+
+        val headerName = listOf("학년", "인원", "총 금액")
+        val startRow = 0
+        val startCell = 0
+
+        // Header 생성
+        val headerRow = summarySheet.createRow(startRow)
+        headerName.forEachIndexed { i, name ->
+            headerRow.createCell(startCell + i).apply {
+                setCellValue(name)
+                cellStyle = headerCellStyle
+            }
+        }
+
+        var totalCount = 0
+
+        (1..3).forEachIndexed { i, grade ->
+            val count = weekendMealPort.findByStatus(OK).filter { it.grade == grade }.size
+            summarySheet.createRow(startRow + i + 1).apply {
+                createCell(startCell).apply {
+                    setCellValue("${grade}학년")
+                    cellStyle = bodyCellStyle
+                }
+                createCell(startCell + 1).apply {
+                    setCellValue(count.toDouble())
+                    cellStyle = bodyCellStyle
+                }
+                createCell(startCell + 2).apply {
+                    setCellValue("-")
+                    cellStyle = bodyCellStyle
+                }
+            }
+            totalCount += count
+        }
+
+        // 합계 삽입
+        summarySheet.createRow(startRow + 4).apply {
+            val cell = 3
+            createCell(startCell).apply {
+                setCellValue("합계")
+                cellStyle = headerCellStyle
+            }
+            createCell(startCell + 1).apply {
+                setCellValue(totalCount.toDouble())
+                cellStyle = headerCellStyle
+            }
+            createCell(startCell + 2).apply {
+                setCellValue("-")
+                cellStyle = headerCellStyle
+            }
         }
 
         // 파일 생성
@@ -145,7 +197,6 @@ class PrintAllExcelWeekendMealService(
         response.setHeader("Content-Disposition", "attachment;filename=$fileName")
 
         val servletOutputStream = response.outputStream
-
         workbook.write(servletOutputStream)
         workbook.close()
         servletOutputStream.flush()
