@@ -20,7 +20,9 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             birthDay = birthDay,
             profile = profile,
             role = role,
-            xquareId = xquareId
+            xquareId = xquareId,
+            deviceToken = deviceToken,
+            subscribe = subscribe
         )
     }
 
@@ -36,7 +38,9 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             birthDay = birthDay,
             profile = profile,
             role = role,
-            xquareId = xquareId
+            xquareId = xquareId,
+            deviceToken = deviceToken,
+            subscribe = subscribe
         )
     }
 }

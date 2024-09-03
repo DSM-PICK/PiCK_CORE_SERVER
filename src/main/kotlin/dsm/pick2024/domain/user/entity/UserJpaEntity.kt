@@ -45,5 +45,9 @@ class UserJpaEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val role: Role
+    val role: Role,
+
+    val deviceToken: String ?= null,
+
+    val subscribe: Boolean
 ) : BaseUUIDEntity(id)

@@ -17,5 +17,7 @@ data class User(
     val num: Int,
     val birthDay: LocalDate,
     val profile: String ? = null,
-    val role: Role
+    val role: Role,
+    val deviceToken: String ?= null,
+    val subscribe: Boolean
 )
