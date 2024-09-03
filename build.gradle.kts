@@ -80,6 +80,7 @@ dependencies {
 
     implementation(Dependencies.CACHE)
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    implementation("com.google.firebase:firebase-admin:9.2.0")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 }
 
