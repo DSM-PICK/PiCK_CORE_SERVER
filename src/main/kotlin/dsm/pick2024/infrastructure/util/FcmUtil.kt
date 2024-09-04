@@ -2,12 +2,12 @@ package dsm.pick2024.infrastructure.util
 
 import com.google.firebase.messaging.*
 import dsm.pick2024.domain.event.Topic
-import dsm.pick2024.domain.notification.Notification
-import dsm.pick2024.domain.notification.NotificationPort
+import dsm.pick2024.domain.notification.domain.Notification
+import dsm.pick2024.domain.notification.port.out.CommendNotificationPort
 import org.springframework.stereotype.Component
 
 @Component
-class FcmUtil : NotificationPort {
+class FcmUtil : CommendNotificationPort {
     private val firebaseInstance: FirebaseMessaging
         get() = FirebaseMessaging.getInstance()
 
