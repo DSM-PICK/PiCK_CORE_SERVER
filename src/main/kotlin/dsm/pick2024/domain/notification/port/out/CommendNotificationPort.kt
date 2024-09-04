@@ -1,8 +1,9 @@
-package dsm.pick2024.domain.notification
+package dsm.pick2024.domain.notification.port.out
 
 import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.notification.domain.Notification
 
-interface NotificationPort {
+interface MessageNotificationPort {
     fun sendMessage(
         token: String,
         notification: Notification
