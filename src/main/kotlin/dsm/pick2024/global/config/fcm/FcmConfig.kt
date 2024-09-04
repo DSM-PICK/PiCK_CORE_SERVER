@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
 import java.io.IOException
+import javax.annotation.PostConstruct
 
 @Configuration
 class FcmConfig(
@@ -17,8 +18,7 @@ class FcmConfig(
 ) {
     private val firebaseResource = ClassPathResource(resource)
 
-    @Bean
-    @Throws(IOException::class)
+    @PostConstruct
     fun firebaseApp(): FirebaseApp {
         val options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(firebaseResource.inputStream))
@@ -27,9 +27,4 @@ class FcmConfig(
         return FirebaseApp.initializeApp(options)
     }
 
-    @Bean
-    @Throws(IOException::class)
-    fun firebaseMessaging(): FirebaseMessaging {
-        return FirebaseMessaging.getInstance(firebaseApp())
-    }
 }
