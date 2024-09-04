@@ -56,7 +56,8 @@ class UserLoginService(
             birthDay = xquareUser.birthDay,
             role = xquareUser.userRole,
             profile = xquareUser.profileImageUrl,
-            xquareId = xquareUser.id
+            xquareId = xquareUser.id,
+            deviceToken = userLoginRequest.deviceToken,
         )
 
         userSavePort.save(newUser)
@@ -71,6 +72,12 @@ class UserLoginService(
         if (!passwordEncoder.matches(userLoginRequest.password, existingUser.password)) {
             throw PasswordMissMatchException
         }
+
+        userSavePort.save(
+            existingUser.copy(
+                deviceToken = userLoginRequest.deviceToken
+            )
+        )
 
         return existingUser
     }
