@@ -8,28 +8,35 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
+import java.io.File
 import java.io.IOException
+import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Paths
 
 @Configuration
 class FcmConfig(
-    @Value("\${firebase.accessKey}")
-    private val resource: String
+    @Value("\${firebase.url}")
+    private val url: String
 ) {
-    private val firebaseResource = ClassPathResource(resource)
 
     @Bean
     @Throws(IOException::class)
-    fun firebaseApp(): FirebaseApp {
-        val options = FirebaseOptions.builder()
-            .setCredentials(GoogleCredentials.fromStream(firebaseResource.inputStream))
-            .build()
-
-        return FirebaseApp.initializeApp(options)
+    fun firebaseApp() {
+        URL(url).openStream().use { inputStream ->
+            Files.copy(inputStream, Paths.get(PATH))
+            val file = File(PATH)
+            if (FirebaseApp.getApps().isEmpty()) {
+                val options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(file.inputStream()))
+                    .build()
+                FirebaseApp.initializeApp(options)
+            }
+            file.delete()
+        }
     }
 
-    @Bean
-    @Throws(IOException::class)
-    fun firebaseMessaging(): FirebaseMessaging {
-        return FirebaseMessaging.getInstance(firebaseApp())
+    companion object {
+        private const val PATH = "./credentials.json"
     }
 }
