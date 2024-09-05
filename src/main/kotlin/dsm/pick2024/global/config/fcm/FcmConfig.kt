@@ -19,8 +19,7 @@ class FcmConfig(
     private val url: String
 ) {
 
-    @Bean
-    @Throws(IOException::class)
+    @PostConstruct
     fun firebaseApp() {
         URL(url).openStream().use { inputStream ->
             Files.copy(inputStream, Paths.get(PATH))
