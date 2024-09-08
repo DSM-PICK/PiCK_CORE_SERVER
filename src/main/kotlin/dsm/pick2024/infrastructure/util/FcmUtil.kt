@@ -2,20 +2,20 @@ package dsm.pick2024.infrastructure.util
 
 import com.google.firebase.messaging.*
 import dsm.pick2024.domain.event.Topic
-import dsm.pick2024.domain.notification.domain.Notification
-import dsm.pick2024.domain.notification.port.out.CommendNotificationPort
+import dsm.pick2024.domain.notification.domain.TopicSubscription
+import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import org.springframework.stereotype.Component
 
 @Component
-class FcmUtil : CommendNotificationPort {
+class FcmUtil : CommendTopicSubscriptionPort {
     private val firebaseInstance: FirebaseMessaging
         get() = FirebaseMessaging.getInstance()
 
     override fun sendMessage(
         token: String,
-        notification: Notification
+        topicSubscription: TopicSubscription
     ) {
-        val message = this.getMassageBuilderByNotification(notification)
+        val message = this.getMessageBuilderByTitleBody(topicSubscription.topic, "Title", "Body")
             .setToken(token)
             .build()
         firebaseInstance.sendAsync(message)
@@ -29,45 +29,47 @@ class FcmUtil : CommendNotificationPort {
         firebaseInstance.unsubscribeFromTopicAsync(listOf(token), topic.toString())
     }
 
-
     override fun sendByTopic(
-        notification: Notification
+        topic: Topic,
+        title: String,
+        body: String
     ) {
-        val message = this.getMassageBuilderByNotification(notification).build()
+        val message = this.getMessageBuilderByTitleBody(topic, title, body).build()
         firebaseInstance.sendAsync(message)
     }
 
-    private fun getMassageBuilderByNotification(notification: Notification) =
-        with(notification) {
-            Message
-                .builder()
-                .setTopic(topic.toString())
-                .setNotification(
-                    com.google.firebase.messaging.Notification
-                        .builder()
-                        .setTitle(title)
-                        .setBody(content)
-                        .build()
-                )
-                .setApnsConfig(buildApnsConfig(notification))
-                .setAndroidConfig(buildAndroidConfig(notification))
-        }
+    private fun getMessageBuilderByTitleBody(topic: Topic, title: String, body: String) =
+        Message
+            .builder()
+            .setTopic(topic.toString())
+            .setNotification(
+                com.google.firebase.messaging.Notification
+                    .builder()
+                    .setTitle(title)
+                    .setBody(body)
+                    .build()
+            )
+            .setApnsConfig(buildApnsConfig(topic, title, body))
+            .setAndroidConfig(buildAndroidConfig(topic, title, body))
 
-    private fun buildAndroidConfig(notification: Notification): AndroidConfig {
+    private fun buildAndroidConfig(topic: Topic, title: String, body: String): AndroidConfig {
         return AndroidConfig.builder()
-            .putData("topic", notification.topic.name)
+            .putData("topic", topic.name)
+            .putData("title", title)
+            .putData("body", body)
             .build()
     }
 
-    private fun buildApnsConfig(notification: Notification): ApnsConfig {
+    private fun buildApnsConfig(topic: Topic, title: String, body: String): ApnsConfig {
         return ApnsConfig.builder()
             .setAps(
                 Aps.builder()
                     .setSound("default")
-                    .putCustomData("topic", notification.topic.name)
+                    .putCustomData("topic", topic.name)
+                    .putCustomData("title", title)
+                    .putCustomData("body", body)
                     .build()
             )
             .build()
     }
-
 }

@@ -1,15 +1,18 @@
 package dsm.pick2024.domain.notification.port.out
 
 import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.notification.domain.TopicSubscription
 
-interface CommendNotificationPort {
+interface CommendTopicSubscriptionPort {
     fun sendMessage(
         token: String,
-        notification: Notification
+        topicSubscription: TopicSubscription
     )
 
     fun sendByTopic(
-        notification: Notification
+        topic: Topic,
+        title: String,
+        body: String
     )
 
     fun subscribeTopic(token: String, topic: Topic)

@@ -1,7 +1,8 @@
 package dsm.pick2024.domain.notification.port.out
 
 import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.notification.domain.TopicSubscription
 
-interface QueryNotificationPort {
-    fun queryNotificationByDeviceTokenAndTopic(deviceToken: String, topic: Topic): List<Notification>?
+interface QueryTopicSubscriptionPort {
+    fun queryNotificationByDeviceTokenAndTopic(deviceToken: String, topic: Topic): List<TopicSubscription>?
 }
