@@ -21,4 +21,11 @@ class TopicSubscriptionPersistenceAdapter(
         return topicSubscriptionRepository.findByDeviceTokenAndTopic(deviceToken, topic)
             .let { topicSubscriptionMapper.toDomain(it) }
     }
+
+    override fun queryAllNotificationByDeviceToken(
+        deviceToken: String,
+    ): List<TopicSubscription>? {
+        return topicSubscriptionRepository.findAllByDeviceToken(deviceToken)
+            .map { topicSubscriptionMapper.toDomain(it) }
+    }
 }
