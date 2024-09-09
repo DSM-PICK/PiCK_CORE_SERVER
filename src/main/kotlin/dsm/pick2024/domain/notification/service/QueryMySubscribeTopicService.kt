@@ -19,7 +19,7 @@ class QueryMySubscribeTopicService(
         val user = userFacade.currentUser()
         return QueryMySubscribeTopicResponse(
             queryTopicSubscriptionPort.queryAllNotificationByDeviceToken(user.deviceToken!!)
-                .map { subscription ->
+                !!.map { subscription ->
                     QuerySubscribeTopicResponse(
                         topic = subscription.topic,
                         isSubscribed = subscription.isSubscribed

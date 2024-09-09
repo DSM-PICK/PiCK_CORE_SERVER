@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.user.service
 
+import dsm.pick2024.domain.notification.port.`in`.CreateSubscribeTopicUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
@@ -24,7 +25,8 @@ class UserLoginService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val xquareFeignClient: XquareFeignClient,
     private val existsUserPort: ExistsUserPort,
-    private val userSavePort: UserSavePort
+    private val userSavePort: UserSavePort,
+    private val createSubscribeTopicUseCase: CreateSubscribeTopicUseCase
 ) : LoginUseCase {
 
     @Transactional
@@ -61,25 +63,27 @@ class UserLoginService(
         )
 
         userSavePort.save(newUser)
+        createSubscribeTopicUseCase.execute(userLoginRequest.deviceToken)
 
         return newUser
     }
 
     private fun authenticateUser(userLoginRequest: UserLoginRequest): User {
-        val existingUser = queryUserPort.findByAccountId(userLoginRequest.accountId)
+        val user = queryUserPort.findByAccountId(userLoginRequest.accountId)
             ?: throw UserNotFoundException
 
-        if (!passwordEncoder.matches(userLoginRequest.password, existingUser.password)) {
+        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
             throw PasswordMissMatchException
         }
 
         userSavePort.save(
-            existingUser.copy(
+            user.copy(
                 deviceToken = userLoginRequest.deviceToken
             )
         )
+        createSubscribeTopicUseCase.execute(userLoginRequest.deviceToken)
 
-        return existingUser
+        return user
     }
 
     private fun generateToken(accountId: String): TokenResponse {
