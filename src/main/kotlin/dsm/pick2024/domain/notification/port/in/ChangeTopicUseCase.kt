@@ -4,6 +4,8 @@ import dsm.pick2024.domain.event.Topic
 
 interface ChangeTopicUseCase {
 
-    fun changeSubscribeTopic(topic: Topic)
+    fun subscribeTopic(topic: Topic)
+
+    fun unSubscribeTopic(topic: Topic)
 
 }

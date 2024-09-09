@@ -17,9 +17,8 @@ class TopicSubscriptionPersistenceAdapter(
         topicSubscriptionRepository.save(topicSubscriptionMapper.toEntity(topicSubscription))
     }
 
-    override fun queryNotificationByDeviceTokenAndTopic(deviceToken: String, topic: Topic): List<TopicSubscription>? {
-        TODO("Not yet implemented")
+    override fun queryNotificationByDeviceTokenAndTopic(deviceToken: String, topic: Topic): TopicSubscription? {
+        return topicSubscriptionRepository.findByDeviceTokenAndTopic(deviceToken, topic)
+            .let { topicSubscriptionMapper.toDomain(it) }
     }
-
-
 }
