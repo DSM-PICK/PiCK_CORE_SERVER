@@ -30,7 +30,9 @@ class QueryMyApplicationService(
             start = application.start.take(5),
             end = application.end!!.take(5),
             reason = application.reason,
-            schoolNum = (user.grade * 1000) + (user.classNum * 100) + user.num,
+            grade = user.grade,
+            classNum = user.classNum,
+            num = user.num,
             type = Type.APPLICATION
         )
     }
