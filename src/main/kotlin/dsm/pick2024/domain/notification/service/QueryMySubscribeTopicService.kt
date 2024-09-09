@@ -18,7 +18,7 @@ class QueryMySubscribeTopicService(
     override fun execute(): QueryMySubscribeTopicResponse {
         val user = userFacade.currentUser()
         return QueryMySubscribeTopicResponse(
-            queryTopicSubscriptionPort.queryAllNotificationByDeviceToken(user.deviceToken!!)!!.map { subscription ->
+            queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(user.accountId)!!.map { subscription ->
                 QuerySubscribeTopicResponse(
                     topic = subscription.topic,
                     isSubscribed = subscription.isSubscribed

@@ -4,19 +4,21 @@ import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.domain.TopicSubscription
 import dsm.pick2024.domain.notification.port.out.QueryTopicSubscriptionPort
 import dsm.pick2024.domain.notification.port.out.SaveTopicSubscriptionPort
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
-@Service
+@Component
 class CreateSubscribeTopicEvent(
     private val saveTopicSubscriptionPort: SaveTopicSubscriptionPort,
     private val queryTopicSubscriptionPort: QueryTopicSubscriptionPort
 ) : CreateSubscribeTopicEventPort {
 
     @Transactional
-    override fun execute(deviceToken: String) {
-        val topicSubscription = queryTopicSubscriptionPort.queryAllNotificationByDeviceToken(deviceToken)
-        if (topicSubscription == null) {
+    override fun execute(deviceToken: String, userId: String) {
+        val topicSubscription = queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(userId)
+        if (topicSubscription.isNullOrEmpty()) {
             val topics = listOf(
                 Topic.NEW_NOTICE,
                 Topic.APPLICATION,
@@ -28,7 +30,8 @@ class CreateSubscribeTopicEvent(
                     TopicSubscription(
                         deviceToken = deviceToken,
                         isSubscribed = false,
-                        topic = it
+                        topic = it,
+                        userId = userId
                     )
                 )
             }

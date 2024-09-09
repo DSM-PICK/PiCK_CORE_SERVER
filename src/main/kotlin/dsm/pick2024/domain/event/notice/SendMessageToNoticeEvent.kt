@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.event.notice
 
 import dsm.pick2024.domain.event.Topic
-import dsm.pick2024.domain.notification.domain.Notification
+import dsm.pick2024.domain.notification.presentation.dto.request.Notification
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component

@@ -2,9 +2,10 @@ package dsm.pick2024.domain.notification.port.out
 
 import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.domain.TopicSubscription
+import java.util.UUID
 
 interface QueryTopicSubscriptionPort {
-    fun queryNotificationByDeviceTokenAndTopic(deviceToken: String, topic: Topic): TopicSubscription?
+    fun queryTopicSubscriptionByDeviceTokenAndTopic(deviceToken: String, topic: Topic): TopicSubscription?
 
-    fun queryAllNotificationByDeviceToken(deviceToken: String): List<TopicSubscription>?
+    fun queryAllTopicSubscriptionByUserId(userId: String): List<TopicSubscription>?
 }

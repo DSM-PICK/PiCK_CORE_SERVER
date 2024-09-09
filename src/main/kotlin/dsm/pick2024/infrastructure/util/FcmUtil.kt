@@ -2,7 +2,7 @@ package dsm.pick2024.infrastructure.util
 
 import com.google.firebase.messaging.*
 import dsm.pick2024.domain.event.Topic
-import dsm.pick2024.domain.notification.domain.Notification
+import dsm.pick2024.domain.notification.presentation.dto.request.Notification
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import org.springframework.stereotype.Component
 

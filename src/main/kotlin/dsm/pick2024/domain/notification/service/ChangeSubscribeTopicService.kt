@@ -29,7 +29,7 @@ class ChangeSubscribeTopicService(
     }
 
     private fun updateTopic(deviceToken: String, topic: Topic, isSubscribed: Boolean) {
-        val topicSubscription = topicSubscriptionPort.queryNotificationByDeviceTokenAndTopic(
+        val topicSubscription = topicSubscriptionPort.queryTopicSubscriptionByDeviceTokenAndTopic(
             deviceToken,
             topic
         )
