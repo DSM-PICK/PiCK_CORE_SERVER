@@ -10,7 +10,6 @@ import dsm.pick2024.domain.user.facade.UserFacade
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-@Transactional
 @Service
 class ChangeSubscribeTopicService(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort,
@@ -18,17 +17,16 @@ class ChangeSubscribeTopicService(
     private val userFacade: UserFacade
 ): ChangeTopicUseCase {
 
+    @Transactional
     override fun execute(request: ChangeSubscribeTopicRequest): Boolean {
-        val user = userFacade.currentUser()
+        val deviceToken = userFacade.currentUser().deviceToken!!
+        updateTopic(deviceToken, request.topic, request.isSubscribed)
         if (request.isSubscribed) {
-            updateTopic(user.deviceToken!!, request.topic, true)
-            commendTopicSubscriptionPort.subscribeTopic(user.deviceToken, request.topic)
-            return true
+            commendTopicSubscriptionPort.subscribeTopic(deviceToken, request.topic)
         } else {
-            updateTopic(user.deviceToken!!, request.topic, false)
-            commendTopicSubscriptionPort.unsubscribeTopic(user.deviceToken, request.topic)
-            return false
+            commendTopicSubscriptionPort.unsubscribeTopic(deviceToken, request.topic)
         }
+        return request.isSubscribed
     }
 
     private fun updateTopic(deviceToken: String, topic: Topic, isSubscribed: Boolean) {

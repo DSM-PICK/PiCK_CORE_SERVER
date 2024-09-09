@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.notification.port.`in`
 
-import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.presentation.dto.request.ChangeSubscribeTopicRequest
 
 interface ChangeTopicUseCase {
