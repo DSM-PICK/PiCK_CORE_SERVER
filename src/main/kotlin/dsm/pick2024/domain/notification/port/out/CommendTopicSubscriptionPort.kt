@@ -2,7 +2,6 @@ package dsm.pick2024.domain.notification.port.out
 
 import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.domain.Notification
-import dsm.pick2024.domain.notification.domain.TopicSubscription
 
 interface CommendTopicSubscriptionPort {
     fun sendMessage(
@@ -15,7 +14,6 @@ interface CommendTopicSubscriptionPort {
     )
 
     fun subscribeTopic(token: String, topic: Topic)
-
 
     fun unsubscribeTopic(token: String, topic: Topic)
 }

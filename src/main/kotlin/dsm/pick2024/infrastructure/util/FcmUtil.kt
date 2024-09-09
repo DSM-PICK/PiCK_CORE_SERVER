@@ -15,7 +15,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
         token: List<String>,
         notification: Notification
     ) {
-        val message = this.sendMessagesToDeviceToken(token,notification)
+        val message = this.sendMessagesToDeviceToken(token, notification)
         firebaseInstance.sendEachForMulticast(message)
     }
 
@@ -46,8 +46,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
             .setNotification(buildNotification(notification).build())
             .setAndroidConfig(buildAndroidConfig(notification))
             .setApnsConfig(buildApnsConfig(notification))
-            .build();
-
+            .build()
 
     private fun sendMessageToTopic(notification: Notification) =
         Message

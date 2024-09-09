@@ -26,5 +26,4 @@ class NotificationController(
     @GetMapping("/my-subscribe")
     fun queryMySubscribe() =
         queryMySubscribeTopicUseCase.execute()
-
 }

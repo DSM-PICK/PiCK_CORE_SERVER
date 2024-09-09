@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.user.service
 
-import dsm.pick2024.domain.notification.event.CreateSubscribeTopicEventUseCase
+import dsm.pick2024.domain.notification.event.CreateSubscribeTopicEventPort
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
@@ -26,7 +26,7 @@ class UserLoginService(
     private val xquareFeignClient: XquareFeignClient,
     private val existsUserPort: ExistsUserPort,
     private val userSavePort: UserSavePort,
-    private val createSubscribeTopicEventUseCase: CreateSubscribeTopicEventUseCase
+    private val createSubscribeTopicEventPort: CreateSubscribeTopicEventPort
 ) : LoginUseCase {
 
     @Transactional
@@ -59,11 +59,11 @@ class UserLoginService(
             role = xquareUser.userRole,
             profile = xquareUser.profileImageUrl,
             xquareId = xquareUser.id,
-            deviceToken = userLoginRequest.deviceToken,
+            deviceToken = userLoginRequest.deviceToken
         )
 
         userSavePort.save(newUser)
-        createSubscribeTopicEventUseCase.execute(userLoginRequest.deviceToken)
+        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken)
 
         return newUser
     }
@@ -81,7 +81,7 @@ class UserLoginService(
                 deviceToken = userLoginRequest.deviceToken
             )
         )
-        createSubscribeTopicEventUseCase.execute(userLoginRequest.deviceToken)
+        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken)
 
         return user
     }

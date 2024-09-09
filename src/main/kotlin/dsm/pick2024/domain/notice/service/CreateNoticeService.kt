@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.notice.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.event.notice.SendMessageToNoticeEventPort
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.port.`in`.CreateNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.NoticeSavePort
@@ -13,6 +14,7 @@ import java.time.ZoneId
 @Service
 class CreateNoticeService(
     private val noticeSavePort: NoticeSavePort,
+    private val sendMessageToNoticeEventPort: SendMessageToNoticeEventPort,
     private val adminFacadeUseCase: AdminFacadeUseCase
 ) : CreateNoticeUseCase {
 
@@ -29,5 +31,6 @@ class CreateNoticeService(
                 content = request.content
             )
         )
+        sendMessageToNoticeEventPort.send(request.content)
     }
 }

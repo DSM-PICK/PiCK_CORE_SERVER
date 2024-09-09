@@ -1,5 +1,5 @@
 package dsm.pick2024.domain.notification.event
 
-interface CreateSubscribeTopicEventUseCase {
+interface CreateSubscribeTopicEventPort {
     fun execute(deviceToken: String)
 }

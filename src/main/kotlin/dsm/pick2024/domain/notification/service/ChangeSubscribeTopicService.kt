@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.notification.service
 
 import dsm.pick2024.domain.event.Topic
-import dsm.pick2024.domain.notification.domain.TopicSubscription
 import dsm.pick2024.domain.notification.port.`in`.ChangeTopicUseCase
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import dsm.pick2024.domain.notification.port.out.TopicSubscriptionPort
@@ -15,7 +14,7 @@ class ChangeSubscribeTopicService(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort,
     private val topicSubscriptionPort: TopicSubscriptionPort,
     private val userFacade: UserFacade
-): ChangeTopicUseCase {
+) : ChangeTopicUseCase {
 
     @Transactional
     override fun execute(request: ChangeSubscribeTopicRequest): Boolean {
@@ -31,7 +30,8 @@ class ChangeSubscribeTopicService(
 
     private fun updateTopic(deviceToken: String, topic: Topic, isSubscribed: Boolean) {
         val topicSubscription = topicSubscriptionPort.queryNotificationByDeviceTokenAndTopic(
-            deviceToken, topic
+            deviceToken,
+            topic
         )
         topicSubscriptionPort.save(
             topicSubscription!!.copy(

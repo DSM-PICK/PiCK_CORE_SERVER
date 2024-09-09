@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class TopicSubscriptionPersistenceAdapter(
     private val topicSubscriptionRepository: TopicSubscriptionRepository,
     private val topicSubscriptionMapper: TopicSubscriptionMapper
-): TopicSubscriptionPort {
+) : TopicSubscriptionPort {
 
     override fun save(topicSubscription: TopicSubscription) {
         topicSubscriptionRepository.save(topicSubscriptionMapper.toEntity(topicSubscription))
@@ -23,7 +23,7 @@ class TopicSubscriptionPersistenceAdapter(
     }
 
     override fun queryAllNotificationByDeviceToken(
-        deviceToken: String,
+        deviceToken: String
     ): List<TopicSubscription>? {
         return topicSubscriptionRepository.findAllByDeviceToken(deviceToken)
             .map { topicSubscriptionMapper.toDomain(it) }

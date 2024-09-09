@@ -45,5 +45,5 @@ class UserJpaEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val role: Role,
+    val role: Role
 ) : BaseUUIDEntity(id)

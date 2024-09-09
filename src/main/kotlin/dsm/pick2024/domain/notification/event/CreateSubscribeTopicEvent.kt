@@ -11,15 +11,17 @@ import org.springframework.transaction.annotation.Transactional
 class CreateSubscribeTopicEvent(
     private val saveTopicSubscriptionPort: SaveTopicSubscriptionPort,
     private val queryTopicSubscriptionPort: QueryTopicSubscriptionPort
-): CreateSubscribeTopicEventUseCase {
+) : CreateSubscribeTopicEventPort {
 
     @Transactional
     override fun execute(deviceToken: String) {
         val topicSubscription = queryTopicSubscriptionPort.queryAllNotificationByDeviceToken(deviceToken)
         if (topicSubscription == null) {
             val topics = listOf(
-                Topic.NEW_NOTICE, Topic.APPLICATION,
-                Topic.EARLY_RETURN, Topic.WEEKEND_MEAL
+                Topic.NEW_NOTICE,
+                Topic.APPLICATION,
+                Topic.EARLY_RETURN,
+                Topic.WEEKEND_MEAL
             )
             topics.forEach { it ->
                 saveTopicSubscriptionPort.save(

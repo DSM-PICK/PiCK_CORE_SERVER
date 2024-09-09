@@ -5,9 +5,9 @@ import dsm.pick2024.global.annotation.Aggregate
 import java.util.UUID
 
 @Aggregate
-data class TopicSubscription (
+data class TopicSubscription(
     val id: UUID? = null,
     val topic: Topic,
     val deviceToken: String,
-    val isSubscribed: Boolean = false,
+    val isSubscribed: Boolean = false
 )

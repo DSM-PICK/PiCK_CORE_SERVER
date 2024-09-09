@@ -5,5 +5,4 @@ import dsm.pick2024.domain.notification.presentation.dto.request.ChangeSubscribe
 interface ChangeTopicUseCase {
 
     fun execute(request: ChangeSubscribeTopicRequest): Boolean
-
 }
