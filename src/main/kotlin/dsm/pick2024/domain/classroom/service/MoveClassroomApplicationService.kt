@@ -34,8 +34,8 @@ class MoveClassroomApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                startPeriod = request.startPeriod,
-                endPeriod = request.endPeriod,
+                startPeriod = request.start,
+                endPeriod = request.end,
                 status = Status.QUIET
             )
         )
