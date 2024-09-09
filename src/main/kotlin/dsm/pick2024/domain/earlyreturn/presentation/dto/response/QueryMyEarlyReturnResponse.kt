@@ -5,7 +5,7 @@ import dsm.pick2024.domain.applicationstory.enums.Type
 data class QueryMyEarlyReturnResponse(
     val username: String,
     val teacherName: String,
-    val startTime: String,
+    val start: String,
     val reason: String,
     val grade: Int,
     val classNum: Int,

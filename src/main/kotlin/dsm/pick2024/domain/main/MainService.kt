@@ -64,8 +64,8 @@ class MainService(
             QueryMainUserMoveClassroomResponse(
                 username = userName,
                 classroom = classroomName,
-                startPeriod = startPeriod,
-                endPeriod = endPeriod,
+                start = startPeriod,
+                end = endPeriod,
                 type = Main.CLASSROOM
             )
         }!!

@@ -26,7 +26,7 @@ class QueryMyEarlyReturnService(
         return QueryMyEarlyReturnResponse(
             username = user.name,
             teacherName = earlyReturn.teacherName!!,
-            startTime = earlyReturn.start.take(5),
+            start = earlyReturn.start.take(5),
             reason = earlyReturn.reason,
             grade = earlyReturn.grade,
             classNum = earlyReturn.classNum,
