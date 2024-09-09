@@ -18,5 +18,5 @@ data class User(
     val birthDay: LocalDate,
     val profile: String ? = null,
     val role: Role,
-    val deviceToken: String ? = null,
+    val deviceToken: String ? = null
 )
