@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.notification.service
 
+import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.port.`in`.QueryMySubscribeTopicUseCase
 import dsm.pick2024.domain.notification.port.out.QueryTopicSubscriptionPort
 import dsm.pick2024.domain.notification.presentation.dto.response.QueryMySubscribeTopicResponse
@@ -17,13 +18,17 @@ class QueryMySubscribeTopicService(
     @Transactional(readOnly = true)
     override fun execute(): QueryMySubscribeTopicResponse {
         val user = userFacade.currentUser()
+        val topicList = listOf(Topic.APPLICATION, Topic.CLASS_ROOM, Topic.NEW_NOTICE, Topic.WEEKEND_MEAL)
+
         return QueryMySubscribeTopicResponse(
-            queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(user.accountId)!!.map { subscription ->
-                QuerySubscribeTopicResponse(
-                    topic = subscription.topic,
-                    isSubscribed = subscription.isSubscribed
-                )
-            }
+            queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(user.accountId)!!
+                .map { subscription ->
+                    QuerySubscribeTopicResponse(
+                        topic = subscription.topic,
+                        isSubscribed = subscription.isSubscribed
+                    )
+                }
+                .sortedBy { topicList.indexOf(it.topic) }
         )
     }
 }
