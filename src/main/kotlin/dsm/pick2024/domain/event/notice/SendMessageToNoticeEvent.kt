@@ -11,6 +11,7 @@ class SendMessageToNoticeEvent(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort
 ) : SendMessageToNoticeEventPort {
 
+    @Async
     override fun send(content: String) {
         commendTopicSubscriptionPort.sendByTopic(
             Notification(

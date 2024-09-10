@@ -4,6 +4,7 @@ import com.google.firebase.messaging.*
 import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.presentation.dto.request.Notification
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
+import dsm.pick2024.infrastructure.util.exception.FcmServerException
 import org.springframework.stereotype.Component
 
 @Component
@@ -16,22 +17,38 @@ class FcmUtil : CommendTopicSubscriptionPort {
         notification: Notification
     ) {
         val message = this.sendMessagesToDeviceToken(token, notification)
-        firebaseInstance.sendEachForMulticast(message)
+        try {
+            firebaseInstance.sendMulticastAsync(message)
+        } catch (e: FirebaseMessagingException) {
+            throw FcmServerException
+        }
     }
 
     override fun subscribeTopic(token: String, topic: Topic) {
-        firebaseInstance.subscribeToTopicAsync(listOf(token), topic.toString())
+        try {
+            firebaseInstance.subscribeToTopic(listOf(token), topic.name)
+        } catch (e: FirebaseMessagingException) {
+            throw FcmServerException
+        }
     }
 
     override fun unsubscribeTopic(token: String, topic: Topic) {
-        firebaseInstance.unsubscribeFromTopicAsync(listOf(token), topic.toString())
+        try {
+            firebaseInstance.unsubscribeFromTopicAsync(listOf(token), topic.name)
+        } catch (e: FirebaseMessagingException) {
+            throw FcmServerException
+        }
     }
 
     override fun sendByTopic(
         notification: Notification
     ) {
-        val message = this.sendMessageToTopic(notification).build()
-        firebaseInstance.sendAsync(message)
+        try {
+            val message = this.sendMessageToTopic(notification).build()
+            firebaseInstance.sendAsync(message)
+        } catch (e: FirebaseMessagingException) {
+            throw FcmServerException
+        }
     }
 
     private fun buildNotification(notification: Notification): com.google.firebase.messaging.Notification.Builder {
