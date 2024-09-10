@@ -110,7 +110,8 @@ class SecurityConfig(
             .antMatchers(
                 HttpMethod.PATCH,
                 "/application/status",
-                "/weekend-meal/my-status"
+                "/weekend-meal/my-status",
+                "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
@@ -123,7 +124,8 @@ class SecurityConfig(
                 "meal/date",
                 "/timetable/**",
                 "/weekend-meal/my",
-                "/main"
+                "/main",
+                "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.DELETE,
