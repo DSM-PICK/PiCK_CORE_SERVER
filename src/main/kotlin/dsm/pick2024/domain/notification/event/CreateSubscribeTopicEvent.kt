@@ -17,13 +17,13 @@ class CreateSubscribeTopicEvent(
     override fun execute(deviceToken: String, userId: String) {
         val topicSubscription = queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(userId)
         if (topicSubscription.isNullOrEmpty()) {
-            val topics = listOf(
+            val topicList = listOf(
                 Topic.NEW_NOTICE,
                 Topic.APPLICATION,
                 Topic.CLASS_ROOM,
                 Topic.WEEKEND_MEAL
             )
-            topics.forEach { it ->
+            topicList.forEach { it ->
                 saveTopicSubscriptionPort.save(
                     TopicSubscription(
                         deviceToken = deviceToken,
