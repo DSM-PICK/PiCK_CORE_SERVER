@@ -17,6 +17,9 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
+import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.application.SendMessageToApplicationEventPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -30,6 +33,8 @@ class ChangeEarlyReturnStatusService(
     private val deleteApplicationPort: DeleteApplicationPort,
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort,
+    private val queryUserPort: QueryUserPort,
+    private val sendMessageToApplicationEventPort: SendMessageToApplicationEventPort,
     private val attendanceService: AttendanceService
 
 ) : ChangeEarlyReturnStatusUseCase {
@@ -39,31 +44,47 @@ class ChangeEarlyReturnStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.NO) {
-            handleStatusNo(request.ids)
-            return
+            handleStatusNo(request.idList)
+        } else {
+            handleStatusOk(request.idList, admin.name)
         }
+    }
 
-        val updateEarlyReturns = request.ids.map { id ->
+    private fun handleStatusOk(ids: List<UUID>, adminName: String) {
+        val updateEarlyReturnList = ids.map { id ->
             val application = findApplicationById(id)
-            updateEarlyReturn(application, admin.name)
+            val user = queryUserPort.findByXquareId(application.userId)!!
+            sendMessageToApplicationEventPort.send(
+                user.deviceToken!!, Topic.APPLICATION,
+                Status.OK, ApplicationKind.EARLY_RETURN,
+                application
+            )
+            updateEarlyReturn(application, adminName)
         }
 
-        val applicationStory = updateEarlyReturns.map { earlyReturn ->
+        val applicationStoryList = updateEarlyReturnList.map { earlyReturn ->
             createApplicationStory(earlyReturn)
         }
 
-        val attendances = updateEarlyReturns.map { it ->
+        val attendanceList = updateEarlyReturnList.map { it ->
             val attendanceId = queryAttendancePort.findByUserId(it.userId)
             attendanceService.updateAttendanceToEarlyReturn(it.start, attendanceId!!)
         }.toMutableList()
 
-        saveApplicationPort.saveAll(updateEarlyReturns)
-        applicationStorySaveAllPort.saveAll(applicationStory)
-        saveAttendancePort.saveAll(attendances)
+        saveApplicationPort.saveAll(updateEarlyReturnList)
+        applicationStorySaveAllPort.saveAll(applicationStoryList)
+        saveAttendancePort.saveAll(attendanceList)
     }
 
     private fun handleStatusNo(ids: List<UUID>) {
         ids.forEach { id ->
+            val application = findApplicationById(id)
+            val user = queryUserPort.findByXquareId(application.userId)!!
+            sendMessageToApplicationEventPort.send(
+                user.deviceToken!!, Topic.APPLICATION,
+                Status.NO, ApplicationKind.EARLY_RETURN,
+                null
+            )
             deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
     }
