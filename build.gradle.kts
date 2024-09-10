@@ -79,9 +79,8 @@ dependencies {
     implementation(Dependencies.CLOUD)
 
     implementation(Dependencies.CACHE)
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("com.google.firebase:firebase-admin:9.2.0")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    implementation(Dependencies.FCM)
 }
 
 tasks.withType<KotlinCompile> {
