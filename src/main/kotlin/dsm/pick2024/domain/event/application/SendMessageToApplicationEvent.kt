@@ -6,6 +6,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import dsm.pick2024.domain.notification.presentation.dto.request.Notification
+import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
@@ -13,6 +14,7 @@ class SendMessageToApplicationEvent(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort
 ): SendMessageToApplicationEventPort {
 
+    @Async
     override fun send(
         deviceToken: String, topic: Topic,
         status: Status, applicationKind: ApplicationKind,

@@ -45,8 +45,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
     ) {
         try {
             val message = this.sendMessageToTopic(notification).build()
-            val a = firebaseInstance.send(message)
-            println(a)
+            firebaseInstance.sendAsync(message)
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
