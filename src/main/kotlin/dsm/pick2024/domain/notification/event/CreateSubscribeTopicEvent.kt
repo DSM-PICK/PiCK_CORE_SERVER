@@ -20,7 +20,7 @@ class CreateSubscribeTopicEvent(
             val topics = listOf(
                 Topic.NEW_NOTICE,
                 Topic.APPLICATION,
-                Topic.EARLY_RETURN,
+                Topic.CLASS_ROOM,
                 Topic.WEEKEND_MEAL
             )
             topics.forEach { it ->
