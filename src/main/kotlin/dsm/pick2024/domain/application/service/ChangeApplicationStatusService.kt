@@ -42,15 +42,15 @@ class ChangeApplicationStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.OK) {
-            handleStatusOk(request.ids, admin.name)
+            handleStatusOk(request.idList, admin.name)
         } else {
-            handleStatusNo(request.ids)
+            handleStatusNo(request.idList)
         }
 
     }
 
     private fun handleStatusOk(ids: List<UUID>, adminName: String) {
-        val updateApplications = ids.map { id ->
+        val updateApplicationList = ids.map { id ->
             val application = findApplicationById(id)
             val user = queryUserPort.findByXquareId(application.userId)!!
             sendMessageToApplicationEventPort.send(
@@ -61,16 +61,19 @@ class ChangeApplicationStatusService(
             updateApplication(application, adminName)
         }
 
-        val applicationStory = updateApplications.map { application ->
+        val applicationStory = updateApplicationList.map { application ->
             createApplicationStory(application)
         }
 
-        val attendance = updateApplications.map { application ->
+        val attendance = updateApplicationList.map { application ->
             val attendanceId = queryAttendancePort.findByUserId(application.userId)
-            attendanceService.updateAttendanceToApplication(application.start, application.end!!, application.applicationType, attendanceId!!)
+            attendanceService.updateAttendanceToApplication(
+                application.start, application.end!!,
+                application.applicationType, attendanceId!!
+            )
         }.toMutableList()
 
-        saveApplicationPort.saveAll(updateApplications)
+        saveApplicationPort.saveAll(updateApplicationList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendance)
     }
