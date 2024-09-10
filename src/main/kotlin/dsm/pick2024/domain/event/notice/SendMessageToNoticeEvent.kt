@@ -18,7 +18,6 @@ class SendMessageToNoticeEvent(
                 topic = Topic.NEW_NOTICE,
                 title = "새로운 공지가 등록되었습니다.",
                 body = content
-
             )
         )
     }
