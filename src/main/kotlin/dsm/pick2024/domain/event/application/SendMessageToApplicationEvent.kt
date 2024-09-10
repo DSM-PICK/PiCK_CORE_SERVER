@@ -14,19 +14,20 @@ class SendMessageToApplicationEvent(
 ): SendMessageToApplicationEventPort {
 
     override fun send(
-        deviceToken: List<String>, topic: Topic,
+        deviceToken: String, topic: Topic,
         status: Status, applicationKind: ApplicationKind,
-        application: Application
+        application: Application?
     ) {
-        commendTopicSubscriptionPort.sendByTopic(
+        commendTopicSubscriptionPort.sendMessage(
+            deviceToken,
             Notification(
                 topic = Topic.APPLICATION,
                 title = "${if (applicationKind.name == "application") "외출" else "조기귀가"} 신청이 " +
                     "${if (status == Status.OK) "수락" else "거절"}되었습니다.",
-                body = if (status == Status.NO) {
-                    "신청이 거절되었습니다."
+                body = if (status == Status.OK) {
+                    "${application?.start}부터 이용 가능합니다."
                 } else {
-                    "${application.start}부터 이용 가능합니다."
+                    "신청이 거절되었습니다."
                 }
             )
         )

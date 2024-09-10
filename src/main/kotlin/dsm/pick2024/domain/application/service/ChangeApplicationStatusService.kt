@@ -16,6 +16,9 @@ import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
+import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.application.SendMessageToApplicationEventPort
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -29,29 +32,42 @@ class ChangeApplicationStatusService(
     private val deleteApplicationPort: DeleteApplicationPort,
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort,
+    private val sendMessageToApplicationEventPort: SendMessageToApplicationEventPort,
+    private val queryUserPort: QueryUserPort,
     private val attendanceService: AttendanceService
 ) : ChangeApplicationStatusUseCase {
 
     @Transactional
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
-        if (request.status == Status.NO) {
+
+        if (request.status == Status.OK) {
+            handleStatusOk(request.ids, admin.name)
+        } else {
             handleStatusNo(request.ids)
-            return
         }
 
-        val updateApplications = request.ids.map { id ->
+    }
+
+    private fun handleStatusOk(ids: List<UUID>, adminName: String) {
+        val updateApplications = ids.map { id ->
             val application = findApplicationById(id)
-            updateApplication(application, admin.name)
+            val user = queryUserPort.findByXquareId(application.userId)!!
+            sendMessageToApplicationEventPort.send(
+                user.deviceToken!!, Topic.APPLICATION,
+                Status.OK, ApplicationKind.APPLICATION,
+                application
+            )
+            updateApplication(application, adminName)
         }
 
-        val applicationStory = updateApplications.map { it ->
-            createApplicationStory(it)
+        val applicationStory = updateApplications.map { application ->
+            createApplicationStory(application)
         }
 
-        val attendance = updateApplications.map { it ->
-            val attendanceId = queryAttendancePort.findByUserId(it.userId)
-            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
+        val attendance = updateApplications.map { application ->
+            val attendanceId = queryAttendancePort.findByUserId(application.userId)
+            attendanceService.updateAttendanceToApplication(application.start, application.end!!, application.applicationType, attendanceId!!)
         }.toMutableList()
 
         saveApplicationPort.saveAll(updateApplications)
@@ -60,10 +76,18 @@ class ChangeApplicationStatusService(
     }
 
     private fun handleStatusNo(ids: List<UUID>) {
+
         ids.forEach { id ->
             val application = findApplicationById(id)
+            val user = queryUserPort.findByXquareId(application.userId)!!
+            sendMessageToApplicationEventPort.send(
+                user.deviceToken!!, Topic.APPLICATION,
+                Status.NO, ApplicationKind.APPLICATION,
+                null
+            )
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
         }
+
     }
 
     private fun findApplicationById(id: UUID): Application {

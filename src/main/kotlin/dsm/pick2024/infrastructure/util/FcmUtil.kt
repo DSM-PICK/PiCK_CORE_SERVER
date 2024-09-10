@@ -13,7 +13,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
         get() = FirebaseMessaging.getInstance()
 
     override fun sendMessage(
-        token: List<String>,
+        token: String,
         notification: Notification
     ) {
         val message = this.sendMessagesToDeviceToken(token, notification)
@@ -45,7 +45,8 @@ class FcmUtil : CommendTopicSubscriptionPort {
     ) {
         try {
             val message = this.sendMessageToTopic(notification).build()
-            firebaseInstance.sendAsync(message)
+            val a = firebaseInstance.send(message)
+            println(a)
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
@@ -57,9 +58,9 @@ class FcmUtil : CommendTopicSubscriptionPort {
             .setBody(notification.body)
     }
 
-    private fun sendMessagesToDeviceToken(token: List<String>, notification: Notification) =
+    private fun sendMessagesToDeviceToken(token: String, notification: Notification) =
         MulticastMessage.builder()
-            .addAllTokens(token)
+            .addToken(token)
             .setNotification(buildNotification(notification).build())
             .setAndroidConfig(buildAndroidConfig(notification))
             .setApnsConfig(buildApnsConfig(notification))
