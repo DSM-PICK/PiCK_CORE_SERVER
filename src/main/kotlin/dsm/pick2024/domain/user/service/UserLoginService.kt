@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.user.service
 
+import dsm.pick2024.domain.notification.event.CreateSubscribeTopicEventPort
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
@@ -24,13 +25,14 @@ class UserLoginService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val xquareFeignClient: XquareFeignClient,
     private val existsUserPort: ExistsUserPort,
-    private val userSavePort: UserSavePort
+    private val userSavePort: UserSavePort,
+    private val createSubscribeTopicEventPort: CreateSubscribeTopicEventPort
 ) : LoginUseCase {
 
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         val accountId = userLoginRequest.accountId
-
+        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken, userLoginRequest.accountId)
         val user = if (!existsUserPort.existsByAccountId(accountId)) {
             registerUser(userLoginRequest)
         } else {
@@ -56,23 +58,28 @@ class UserLoginService(
             birthDay = xquareUser.birthDay,
             role = xquareUser.userRole,
             profile = xquareUser.profileImageUrl,
-            xquareId = xquareUser.id
+            xquareId = xquareUser.id,
+            deviceToken = userLoginRequest.deviceToken
         )
-
         userSavePort.save(newUser)
 
         return newUser
     }
 
     private fun authenticateUser(userLoginRequest: UserLoginRequest): User {
-        val existingUser = queryUserPort.findByAccountId(userLoginRequest.accountId)
+        val user = queryUserPort.findByAccountId(userLoginRequest.accountId)
             ?: throw UserNotFoundException
 
-        if (!passwordEncoder.matches(userLoginRequest.password, existingUser.password)) {
+        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
             throw PasswordMissMatchException
         }
 
-        return existingUser
+        userSavePort.save(
+            user.copy(
+                deviceToken = userLoginRequest.deviceToken
+            )
+        )
+        return user
     }
 
     private fun generateToken(accountId: String): TokenResponse {
