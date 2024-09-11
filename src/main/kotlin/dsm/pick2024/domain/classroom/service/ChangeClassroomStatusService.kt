@@ -13,7 +13,6 @@ import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
-import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.event.classroom.SendMessageToClassroomEventPot
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.QueryUserPort
@@ -44,7 +43,7 @@ class ChangeClassroomStatusService(
         ids.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
             val user = queryUserPort.findByXquareId(classroom!!.userId)!!
-            sendMessageToClassroomEventPot.send(user.deviceToken!!, Topic.CLASS_ROOM, NO, null)
+            sendMessageToClassroomEventPot.send(user.deviceToken!!, NO, null)
             deleteClassRoomPort.deleteByUserId(id)
         }
     }
@@ -72,7 +71,7 @@ class ChangeClassroomStatusService(
                 } ?: throw UserNotFoundException
 
             updateAttendanceList.add(updatedAttendance)
-            sendMessageToClassroomEventPot.send(user.deviceToken!!, Topic.CLASS_ROOM, OK, classroom)
+            sendMessageToClassroomEventPot.send(user.deviceToken!!, OK, classroom)
         }
         saveClassRoomPort.saveAll(updateClassroom)
         saveAttendancePort.saveAll(updateAttendanceList)
