@@ -11,5 +11,5 @@ object DependencyVersions {
     const val APACHE_POI = "5.2.5"
     const val GSON = "2.8.7"
     const val AWS = "1.12.281"
-    const val FCM = "8.1.0"
+    const val FCM = "9.2.0"
 }

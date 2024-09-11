@@ -18,7 +18,9 @@ class FcmUtil : CommendTopicSubscriptionPort {
     ) {
         val message = this.sendMessagesToDeviceToken(token, notification)
         try {
-            firebaseInstance.sendMulticastAsync(message)
+            val a = firebaseInstance.sendEachForMulticast(message)
+            println(a.responses)
+            println(a.failureCount)
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
@@ -26,7 +28,8 @@ class FcmUtil : CommendTopicSubscriptionPort {
 
     override fun subscribeTopic(token: String, topic: Topic) {
         try {
-            firebaseInstance.subscribeToTopic(listOf(token), topic.name)
+            val a = firebaseInstance.subscribeToTopic(listOf(token), topic.name)
+            println(a.errors)
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
@@ -45,7 +48,8 @@ class FcmUtil : CommendTopicSubscriptionPort {
     ) {
         try {
             val message = this.sendMessageToTopic(notification).build()
-            firebaseInstance.sendAsync(message)
+            val a = firebaseInstance.send(message)
+            println(a)
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }

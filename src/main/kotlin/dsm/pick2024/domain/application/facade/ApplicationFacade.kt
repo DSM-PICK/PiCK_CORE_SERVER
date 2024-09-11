@@ -40,7 +40,6 @@ class ApplicationFacade(
                 val user = queryUserPort.findByXquareId(userId)!!
                 sendMessageToApplicationEventPort.send(
                     user.deviceToken!!,
-                    Topic.APPLICATION,
                     Status.OK,
                     applicationKind,
                     this
@@ -71,7 +70,6 @@ class ApplicationFacade(
             val user = queryUserPort.findByXquareId(application.userId)!!
             sendMessageToApplicationEventPort.send(
                 user.deviceToken!!,
-                Topic.APPLICATION,
                 Status.NO,
                 applicationKind,
                 null
