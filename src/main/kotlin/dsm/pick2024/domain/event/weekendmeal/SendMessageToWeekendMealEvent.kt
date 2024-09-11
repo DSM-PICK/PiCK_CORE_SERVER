@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 @Component
 class SendMessageToWeekendMealEvent(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort
-): SendMessageToWeekendMealEventPort {
+) : SendMessageToWeekendMealEventPort {
 
     override fun send() {
         commendTopicSubscriptionPort.sendByTopic(
@@ -19,5 +19,4 @@ class SendMessageToWeekendMealEvent(
             )
         )
     }
-
 }

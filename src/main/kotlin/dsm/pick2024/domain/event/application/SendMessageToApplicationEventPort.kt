@@ -7,8 +7,10 @@ import dsm.pick2024.domain.event.Topic
 
 interface SendMessageToApplicationEventPort {
     fun send(
-        deviceToken: String, topic: Topic,
-        status: Status, applicationKind: ApplicationKind,
+        deviceToken: String,
+        topic: Topic,
+        status: Status,
+        applicationKind: ApplicationKind,
         application: Application?
     )
 }

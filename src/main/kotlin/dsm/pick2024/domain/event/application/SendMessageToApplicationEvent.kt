@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component
 @Component
 class SendMessageToApplicationEvent(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort
-): SendMessageToApplicationEventPort {
+) : SendMessageToApplicationEventPort {
 
     @Async
     override fun send(
-        deviceToken: String, topic: Topic,
-        status: Status, applicationKind: ApplicationKind,
+        deviceToken: String,
+        topic: Topic,
+        status: Status,
+        applicationKind: ApplicationKind,
         application: Application?
     ) {
         commendTopicSubscriptionPort.sendMessage(
