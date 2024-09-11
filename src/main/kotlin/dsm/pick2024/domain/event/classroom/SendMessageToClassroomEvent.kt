@@ -16,7 +16,6 @@ class SendMessageToClassroomEvent(
     @Async
     override fun send(
         deviceToken: String,
-        topic: Topic,
         status: Status,
         classroom: Classroom?
     ) {
