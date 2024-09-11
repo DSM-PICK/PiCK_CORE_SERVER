@@ -5,6 +5,7 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
+import dsm.pick2024.domain.application.port.`in`.ApplicationFacadeUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
@@ -32,8 +33,8 @@ class ApplicationFacade(
     private val sendMessageToApplicationEventPort: SendMessageToApplicationEventPort,
     private val queryUserPort: QueryUserPort,
     private val attendanceService: AttendanceService
-) {
-    fun handleStatusOk(idList: List<UUID>, adminName: String, applicationKind: ApplicationKind) {
+) : ApplicationFacadeUseCase {
+    override fun handleStatusOk(idList: List<UUID>, adminName: String, applicationKind: ApplicationKind) {
         val applicationList = idList.map { id ->
             findApplicationById(id, applicationKind).apply {
                 val user = queryUserPort.findByXquareId(userId)!!
@@ -64,7 +65,7 @@ class ApplicationFacade(
         saveAttendancePort.saveAll(attendanceMutableList)
     }
 
-    fun handleStatusNo(idList: List<UUID>, applicationKind: ApplicationKind) {
+    override fun handleStatusNo(idList: List<UUID>, applicationKind: ApplicationKind) {
         idList.forEach { id ->
             val application = findApplicationById(id, applicationKind)
             val user = queryUserPort.findByXquareId(application.userId)!!
