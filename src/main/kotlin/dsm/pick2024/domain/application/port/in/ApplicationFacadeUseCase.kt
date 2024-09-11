@@ -5,6 +5,6 @@ import java.util.*
 
 interface ApplicationFacadeUseCase {
     fun handleStatusOk(idList: List<UUID>, adminName: String, applicationKind: ApplicationKind)
-   
+
     fun handleStatusNo(idList: List<UUID>, applicationKind: ApplicationKind)
 }
