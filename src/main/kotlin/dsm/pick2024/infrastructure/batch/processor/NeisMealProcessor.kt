@@ -6,7 +6,6 @@ import dsm.pick2024.infrastructure.feign.client.dto.response.NeisMealRow
 import org.springframework.batch.item.ItemProcessor
 import org.springframework.stereotype.Component
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Component
 class NeisMealProcessor : ItemProcessor<NeisMealRow, Meal> {

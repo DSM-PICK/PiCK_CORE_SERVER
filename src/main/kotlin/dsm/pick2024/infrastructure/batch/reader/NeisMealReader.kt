@@ -11,9 +11,7 @@ class NeisMealReader(
     private val neisMealFeignClientService: NeisMealFeignClientService
 ) : ItemReader<NeisMealRow> {
 
-    private var meals: List<Meal> = emptyList()
     private var currentIndex: Int = 0
-
 
     override fun read(): NeisMealRow? {
         val meals = neisMealFeignClientService.getNeisInfoToEntity()
