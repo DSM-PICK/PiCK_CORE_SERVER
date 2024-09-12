@@ -33,31 +33,31 @@ class ChangeClassroomStatusService(
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         if (request.status == NO) {
-            handleNo(request.ids)
+            handleNo(request.idList)
         } else {
-            handleOk(request.ids)
+            handleOk(request.idList)
         }
     }
 
-    private fun handleNo(ids: List<UUID>) {
-        ids.forEach { id ->
+    private fun handleNo(idList: List<UUID>) {
+        idList.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
-            val user = queryUserPort.findByXquareId(classroom!!.userId)!!
+            val user = queryUserPort.findByXquareId(classroom.userId)!!
             sendMessageToClassroomEventPot.send(user.deviceToken!!, NO, null)
             deleteClassRoomPort.deleteByUserId(id)
         }
     }
 
-    private fun handleOk(ids: List<UUID>) {
-        val updateClassroom = mutableListOf<Classroom>()
+    private fun handleOk(idList: List<UUID>) {
+        val updateClassroomList = mutableListOf<Classroom>()
         val updateAttendanceList = mutableListOf<Attendance>()
 
-        ids.forEach { id ->
+        idList.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
-            val user = queryUserPort.findByXquareId(classroom!!.userId)!!
+            val user = queryUserPort.findByXquareId(classroom.userId)!!
             val updatedClassroom = classroom.copy(status = OK)
 
-            updateClassroom.add(updatedClassroom)
+            updateClassroomList.add(updatedClassroom)
 
             val updatedAttendance =
                 queryAttendancePort.findByUserId(user.xquareId)?.run {
@@ -73,7 +73,7 @@ class ChangeClassroomStatusService(
             updateAttendanceList.add(updatedAttendance)
             sendMessageToClassroomEventPot.send(user.deviceToken!!, OK, classroom)
         }
-        saveClassRoomPort.saveAll(updateClassroom)
+        saveClassRoomPort.saveAll(updateClassroomList)
         saveAttendancePort.saveAll(updateAttendanceList)
     }
 
