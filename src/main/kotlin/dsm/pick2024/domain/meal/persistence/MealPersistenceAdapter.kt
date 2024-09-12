@@ -19,6 +19,11 @@ class MealPersistenceAdapter(
         mealRepository.save(mealMapper.toEntity(meal))
     }
 
+    override fun saveAll(meal: List<Meal>) {
+        val mealList = meal.map { mealMapper.toEntity(it) }
+        mealRepository.saveAll(mealList)
+    }
+
     override fun findMealsByMealDate(date: LocalDate): List<Meal> {
         return jpaQueryFactory
             .selectFrom(QMealJpaEntity.mealJpaEntity)
