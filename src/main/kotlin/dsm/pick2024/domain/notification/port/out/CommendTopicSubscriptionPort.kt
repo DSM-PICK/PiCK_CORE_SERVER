@@ -6,7 +6,8 @@ import dsm.pick2024.domain.notification.presentation.dto.request.Notification
 interface CommendTopicSubscriptionPort {
     fun sendMessage(
         token: String,
-        notification: Notification
+        notification: Notification,
+        isSubscribed: Boolean
     )
 
     fun sendByTopic(

@@ -14,13 +14,14 @@ class FcmUtil : CommendTopicSubscriptionPort {
 
     override fun sendMessage(
         token: String,
-        notification: Notification
+        notification: Notification,
+        isSubmitted: Boolean
     ) {
-        val message = this.sendMessagesToDeviceToken(token, notification)
         try {
-            val a = firebaseInstance.sendEachForMulticast(message)
-            println(a.responses)
-            println(a.failureCount)
+            if (isSubmitted) {
+                val message = this.sendMessagesToDeviceToken(token, notification)
+                firebaseInstance.sendEachForMulticast(message)
+            }
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
@@ -38,6 +39,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
     override fun unsubscribeTopic(token: String, topic: Topic) {
         try {
             firebaseInstance.unsubscribeFromTopicAsync(listOf(token), topic.name)
+            println("asdfasdgasf")
         } catch (e: FirebaseMessagingException) {
             throw FcmServerException
         }
@@ -73,13 +75,7 @@ class FcmUtil : CommendTopicSubscriptionPort {
         Message
             .builder()
             .setTopic(notification.topic.name)
-            .setNotification(
-                com.google.firebase.messaging.Notification
-                    .builder()
-                    .setTitle(notification.title)
-                    .setBody(notification.body)
-                    .build()
-            )
+            .setNotification(buildNotification(notification).build())
             .setApnsConfig(buildApnsConfig(notification))
             .setAndroidConfig(buildAndroidConfig(notification))
 
