@@ -16,8 +16,8 @@ import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
-import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.event.application.SendMessageToApplicationEventPort
+import dsm.pick2024.domain.notification.port.out.QueryTopicSubscriptionPort
 import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.stereotype.Component
 import java.util.*
@@ -32,50 +32,63 @@ class ApplicationFacade(
     private val queryAttendancePort: QueryAttendancePort,
     private val sendMessageToApplicationEventPort: SendMessageToApplicationEventPort,
     private val queryUserPort: QueryUserPort,
+    private val queryTopicSubscriptionPort: QueryTopicSubscriptionPort,
     private val attendanceService: AttendanceService
 ) : ApplicationFacadeUseCase {
+
     override fun handleStatusOk(idList: List<UUID>, adminName: String, applicationKind: ApplicationKind) {
         val applicationList = idList.map { id ->
-            findApplicationById(id, applicationKind).apply {
-                val user = queryUserPort.findByXquareId(userId)!!
-                sendMessageToApplicationEventPort.send(
-                    user.deviceToken!!,
-                    Status.OK,
-                    applicationKind,
-                    this
-                )
-                updateApplication(adminName)
-            }
+            processApplication(id, adminName, Status.OK, applicationKind)
         }
 
+        saveProcessedApplicationList(applicationList, applicationKind)
+    }
+
+    override fun handleStatusNo(idList: List<UUID>, applicationKind: ApplicationKind) {
+        idList.forEach { id ->
+            val application = findApplicationById(id, applicationKind)
+            queryAndSendMessage(application.userId, Status.NO, applicationKind, null)
+            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, applicationKind)
+        }
+    }
+
+    private fun processApplication(id: UUID, adminName: String, status: Status, applicationKind: ApplicationKind): Application {
+        val application = findApplicationById(id, applicationKind)
+        queryAndSendMessage(application.userId, status, applicationKind, application)
+        return application.updateApplication(adminName)
+    }
+
+    private fun queryAndSendMessage(userId: UUID, status: Status, applicationKind: ApplicationKind, application: Application?) {
+        val user = queryUserPort.findByXquareId(userId) ?: throw ApplicationNotFoundException
+        val isSubscribed =
+            queryTopicSubscriptionPort.queryTopicSubscriptionByDeviceToken(user.deviceToken!!).isSubscribed
+
+        sendMessageToApplicationEventPort.send(
+            user.deviceToken,
+            status,
+            applicationKind,
+            application,
+            isSubscribed
+        )
+    }
+
+    private fun saveProcessedApplicationList(applicationList: List<Application>, applicationKind: ApplicationKind) {
         val applicationStoryList = applicationList.map { createApplicationStory(it, applicationKind) }
-        val attendanceMutableList: MutableList<Attendance> = applicationList.map { application ->
-            val attendanceId = queryAttendancePort.findByUserId(application.userId)
-            attendanceService.updateAttendanceToApplication(
-                application.start,
-                application.end!!,
-                application.applicationType,
-                attendanceId!!
-            )
-        }.toMutableList()
+        val attendanceMutableList = applicationList.map { updateAttendance(it) }.toMutableList()
 
         saveApplicationPort.saveAll(applicationList)
         applicationStorySaveAllPort.saveAll(applicationStoryList)
         saveAttendancePort.saveAll(attendanceMutableList)
     }
 
-    override fun handleStatusNo(idList: List<UUID>, applicationKind: ApplicationKind) {
-        idList.forEach { id ->
-            val application = findApplicationById(id, applicationKind)
-            val user = queryUserPort.findByXquareId(application.userId)!!
-            sendMessageToApplicationEventPort.send(
-                user.deviceToken!!,
-                Status.NO,
-                applicationKind,
-                null
-            )
-            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, applicationKind)
-        }
+    private fun updateAttendance(application: Application): Attendance {
+        val attendanceId = queryAttendancePort.findByUserId(application.userId)
+        return attendanceService.updateAttendanceToApplication(
+            application.start,
+            application.end!!,
+            application.applicationType,
+            attendanceId!!
+        )
     }
 
     private fun findApplicationById(id: UUID, applicationKind: ApplicationKind): Application {
@@ -84,10 +97,7 @@ class ApplicationFacade(
     }
 
     private fun Application.updateApplication(adminName: String): Application {
-        return copy(
-            teacherName = adminName,
-            status = Status.OK
-        )
+        return copy(teacherName = adminName, status = Status.OK)
     }
 
     private fun createApplicationStory(application: Application, applicationKind: ApplicationKind): ApplicationStory {
