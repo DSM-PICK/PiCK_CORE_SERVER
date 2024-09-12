@@ -26,7 +26,7 @@ class NeisMealReader(
 
     private fun createNeisMealRow(meal: Meal): NeisMealRow {
         return NeisMealRow(
-            MMEAL_SC_CODE = meal.mealType?.name ?: "",
+            MMEAL_SC_CODE = meal.mealType?.name.toString(),
             MLSV_YMD = meal.mealDate.toString(),
             DDISH_NM = meal.menu ?: "",
             CAL_INFO = meal.cal.toString()

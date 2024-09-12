@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter
 class NeisMealProcessor : ItemProcessor<NeisMealRow, Meal> {
 
     override fun process(item: NeisMealRow): Meal {
-        val mealDate = LocalDate.parse(item.MLSV_YMD, DateTimeFormatter.BASIC_ISO_DATE)
+        val mealDate = LocalDate.parse(item.MLSV_YMD)
         val mealType = getMealType(item.MMEAL_SC_CODE)
         val menu = item.DDISH_NM.replace("<br/>", "||").replace(Regex("[0-9.()]"), "").trim()
         val cal = item.CAL_INFO

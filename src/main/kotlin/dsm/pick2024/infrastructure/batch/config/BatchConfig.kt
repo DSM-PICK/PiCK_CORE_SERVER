@@ -35,7 +35,6 @@ class BatchConfig(
     }
 
     @Bean
-    @StepScope
     fun neisMealStep(): Step {
         return stepBuilderFactory.get("neisMealStep")
             .chunk<NeisMealRow, Meal>(10)
