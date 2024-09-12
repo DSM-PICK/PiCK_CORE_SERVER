@@ -3,7 +3,6 @@ package dsm.pick2024.domain.event.weekendmeal
 import dsm.pick2024.domain.event.Topic
 import dsm.pick2024.domain.notification.port.out.CommendTopicSubscriptionPort
 import dsm.pick2024.domain.notification.presentation.dto.request.Notification
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Component
 
 @Component
@@ -11,7 +10,6 @@ class SendMessageToWeekendMealEvent(
     private val commendTopicSubscriptionPort: CommendTopicSubscriptionPort
 ) : SendMessageToWeekendMealEventPort {
 
-    @Async
     override fun send() {
         commendTopicSubscriptionPort.sendByTopic(
             Notification(
