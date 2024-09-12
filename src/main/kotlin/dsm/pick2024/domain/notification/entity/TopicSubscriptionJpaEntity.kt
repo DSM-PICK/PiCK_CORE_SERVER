@@ -15,5 +15,5 @@ class TopicSubscriptionJpaEntity(
     val topic: Topic,
     @Column(columnDefinition = "TEXT")
     val deviceToken: String,
-    val isSubscribed: Boolean = false,
+    val isSubscribed: Boolean = false
 ) : BaseUUIDEntity(id)

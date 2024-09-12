@@ -28,7 +28,7 @@ class CreateSubscribeTopicEvent(
                     TopicSubscription(
                         deviceToken = deviceToken,
                         isSubscribed = false,
-                        topic = it,
+                        topic = it
                     )
                 )
             }

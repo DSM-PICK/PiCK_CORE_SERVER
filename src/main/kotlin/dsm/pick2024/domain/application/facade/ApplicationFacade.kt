@@ -52,13 +52,23 @@ class ApplicationFacade(
         }
     }
 
-    private fun processApplication(id: UUID, adminName: String, status: Status, applicationKind: ApplicationKind): Application {
+    private fun processApplication(
+        id: UUID,
+        adminName: String,
+        status: Status,
+        applicationKind: ApplicationKind
+    ): Application {
         val application = findApplicationById(id, applicationKind)
         queryAndSendMessage(application.userId, status, applicationKind, application)
         return application.updateApplication(adminName)
     }
 
-    private fun queryAndSendMessage(userId: UUID, status: Status, applicationKind: ApplicationKind, application: Application?) {
+    private fun queryAndSendMessage(
+        userId: UUID,
+        status: Status,
+        applicationKind: ApplicationKind,
+        application: Application?
+    ) {
         val user = queryUserPort.findByXquareId(userId) ?: throw ApplicationNotFoundException
         val isSubscribed =
             queryTopicSubscriptionPort.queryTopicSubscriptionByDeviceToken(user.deviceToken!!).isSubscribed

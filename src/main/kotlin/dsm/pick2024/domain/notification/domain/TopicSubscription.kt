@@ -9,5 +9,5 @@ data class TopicSubscription(
     val id: UUID? = null,
     val topic: Topic,
     val deviceToken: String,
-    val isSubscribed: Boolean = false,
+    val isSubscribed: Boolean = false
 )
