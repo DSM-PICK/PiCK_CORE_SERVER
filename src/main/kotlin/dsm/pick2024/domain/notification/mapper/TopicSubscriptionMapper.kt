@@ -12,8 +12,7 @@ class TopicSubscriptionMapper {
                 id = id,
                 topic = topic,
                 isSubscribed = isSubscribed,
-                deviceToken = deviceToken,
-                userId = userId
+                deviceToken = deviceToken
             )
         }
 
@@ -24,7 +23,6 @@ class TopicSubscriptionMapper {
                 topic = topic,
                 isSubscribed = isSubscribed,
                 deviceToken = deviceToken,
-                userId = userId
             )
         }
 }

@@ -6,7 +6,6 @@ import dsm.pick2024.domain.notification.mapper.TopicSubscriptionMapper
 import dsm.pick2024.domain.notification.persistence.repository.TopicSubscriptionRepository
 import dsm.pick2024.domain.notification.port.out.TopicSubscriptionPort
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class TopicSubscriptionPersistenceAdapter(
@@ -23,8 +22,13 @@ class TopicSubscriptionPersistenceAdapter(
             .let { topicSubscriptionMapper.toDomain(it) }
     }
 
-    override fun queryAllTopicSubscriptionByUserId(userId: String): List<TopicSubscription>? {
-        return topicSubscriptionRepository.findAllByUserId(userId)
+    override fun queryAllTopicSubscriptionByDeviceToken(deviceToken: String): List<TopicSubscription>? {
+        return topicSubscriptionRepository.findAllByDeviceToken(deviceToken)
             .map { topicSubscriptionMapper.toDomain(it) }
+    }
+
+    override fun queryTopicSubscriptionByDeviceToken(deviceToken: String): TopicSubscription {
+        return topicSubscriptionRepository.findByDeviceToken(deviceToken)
+            .let { topicSubscriptionMapper.toDomain(it) }
     }
 }

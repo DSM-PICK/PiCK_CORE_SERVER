@@ -10,5 +10,4 @@ data class TopicSubscription(
     val topic: Topic,
     val deviceToken: String,
     val isSubscribed: Boolean = false,
-    val userId: String
 )

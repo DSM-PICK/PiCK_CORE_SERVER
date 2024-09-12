@@ -24,7 +24,7 @@ class SendMessageToApplicationEvent(
             deviceToken,
             Notification(
                 topic = Topic.APPLICATION,
-                title = "${if (applicationKind.name == "application") "외출" else "조기귀가"} 신청이 " +
+                title = "${if (applicationKind.name == ApplicationKind.APPLICATION.name) "외출" else "조기귀가"} 신청이 " +
                     "${if (status == Status.OK) "수락" else "거절"}되었습니다.",
                 body = if (status == Status.OK) {
                     "${application?.start}부터 이용 가능합니다."

@@ -6,5 +6,7 @@ import dsm.pick2024.domain.notification.domain.TopicSubscription
 interface QueryTopicSubscriptionPort {
     fun queryTopicSubscriptionByDeviceTokenAndTopic(deviceToken: String, topic: Topic): TopicSubscription?
 
-    fun queryAllTopicSubscriptionByUserId(userId: String): List<TopicSubscription>?
+    fun queryAllTopicSubscriptionByDeviceToken(deviceToken: String): List<TopicSubscription>?
+
+    fun queryTopicSubscriptionByDeviceToken(deviceToken: String): TopicSubscription
 }

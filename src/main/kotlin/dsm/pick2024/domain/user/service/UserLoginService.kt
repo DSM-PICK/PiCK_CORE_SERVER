@@ -32,7 +32,7 @@ class UserLoginService(
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
         val accountId = userLoginRequest.accountId
-        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken, userLoginRequest.accountId)
+        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken)
         val user = if (!existsUserPort.existsByAccountId(accountId)) {
             registerUser(userLoginRequest)
         } else {

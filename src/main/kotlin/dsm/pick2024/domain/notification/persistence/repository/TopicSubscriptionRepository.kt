@@ -8,5 +8,7 @@ import java.util.UUID
 interface TopicSubscriptionRepository : JpaRepository<TopicSubscriptionJpaEntity, UUID> {
     fun findByDeviceTokenAndTopic(deviceToken: String, topic: Topic): TopicSubscriptionJpaEntity
 
-    fun findAllByUserId(userId: String): List<TopicSubscriptionJpaEntity>
+    fun findAllByDeviceToken(deviceToken: String): List<TopicSubscriptionJpaEntity>
+
+    fun findByDeviceToken(deviceToken: String): TopicSubscriptionJpaEntity
 }
