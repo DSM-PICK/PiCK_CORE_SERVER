@@ -81,6 +81,8 @@ dependencies {
     implementation(Dependencies.CACHE)
 
     implementation(Dependencies.FCM)
+
+    implementation("org.springframework.batch:spring-batch-core")
 }
 
 tasks.withType<KotlinCompile> {
