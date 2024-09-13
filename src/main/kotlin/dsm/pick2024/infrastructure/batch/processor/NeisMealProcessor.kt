@@ -26,9 +26,9 @@ class NeisMealProcessor : ItemProcessor<NeisMealRow, Meal> {
 
     private fun getMealType(mealCode: String): MealType? {
         return when (mealCode) {
-            "1" -> MealType.BREAKFAST
-            "2" -> MealType.LUNCH
-            "3" -> MealType.DINNER
+            "BREAKFAST" -> MealType.BREAKFAST
+            "LUNCH" -> MealType.LUNCH
+            "DINNER" -> MealType.DINNER
             else -> null
         }
     }
