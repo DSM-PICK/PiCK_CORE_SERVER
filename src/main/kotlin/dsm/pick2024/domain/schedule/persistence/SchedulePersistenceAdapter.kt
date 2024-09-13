@@ -52,7 +52,7 @@ class SchedulePersistenceAdapter(
             .sortedBy { it.date }
     }
 
-    override fun saveFeignSchedule(schedule: MutableList<Schedule>) {
+    override fun saveFeignSchedule(schedule: List<Schedule>) {
         val entities = schedule.map { scheduleMapper.toEntity(it) }
         scheduleRepository.saveAll(entities)
     }
