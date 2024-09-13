@@ -33,7 +33,7 @@ class BatchConfig(
     fun neisScheduleJob(): Job {
         return jobBuilderFactory.get("neisScheduleJob")
             .incrementer(RunIdIncrementer())
-            .flow(neisMealStep())
+            .flow(neisScheduleStep())
             .end()
             .build()
     }
