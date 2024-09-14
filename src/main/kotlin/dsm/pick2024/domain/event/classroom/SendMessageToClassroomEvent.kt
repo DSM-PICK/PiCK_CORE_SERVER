@@ -17,7 +17,8 @@ class SendMessageToClassroomEvent(
     override fun send(
         deviceToken: String,
         status: Status,
-        classroom: Classroom?
+        classroom: Classroom?,
+        isSubscribed: Boolean
     ) {
         println("여까지는 왔다")
         commendTopicSubscriptionPort.sendMessage(
@@ -31,7 +32,8 @@ class SendMessageToClassroomEvent(
                 } else {
                     "신청이 거절되었습니다."
                 }
-            )
+            ),
+            isSubscribed
         )
     }
 }

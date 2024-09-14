@@ -14,6 +14,7 @@ import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import dsm.pick2024.domain.event.classroom.SendMessageToClassroomEventPot
+import dsm.pick2024.domain.notification.port.out.QueryTopicSubscriptionPort
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.QueryUserPort
 import java.util.UUID
@@ -28,6 +29,7 @@ class ChangeClassroomStatusService(
     private val queryAttendancePort: QueryAttendancePort,
     private val saveAttendancePort: SaveAttendancePort,
     private val queryUserPort: QueryUserPort,
+    private val queryTopicSubscriptionPort: QueryTopicSubscriptionPort,
     private val sendMessageToClassroomEventPot: SendMessageToClassroomEventPot
 ) : ChangeClassroomStatusUseCase {
     @Transactional
@@ -43,7 +45,8 @@ class ChangeClassroomStatusService(
         idList.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
             val user = queryUserPort.findByXquareId(classroom.userId)!!
-            sendMessageToClassroomEventPot.send(user.deviceToken!!, NO, null)
+            val topic = queryTopicSubscriptionPort.queryTopicSubscriptionByDeviceToken(user.deviceToken!!)
+            sendMessageToClassroomEventPot.send(user.deviceToken, NO, null, topic.isSubscribed)
             deleteClassRoomPort.deleteByUserId(id)
         }
     }
@@ -55,6 +58,7 @@ class ChangeClassroomStatusService(
         idList.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
             val user = queryUserPort.findByXquareId(classroom.userId)!!
+            val topic = queryTopicSubscriptionPort.queryTopicSubscriptionByDeviceToken(user.deviceToken!!)
             val updatedClassroom = classroom.copy(status = OK)
 
             updateClassroomList.add(updatedClassroom)
@@ -71,7 +75,7 @@ class ChangeClassroomStatusService(
                 } ?: throw UserNotFoundException
 
             updateAttendanceList.add(updatedAttendance)
-            sendMessageToClassroomEventPot.send(user.deviceToken!!, OK, classroom)
+            sendMessageToClassroomEventPot.send(user.deviceToken, OK, classroom, topic.isSubscribed)
         }
         saveClassRoomPort.saveAll(updateClassroomList)
         saveAttendancePort.saveAll(updateAttendanceList)

@@ -18,11 +18,11 @@ class QueryMySubscribeTopicService(
     @Transactional(readOnly = true)
     override fun execute(): QueryMySubscribeTopicResponse {
         val user = userFacade.currentUser()
-        val topicList = listOf(Topic.APPLICATION, Topic.CLASS_ROOM, Topic.NEW_NOTICE, Topic.WEEKEND_MEAL)
+        val topicList = listOf(Topic.ALL, Topic.APPLICATION, Topic.CLASS_ROOM, Topic.NEW_NOTICE, Topic.WEEKEND_MEAL)
 
         return QueryMySubscribeTopicResponse(
-            queryTopicSubscriptionPort.queryAllTopicSubscriptionByUserId(user.accountId)!!
-                .map { subscription ->
+            queryTopicSubscriptionPort.queryAllTopicSubscriptionByDeviceToken(user.deviceToken!!)
+                !!.map { subscription ->
                     QuerySubscribeTopicResponse(
                         topic = subscription.topic,
                         isSubscribed = subscription.isSubscribed

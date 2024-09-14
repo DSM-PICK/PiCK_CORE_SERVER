@@ -7,6 +7,7 @@ interface SendMessageToClassroomEventPot {
     fun send(
         deviceToken: String,
         status: Status,
-        classroom: Classroom?
+        classroom: Classroom?,
+        isSubscribed: Boolean
     )
 }
