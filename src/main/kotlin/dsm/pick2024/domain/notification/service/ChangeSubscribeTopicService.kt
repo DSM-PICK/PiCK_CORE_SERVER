@@ -19,13 +19,22 @@ class ChangeSubscribeTopicService(
     @Transactional
     override fun execute(request: ChangeSubscribeTopicRequest): Boolean {
         val deviceToken = userFacade.currentUser().deviceToken!!
-        updateTopic(deviceToken, request.topic, request.isSubscribed)
-        if (request.isSubscribed) {
-            commendTopicSubscriptionPort.subscribeTopic(deviceToken, request.topic)
+
+        if (request.topic == Topic.ALL) {
+            updateAllTopics(deviceToken, request.isSubscribed)
         } else {
-            commendTopicSubscriptionPort.unsubscribeTopic(deviceToken, request.topic)
+            handleSingleTopic(deviceToken, request.topic, request.isSubscribed)
         }
         return request.isSubscribed
+    }
+
+    private fun handleSingleTopic(deviceToken: String, topic: Topic, isSubscribed: Boolean) {
+        updateTopic(deviceToken, topic, isSubscribed)
+        if (isSubscribed) {
+            commendTopicSubscriptionPort.subscribeTopic(deviceToken, topic)
+        } else {
+            commendTopicSubscriptionPort.unsubscribeTopic(deviceToken, topic)
+        }
     }
 
     private fun updateTopic(deviceToken: String, topic: Topic, isSubscribed: Boolean) {
@@ -38,5 +47,11 @@ class ChangeSubscribeTopicService(
                 isSubscribed = isSubscribed
             )
         )
+    }
+
+    private fun updateAllTopics(deviceToken: String, isSubscribed: Boolean) {
+        Topic.values().filter { it != Topic.ALL }.forEach { topic ->
+            updateTopic(deviceToken, topic, isSubscribed)
+        }
     }
 }
