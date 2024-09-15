@@ -4,5 +4,5 @@ import dsm.pick2024.domain.weekendmeal.presentation.dto.request.SettingWeekendMe
 import java.util.UUID
 
 interface SettingWeekendMealPeriodUseCase {
-    fun settingWeekendMealPeriod(request: SettingWeekendMealPeriodRequest): UUID
+    fun settingWeekendMealPeriod(request: SettingWeekendMealPeriodRequest)
 }

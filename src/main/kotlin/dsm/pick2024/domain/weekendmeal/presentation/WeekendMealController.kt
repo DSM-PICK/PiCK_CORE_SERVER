@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 import javax.servlet.http.HttpServletResponse
+import javax.validation.Valid
 
 @Tag(name = "weekendMeal API")
 @RestController
@@ -86,8 +87,8 @@ class WeekendMealController(
     @Operation(summary = "주말급식 신청기간 변경 API")
     @PatchMapping("/period")
     fun settingWeekendMealPeriod(
-        @RequestBody settingWeekendMealPeriodRequest: SettingWeekendMealPeriodRequest
-    ): UUID {
-        return settingWeekendMealPeriodUseCase.settingWeekendMealPeriod(settingWeekendMealPeriodRequest)
+        @Valid @RequestBody settingWeekendMealPeriodRequest: SettingWeekendMealPeriodRequest
+    ) {
+         settingWeekendMealPeriodUseCase.settingWeekendMealPeriod(settingWeekendMealPeriodRequest)
     }
 }

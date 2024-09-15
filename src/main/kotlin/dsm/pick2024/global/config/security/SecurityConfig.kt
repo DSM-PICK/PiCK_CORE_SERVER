@@ -91,7 +91,8 @@ class SecurityConfig(
                 "/schedule/modify",
                 "/after/change",
                 "/class-room/status",
-                "/class"
+                "/class",
+                "weekend-meal/period"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
