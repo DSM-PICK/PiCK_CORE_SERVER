@@ -1,13 +1,8 @@
 package dsm.pick2024.domain.weekendmeal.presentation
 
 import dsm.pick2024.domain.weekendmeal.enums.Status
-import dsm.pick2024.domain.weekendmeal.port.`in`.ChangeWeekendMealStatusUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.CreateWeekendMealUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelClassWeekendMealUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.QueryMyWeekendMealStatusUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUserUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelWeekendMealUseCase
+import dsm.pick2024.domain.weekendmeal.port.`in`.*
+import dsm.pick2024.domain.weekendmeal.presentation.dto.request.SettingWeekendMealPeriodRequest
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryStatusResponse
 import dsm.pick2024.domain.weekendmeal.service.QueryAllWeekendMealStatus
 import io.swagger.v3.oas.annotations.Operation
@@ -15,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -32,7 +28,8 @@ class WeekendMealController(
     private val changeWeekendMealStatusUseCase: ChangeWeekendMealStatusUseCase,
     private val saveAllWeekendMealUserUseCase: SaveAllWeekendMealUserUseCase,
     private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus,
-    private val printExcelClassWeekendMealUseCase: PrintExcelClassWeekendMealUseCase
+    private val printExcelClassWeekendMealUseCase: PrintExcelClassWeekendMealUseCase,
+    private val settingWeekendMealPeriodUseCase: SettingWeekendMealPeriodUseCase
 ) {
 
     @Operation(summary = "주말급식 강제 상태변경")
@@ -85,4 +82,12 @@ class WeekendMealController(
     @Operation(summary = "주말급식 유저 전체 조회 API")
     @GetMapping("/hey")
     fun hey() = queryAllWeekendMealStatus.findAll()
+
+    @Operation(summary = "주말급식 신청기간 변경 API")
+    @PatchMapping("/period")
+    fun settingWeekendMealPeriod(
+        @RequestBody settingWeekendMealPeriodRequest: SettingWeekendMealPeriodRequest
+    ): UUID {
+        return settingWeekendMealPeriodUseCase.settingWeekendMealPeriod(settingWeekendMealPeriodRequest)
+    }
 }
