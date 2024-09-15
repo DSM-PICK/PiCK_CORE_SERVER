@@ -87,8 +87,9 @@ class WeekendMealController(
     @Operation(summary = "주말급식 신청기간 변경 API")
     @PatchMapping("/period")
     fun settingWeekendMealPeriod(
-        @Valid @RequestBody settingWeekendMealPeriodRequest: SettingWeekendMealPeriodRequest
+        @Valid @RequestBody
+        settingWeekendMealPeriodRequest: SettingWeekendMealPeriodRequest
     ) {
-         settingWeekendMealPeriodUseCase.settingWeekendMealPeriod(settingWeekendMealPeriodRequest)
+        settingWeekendMealPeriodUseCase.settingWeekendMealPeriod(settingWeekendMealPeriodRequest)
     }
 }

@@ -11,7 +11,7 @@ import java.util.*
 class WeekendMealPeriodPersistenceAdapter(
     private val weekendMealPeriodMapper: WeekendMealPeriodMapper,
     private val weekendMealPeriodRepository: WeekendMealPeriodRepository
-): WeekendMealPeriodPort {
+) : WeekendMealPeriodPort {
 
     override fun save(weekendMealPeriod: WeekendMealPeriod) {
         weekendMealPeriodRepository.save(weekendMealPeriodMapper.toEntity(weekendMealPeriod))

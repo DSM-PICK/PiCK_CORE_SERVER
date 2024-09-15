@@ -12,4 +12,4 @@ class WeekendMealPeriodJpaEntity(
     val start: LocalDate,
     val end: LocalDate,
     val month: Month
-): BaseUUIDEntity(id)
+) : BaseUUIDEntity(id)

@@ -1,5 +1,5 @@
 package dsm.pick2024.domain.weekendmeal.port.out
 
-interface WeekendMealPeriodPort:
+interface WeekendMealPeriodPort :
     SaveWeekendMealPeriodPort,
     QueryWeekendMealPeriodPort
