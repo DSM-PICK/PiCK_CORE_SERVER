@@ -9,4 +9,6 @@ interface WeekendMealPeriodRepository : Repository<WeekendMealPeriodJpaEntity, U
     fun save(weekendMealPeriodJpaEntity: WeekendMealPeriodJpaEntity)
 
     fun findById(id: UUID): WeekendMealPeriodJpaEntity?
+
+    fun findAll(): List<WeekendMealPeriodJpaEntity>
 }
