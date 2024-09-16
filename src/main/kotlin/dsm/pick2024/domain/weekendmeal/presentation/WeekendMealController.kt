@@ -31,7 +31,8 @@ class WeekendMealController(
     private val queryAllWeekendMealStatus: QueryAllWeekendMealStatus,
     private val printExcelClassWeekendMealUseCase: PrintExcelClassWeekendMealUseCase,
     private val settingWeekendMealPeriodUseCase: SettingWeekendMealPeriodUseCase,
-    private val queryIsWeekendMealPeriodUseCase: QueryIsWeekendMealPeriodUseCase
+    private val queryIsWeekendMealPeriodUseCase: QueryIsWeekendMealPeriodUseCase,
+    private val queryWeekendMealApplicationUseCase: QueryWeekendMealApplicationUseCase
 ) {
 
     @Operation(summary = "주말급식 강제 상태변경")
@@ -97,4 +98,8 @@ class WeekendMealController(
     @Operation(summary = "메인 주말급식 신청기간 여부 조회 API")
     @GetMapping("/period")
     fun isWeekendMealPeriod() = queryIsWeekendMealPeriodUseCase.isWeekendMealPeriod()
+
+    @Operation(summary = "주말급식 신청기간 조회 API")
+    @GetMapping("/application")
+    fun application() = queryWeekendMealApplicationUseCase.queryWeekendMealApplication()
 }
