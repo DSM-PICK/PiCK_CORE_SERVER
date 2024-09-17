@@ -64,8 +64,8 @@ class MainService(
             QueryMainUserMoveClassroomResponse(
                 username = userName,
                 classroom = classroomName,
-                start = startPeriod,
-                end = endPeriod,
+                start = startPeriod.toString(),
+                end = endPeriod.toString(),
                 type = Main.CLASSROOM
             )
         }!!
