@@ -10,6 +10,6 @@ data class QueryClassroomResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val startPeriod: Int,
-    val endPeriod: Int
+    val start: Int,
+    val end: Int
 )
