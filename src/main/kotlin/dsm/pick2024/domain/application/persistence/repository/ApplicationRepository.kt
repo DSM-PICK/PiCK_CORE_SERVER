@@ -9,6 +9,11 @@ import java.util.UUID
 interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun existsByUserId(userId: UUID): Boolean
 
+    fun existsByUserIdAndApplicationKind(
+        userId: UUID,
+        applicationKind: ApplicationKind
+    ): Boolean
+
     fun existsByStatusAndUserIdAndApplicationKind(
         status: Status,
         userId: UUID,
@@ -19,6 +24,8 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
 
     fun findById(id: UUID): ApplicationJapEntity
 
+    fun findByUserId(userId: UUID): ApplicationJapEntity
+
     fun deleteByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind)
 
     fun save(entity: ApplicationJapEntity)
@@ -26,8 +33,6 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
     fun findAllByApplicationKind(applicationKind: ApplicationKind): List<ApplicationJapEntity>
 
     fun findAllByStatus(status: Status): List<ApplicationJapEntity>
-
-    fun findByUserId(userId: UUID): ApplicationJapEntity
 
     fun deleteAll()
 
