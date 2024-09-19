@@ -26,11 +26,17 @@ class ApplicationPersistenceAdapter(
         applicationRepository.saveAll(entities)
     }
 
-    override fun existsByUserId(userId: UUID) =
-        applicationRepository.existsByUserId(userId)
+    override fun existByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
-    override fun existsOKByUserId(userId: UUID, applicationKind: ApplicationKind) =
-        applicationRepository.existsByStatusAndUserIdAndApplicationKind(Status.OK, userId, applicationKind)
+    override fun existsByUserIdAndApplicationKind(userId: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.existsByUserIdAndApplicationKind(userId, applicationKind)
+
+    override fun existsByStatusAndUserIdAndApplicationKind(
+        status: Status,
+        userId: UUID,
+        applicationKind: ApplicationKind
+    ) =
+        applicationRepository.existsByStatusAndUserIdAndApplicationKind(status, userId, applicationKind)
 
     override fun findByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind) =
         applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
@@ -46,11 +52,13 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteAllByApplicationKind(applicationKind)
     }
 
+    override fun findByUserId(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
+
     override fun findAllByApplicationKind(applicationKind: ApplicationKind) =
         applicationRepository.findAllByApplicationKind(applicationKind).map { applicationMapper.toDomain(it) }
 
-    override fun findByUserIdAndStatusAndApplicationKind(id: UUID, applicationKind: ApplicationKind) =
-        applicationRepository.findByUserIdAndStatusAndApplicationKind(id, Status.OK, applicationKind).let {
+    override fun findByUserIdAndStatusAndApplicationKind(status: Status, id: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.findByUserIdAndStatusAndApplicationKind(id, status, applicationKind).let {
             applicationMapper.toDomain(it)
         }
 

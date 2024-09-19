@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -26,33 +27,53 @@ class MainService(
         val userId = userFacadeUseCase.currentUser().xquareId
 
         return when {
-            existApplicationPort.existsOKByUserId(userId, ApplicationKind.APPLICATION) -> findApplication(userId)
-            existApplicationPort.existsOKByUserId(userId, ApplicationKind.EARLY_RETURN) -> findEarlyReturn(userId)
+            existApplicationPort.existsByStatusAndUserIdAndApplicationKind(
+                Status.OK,
+                userId,
+                ApplicationKind.APPLICATION
+            ) -> findApplication(userId)
+            existApplicationPort.existsByStatusAndUserIdAndApplicationKind(
+                Status.OK,
+                userId,
+                ApplicationKind.EARLY_RETURN
+            ) -> findEarlyReturn(userId)
             existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
+            existApplicationPort.existsByUserIdAndApplicationKind(
+                userId,
+                ApplicationKind.APPLICATION
+            ) -> waiting(userId, Main.APPLICATION)
+            existApplicationPort.existsByUserIdAndApplicationKind(
+                userId,
+                ApplicationKind.EARLY_RETURN
+            ) -> waiting(userId, Main.EARLYRETURN)
+            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
+
             else -> null
         }
     }
 
     private fun findApplication(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.APPLICATION)?.let {
-            QueryMainMyApplicationResponse(
-                userId = userId,
-                start = it.start.take(5),
-                username = it.userName,
-                end = it.end!!.take(5),
-                type = Main.APPLICATION
-            )
-        }
+        queryApplicationPort
+            .findByUserIdAndStatusAndApplicationKind(Status.OK, userId, ApplicationKind.APPLICATION)?.let {
+                QueryMainMyApplicationResponse(
+                    userId = userId,
+                    start = it.start.take(5),
+                    username = it.userName,
+                    end = it.end!!.take(5),
+                    type = Main.APPLICATION
+                )
+            }
 
     private fun findEarlyReturn(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(userId, ApplicationKind.EARLY_RETURN)?.let {
-            QuerySimpleMyEarlyResponse(
-                userId = userId,
-                start = it.start.take(5),
-                username = it.userName,
-                type = Main.EARLYRETURN
-            )
-        }
+        queryApplicationPort
+            .findByUserIdAndStatusAndApplicationKind(Status.OK, userId, ApplicationKind.EARLY_RETURN)?.let {
+                QuerySimpleMyEarlyResponse(
+                    userId = userId,
+                    start = it.start.take(5),
+                    username = it.userName,
+                    type = Main.EARLYRETURN
+                )
+            }
 
     private fun findClassroom(userId: UUID) =
         queryClassroomPort.findByUserId(userId)?.let {
@@ -64,4 +85,28 @@ class MainService(
                 type = Main.CLASSROOM
             )
         }
+
+    private fun waiting(userId: UUID, type: Main): WaitingResponse? {
+        val status = when (type) {
+            Main.APPLICATION -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+                Status.QUIET,
+                userId,
+                ApplicationKind.APPLICATION
+            )?.status
+
+            Main.EARLYRETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+                Status.QUIET,
+                userId,
+                ApplicationKind.EARLY_RETURN
+            )?.status
+
+            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
+        }
+
+        return if (status == Status.QUIET) {
+            WaitingResponse(type)
+        } else {
+            null
+        }
+    }
 }

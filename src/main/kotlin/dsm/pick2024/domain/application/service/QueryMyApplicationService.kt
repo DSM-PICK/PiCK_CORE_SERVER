@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -20,7 +21,11 @@ class QueryMyApplicationService(
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
         val application =
-            queryApplicationPort.findByUserIdAndStatusAndApplicationKind(user.xquareId, ApplicationKind.APPLICATION)
+            queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+                Status.OK,
+                user.xquareId,
+                ApplicationKind.APPLICATION
+            )
                 ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
