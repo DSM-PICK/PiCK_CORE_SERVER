@@ -18,7 +18,11 @@ interface QueryApplicationPort {
 
     fun findByFloorAndApplicationKind(floor: Int, applicationKind: ApplicationKind): List<Application>
 
-    fun findByUserIdAndStatusAndApplicationKind(status: Status, id: UUID, applicationKind: ApplicationKind): Application?
+    fun findByUserIdAndStatusAndApplicationKind(
+        status: Status,
+        id: UUID,
+        applicationKind: ApplicationKind
+    ): Application?
 
     fun queryApplicationWithAttendance(floor: Int): List<Application>
 }
