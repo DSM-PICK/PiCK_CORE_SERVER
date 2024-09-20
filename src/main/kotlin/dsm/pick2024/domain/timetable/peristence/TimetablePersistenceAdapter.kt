@@ -15,6 +15,10 @@ class TimetablePersistenceAdapter(
     private val jpaQueryFactory: JPAQueryFactory
 
 ) : TimetablePort {
+    override fun save(timetable: Timetable) {
+        timetableRepository.save(timetableMapper.toEntity(timetable))
+    }
+
     override fun saveAll(timetables: MutableList<Timetable>) {
         val entities = timetables.map { timetableMapper.toEntity(it) }
         timetableRepository.saveAll(entities)
@@ -28,5 +32,16 @@ class TimetablePersistenceAdapter(
             .where(QTimetableJpaEntity.timetableJpaEntity.dayWeek.eq(dayWeek))
             .fetch()
             .map { timetableMapper.toDomain(it) }
+    }
+
+    override fun findByDayOfWeekAndPeriodAndGradeAndClassNum(
+        dayWeek: Int,
+        period: Int,
+        grade: Int,
+        classNum: Int
+    ) = timetableRepository.findByDayWeekAndPeriodAndGradeAndClassNum(dayWeek, period, grade, classNum).let {
+        timetableMapper.toDomain(
+            it
+        )
     }
 }
