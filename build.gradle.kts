@@ -81,6 +81,8 @@ dependencies {
     implementation(Dependencies.CACHE)
 
     implementation(Dependencies.FCM)
+
+    implementation(Dependencies.WEB_SOCKET)
 }
 
 tasks.withType<KotlinCompile> {

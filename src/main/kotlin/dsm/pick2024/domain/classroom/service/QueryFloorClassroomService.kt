@@ -51,8 +51,8 @@ class QueryFloorClassroomService(
                 grade = classroom.grade,
                 classNum = classroom.classNum,
                 num = classroom.num,
-                startPeriod = classroom.startPeriod,
-                endPeriod = classroom.endPeriod
+                start = classroom.startPeriod,
+                end = classroom.endPeriod
             )
         }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }

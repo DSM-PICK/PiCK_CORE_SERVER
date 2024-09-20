@@ -5,7 +5,7 @@ import dsm.pick2024.domain.main.Main
 data class QueryMainUserMoveClassroomResponse(
     val username: String,
     val classroom: String,
-    val start: Int,
-    val end: Int,
+    val start: String,
+    val end: String,
     val type: Main
 )
