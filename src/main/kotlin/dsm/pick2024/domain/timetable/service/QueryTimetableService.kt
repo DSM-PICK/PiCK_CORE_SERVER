@@ -2,8 +2,8 @@ package dsm.pick2024.domain.timetable.service
 
 import dsm.pick2024.domain.timetable.port.`in`.QueryDayTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
-import dsm.pick2024.domain.timetable.presentation.dto.DayTimetableResponse
-import dsm.pick2024.domain.timetable.presentation.dto.PeriodTimetableResponse
+import dsm.pick2024.domain.timetable.presentation.dto.response.DayTimetableResponse
+import dsm.pick2024.domain.timetable.presentation.dto.response.PeriodTimetableResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.infrastructure.s3.FileUtil
 import org.springframework.stereotype.Service
