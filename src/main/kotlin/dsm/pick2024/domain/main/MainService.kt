@@ -11,7 +11,6 @@ import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMove
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.QueryUserPort
-import dsm.pick2024.global.config.socket.MainWebSocketHandler
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
