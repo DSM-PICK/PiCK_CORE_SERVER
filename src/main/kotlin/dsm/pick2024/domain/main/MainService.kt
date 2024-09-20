@@ -10,25 +10,37 @@ import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.user.exception.UserNotFoundException
-import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.domain.user.port.out.QueryUserPort
+import dsm.pick2024.global.config.socket.MainWebSocketHandler
+import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.socket.WebSocketSession
 import java.util.UUID
 
 @Service
 class MainService(
-    private val userFacadeUseCase: UserFacadeUseCase,
     private val queryApplicationPort: QueryApplicationPort,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val queryUserPort: QueryUserPort
+    private val queryUserPort: QueryUserPort,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
+
     @Transactional(readOnly = true)
-    fun main(payload: String): Any? {
+    fun main(session: WebSocketSession, payload: String): Any? {
         val user = queryUserPort.findByAccountId(payload) ?: throw UserNotFoundException
         val userId = user.xquareId
+        val newStatus = findStatus(userId)
+
+        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
+
+        return newStatus
+    }
+
+    private fun findStatus(userId: UUID): Any? {
         return when {
             existApplicationPort.existsByStatusAndUserIdAndApplicationKind(
                 Status.OK,
