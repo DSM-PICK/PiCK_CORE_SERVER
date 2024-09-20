@@ -24,7 +24,7 @@ class ApplicationService(
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
-        if (existsApplicationPort.existsByUserId(user.xquareId)) {
+        if (existsApplicationPort.existByUserId(user.xquareId)) {
             throw AlreadyApplyingForPicnicException
         }
 
