@@ -12,11 +12,7 @@ class MainWebSocketHandler(
 ) : TextWebSocketHandler() {
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        try {
-            val response = mainService.main()
-            session.sendMessage(TextMessage(response.toString()))
-        } catch (e: Exception) {
-            session.sendMessage(TextMessage("오류 발생: ${e.message}"))
-        }
+        val response = mainService.main(message.payload)
+        session.sendMessage(TextMessage(response.toString()))
     }
 }

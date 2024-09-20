@@ -8,7 +8,9 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
+import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -19,12 +21,13 @@ class MainService(
     private val queryApplicationPort: QueryApplicationPort,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
-    private val existClassRoomPort: ExistClassRoomPort
+    private val existClassRoomPort: ExistClassRoomPort,
+    private val queryUserPort: QueryUserPort
 ) {
     @Transactional(readOnly = true)
-    fun main(): Any? {
-        val userId = userFacadeUseCase.currentUser().xquareId
-
+    fun main(payload: String): Any? {
+        val user = queryUserPort.findByAccountId(payload) ?: throw UserNotFoundException
+        val userId = user.xquareId
         return when {
             existApplicationPort.existsOKByUserId(userId, ApplicationKind.APPLICATION) -> findApplication(userId)
             existApplicationPort.existsOKByUserId(userId, ApplicationKind.EARLY_RETURN) -> findEarlyReturn(userId)
