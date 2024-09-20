@@ -55,4 +55,6 @@ object Dependencies {
 
     const val FCM = "com.google.firebase:firebase-admin:${DependencyVersions.FCM}"
 
+    const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
+
 }
