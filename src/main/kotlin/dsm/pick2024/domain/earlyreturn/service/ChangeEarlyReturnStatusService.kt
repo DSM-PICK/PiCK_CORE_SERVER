@@ -5,6 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.event.ApplicationStatusChangeEvent
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -17,6 +18,7 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -30,8 +32,8 @@ class ChangeEarlyReturnStatusService(
     private val deleteApplicationPort: DeleteApplicationPort,
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort,
-    private val attendanceService: AttendanceService
-
+    private val attendanceService: AttendanceService,
+    private val eventPublisher: ApplicationEventPublisher
 ) : ChangeEarlyReturnStatusUseCase {
 
     @Transactional
@@ -60,6 +62,7 @@ class ChangeEarlyReturnStatusService(
         saveApplicationPort.saveAll(updateEarlyReturns)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendances)
+        eventPublisher.publishEvent(ApplicationStatusChangeEvent(this, updateEarlyReturns.map { it.userId }))
     }
 
     private fun handleStatusNo(ids: List<UUID>) {
