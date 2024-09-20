@@ -9,10 +9,9 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
-import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
+import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,13 +25,17 @@ class MainService(
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val jwtTokenProvider: JwtTokenProvider
 ) {
 
     @Transactional(readOnly = true)
-    fun main(session: WebSocketSession): Any? {
-        val userId = userFacadeUseCase.currentUser().xquareId
-        val newStatus = findStatus(userId)
+    fun main(session: WebSocketSession, authorization: String): Any? {
+        val token = authorization.removePrefix("Bearer ")
+        val claims = jwtTokenProvider.getClaimsToken(token)
+        val userId = claims.get("sub", String::class.java)
+        val user = userFacadeUseCase.getUserByAccountId(userId)
+        val newStatus = findStatus(user.xquareId)
 
         eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
 

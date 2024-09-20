@@ -27,7 +27,8 @@ class MainWebSocketHandler(
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
-        val currentStatus = mainService.main(session, message.payload)
+        val authorization = session.handshakeHeaders.getFirst("Authorization")
+        val currentStatus = mainService.main(session, authorization.toString())
         sendStatusUpdate(session, currentStatus)
     }
 }
