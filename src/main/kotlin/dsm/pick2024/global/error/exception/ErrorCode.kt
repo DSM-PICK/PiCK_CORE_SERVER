@@ -29,6 +29,7 @@ enum class ErrorCode(
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
     FLOOR_NOT_FOUND(404, "Floor Not Found"),
     TEACHER_NOT_FOUND(404, "Teacher Not Found"),
+    TIMETABLE_NOT_FOUND(404, "Timetable Not Found"),
 
     NOT_ADMIN(403, "Not an Admin"),
     NOT_STUDENT(403, "Not an Student"),
