@@ -82,7 +82,7 @@ dependencies {
 
     implementation(Dependencies.FCM)
 
-    implementation ("org.springframework.boot:spring-boot-starter-websocket")
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
 }
 
 tasks.withType<KotlinCompile> {
