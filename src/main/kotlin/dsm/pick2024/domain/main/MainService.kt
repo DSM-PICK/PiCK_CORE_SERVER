@@ -28,9 +28,10 @@ class MainService(
     private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationListener<ApplicationStatusChangeEvent> {
 
-    fun main(userId: String, session: WebSocketSession): Any? {
+    fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
-        return findStatus(user.xquareId)
+        val newStatus = findStatus(user.xquareId)
+        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
     }
 
     override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
