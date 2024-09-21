@@ -2,7 +2,6 @@ package dsm.pick2024.domain.timetable.service
 
 import dsm.pick2024.domain.timetable.port.`in`.QueryTeacherTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
-import dsm.pick2024.domain.timetable.presentation.dto.request.QueryTeacherTimetableRequest
 import dsm.pick2024.domain.timetable.presentation.dto.response.DayTimetableResponse
 import dsm.pick2024.domain.timetable.presentation.dto.response.PeriodTimetableResponse
 import dsm.pick2024.infrastructure.s3.FileUtil
@@ -20,15 +19,15 @@ class QueryTeacherTimetableService(
 ) : QueryTeacherTimetableUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryTeacherTimetable(request: QueryTeacherTimetableRequest): List<DayTimetableResponse> {
+    override fun queryTeacherTimetable(grade: Int, classNum: Int): List<DayTimetableResponse> {
         val startOfWeek = getStartOfWeek(LocalDate.now(ZoneId.of("Asia/Seoul")))
 
         return (0 until 5).map { i ->
             val date = startOfWeek.plusDays(i.toLong())
             val tables = queryTimeTablePort.findTimetableByDayWeekPort(
                 date.dayOfWeek.value,
-                request.grade,
-                request.classNum
+                grade,
+                classNum
             )
 
             val timetables = (1..7).mapNotNull { period ->
