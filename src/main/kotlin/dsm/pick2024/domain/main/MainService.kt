@@ -10,10 +10,10 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
-import dsm.pick2024.domain.user.domain.User
+import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
-import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Service
@@ -28,29 +28,20 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val queryUserPort: QueryUserPort
 ) : ApplicationListener<ApplicationStatusChangeEvent> {
 
-    private var event: ApplicationStatusChangeEvent? = null
-    fun main(session: WebSocketSession, authorization: String): Any? {
-        val token = authorization.removePrefix("Bearer ")
-        val claims = jwtTokenProvider.getClaimsToken(token)
-        val userId = claims.get("sub", String::class.java)
+    fun main(userId: String, session: WebSocketSession): Any? {
         val user = userFacadeUseCase.getUserByAccountId(userId)
-        return if (event != null) {
-            val newStatus = findStatus(user.xquareId)
-            eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
-        } else {
-            null
-        }
+        return findStatus(user.xquareId)
     }
 
     override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
-        this.event = event
-    }
-
-    private fun handleApplicationStatusChange(event: ApplicationStatusChangeEvent, user: User): Boolean {
-        return event.userIdList.contains(user.xquareId)
+        event.userIdList.map {
+            val user = queryUserPort.findByXquareId(it) ?: throw UserNotFoundException
+            val newStatus = findStatus(user.xquareId)
+            eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
+        }
     }
 
     private fun findStatus(userId: UUID): Any? {
