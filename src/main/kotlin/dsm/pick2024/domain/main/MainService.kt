@@ -28,8 +28,8 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val jwtTokenProvider: JwtTokenProvider,
-): ApplicationListener<ApplicationStatusChangeEvent> {
+    private val jwtTokenProvider: JwtTokenProvider
+) : ApplicationListener<ApplicationStatusChangeEvent> {
 
     private var event: ApplicationStatusChangeEvent? = null
     fun main(session: WebSocketSession, authorization: String): Any? {
