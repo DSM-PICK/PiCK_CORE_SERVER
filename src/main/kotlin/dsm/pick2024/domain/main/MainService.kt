@@ -61,7 +61,7 @@ class MainService(
             existApplicationPort.existsByUserIdAndApplicationKind(
                 userId,
                 ApplicationKind.EARLY_RETURN
-            ) -> waiting(userId, Main.EARLYRETURN)
+            ) -> waiting(userId, Main.EARLY_RETURN)
             existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
 
             else -> null
@@ -87,7 +87,7 @@ class MainService(
                     userId = userId,
                     start = it.start.take(5),
                     username = it.userName,
-                    type = Main.EARLYRETURN
+                    type = Main.EARLY_RETURN
                 )
             }
 
@@ -110,7 +110,7 @@ class MainService(
                 ApplicationKind.APPLICATION
             )?.status
 
-            Main.EARLYRETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            Main.EARLY_RETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
                 Status.QUIET,
                 userId,
                 ApplicationKind.EARLY_RETURN
