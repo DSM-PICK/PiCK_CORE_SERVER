@@ -16,14 +16,12 @@ class MainWebSocketHandler(
     private val objectMapper = ObjectMapper()
 
     fun sendStatusUpdate(session: WebSocketSession, status: Any?) {
-        if (status != null) {
-            val jsonResponse = objectMapper.writeValueAsString(status)
-            session.sendMessage(TextMessage(jsonResponse))
-        }
+        val jsonResponse = objectMapper.writeValueAsString(status)
+        session.sendMessage(TextMessage(jsonResponse))
     }
 
     override fun onApplicationEvent(event: WebSocketStatusUpdateEvent) {
-        sendStatusUpdate(event.session, event.status)
+        if (event.session.isOpen) sendStatusUpdate(event.session, event.status)
     }
 
     override fun handleTextMessage(session: WebSocketSession, message: TextMessage) {
