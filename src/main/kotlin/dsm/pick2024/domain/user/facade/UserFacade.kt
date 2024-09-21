@@ -23,5 +23,4 @@ class UserFacade(
 
     override fun getUserByXquareId(userId: UUID) =
         queryUserPort.findByXquareId(userId) ?: throw UserNotFoundException
-
 }

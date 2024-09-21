@@ -10,9 +10,7 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
-import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.ApplicationListener
@@ -27,7 +25,7 @@ class MainService(
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
-    private val userFacadeUseCase: UserFacadeUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase
 ) : ApplicationListener<ApplicationStatusChangeEvent> {
 
     fun main(userId: String, session: WebSocketSession): Any? {
