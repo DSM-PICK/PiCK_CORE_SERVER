@@ -2,6 +2,7 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.event.ApplicationStatusChangeEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -9,12 +10,11 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
-import dsm.pick2024.domain.user.exception.UserNotFoundException
-import dsm.pick2024.domain.user.port.out.QueryUserPort
+import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import org.springframework.context.ApplicationEventPublisher
+import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.socket.WebSocketSession
 import java.util.UUID
 
@@ -24,19 +24,21 @@ class MainService(
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val queryUserPort: QueryUserPort,
-    private val eventPublisher: ApplicationEventPublisher
-) {
+    private val eventPublisher: ApplicationEventPublisher,
+    private val userFacadeUseCase: UserFacadeUseCase
+) : ApplicationListener<ApplicationStatusChangeEvent> {
 
-    @Transactional(readOnly = true)
-    fun main(session: WebSocketSession, payload: String): Any? {
-        val user = queryUserPort.findByAccountId(payload) ?: throw UserNotFoundException
-        val userId = user.xquareId
-        val newStatus = findStatus(userId)
+    fun main(userId: String, session: WebSocketSession): Any? {
+        val user = userFacadeUseCase.getUserByAccountId(userId)
+        return findStatus(user.xquareId)
+    }
 
-        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
-
-        return newStatus
+    override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
+        event.userIdList.forEach {
+            val user = userFacadeUseCase.getUserByXquareId(it)
+            val newStatus = findStatus(user.xquareId)
+            eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
+        }
     }
 
     private fun findStatus(userId: UUID): Any? {
