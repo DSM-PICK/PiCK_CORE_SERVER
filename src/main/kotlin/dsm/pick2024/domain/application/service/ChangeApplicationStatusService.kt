@@ -39,11 +39,11 @@ class ChangeApplicationStatusService(
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
         if (request.status == Status.NO) {
-            handleStatusNo(request.ids)
+            handleStatusNo(request.idList)
             return
         }
 
-        val updateApplications = request.ids.map { id ->
+        val updateApplications = request.idList.map { id ->
             val application = findApplicationById(id)
             updateApplication(application, admin.name)
         }

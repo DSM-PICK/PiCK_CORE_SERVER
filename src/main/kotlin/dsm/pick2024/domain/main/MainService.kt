@@ -2,6 +2,7 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.event.ApplicationStatusChangeEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -9,12 +10,13 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
+import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.ApplicationEventPublisher
+import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.socket.WebSocketSession
 import java.util.UUID
 
@@ -26,20 +28,29 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val jwtTokenProvider: JwtTokenProvider
-) {
+    private val jwtTokenProvider: JwtTokenProvider,
+): ApplicationListener<ApplicationStatusChangeEvent> {
 
-    @Transactional(readOnly = true)
+    private var event: ApplicationStatusChangeEvent? = null
     fun main(session: WebSocketSession, authorization: String): Any? {
         val token = authorization.removePrefix("Bearer ")
         val claims = jwtTokenProvider.getClaimsToken(token)
         val userId = claims.get("sub", String::class.java)
         val user = userFacadeUseCase.getUserByAccountId(userId)
-        val newStatus = findStatus(user.xquareId)
+        return if (event != null) {
+            val newStatus = findStatus(user.xquareId)
+            eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
+        } else {
+            null
+        }
+    }
 
-        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, session, newStatus))
+    override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
+        this.event = event
+    }
 
-        return newStatus
+    private fun handleApplicationStatusChange(event: ApplicationStatusChangeEvent, user: User): Boolean {
+        return event.userIdList.contains(user.xquareId)
     }
 
     private fun findStatus(userId: UUID): Any? {
