@@ -28,7 +28,6 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryUserPort: QueryUserPort
 ) : ApplicationListener<ApplicationStatusChangeEvent> {
 
     fun main(userId: String, session: WebSocketSession): Any? {
@@ -37,8 +36,8 @@ class MainService(
     }
 
     override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
-        event.userIdList.map {
-            val user = queryUserPort.findByXquareId(it) ?: throw UserNotFoundException
+        event.userIdList.forEach {
+            val user = userFacadeUseCase.getUserByXquareId(it)
             val newStatus = findStatus(user.xquareId)
             eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
         }
