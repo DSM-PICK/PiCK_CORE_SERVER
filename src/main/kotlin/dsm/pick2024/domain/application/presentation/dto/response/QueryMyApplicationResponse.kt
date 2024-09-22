@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class QueryMyApplicationResponse(
     val userId: UUID,
-    val username: String,
+    val userName: String,
     val teacherName: String,
     val start: String,
     val end: String,

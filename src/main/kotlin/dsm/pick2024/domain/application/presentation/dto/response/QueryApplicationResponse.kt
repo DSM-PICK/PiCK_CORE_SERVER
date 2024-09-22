@@ -6,7 +6,7 @@ import java.util.UUID
 data class QueryApplicationResponse(
     val id: UUID,
     val userId: UUID,
-    val username: String,
+    val userName: String,
     val start: String,
     val end: String,
     val grade: Int,

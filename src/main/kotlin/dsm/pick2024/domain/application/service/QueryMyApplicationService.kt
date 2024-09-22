@@ -30,7 +30,7 @@ class QueryMyApplicationService(
 
         return QueryMyApplicationResponse(
             userId = application.userId,
-            username = application.userName,
+            userName = application.userName,
             teacherName = application.teacherName!!,
             start = application.start.take(5),
             end = application.end!!.take(5),

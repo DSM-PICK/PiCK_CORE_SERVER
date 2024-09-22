@@ -34,7 +34,7 @@ class QueryUserApplicationStoryService(
         }
 
         return QueryApplicationStoryResponse(
-            username = user.name,
+            userName = user.name,
             applicationStory = userStory
         )
     }

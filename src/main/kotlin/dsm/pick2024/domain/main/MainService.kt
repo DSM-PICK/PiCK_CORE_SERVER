@@ -87,7 +87,7 @@ class MainService(
                 QueryMainMyApplicationResponse(
                     userId = userId,
                     start = it.start.take(5),
-                    username = it.userName,
+                    userName = it.userName,
                     end = it.end!!.take(5),
                     type = Main.APPLICATION
                 )
@@ -99,7 +99,7 @@ class MainService(
                 QuerySimpleMyEarlyResponse(
                     userId = userId,
                     start = it.start.take(5),
-                    username = it.userName,
+                    userName = it.userName,
                     type = Main.EARLY_RETURN
                 )
             }
@@ -107,7 +107,7 @@ class MainService(
     private fun findClassroom(userId: UUID) =
         queryClassroomPort.findByUserId(userId)?.let {
             QueryMainUserMoveClassroomResponse(
-                username = it.userName,
+                userName = it.userName,
                 classroom = it.classroomName,
                 start = it.startPeriod.toString(),
                 end = it.endPeriod.toString(),

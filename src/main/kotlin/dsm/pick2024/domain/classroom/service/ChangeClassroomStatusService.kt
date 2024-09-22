@@ -31,7 +31,7 @@ class ChangeClassroomStatusService(
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         if (request.status == NO) {
-            for (id in request.ids) {
+            for (id in request.idList) {
                 val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
@@ -41,7 +41,7 @@ class ChangeClassroomStatusService(
         val update = mutableListOf<Classroom>()
         val updateAttendanceList = mutableListOf<Attendance>()
 
-        request.ids.forEach { id ->
+        request.idList.forEach { id ->
             val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
 
             val updatedClassroom = classroom.copy(status = OK)

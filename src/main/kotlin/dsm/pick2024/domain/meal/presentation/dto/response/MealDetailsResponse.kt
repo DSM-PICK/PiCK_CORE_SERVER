@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class MealDetailsResponse(
     val date: LocalDate? = null,
-    val meals: MealResponse? = null
+    val mealList: MealResponse? = null
 )
 
 data class MealResponse(

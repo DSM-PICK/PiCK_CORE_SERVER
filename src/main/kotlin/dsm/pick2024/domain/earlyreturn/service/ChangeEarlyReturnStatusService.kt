@@ -41,11 +41,11 @@ class ChangeEarlyReturnStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.NO) {
-            handleStatusNo(request.ids)
+            handleStatusNo(request.idList)
             return
         }
 
-        val updateEarlyReturns = request.ids.map { id ->
+        val updateEarlyReturns = request.idList.map { id ->
             val application = findApplicationById(id)
             updateEarlyReturn(application, admin.name)
         }
