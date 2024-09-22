@@ -3,7 +3,6 @@ package dsm.pick2024.global.config.socket
 import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.main.MainService
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
-import org.springframework.context.ApplicationListener
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
@@ -37,7 +36,7 @@ class MainWebSocketHandler(
     }
 
     @EventListener(WebSocketStatusUpdateEvent::class)
-     fun onWebSocketStatusUpdateEvent(event: WebSocketStatusUpdateEvent) {
+    fun onWebSocketStatusUpdateEvent(event: WebSocketStatusUpdateEvent) {
         sendStatusUpdate(event.userId, event.status)
     }
 }

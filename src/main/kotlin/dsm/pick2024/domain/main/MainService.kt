@@ -27,7 +27,7 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase
-)  {
+) {
 
     fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
@@ -52,7 +52,6 @@ class MainService(
         val newStatus = findStatus(user.xquareId)
         eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
     }
-
 
     private fun findStatus(userId: UUID): Any? {
         return when {

@@ -5,5 +5,5 @@ import java.util.UUID
 
 class CreateApplicationEvent(
     source: Any,
-    val userId: UUID,
-): ApplicationEvent(source)
+    val userId: UUID
+) : ApplicationEvent(source)
