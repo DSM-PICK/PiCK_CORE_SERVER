@@ -42,7 +42,7 @@ class QueryTeacherTimetableService(
     }
 
     private fun getStartOfWeek(currentDate: LocalDate): LocalDate {
-        val daysToSubtract = if (currentDate.dayOfWeek == DayOfWeek.SUNDAY) 0 else currentDate.dayOfWeek.value - 1
-        return currentDate.minusDays(daysToSubtract.toLong()).plusDays(if (daysToSubtract == 0) 7 else 0)
+        val sunday = if (currentDate.dayOfWeek == DayOfWeek.SUNDAY) 7 else 0
+        return currentDate.minusDays(currentDate.dayOfWeek.value.toLong() - 1).plusDays(sunday.toLong())
     }
 }
