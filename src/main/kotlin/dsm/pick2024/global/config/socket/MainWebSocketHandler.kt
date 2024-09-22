@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.main.MainService
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.ApplicationListener
+import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
@@ -13,7 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 class MainWebSocketHandler(
     private val mainService: MainService,
     private val jwtTokenProvider: JwtTokenProvider
-) : TextWebSocketHandler(), ApplicationListener<WebSocketStatusUpdateEvent> {
+) : TextWebSocketHandler() {
 
     private val objectMapper = ObjectMapper()
     private val sessions = HashMap<String, WebSocketSession>()
@@ -35,7 +36,8 @@ class MainWebSocketHandler(
         }
     }
 
-    override fun onApplicationEvent(event: WebSocketStatusUpdateEvent) {
+    @EventListener(WebSocketStatusUpdateEvent::class)
+     fun onWebSocketStatusUpdateEvent(event: WebSocketStatusUpdateEvent) {
         sendStatusUpdate(event.userId, event.status)
     }
 }
