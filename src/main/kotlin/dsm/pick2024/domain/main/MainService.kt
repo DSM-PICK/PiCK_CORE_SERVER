@@ -2,7 +2,8 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.ApplicationStatusChangeEvent
+import dsm.pick2024.domain.application.event.ChangeApplicationStatusEvent
+import dsm.pick2024.domain.application.event.CreateApplicationEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -13,7 +14,7 @@ import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEa
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import org.springframework.context.ApplicationEventPublisher
-import org.springframework.context.ApplicationListener
+import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
 import org.springframework.web.socket.WebSocketSession
 import java.util.UUID
@@ -26,7 +27,7 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase
-) : ApplicationListener<ApplicationStatusChangeEvent> {
+) {
 
     fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
@@ -34,12 +35,22 @@ class MainService(
         eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
     }
 
-    override fun onApplicationEvent(event: ApplicationStatusChangeEvent) {
+    @EventListener(ChangeApplicationStatusEvent::class)
+    fun onChangeApplicationStatusEvent(event: ChangeApplicationStatusEvent) {
         event.userIdList.forEach {
-            val user = userFacadeUseCase.getUserByXquareId(it)
-            val newStatus = findStatus(user.xquareId)
-            eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
+            onHandleEvent(it)
         }
+    }
+
+    @EventListener(CreateApplicationEvent::class)
+    fun onCreateApplicationEvent(event: CreateApplicationEvent) {
+        onHandleEvent(event.userId)
+    }
+
+    private fun onHandleEvent(userId: UUID) {
+        val user = userFacadeUseCase.getUserByXquareId(userId)
+        val newStatus = findStatus(user.xquareId)
+        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
     }
 
     private fun findStatus(userId: UUID): Any? {
@@ -75,7 +86,7 @@ class MainService(
                 QueryMainMyApplicationResponse(
                     userId = userId,
                     start = it.start.take(5),
-                    username = it.userName,
+                    userName = it.userName,
                     end = it.end!!.take(5),
                     type = Main.APPLICATION
                 )
@@ -87,7 +98,7 @@ class MainService(
                 QuerySimpleMyEarlyResponse(
                     userId = userId,
                     start = it.start.take(5),
-                    username = it.userName,
+                    userName = it.userName,
                     type = Main.EARLY_RETURN
                 )
             }
@@ -95,7 +106,7 @@ class MainService(
     private fun findClassroom(userId: UUID) =
         queryClassroomPort.findByUserId(userId)?.let {
             QueryMainUserMoveClassroomResponse(
-                username = it.userName,
+                userName = it.userName,
                 classroom = it.classroomName,
                 start = it.startPeriod.toString(),
                 end = it.endPeriod.toString(),

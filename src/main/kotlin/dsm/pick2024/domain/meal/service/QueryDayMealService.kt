@@ -18,19 +18,19 @@ class QueryDayMealService(
 
     @Transactional(readOnly = true)
     override fun queryDayMeal(date: LocalDate): MealDetailsResponse {
-        val meals = queryMealPort.findMealsByMealDate(date)
-        val groupMeals = meals.groupBy { it.mealType }
+        val mealList = queryMealPort.findMealsByMealDate(date)
+        val groupMeals = mealList.groupBy { it.mealType }
 
         val mealResponse = MealResponse(
-            breakfast = toMealDtail(groupMeals[MealType.BREAKFAST]),
-            lunch = toMealDtail(groupMeals[MealType.LUNCH]),
-            dinner = toMealDtail(groupMeals[MealType.DINNER])
+            breakfast = toMealDetail(groupMeals[MealType.BREAKFAST]),
+            lunch = toMealDetail(groupMeals[MealType.LUNCH]),
+            dinner = toMealDetail(groupMeals[MealType.DINNER])
         )
 
         return MealDetailsResponse(date, mealResponse)
     }
 
-    private fun toMealDtail(meals: List<Meal>?): MealDetail {
+    private fun toMealDetail(meals: List<Meal>?): MealDetail {
         val menuItems = meals
             ?.flatMap { it.toSplit(it.menu) }
             ?.filter { it.isNotBlank() }

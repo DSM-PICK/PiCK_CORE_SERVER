@@ -5,7 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.ApplicationStatusChangeEvent
+import dsm.pick2024.domain.application.event.ChangeApplicationStatusEvent
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -41,11 +41,11 @@ class ChangeEarlyReturnStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         if (request.status == Status.NO) {
-            handleStatusNo(request.ids)
+            handleStatusNo(request.idList)
             return
         }
 
-        val updateEarlyReturns = request.ids.map { id ->
+        val updateEarlyReturns = request.idList.map { id ->
             val application = findApplicationById(id)
             updateEarlyReturn(application, admin.name)
         }
@@ -62,7 +62,7 @@ class ChangeEarlyReturnStatusService(
         saveApplicationPort.saveAll(updateEarlyReturns)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendances)
-        eventPublisher.publishEvent(ApplicationStatusChangeEvent(this, updateEarlyReturns.map { it.userId }))
+        eventPublisher.publishEvent(ChangeApplicationStatusEvent(this, updateEarlyReturns.map { it.userId }))
     }
 
     private fun handleStatusNo(ids: List<UUID>) {

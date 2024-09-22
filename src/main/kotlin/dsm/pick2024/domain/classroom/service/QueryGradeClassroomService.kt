@@ -30,7 +30,7 @@ class QueryGradeClassroomService(
 
                 QueryClassroomResponse(
                     userId = classroom.userId,
-                    username = classroom.userName,
+                    userName = classroom.userName,
                     classroomName = classroom.classroomName,
                     move = move,
                     grade = classroom.grade,

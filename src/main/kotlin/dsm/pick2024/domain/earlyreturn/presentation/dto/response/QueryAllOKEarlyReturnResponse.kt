@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class QueryAllOKEarlyReturnResponse(
     val id: UUID,
-    val username: String,
+    val userName: String,
     val start: String,
     val grade: Int,
     val classNum: Int,

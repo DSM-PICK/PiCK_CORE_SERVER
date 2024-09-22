@@ -3,7 +3,7 @@ package dsm.pick2024.domain.earlyreturn.presentation.dto.response
 import dsm.pick2024.domain.application.domain.Application
 
 data class QueryEarlyReturnReasonResponse(
-    val username: String,
+    val userName: String,
     val start: String,
     val grade: Int,
     val classNum: Int,

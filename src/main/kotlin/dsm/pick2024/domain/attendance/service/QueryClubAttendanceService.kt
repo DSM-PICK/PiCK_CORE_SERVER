@@ -34,7 +34,7 @@ class QueryClubAttendanceService(
 
             QueryAttendanceResponse(
                 id = it.userId,
-                username = it.userName,
+                userName = it.userName,
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num,

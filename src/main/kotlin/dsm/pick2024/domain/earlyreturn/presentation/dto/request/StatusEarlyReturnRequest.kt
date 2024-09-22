@@ -5,5 +5,5 @@ import java.util.UUID
 
 data class StatusEarlyReturnRequest(
     val status: Status,
-    val ids: List<UUID>
+    val idList: List<UUID>
 )

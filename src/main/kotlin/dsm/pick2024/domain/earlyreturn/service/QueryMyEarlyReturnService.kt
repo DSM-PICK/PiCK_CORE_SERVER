@@ -29,7 +29,7 @@ class QueryMyEarlyReturnService(
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
-            username = user.name,
+            userName = user.name,
             teacherName = earlyReturn.teacherName!!,
             start = earlyReturn.start.take(5),
             reason = earlyReturn.reason,
