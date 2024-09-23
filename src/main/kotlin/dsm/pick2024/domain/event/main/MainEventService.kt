@@ -4,7 +4,6 @@ import dsm.pick2024.domain.application.event.ChangeApplicationStatusEvent
 import dsm.pick2024.domain.application.event.CreateApplicationEvent
 import dsm.pick2024.domain.application.event.ReturnApplicationEvent
 import dsm.pick2024.domain.classroom.event.BackUserClassroomEvent
-import dsm.pick2024.domain.main.MainService
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
