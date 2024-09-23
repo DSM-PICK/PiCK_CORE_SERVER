@@ -8,6 +8,7 @@ import dsm.pick2024.domain.application.event.ReturnApplicationEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
+import dsm.pick2024.domain.classroom.event.BackUserClassroomEvent
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
@@ -50,6 +51,11 @@ class MainService(
 
     @EventListener(ReturnApplicationEvent::class)
     fun onReturnApplicationEvent(event: ReturnApplicationEvent) {
+        onHandleEvent(event.userId)
+    }
+
+    @EventListener(BackUserClassroomEvent::class)
+    fun onBackUserClassroomEvent(event: BackUserClassroomEvent) {
         onHandleEvent(event.userId)
     }
 
