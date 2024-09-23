@@ -1,7 +1,7 @@
 package dsm.pick2024.global.config.socket
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import dsm.pick2024.domain.main.MainService
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
@@ -11,7 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler
 
 @Component
 class MainWebSocketHandler(
-    private val mainService: MainService,
+    private val mainUseCase: MainUseCase,
     private val jwtTokenProvider: JwtTokenProvider
 ) : TextWebSocketHandler() {
 
@@ -24,7 +24,7 @@ class MainWebSocketHandler(
         val claims = jwtTokenProvider.getClaimsToken(token)
         val userId = claims.get("sub", String::class.java)
         sessions[userId] = session
-        mainService.main(userId, session)
+        mainUseCase.main(userId, session)
     }
 
     private fun sendStatusUpdate(userId: String, status: Any?) {
