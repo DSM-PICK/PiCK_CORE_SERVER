@@ -13,6 +13,7 @@ import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
 import org.springframework.context.ApplicationEventPublisher
@@ -29,37 +30,15 @@ class MainService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase
-) {
+): MainUseCase {
 
-    fun main(userId: String, session: WebSocketSession) {
+    override fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
         val newStatus = findStatus(user.xquareId)
         eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
     }
 
-    @EventListener(ChangeApplicationStatusEvent::class)
-    fun onChangeApplicationStatusEvent(event: ChangeApplicationStatusEvent) {
-        event.userIdList.forEach {
-            onHandleEvent(it)
-        }
-    }
-
-    @EventListener(CreateApplicationEvent::class)
-    fun onCreateApplicationEvent(event: CreateApplicationEvent) {
-        onHandleEvent(event.userId)
-    }
-
-    @EventListener(ReturnApplicationEvent::class)
-    fun onReturnApplicationEvent(event: ReturnApplicationEvent) {
-        onHandleEvent(event.userId)
-    }
-
-    @EventListener(BackUserClassroomEvent::class)
-    fun onBackUserClassroomEvent(event: BackUserClassroomEvent) {
-        onHandleEvent(event.userId)
-    }
-
-    private fun onHandleEvent(userId: UUID) {
+     override fun onHandleEvent(userId: UUID) {
         val user = userFacadeUseCase.getUserByXquareId(userId)
         val newStatus = findStatus(user.xquareId)
         eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
