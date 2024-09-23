@@ -2,6 +2,7 @@ package dsm.pick2024.domain.timetable.presentation
 
 import dsm.pick2024.domain.timetable.port.`in`.ModifyTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryDayTimetableUseCase
+import dsm.pick2024.domain.timetable.port.`in`.QuerySubjectNameUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryTeacherTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryWeekTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
@@ -24,7 +25,8 @@ class TimetableController(
     private val queryDayTimetableUseCase: QueryDayTimetableUseCase,
     private val queryWeekTimetableUseCase: QueryWeekTimetableUseCase,
     private val queryTeacherTimetableUseCase: QueryTeacherTimetableUseCase,
-    private val modifyTimetableUseCase: ModifyTimetableUseCase
+    private val modifyTimetableUseCase: ModifyTimetableUseCase,
+    private val querySubjectNameUseCase: QuerySubjectNameUseCase
 ) {
     @Operation(summary = "시간표 저장 API")
     @PostMapping
@@ -46,8 +48,17 @@ class TimetableController(
     ) =
         queryTeacherTimetableUseCase.queryTeacherTimetable(grade, classNum)
 
+    @Operation(summary = "과목 전체 조회")
+    @GetMapping("/subjects")
+    fun getSubjectNames() = querySubjectNameUseCase.getAllSubjectNames()
+
     @Operation(summary = "시간표 수정")
     @PatchMapping("/change")
     fun changeTimetable(@RequestBody request: ChangeTimetableRequest) =
         modifyTimetableUseCase.modifyTimetable(request)
+
+//    @GetMapping("/search")
+//    fun autocomplete(@RequestParam("subject") prefix: String): List<String> {
+//        return autocompleteService.autocompleteSubjectName(prefix)
+//    }
 }
