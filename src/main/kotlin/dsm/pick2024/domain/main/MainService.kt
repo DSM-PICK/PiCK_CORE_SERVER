@@ -4,6 +4,7 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.event.ChangeApplicationStatusEvent
 import dsm.pick2024.domain.application.event.CreateApplicationEvent
+import dsm.pick2024.domain.application.event.ReturnApplicationEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -44,6 +45,11 @@ class MainService(
 
     @EventListener(CreateApplicationEvent::class)
     fun onCreateApplicationEvent(event: CreateApplicationEvent) {
+        onHandleEvent(event.userId)
+    }
+
+    @EventListener(ReturnApplicationEvent::class)
+    fun onReturnApplicationEvent(event: ReturnApplicationEvent) {
         onHandleEvent(event.userId)
     }
 
