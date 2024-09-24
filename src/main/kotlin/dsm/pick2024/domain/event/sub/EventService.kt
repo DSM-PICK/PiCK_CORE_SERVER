@@ -11,7 +11,7 @@ class EventService(
     private val mainUseCase: MainUseCase
 ) {
 
-    @EventListener(UserInfoRequest::class)
+    @EventListener(ChangeStatusRequest::class)
     fun onChangeApplicationStatusEvent(event: ChangeStatusRequest) {
         event.userIdList.forEach {
             mainUseCase.onHandleEvent(it)
