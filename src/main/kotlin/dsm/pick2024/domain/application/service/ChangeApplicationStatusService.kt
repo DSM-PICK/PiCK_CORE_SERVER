@@ -63,11 +63,11 @@ class ChangeApplicationStatusService(
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
+        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
         idList.forEach { id ->
             val application = findApplicationById(id)
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
         }
-        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
     }
 
     private fun findApplicationById(id: UUID): Application {
