@@ -42,24 +42,24 @@ class ChangeApplicationStatusService(
             handleStatusNo(request.idList)
         }
 
-        val updateApplications = request.idList.map { id ->
+        val updateApplicationList = request.idList.map { id ->
             val application = findApplicationById(id)
             updateApplication(application, admin.name)
         }
 
-        val applicationStory = updateApplications.map { it ->
+        val applicationStory = updateApplicationList.map { it ->
             createApplicationStory(it)
         }
 
-        val attendance = updateApplications.map { it ->
+        val attendance = updateApplicationList.map { it ->
             val attendanceId = queryAttendancePort.findByUserId(it.userId)
             attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
         }.toMutableList()
 
-        saveApplicationPort.saveAll(updateApplications)
+        saveApplicationPort.saveAll(updateApplicationList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendance)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplications.map { it.userId }))
+        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
     }
 
     private fun handleStatusNo(idList: List<UUID>) {

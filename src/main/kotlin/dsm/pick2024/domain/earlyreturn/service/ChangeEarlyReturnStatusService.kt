@@ -45,24 +45,24 @@ class ChangeEarlyReturnStatusService(
             return
         }
 
-        val updateEarlyReturns = request.idList.map { id ->
+        val updateEarlyReturnList = request.idList.map { id ->
             val application = findApplicationById(id)
             updateEarlyReturn(application, admin.name)
         }
 
-        val applicationStory = updateEarlyReturns.map { earlyReturn ->
+        val applicationStory = updateEarlyReturnList.map { earlyReturn ->
             createApplicationStory(earlyReturn)
         }
 
-        val attendances = updateEarlyReturns.map { it ->
+        val attendances = updateEarlyReturnList.map { it ->
             val attendanceId = queryAttendancePort.findByUserId(it.userId)
             attendanceService.updateAttendanceToEarlyReturn(it.start, attendanceId!!)
         }.toMutableList()
 
-        saveApplicationPort.saveAll(updateEarlyReturns)
+        saveApplicationPort.saveAll(updateEarlyReturnList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendances)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturns.map { it.userId }))
+        eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturnList.map { it.userId }))
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
