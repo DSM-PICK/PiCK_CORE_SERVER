@@ -35,7 +35,7 @@ class ChangeClassroomStatusService(
                 val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
-            return
+            eventPublisher.publishEvent(ChangeStatusRequest(this, request.idList))
         }
 
         val update = mutableListOf<Classroom>()
