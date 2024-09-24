@@ -20,11 +20,11 @@ class ReturnApplicationReturnService(
     @Transactional
     override fun returnApplicationStatus(applicationId: List<UUID>) {
         applicationId.map {
-            queryApplicationPort.findByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
+            val application = queryApplicationPort.findByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
                 ?: throw ApplicationNotFoundException
 
             deleteApplicationPort.deleteByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
-            eventPublisher.publishEvent(UserInfoRequest(this, it))
+            eventPublisher.publishEvent(UserInfoRequest(this, application.userId))
         }
     }
 }
