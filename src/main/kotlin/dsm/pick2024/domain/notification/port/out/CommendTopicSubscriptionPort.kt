@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.notification.port.out
 
-import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.enums.Topic
 import dsm.pick2024.domain.notification.presentation.dto.request.Notification
 
 interface CommendTopicSubscriptionPort {

@@ -3,12 +3,12 @@ package dsm.pick2024.domain.application.service
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.CreateApplicationEvent
 import dsm.pick2024.domain.application.exception.AlreadyApplyingForPicnicException
 import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.event.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -47,6 +47,6 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        eventPublisher.publishEvent(CreateApplicationEvent(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
     }
 }

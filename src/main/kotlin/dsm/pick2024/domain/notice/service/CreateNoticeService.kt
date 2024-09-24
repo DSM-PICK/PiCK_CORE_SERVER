@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.notice.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
-import dsm.pick2024.domain.event.notice.SendMessageToNoticeEventPort
+import dsm.pick2024.domain.event.fcm.notice.SendMessageToNoticeEventPort
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.port.`in`.CreateNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.NoticeSavePort

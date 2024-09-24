@@ -27,16 +27,11 @@ class MainWebSocketHandler(
         mainUseCase.main(userId, session)
     }
 
-    private fun sendStatusUpdate(userId: String, status: Any?) {
+     fun sendStatusUpdate(userId: String, status: Any?) {
         val session = sessions[userId]
         if (session?.isOpen == true) {
             val jsonResponse = objectMapper.writeValueAsString(status)
             session.sendMessage(TextMessage(jsonResponse))
         }
-    }
-
-    @EventListener(WebSocketStatusUpdateEvent::class)
-    fun onWebSocketStatusUpdateEvent(event: WebSocketStatusUpdateEvent) {
-        sendStatusUpdate(event.userId, event.status)
     }
 }

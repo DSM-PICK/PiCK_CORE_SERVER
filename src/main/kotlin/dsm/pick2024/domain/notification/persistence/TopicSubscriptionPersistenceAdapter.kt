@@ -1,12 +1,11 @@
 package dsm.pick2024.domain.notification.persistence
 
-import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.enums.Topic
 import dsm.pick2024.domain.notification.domain.TopicSubscription
 import dsm.pick2024.domain.notification.mapper.TopicSubscriptionMapper
 import dsm.pick2024.domain.notification.persistence.repository.TopicSubscriptionRepository
 import dsm.pick2024.domain.notification.port.out.TopicSubscriptionPort
 import org.springframework.stereotype.Component
-import java.util.*
 
 @Component
 class TopicSubscriptionPersistenceAdapter(

@@ -11,7 +11,7 @@ import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMove
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.global.config.socket.WebSocketStatusUpdateEvent
+import dsm.pick2024.domain.event.WebSocketStatusUpdateRequest
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.web.socket.WebSocketSession
@@ -30,13 +30,13 @@ class MainService(
     override fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
         val newStatus = findStatus(user.xquareId)
-        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
+        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, user.accountId))
     }
 
     override fun onHandleEvent(userId: UUID) {
         val user = userFacadeUseCase.getUserByXquareId(userId)
         val newStatus = findStatus(user.xquareId)
-        eventPublisher.publishEvent(WebSocketStatusUpdateEvent(this, newStatus, user.accountId))
+        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, user.accountId))
     }
 
     private fun findStatus(userId: UUID): Any? {

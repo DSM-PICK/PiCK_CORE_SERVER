@@ -1,13 +1,13 @@
 package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.CreateApplicationEvent
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.AleadyApplyingMovementException
 import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
+import dsm.pick2024.domain.event.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -42,6 +42,6 @@ class MoveClassroomApplicationService(
                 status = Status.QUIET
             )
         )
-        eventPublisher.publishEvent(CreateApplicationEvent(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
     }
 }

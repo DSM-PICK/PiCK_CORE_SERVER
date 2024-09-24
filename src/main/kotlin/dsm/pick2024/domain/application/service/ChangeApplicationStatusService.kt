@@ -4,7 +4,7 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.ChangeApplicationStatusEvent
+import dsm.pick2024.domain.event.ChangeStatusRequest
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
@@ -60,7 +60,7 @@ class ChangeApplicationStatusService(
         saveApplicationPort.saveAll(updateApplications)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendance)
-        eventPublisher.publishEvent(ChangeApplicationStatusEvent(this, updateApplications.map { it.userId }))
+        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplications.map { it.userId }))
     }
 
     private fun handleStatusNo(ids: List<UUID>) {

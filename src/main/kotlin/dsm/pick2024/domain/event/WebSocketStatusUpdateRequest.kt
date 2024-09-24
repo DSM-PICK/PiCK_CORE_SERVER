@@ -1,8 +1,8 @@
-package dsm.pick2024.global.config.socket
+package dsm.pick2024.domain.event
 
 import org.springframework.context.ApplicationEvent
 
-class WebSocketStatusUpdateEvent(
+class WebSocketStatusUpdateRequest(
     source: Any,
     val status: Any?,
     val userId: String

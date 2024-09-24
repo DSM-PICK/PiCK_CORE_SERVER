@@ -1,11 +1,11 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
-import dsm.pick2024.domain.application.event.ReturnApplicationEvent
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
+import dsm.pick2024.domain.event.UserInfoRequest
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -24,7 +24,7 @@ class ReturnApplicationReturnService(
                 ?: throw ApplicationNotFoundException
 
             deleteApplicationPort.deleteByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
-            eventPublisher.publishEvent(ReturnApplicationEvent(this, it))
+            eventPublisher.publishEvent(UserInfoRequest(this, it))
         }
     }
 }

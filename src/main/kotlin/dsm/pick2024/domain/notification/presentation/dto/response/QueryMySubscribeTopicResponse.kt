@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.notification.presentation.dto.response
 
-import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.enums.Topic
 
 data class QueryMySubscribeTopicResponse(
     val subscribeTopicResponse: List<QuerySubscribeTopicResponse>

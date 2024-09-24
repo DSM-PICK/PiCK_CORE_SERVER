@@ -4,12 +4,12 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.event.CreateApplicationEvent
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
+import dsm.pick2024.domain.event.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -47,6 +47,6 @@ class CreateEarlyReturnService(
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
-        eventPublisher.publishEvent(CreateApplicationEvent(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
     }
 }

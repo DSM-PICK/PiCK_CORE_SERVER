@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.notification.entity
 
-import dsm.pick2024.domain.event.Topic
+import dsm.pick2024.domain.event.enums.Topic
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.*
 import javax.persistence.Column
