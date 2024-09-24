@@ -22,14 +22,4 @@ class EventService(
     fun onCreateApplicationEvent(event: UserInfoRequest) {
         mainUseCase.onHandleEvent(event.userId)
     }
-
-    @EventListener(UserInfoRequest::class)
-    fun onReturnApplicationEvent(event: UserInfoRequest) {
-        mainUseCase.onHandleEvent(event.userId)
-    }
-
-    @EventListener(UserInfoRequest::class)
-    fun onBackUserClassroomEvent(event: UserInfoRequest) {
-        mainUseCase.onHandleEvent(event.userId)
-    }
 }
