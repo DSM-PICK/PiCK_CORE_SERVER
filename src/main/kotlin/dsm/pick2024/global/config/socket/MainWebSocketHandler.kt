@@ -3,7 +3,6 @@ package dsm.pick2024.global.config.socket
 import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
-import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 import org.springframework.web.socket.TextMessage
 import org.springframework.web.socket.WebSocketSession
@@ -27,7 +26,7 @@ class MainWebSocketHandler(
         mainUseCase.main(userId, session)
     }
 
-     fun sendStatusUpdate(userId: String, status: Any?) {
+    fun sendStatusUpdate(userId: String, status: Any?) {
         val session = sessions[userId]
         if (session?.isOpen == true) {
             val jsonResponse = objectMapper.writeValueAsString(status)

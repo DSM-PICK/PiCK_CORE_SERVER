@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class EventService(
-    private val mainUseCase: MainUseCase,
+    private val mainUseCase: MainUseCase
 ) {
 
     @EventListener(UserInfoRequest::class)
