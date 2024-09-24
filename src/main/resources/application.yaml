@@ -8,7 +8,7 @@ spring:
             maxLifetime: 580000
     jpa:
         hibernate:
-            ddl-auto: none
+            ddl-auto: update
         show-sql: false
         properties:
             hibernate:
@@ -66,3 +66,6 @@ servlet:
     multipart:
         max-file-size: 10MB
         max-request-size: 10MB
+
+firebase:
+    url: ${FIREBASE_URL}

@@ -29,7 +29,7 @@ class QueryClassUserService(
 
             QueryUserClassResponse(
                 id = student.userId,
-                name = student.userName,
+                userName = student.userName,
                 grade = student.grade,
                 classNum = student.classNum,
                 num = student.num,

@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class QueryOKApplicationResponse(
     val id: UUID,
-    val username: String,
+    val userName: String,
     val endTime: LocalTime,
     val grade: Int,
     val classNum: Int,

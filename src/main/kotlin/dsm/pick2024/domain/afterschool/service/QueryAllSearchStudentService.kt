@@ -21,7 +21,7 @@ class QueryAllSearchStudentService(
         return users.filterNot { user -> students.contains(user.id) }
             .map {
                 QueryUserSimpleInfoResponse(
-                    name = it.name,
+                    userName = it.name,
                     grade = it.grade,
                     classNum = it.classNum,
                     num = it.num

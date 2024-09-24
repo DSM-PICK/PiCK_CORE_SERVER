@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class QueryWeekendMealResponse(
     val id: UUID,
-    val name: String,
+    val userName: String,
     val status: Status,
     val grade: Int,
     val classNum: Int,

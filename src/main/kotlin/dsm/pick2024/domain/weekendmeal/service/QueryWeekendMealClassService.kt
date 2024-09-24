@@ -20,7 +20,7 @@ class QueryWeekendMealClassService(
                 it ->
             QueryWeekendMealResponse(
                 id = it.id!!,
-                name = it.userName,
+                userName = it.userName,
                 status = it.status,
                 grade = it.grade,
                 classNum = it.classNum,

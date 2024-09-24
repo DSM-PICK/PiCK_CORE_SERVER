@@ -5,5 +5,5 @@ import java.util.UUID
 
 data class ClassroomStatusRequest(
     val status: Status,
-    val ids: List<UUID>
+    val idList: List<UUID>
 )

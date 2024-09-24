@@ -7,7 +7,9 @@ import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
+import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +17,8 @@ import org.springframework.transaction.annotation.Transactional
 class MoveClassroomApplicationService(
     private val saveClassRoomPort: SaveClassRoomPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val eventPublisher: ApplicationEventPublisher
 ) : MoveClassroomApplicationUseCase {
 
     @Transactional
@@ -34,10 +37,11 @@ class MoveClassroomApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                startPeriod = request.startPeriod,
-                endPeriod = request.endPeriod,
+                startPeriod = request.start,
+                endPeriod = request.end,
                 status = Status.QUIET
             )
         )
+        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
     }
 }

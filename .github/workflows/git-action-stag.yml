@@ -42,7 +42,7 @@ jobs:
                   buildargs: |
                       PROFILE=stag
                       JWT_SECRET_KEY=pickpickpickpickpickpickpickpick
-                      JWT_ACCESS_EXP=1000
+                      JWT_ACCESS_EXP=100
                       JWT_REFRESH_EXP=36000000
                       JWT_HEADER=Authorization
                       JWT_PREFIX=Bearer
@@ -61,6 +61,7 @@ jobs:
                       AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
                       AWS_BUCKET=${{ secrets.AWS_BUCKET }}
                       AWS_STATIC=${{ secrets.AWS_STATIC }}
+                      FIREBASE_URL=${{ secrets.FIREBASE_URL }}
 
             - name: Discord Alert Success
               uses: sarisia/actions-status-discord@v1

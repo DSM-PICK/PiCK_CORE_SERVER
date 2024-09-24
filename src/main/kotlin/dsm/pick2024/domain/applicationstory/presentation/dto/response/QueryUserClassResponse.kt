@@ -4,7 +4,7 @@ import java.util.UUID
 
 data class QueryUserClassResponse(
     val id: UUID,
-    val name: String,
+    val userName: String,
     val grade: Int,
     val classNum: Int,
     val num: Int,

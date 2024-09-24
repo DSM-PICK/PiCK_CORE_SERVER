@@ -40,6 +40,9 @@ class UserJpaEntity(
     @Column(name = "birth_day", nullable = false)
     val birthDay: LocalDate,
 
+    @Column(name = "device_token", nullable = true)
+    val deviceToken: String?,
+
     @Column(name = "profile_file_name", nullable = true)
     val profile: String ? = null,
 

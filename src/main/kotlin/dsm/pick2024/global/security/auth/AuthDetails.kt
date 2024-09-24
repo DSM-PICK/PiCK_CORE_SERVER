@@ -6,7 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class AuthDetails(
-    private val name: String,
+    private val userName: String,
     private val role: Role
 ) : UserDetails {
 
@@ -19,7 +19,7 @@ class AuthDetails(
     }
 
     override fun getUsername(): String {
-        return name
+        return userName
     }
 
     override fun isAccountNonExpired(): Boolean {

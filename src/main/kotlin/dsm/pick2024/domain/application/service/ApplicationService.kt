@@ -8,7 +8,9 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -18,13 +20,14 @@ import java.time.ZoneId
 class ApplicationService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val saveApplicationPort: SaveApplicationPort,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val eventPublisher: ApplicationEventPublisher
 ) : ApplicationUseCase {
 
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
-        if (existsApplicationPort.existsByUserId(user.xquareId)) {
+        if (existsApplicationPort.existByUserId(user.xquareId)) {
             throw AlreadyApplyingForPicnicException
         }
 
@@ -44,5 +47,6 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
+        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
     }
 }
