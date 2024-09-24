@@ -30,64 +30,65 @@ class MainService(
     override fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
         val newStatus = findStatus(user.xquareId)
-        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, user.accountId))
+        publishStatusUpdate(newStatus, user.accountId)
     }
 
     override fun onHandleEvent(userId: UUID) {
         val user = userFacadeUseCase.getUserByXquareId(userId)
         val newStatus = findStatus(user.xquareId)
-        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, user.accountId))
+        publishStatusUpdate(newStatus, user.accountId)
     }
 
     private fun findStatus(userId: UUID): Any? {
         return when {
-            existApplicationPort.existsByStatusAndUserIdAndApplicationKind(
-                Status.OK,
-                userId,
-                ApplicationKind.APPLICATION
-            ) -> findApplication(userId)
-            existApplicationPort.existsByStatusAndUserIdAndApplicationKind(
-                Status.OK,
-                userId,
-                ApplicationKind.EARLY_RETURN
-            ) -> findEarlyReturn(userId)
-            existClassRoomPort.existOKByUserId(userId) -> findClassroom(userId)
-            existApplicationPort.existsByUserIdAndApplicationKind(
-                userId,
-                ApplicationKind.APPLICATION
-            ) -> waiting(userId, Main.APPLICATION)
-            existApplicationPort.existsByUserIdAndApplicationKind(
-                userId,
-                ApplicationKind.EARLY_RETURN
-            ) -> waiting(userId, Main.EARLY_RETURN)
-            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
+            applicationExist(userId, ApplicationKind.APPLICATION) -> findApplication(userId)
+            applicationExist(userId, ApplicationKind.EARLY_RETURN) -> findEarlyReturn(userId)
+            classRoomExists(userId) -> findClassroom(userId)
+            else -> findWaitingStatus(userId)
+        }
+    }
 
+    private fun applicationExist(userId: UUID, kind: ApplicationKind) =
+        existApplicationPort.existsByStatusAndUserIdAndApplicationKind(Status.OK, userId, kind)
+
+    private fun classRoomExists(userId: UUID) = existClassRoomPort.existOKByUserId(userId)
+
+    private fun findWaitingStatus(userId: UUID): WaitingResponse? {
+        return when {
+            existsQuietApplication(userId, ApplicationKind.APPLICATION) -> waiting(userId, Main.APPLICATION)
+            existsQuietApplication(userId, ApplicationKind.EARLY_RETURN) -> waiting(userId, Main.EARLY_RETURN)
+            existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
             else -> null
         }
     }
 
+    private fun existsQuietApplication(userId: UUID, kind: ApplicationKind) =
+        existApplicationPort.existsByUserIdAndApplicationKind(userId, kind)
+
     private fun findApplication(userId: UUID) =
-        queryApplicationPort
-            .findByUserIdAndStatusAndApplicationKind(Status.OK, userId, ApplicationKind.APPLICATION)?.let {
-                QueryMainMyApplicationResponse(
-                    userId = userId,
-                    start = it.start.take(5),
-                    userName = it.userName,
-                    end = it.end!!.take(5),
-                    type = Main.APPLICATION
-                )
-            }
+        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            Status.OK, userId, ApplicationKind.APPLICATION
+        )?.let {
+            QueryMainMyApplicationResponse(
+                userId = userId,
+                start = it.start.take(5),
+                userName = it.userName,
+                end = it.end!!.take(5),
+                type = Main.APPLICATION
+            )
+        }
 
     private fun findEarlyReturn(userId: UUID) =
-        queryApplicationPort
-            .findByUserIdAndStatusAndApplicationKind(Status.OK, userId, ApplicationKind.EARLY_RETURN)?.let {
-                QuerySimpleMyEarlyResponse(
-                    userId = userId,
-                    start = it.start.take(5),
-                    userName = it.userName,
-                    type = Main.EARLY_RETURN
-                )
-            }
+        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            Status.OK, userId, ApplicationKind.EARLY_RETURN
+        )?.let {
+            QuerySimpleMyEarlyResponse(
+                userId = userId,
+                start = it.start.take(5),
+                userName = it.userName,
+                type = Main.EARLY_RETURN
+            )
+        }
 
     private fun findClassroom(userId: UUID) =
         queryClassroomPort.findByUserId(userId)?.let {
@@ -103,24 +104,18 @@ class MainService(
     private fun waiting(userId: UUID, type: Main): WaitingResponse? {
         val status = when (type) {
             Main.APPLICATION -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-                Status.QUIET,
-                userId,
-                ApplicationKind.APPLICATION
+                Status.QUIET, userId, ApplicationKind.APPLICATION
             )?.status
-
             Main.EARLY_RETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-                Status.QUIET,
-                userId,
-                ApplicationKind.EARLY_RETURN
+                Status.QUIET, userId, ApplicationKind.EARLY_RETURN
             )?.status
-
             Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
         }
 
-        return if (status == Status.QUIET) {
-            WaitingResponse(type)
-        } else {
-            null
-        }
+        return if (status == Status.QUIET) WaitingResponse(type) else null
+    }
+
+    private fun publishStatusUpdate(newStatus: Any?, accountId: String) {
+        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, accountId))
     }
 }
