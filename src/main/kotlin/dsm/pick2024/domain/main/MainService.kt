@@ -67,7 +67,9 @@ class MainService(
 
     private fun findApplication(userId: UUID) =
         queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-            Status.OK, userId, ApplicationKind.APPLICATION
+            Status.OK,
+            userId,
+            ApplicationKind.APPLICATION
         )?.let {
             QueryMainMyApplicationResponse(
                 userId = userId,
@@ -80,7 +82,9 @@ class MainService(
 
     private fun findEarlyReturn(userId: UUID) =
         queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-            Status.OK, userId, ApplicationKind.EARLY_RETURN
+            Status.OK,
+            userId,
+            ApplicationKind.EARLY_RETURN
         )?.let {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
@@ -104,10 +108,14 @@ class MainService(
     private fun waiting(userId: UUID, type: Main): WaitingResponse? {
         val status = when (type) {
             Main.APPLICATION -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-                Status.QUIET, userId, ApplicationKind.APPLICATION
+                Status.QUIET,
+                userId,
+                ApplicationKind.APPLICATION
             )?.status
             Main.EARLY_RETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
-                Status.QUIET, userId, ApplicationKind.EARLY_RETURN
+                Status.QUIET,
+                userId,
+                ApplicationKind.EARLY_RETURN
             )?.status
             Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
         }
