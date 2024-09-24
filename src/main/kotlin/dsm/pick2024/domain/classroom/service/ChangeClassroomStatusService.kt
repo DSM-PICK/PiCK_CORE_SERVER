@@ -3,7 +3,7 @@ package dsm.pick2024.domain.classroom.service
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.application.enums.Status.NO
 import dsm.pick2024.domain.application.enums.Status.OK
-import dsm.pick2024.domain.event.ChangeStatusRequest
+import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort

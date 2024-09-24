@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.event.sub
 
-import dsm.pick2024.domain.event.WebSocketStatusUpdateRequest
+import dsm.pick2024.domain.event.dto.WebSocketStatusUpdateRequest
 import dsm.pick2024.global.config.socket.port.out.WebSocketHandler
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component

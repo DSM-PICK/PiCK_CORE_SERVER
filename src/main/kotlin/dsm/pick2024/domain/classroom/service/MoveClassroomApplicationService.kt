@@ -7,7 +7,7 @@ import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
-import dsm.pick2024.domain.event.UserInfoRequest
+import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service

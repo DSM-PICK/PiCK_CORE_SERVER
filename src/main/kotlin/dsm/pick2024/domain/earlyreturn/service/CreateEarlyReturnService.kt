@@ -9,7 +9,7 @@ import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
-import dsm.pick2024.domain.event.UserInfoRequest
+import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service

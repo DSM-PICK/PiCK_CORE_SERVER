@@ -11,7 +11,7 @@ import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMove
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.event.WebSocketStatusUpdateRequest
+import dsm.pick2024.domain.event.dto.WebSocketStatusUpdateRequest
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.web.socket.WebSocketSession

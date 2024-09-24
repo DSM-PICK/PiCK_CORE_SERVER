@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.event
+package dsm.pick2024.domain.event.dto
 
 import org.springframework.context.ApplicationEvent
 

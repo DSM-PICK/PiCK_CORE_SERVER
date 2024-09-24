@@ -1,9 +1,9 @@
-package dsm.pick2024.domain.event
+package dsm.pick2024.domain.event.dto
 
 import org.springframework.context.ApplicationEvent
 import java.util.*
 
-class UserInfoRequest(
+class ChangeStatusRequest(
     source: Any,
-    val userId: UUID
+    val userIdList: List<UUID>
 ) : ApplicationEvent(source)

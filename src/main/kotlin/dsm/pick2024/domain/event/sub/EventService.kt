@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.event.sub
 
-import dsm.pick2024.domain.event.ChangeStatusRequest
-import dsm.pick2024.domain.event.UserInfoRequest
+import dsm.pick2024.domain.event.dto.ChangeStatusRequest
+import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
