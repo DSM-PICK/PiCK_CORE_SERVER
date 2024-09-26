@@ -61,6 +61,7 @@ jobs:
                       AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
                       AWS_BUCKET=${{ secrets.AWS_BUCKET }}
                       AWS_STATIC=${{ secrets.AWS_STATIC }}
+                      FIREBASE_URL=${{ secrets.FIREBASE_URL }}
 
             - name: Discord Alert Success
               uses: sarisia/actions-status-discord@v1
