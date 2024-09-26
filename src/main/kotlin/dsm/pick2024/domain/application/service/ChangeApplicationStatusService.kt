@@ -40,6 +40,7 @@ class ChangeApplicationStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
+            return
         }
 
         val updateApplicationList = request.idList.map { id ->
