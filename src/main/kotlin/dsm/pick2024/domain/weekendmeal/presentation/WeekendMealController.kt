@@ -44,11 +44,11 @@ class WeekendMealController(
         status: Status
     ) = changeWeekendMealStatusUseCase.changeWeekendMealStatus(id, status)
 
-//    @Operation(summary = "내 주말급식 상태변경 API")
-//    @PatchMapping("/my-status")
-//    fun changeStatus(
-//        @RequestParam(name = "status") status: Status
-//    ) = weekendMealUseCase.changeWeekendMeal(status)
+    @Operation(summary = "내 주말급식 상태변경 API")
+    @PatchMapping("/my-status")
+    fun changeStatus(
+        @RequestParam(name = "status") status: Status
+    ) = weekendMealUseCase.changeWeekendMeal(status)
 
     @Operation(summary = "주말급식 응답자 반별로 조회 API")
     @GetMapping("/all")
