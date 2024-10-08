@@ -40,7 +40,6 @@ class ChangeApplicationStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
-            return
         }
 
         val updateApplicationList = request.idList.map { id ->
@@ -60,11 +59,11 @@ class ChangeApplicationStatusService(
         saveApplicationPort.saveAll(updateApplicationList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendance)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
+//        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
-        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
+//        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
         idList.forEach { id ->
             val application = findApplicationById(id)
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
