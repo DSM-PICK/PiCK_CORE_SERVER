@@ -62,11 +62,11 @@ class ChangeEarlyReturnStatusService(
         saveApplicationPort.saveAll(updateEarlyReturnList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendances)
-//        eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturnList.map { it.userId }))
+        eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturnList.map { it.userId }))
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
-//        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
+        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
         idList.forEach { id ->
             deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
