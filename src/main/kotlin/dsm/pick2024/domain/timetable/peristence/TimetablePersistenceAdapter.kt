@@ -19,6 +19,8 @@ class TimetablePersistenceAdapter(
         timetableRepository.save(timetableMapper.toEntity(timetable))
     }
 
+    override fun deleteAll() = timetableRepository.deleteAll()
+
     override fun saveAll(timetables: MutableList<Timetable>) {
         val entities = timetables.map { timetableMapper.toEntity(it) }
         timetableRepository.saveAll(entities)
