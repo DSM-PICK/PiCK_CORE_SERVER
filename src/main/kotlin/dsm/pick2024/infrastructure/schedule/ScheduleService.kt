@@ -43,7 +43,7 @@ class ScheduleService(
         resetStatusUseCase.reset()
     }
 
-    @Scheduled(cron = "0 14 * * SUN")
+    @Scheduled(cron = "0 0 14 * * SUN")
     fun saveTimetable() {
         deleteTimetablePort.deleteAll()
         saveTimetableUseCase.saveTimetable()
