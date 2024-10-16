@@ -83,9 +83,6 @@ class SaveMealService(
                 mealMap.forEach { (mealType, mealsOfType) ->
                     val menu = stickMeal(mealsOfType.map { it.menu })
                     val cal = mealsOfType.map { it.cal }.get(0)//mealsOfType.firstNotNullOfOrNull { it.cal }
-
-                    println("작동")
-                    println(cal)
                     if (menu.isNotEmpty()) {
                         saveMealPort.save(
                             Meal(

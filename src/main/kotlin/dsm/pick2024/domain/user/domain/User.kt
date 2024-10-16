@@ -19,4 +19,8 @@ data class User(
     val profile: String ? = null,
     val role: Role,
     val deviceToken: String ? = null
-)
+) {
+    fun updateProfileFileName(fileName: String?): User {
+        return this.copy(profile = fileName)
+    }
+}
