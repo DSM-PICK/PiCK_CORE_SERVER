@@ -17,12 +17,14 @@ class QueryUserSimpleInfoService(
     @Transactional(readOnly = true)
     override fun queryUserSimpleInfo(): QueryUserSimpleInfoResponse {
         val user = userFacadeUseCase.currentUser()
+        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+
         return QueryUserSimpleInfoResponse(
             user.name,
             user.grade,
             user.classNum,
             user.num,
-            user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+            profileUrl?.substringBefore("?")
         )
     }
 }

@@ -17,8 +17,11 @@ class QueryUserDetaileInfoService(
     @Transactional(readOnly = true)
     override fun queryUserDetailsInfo(): QueryUserDetailsInfoResponse {
         val user = userFacadeUseCase.currentUser()
+
+        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+
         return QueryUserDetailsInfoResponse(
-            profile = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) },
+            profile = profileUrl?.substringBefore("?"),
             userName = user.name,
             birthDay = user.birthDay,
             grade = user.grade,
