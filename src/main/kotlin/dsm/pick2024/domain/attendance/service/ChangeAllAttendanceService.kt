@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ChangeAllAttendanceService(
+class
+ChangeAllAttendanceService(
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort
 ) : ChangeAllAttendanceUseCase {
