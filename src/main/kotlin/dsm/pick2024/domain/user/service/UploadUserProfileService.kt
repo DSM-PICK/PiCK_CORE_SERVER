@@ -20,7 +20,7 @@ class UploadUserProfileService(
     override fun uploadUserProfile(file: MultipartFile) {
         val user = userFacade.currentUser()
 
-        if (user.profile != null) fileUtil.delete(user.profile!!, PathList.PROFILE)
+        if (user.profile != null) fileUtil.delete(user.profile, PathList.PROFILE)
         val update = user.updateProfileFileName(fileUtil.upload(file, PathList.PROFILE))
 
         userSavePort.save(update)

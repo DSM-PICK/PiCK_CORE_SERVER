@@ -56,6 +56,7 @@ class UserController(
     @GetMapping("/all")
     fun queryUserAll() = queryUserAllUseCase.queryUserAll()
 
+    @Operation(summary = "유저 프로필 업로드 API")
     @PatchMapping("/profile")
     fun upload(@RequestParam("file")file: MultipartFile) = uploadUserProfileUseCase.uploadUserProfile(file)
 }
