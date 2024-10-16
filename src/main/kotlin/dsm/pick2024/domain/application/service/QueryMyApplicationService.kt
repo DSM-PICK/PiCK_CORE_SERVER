@@ -23,6 +23,7 @@ class QueryMyApplicationService(
     @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
+        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
         val application =
             queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
                 Status.OK,
@@ -38,7 +39,7 @@ class QueryMyApplicationService(
             start = application.start.take(5),
             end = application.end!!.take(5),
             reason = application.reason,
-            profile = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) },
+            profile = profileUrl?.substringBefore("?"),
             grade = user.grade,
             classNum = user.classNum,
             num = user.num,
