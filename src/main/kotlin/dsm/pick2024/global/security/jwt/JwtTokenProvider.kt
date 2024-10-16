@@ -91,6 +91,13 @@ class JwtTokenProvider(
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 
+    fun getClaimsToken(token: String): Claims {
+        return Jwts.parser()
+            .setSigningKey(jwtProperties.secretKey)
+            .parseClaimsJws(token)
+            .body
+    }
+
     private fun getJws(token: String): Jws<Claims> {
         return try {
             Jwts.parser().setSigningKey(jwtProperties.secretKey).parseClaimsJws(token)

@@ -21,7 +21,7 @@ class ChangeStatusAfterSchoolStudentService(
 
         request.map { changeRequest ->
             val student =
-                queryAfterSchoolPort.findByUserId(changeRequest.id)
+                queryAfterSchoolPort.findById(changeRequest.id)
                     ?: throw UserNotFoundException
 
             val newStatusList = changeRequest.statusList

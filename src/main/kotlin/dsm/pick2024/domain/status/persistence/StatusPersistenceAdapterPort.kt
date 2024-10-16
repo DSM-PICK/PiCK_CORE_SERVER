@@ -30,7 +30,6 @@ class StatusPersistenceAdapterPort(
                 QStatusJpaEntity.statusJpaEntity.grade.eq(grade),
                 QStatusJpaEntity.statusJpaEntity.classNum.eq(classNum)
             )
-            .orderBy(QStatusJpaEntity.statusJpaEntity.num.asc())
             .fetch()
             .map { statusMapper.toDomain(it) }
     }

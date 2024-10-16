@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryAllReasonApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
@@ -14,7 +15,7 @@ class QueryAllReasonApplicationService(
 
     @Transactional(readOnly = true)
     override fun queryAllReasonApplication() =
-        queryAllApplicationPort.findAll()
+        queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.APPLICATION)
             .filter { it.status == Status.OK }
             .map { QueryApplicationResponse(it) }
 }

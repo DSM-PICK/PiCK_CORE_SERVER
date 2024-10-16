@@ -23,6 +23,9 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     override fun findByUserId(id: UUID) =
         afterSchoolStudentRepository.findByUserId(id).let { afterSchoolStudentMapper.toDomain(it) }
 
+    override fun findById(id: UUID) =
+        afterSchoolStudentRepository.findById(id).let { afterSchoolStudentMapper.toDomain(it) }
+
     override fun deleteById(id: UUID) {
         afterSchoolStudentRepository.deleteById(id)
     }
@@ -38,11 +41,6 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     override fun findAll() =
         jpaQueryFactory
             .selectFrom(QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity)
-            .orderBy(
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.grade.asc(),
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.classNum.asc(),
-                QAfterSchoolStudentJpaEntity.afterSchoolStudentJpaEntity.num.asc()
-            )
             .fetch()
             .map { afterSchoolStudentMapper.toDomain(it) }
 }

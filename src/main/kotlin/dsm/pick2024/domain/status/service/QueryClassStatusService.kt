@@ -32,7 +32,9 @@ class QueryClassStatusService(
                         num = classStatus.num,
                         status = classStatus.status
                     )
-                }
+                }.sortedWith(
+                    compareBy { it.num }
+                )
 
         return QueryClassResponse(
             teacher = teacher!!.name,

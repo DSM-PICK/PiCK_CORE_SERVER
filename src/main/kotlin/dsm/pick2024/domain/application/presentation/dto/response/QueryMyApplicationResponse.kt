@@ -5,12 +5,13 @@ import java.util.UUID
 
 data class QueryMyApplicationResponse(
     val userId: UUID,
-    val username: String,
+    val userName: String,
     val teacherName: String,
-    val startTime: String,
-    val endTime: String,
+    val start: String,
+    val end: String,
     val reason: String,
-    val schoolNum: Int,
-    val type: Type,
-    val profile: String? = null
+    val grade: Int,
+    val classNum: Int,
+    val num: Int,
+    val type: Type
 )

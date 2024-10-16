@@ -4,8 +4,9 @@ import dsm.pick2024.domain.notice.exception.NoticeNotFoundException
 import dsm.pick2024.domain.notice.port.`in`.QueryAllNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.QueryNoticePort
 import dsm.pick2024.domain.notice.presentation.dto.response.QueryAllNoticeResponse
-import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleAllNoticeResponse
-import dsm.pick2024.domain.notice.presentation.dto.response.QueryTodayNoticeResponse
+import dsm.pick2024.domain.notice.presentation.dto.response.QuerySimpleNoticeResponse
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -19,12 +20,11 @@ class QueryNoticeService(
 
         queryNoticePort.findAll()
             .map { it ->
-                QuerySimpleAllNoticeResponse(
+                QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt,
-                    it.teacherName,
-                    it.grade.split(",").map { grade -> grade.toInt() }
+                    format(it.createAt),
+                    it.teacherName
                 )
             }
 
@@ -35,21 +35,23 @@ class QueryNoticeService(
         return QueryAllNoticeResponse(
             title = notice.title,
             content = notice.content,
-            createAt = notice.createAt,
-            teacher = notice.teacherName,
-            grade = notice.grade.split(",").map { grade -> grade.toInt() }
+            createAt = format(notice.createAt),
+            teacher = notice.teacherName
         )
     }
 
     override fun queryTodayNotice() =
-
         queryNoticePort.findByToday()
             .map { it ->
-                QueryTodayNoticeResponse(
+                QuerySimpleNoticeResponse(
                     it.id!!,
                     it.title,
-                    it.createAt,
+                    format(it.createAt),
                     it.teacherName
                 )
             }
+
+    private fun format(date: LocalDateTime): String {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+    }
 }

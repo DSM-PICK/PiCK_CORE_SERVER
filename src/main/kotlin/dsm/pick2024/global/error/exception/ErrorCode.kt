@@ -29,6 +29,7 @@ enum class ErrorCode(
     SCHEDULE_NOT_FOUND(404, "Schedule Not Found"),
     FLOOR_NOT_FOUND(404, "Floor Not Found"),
     TEACHER_NOT_FOUND(404, "Teacher Not Found"),
+    TIMETABLE_NOT_FOUND(404, "Timetable Not Found"),
 
     NOT_ADMIN(403, "Not an Admin"),
     NOT_STUDENT(403, "Not an Student"),
@@ -36,8 +37,12 @@ enum class ErrorCode(
     FEIGN_BAD_REQUEST(400, "Feign Bad Request"),
     FILE_IS_EMPTY(400, "File does not exist"),
     BAD_FILE_EXTENSION(400, "File Extension is invalid"),
+    MAX_UPLOAD_FILE(400, "Max Upload File Size"),
+    INVALID_PERIOD(400, "Invalid period"),
+    INVALID_TIME(400, "Invalid Time"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
-    FEIGN_SERVER_ERROR(500, "Feign Server Error")
+    FEIGN_SERVER_ERROR(500, "Feign Server Error"),
+    FCM_SERVER_ERROR(500, "Fem Server Error")
 }

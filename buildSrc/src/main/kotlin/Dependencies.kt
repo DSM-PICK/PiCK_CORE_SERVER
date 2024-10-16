@@ -52,4 +52,9 @@ object Dependencies {
     const val CLOUD = "org.springframework.cloud:spring-cloud-starter-loadbalancer"
 
     const val CACHE = "org.springframework.boot:spring-boot-starter-cache"
+
+    const val FCM = "com.google.firebase:firebase-admin:${DependencyVersions.FCM}"
+
+    const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
+
 }

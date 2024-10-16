@@ -2,9 +2,10 @@ package dsm.pick2024.domain.timetable.service
 
 import dsm.pick2024.domain.timetable.port.`in`.QueryWeekTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
-import dsm.pick2024.domain.timetable.presentation.dto.DayTimetableResponse
-import dsm.pick2024.domain.timetable.presentation.dto.PeriodTimetableResponse
+import dsm.pick2024.domain.timetable.presentation.dto.response.DayTimetableResponse
+import dsm.pick2024.domain.timetable.presentation.dto.response.PeriodTimetableResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
+import dsm.pick2024.infrastructure.s3.FileUtil
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -14,9 +15,10 @@ import java.time.DayOfWeek
 @Service
 class QueryWeekTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryTimeTablePort: QueryTimeTablePort
+    private val queryTimeTablePort: QueryTimeTablePort,
+    private val fileUtil: FileUtil
 ) : QueryWeekTimetableUseCase {
-    // @Cacheable(value = ["weekTimetableCache"], key = "#root.methodName")
+
     @Transactional(readOnly = true)
     override fun queryWeekTimetable(): List<DayTimetableResponse> {
         val user = userFacadeUseCase.currentUser()
@@ -30,7 +32,7 @@ class QueryWeekTimetableService(
                 user.classNum
             )
             val response = mutableListOf<PeriodTimetableResponse>()
-            DayTimetableResponse(date, response).addTimetable(tables, response)
+            DayTimetableResponse(date, response).addTimetable(tables, response, fileUtil)
             DayTimetableResponse(date, response)
         }
     }

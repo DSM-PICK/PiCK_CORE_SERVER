@@ -33,8 +33,17 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers("/admin/login", "/admin/refresh", "/user/login", "/user/refresh").permitAll()
-            .antMatchers("/bug/**").hasAnyRole(Role.SCH.name, Role.STU.name)
+            .antMatchers(
+                "/admin/login",
+                "/admin/refresh",
+                "/user/login",
+                "/user/refresh",
+                "/", "/swagger-ui/**",
+                "/v3/api-docs/**",
+                "/dsm-pick/swagger-ui/index.html",
+                "/dsm-pick/swagger-ui/index.html/**",
+                "/main"
+            ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
                 "/after/**",
@@ -68,11 +77,11 @@ class SecurityConfig(
                 "/self-study/date",
                 "/self-study/admin",
                 "/weekend-meal/all",
-                "/weekend-meal/quit",
                 "/weekend-meal/hey",
                 "/status/**",
                 "/user/all",
-                "/status/grade"
+                "/status/grade",
+                "/timetable/all"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
@@ -84,7 +93,9 @@ class SecurityConfig(
                 "/schedule/modify",
                 "/after/change",
                 "/class-room/status",
-                "/class"
+                "/class",
+                "weekend-meal/period",
+                "/timetable/change"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
@@ -105,6 +116,7 @@ class SecurityConfig(
                 "/application/status",
                 "/weekend-meal/my-status",
                 "/user/profile"
+                "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
@@ -115,9 +127,10 @@ class SecurityConfig(
                 "/class-room/move",
                 "/early-return/my",
                 "meal/date",
-                "/timetable/**",
+                "/timetable/today",
+                "/timetable/week",
                 "/weekend-meal/my",
-                "/main"
+                "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.DELETE,
@@ -129,9 +142,11 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/weekend-meal/excel"
+                "/weekend-meal/excel",
+                "/weekend-meal/excel/grade"
             ).hasRole(Role.SCH.name)
             .anyRequest().authenticated()
+//            .anyRequest().permitAll()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface UserRepository : JpaRepository<UserJpaEntity, UUID> {
-    fun findByName(name: String): UserJpaEntity?
 
     fun findByAccountId(accountId: String): UserJpaEntity?
+
+    fun findByXquareId(xquareId: UUID): UserJpaEntity?
 
     fun existsByAccountId(accountId: String): Boolean
 

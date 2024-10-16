@@ -20,27 +20,11 @@ class QueryWeekendMealClassService(
                 it ->
             QueryWeekendMealResponse(
                 id = it.id!!,
-                name = it.userName,
+                userName = it.userName,
                 status = it.status,
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num
-            )
-        }
-
-    override fun queryWeekendMealQuitClass(
-        grade: Int,
-        classNum: Int
-    ) = queryWeekendMealPort.findQuitByGradeAndClassNum(grade, classNum)
-        .map {
-                it ->
-            QueryWeekendMealResponse(
-                it.id!!,
-                it.userName,
-                it.status,
-                it.grade,
-                it.classNum,
-                it.num
             )
         }
 }

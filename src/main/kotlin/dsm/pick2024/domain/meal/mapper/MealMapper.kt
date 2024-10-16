@@ -11,9 +11,9 @@ class MealMapper : GenericMapper<MealJpaEntity, Meal> {
         MealJpaEntity(
             id = id,
             mealDate = mealDate,
-            breakfast = breakfast,
-            lunch = lunch,
-            dinner = dinner
+            mealType = mealType,
+            menu = menu,
+            cal = cal
         )
     }
 
@@ -21,9 +21,9 @@ class MealMapper : GenericMapper<MealJpaEntity, Meal> {
         Meal(
             id = id,
             mealDate = mealDate,
-            breakfast = breakfast,
-            lunch = lunch,
-            dinner = dinner
+            mealType = mealType,
+            menu = menu,
+            cal = cal
         )
     }
 }

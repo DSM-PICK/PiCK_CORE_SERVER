@@ -4,6 +4,4 @@ import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMea
 
 interface QueryWeekendMealClassUseCase {
     fun queryWeekendMealClass(grade: Int, classNum: Int): List<QueryWeekendMealResponse>
-
-    fun queryWeekendMealQuitClass(grade: Int, classNum: Int): List<QueryWeekendMealResponse>
 }

@@ -8,6 +8,7 @@ import java.util.UUID
 @Aggregate
 data class User(
     val id: UUID,
+    val xquareId: UUID,
     val accountId: String,
     val password: String,
     val name: String,
@@ -16,8 +17,9 @@ data class User(
     val num: Int,
     val birthDay: LocalDate,
     val profile: String ? = null,
-    val role: Role
-) {
+    val role: Role,
+    val deviceToken: String ? = null
+){
     fun updateProfileFileName(fileName: String?): User {
         return this.copy(profile = fileName)
     }

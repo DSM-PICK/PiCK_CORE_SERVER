@@ -17,10 +17,10 @@ class QueryUserAllService(
             .map {
                     it ->
                 QueryUserSimpleInfoResponse(
-                    name = it.name,
+                    userName = it.name,
                     grade = it.grade,
                     classNum = it.classNum,
                     num = it.num
                 )
-            }
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }

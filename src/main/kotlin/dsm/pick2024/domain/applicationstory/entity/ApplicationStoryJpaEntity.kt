@@ -3,7 +3,6 @@ package dsm.pick2024.domain.applicationstory.entity
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
-import java.time.LocalTime
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -20,11 +19,11 @@ class ApplicationStoryJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     val userId: UUID,
 
-    @Column(name = "start_time", nullable = false)
-    val startTime: LocalTime,
+    @Column(name = "start", nullable = false)
+    val start: String,
 
-    @Column(name = "end_time", nullable = true)
-    val endTime: LocalTime? = null,
+    @Column(name = "end", nullable = true)
+    val end: String? = null,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,

@@ -1,32 +1,37 @@
 package dsm.pick2024.domain.earlyreturn.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.out.QueryEarlyReturnPort
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryMyEarlyReturnResponse
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.format.DateTimeFormatter
 
 @Service
 class QueryMyEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryEarlyReturnPort: QueryEarlyReturnPort
+    private val queryApplicationPort: QueryApplicationPort
 ) : QueryMyEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
     override fun queryMyEarlyReturn(): QueryMyEarlyReturnResponse {
         val user = userFacadeUseCase.currentUser()
         val earlyReturn =
-            queryEarlyReturnPort.findByOKEarlyReturn(user.id)
+            queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+                Status.OK,
+                user.xquareId,
+                ApplicationKind.EARLY_RETURN
+            )
                 ?: throw EarlyReturnApplicationNotFoundException
 
         return QueryMyEarlyReturnResponse(
-            username = earlyReturn.userName,
+            userName = user.name,
             teacherName = earlyReturn.teacherName!!,
-            startTime = earlyReturn.startTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+            start = earlyReturn.start.take(5),
             reason = earlyReturn.reason,
             grade = earlyReturn.grade,
             classNum = earlyReturn.classNum,

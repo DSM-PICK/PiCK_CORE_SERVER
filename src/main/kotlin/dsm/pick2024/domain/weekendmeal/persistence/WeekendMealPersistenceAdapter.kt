@@ -45,30 +45,11 @@ class WeekendMealPersistenceAdapter(
         .fetch()
         .map { weekendMealMapper.toDomain(it) }
 
-    override fun findQuitByGradeAndClassNum(
-        grade: Int,
-        classNum: Int
-    ) = jpaQueryFactory
-        .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
-        .where(
-            QWeekendMealJpaEntity.weekendMealJpaEntity.grade.eq(grade),
-            QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.eq(classNum),
-            QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.QUIET)
-        )
-        .orderBy(QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc())
-        .fetch()
-        .map { weekendMealMapper.toDomain(it) }
-
     override fun findByStatus(status: Status): List<WeekendMeal> {
         return jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
             .where(
                 QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(status)
-            )
-            .orderBy(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
             )
             .fetch()
             .map { weekendMealMapper.toDomain(it) }
@@ -77,14 +58,17 @@ class WeekendMealPersistenceAdapter(
     override fun findById(id: UUID): WeekendMeal? {
         return weekendMealRepository.findById(id).let { weekendMealMapper.toDomain(it) }
     }
+
+    override fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status) =
+        weekendMealRepository.findByGradeAndClassNumAndStatus(
+            grade,
+            classNum,
+            status
+        )
+
     override fun findAll(): List<WeekendMeal> =
         jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)
-            .orderBy(
-                QWeekendMealJpaEntity.weekendMealJpaEntity.grade.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.classNum.asc(),
-                QWeekendMealJpaEntity.weekendMealJpaEntity.num.asc()
-            )
             .fetch()
             .let { result ->
                 result?.map { weekendMealMapper.toDomain(it) } ?: emptyList()

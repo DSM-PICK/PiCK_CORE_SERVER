@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.user.service
 
+import dsm.pick2024.domain.notification.event.CreateSubscribeTopicEventPort
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
@@ -24,40 +25,64 @@ class UserLoginService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val xquareFeignClient: XquareFeignClient,
     private val existsUserPort: ExistsUserPort,
-    private val userSavePort: UserSavePort
+    private val userSavePort: UserSavePort,
+    private val createSubscribeTopicEventPort: CreateSubscribeTopicEventPort
 ) : LoginUseCase {
 
     @Transactional
     override fun login(userLoginRequest: UserLoginRequest): TokenResponse {
-        if (!existsUserPort.existsByAccountId(userLoginRequest.accountId)) {
-            val xquareUser = xquareFeignClient.xquareUser(
-                XquareRequest(userLoginRequest.accountId, userLoginRequest.password)
-            )
-
-            userSavePort.save(
-                User(
-                    id = xquareUser.id,
-                    accountId = xquareUser.accountId,
-                    password = xquareUser.password,
-                    name = xquareUser.name,
-                    grade = xquareUser.grade,
-                    classNum = xquareUser.classNum,
-                    num = xquareUser.num,
-                    birthDay = xquareUser.birthDay,
-                    role = xquareUser.userRole
-                )
-            )
-
-            return jwtTokenProvider.generateToken(xquareUser.accountId, Role.STU.toString())
+        val accountId = userLoginRequest.accountId
+        createSubscribeTopicEventPort.execute(userLoginRequest.deviceToken, userLoginRequest.accountId)
+        val user = if (!existsUserPort.existsByAccountId(accountId)) {
+            registerUser(userLoginRequest)
         } else {
-            val user = queryUserPort.findByAccountId(userLoginRequest.accountId)
-                ?: throw UserNotFoundException
-
-            if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
-                throw PasswordMissMatchException
-            }
-
-            return jwtTokenProvider.generateToken(user.accountId, Role.STU.toString())
+            authenticateUser(userLoginRequest)
         }
+
+        return generateToken(user.accountId)
+    }
+
+    private fun registerUser(userLoginRequest: UserLoginRequest): User {
+        val xquareUser = xquareFeignClient.xquareUser(
+            XquareRequest(userLoginRequest.accountId, userLoginRequest.password)
+        )
+
+        val newUser = User(
+            id = xquareUser.id,
+            accountId = xquareUser.accountId,
+            password = xquareUser.password,
+            name = xquareUser.name,
+            grade = xquareUser.grade,
+            classNum = xquareUser.classNum,
+            num = xquareUser.num,
+            birthDay = xquareUser.birthDay,
+            role = xquareUser.userRole,
+            profile = xquareUser.profileImageUrl,
+            xquareId = xquareUser.id,
+            deviceToken = userLoginRequest.deviceToken
+        )
+        userSavePort.save(newUser)
+
+        return newUser
+    }
+
+    private fun authenticateUser(userLoginRequest: UserLoginRequest): User {
+        val user = queryUserPort.findByAccountId(userLoginRequest.accountId)
+            ?: throw UserNotFoundException
+
+        if (!passwordEncoder.matches(userLoginRequest.password, user.password)) {
+            throw PasswordMissMatchException
+        }
+
+        userSavePort.save(
+            user.copy(
+                deviceToken = userLoginRequest.deviceToken
+            )
+        )
+        return user
+    }
+
+    private fun generateToken(accountId: String): TokenResponse {
+        return jwtTokenProvider.generateToken(accountId, Role.STU.toString())
     }
 }

@@ -1,5 +1,8 @@
 package dsm.pick2024.domain.attendance.service
 
+import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
+import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
@@ -16,7 +19,7 @@ class QueryClubAttendanceService(
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
-    override fun queryClubAttendance(club: String): List<QueryAttendanceResponse> {
+    override fun queryClubAttendance(period: Int, club: String): List<QueryAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
             ?: throw ClubNotFoundException
 
@@ -27,20 +30,29 @@ class QueryClubAttendanceService(
             } catch (e: EmptyResultDataAccessException) {
                 ""
             }
+            val returnStatus = returnStatus(period, it)
 
             QueryAttendanceResponse(
                 id = it.userId,
-                username = it.userName,
+                userName = it.userName,
                 grade = it.grade,
                 classNum = it.classNum,
                 num = it.num,
-                status6 = it.period6,
-                status7 = it.period7,
-                status8 = it.period8,
-                status9 = it.period9,
-                status10 = it.period10,
+                status = returnStatus,
                 classroomName = classroomName!!
             )
+        }.sortedWith(
+            compareBy({ it.grade }, { it.classNum }, { it.num })
+        )
+    }
+    private fun returnStatus(period: Int, attendance: Attendance): AttendanceStatus {
+        return when (period) {
+            6 -> attendance!!.period6
+            7 -> attendance!!.period7
+            8 -> attendance!!.period8
+            9 -> attendance!!.period9
+            10 -> attendance!!.period10
+            else -> throw InvalidPeriodException
         }
     }
 }

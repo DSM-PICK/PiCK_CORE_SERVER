@@ -17,13 +17,13 @@ class QueryAllWeekendMealStatus(
             weekendMeal.map { meal ->
                 QueryWeekendMealResponse(
                     id = meal.id!!,
-                    name = meal.userName,
+                    userName = meal.userName,
                     status = meal.status,
                     grade = meal.grade,
                     classNum = meal.classNum,
                     num = meal.num
                 )
-            }
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 
         return responseList
     }

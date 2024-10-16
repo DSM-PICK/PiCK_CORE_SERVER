@@ -4,7 +4,7 @@ import java.time.LocalDate
 
 data class QueryUserDetailsInfoResponse(
     val profile: String ? = null,
-    val name: String,
+    val userName: String,
     val birthDay: LocalDate,
     val grade: Int,
     val classNum: Int,

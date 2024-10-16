@@ -44,15 +44,15 @@ class QueryFloorClassroomService(
             }
 
             QueryClassroomResponse(
-                id = classroom.userId,
-                username = classroom.userName,
+                userId = classroom.userId,
+                userName = classroom.userName,
                 classroomName = classroom.classroomName,
                 move = move,
                 grade = classroom.grade,
                 classNum = classroom.classNum,
                 num = classroom.num,
-                startPeriod = classroom.startPeriod,
-                endPeriod = classroom.endPeriod
+                start = classroom.startPeriod,
+                end = classroom.endPeriod
             )
         }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }

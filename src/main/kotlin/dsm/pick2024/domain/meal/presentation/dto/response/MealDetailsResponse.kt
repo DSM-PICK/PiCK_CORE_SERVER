@@ -4,11 +4,16 @@ import java.time.LocalDate
 
 data class MealDetailsResponse(
     val date: LocalDate? = null,
-    val meals: MealResponse? = null
+    val mealList: MealResponse? = null
 )
 
 data class MealResponse(
-    val breakfast: List<String>? = null,
-    val lunch: List<String>? = null,
-    val dinner: List<String>? = null
+    val breakfast: MealDetail? = null,
+    val lunch: MealDetail? = null,
+    val dinner: MealDetail? = null
+)
+
+data class MealDetail(
+    val menu: List<String> = emptyList(),
+    val cal: String? = ""
 )

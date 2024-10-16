@@ -1,8 +1,9 @@
 package dsm.pick2024.domain.earlyreturn.presentation.dto.request
 
-import java.time.LocalTime
+import dsm.pick2024.global.annotation.ValidFormat
 
+@ValidFormat
 data class CreateEarlyReturnRequest(
     val reason: String,
-    val startTime: LocalTime
+    val start: String
 )

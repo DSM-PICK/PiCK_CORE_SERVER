@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryFloorAndStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
@@ -25,12 +26,12 @@ class QueryFloorApplicationService(
                 val filteredClassrooms = if (today == 2 || today == 5) {
                     queryApplicationPort.queryApplicationWithAttendance(floor)
                 } else {
-                    queryApplicationPort.findByFloor(floor)
+                    queryApplicationPort.findByFloorAndApplicationKind(floor, ApplicationKind.APPLICATION)
                 }
                 filteredClassrooms.filter { it.status == status }
             }
             5 -> {
-                queryAllApplicationPort.findAllByStatus(status)
+                queryAllApplicationPort.findAllByStatusAndApplicationKind(status, ApplicationKind.APPLICATION)
             }
             else -> throw FloorNotFoundException
         }

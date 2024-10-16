@@ -3,6 +3,7 @@ package dsm.pick2024.domain.application.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.entity.QApplicationJapEntity
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
@@ -25,42 +26,45 @@ class ApplicationPersistenceAdapter(
         applicationRepository.saveAll(entities)
     }
 
-    override fun existsByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
+    override fun existByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
-    override fun existsOKByUserId(userId: UUID): Boolean {
-        val application = QApplicationJapEntity.applicationJapEntity
-        val user = QUserJpaEntity.userJpaEntity
+    override fun existsByUserIdAndApplicationKind(userId: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.existsByUserIdAndApplicationKind(userId, applicationKind)
 
-        return jpaQueryFactory.selectFrom(application)
-            .innerJoin(user).on(application.userName.eq(user.name))
-            .where(user.id.eq(userId), application.status.eq(Status.OK))
-            .fetchFirst() != null
+    override fun existsByStatusAndUserIdAndApplicationKind(
+        status: Status,
+        userId: UUID,
+        applicationKind: ApplicationKind
+    ) =
+        applicationRepository.existsByStatusAndUserIdAndApplicationKind(status, userId, applicationKind)
+
+    override fun findByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
+
+    override fun deleteByIdAndApplicationKind(applicationId: UUID, applicationKind: ApplicationKind) {
+        applicationRepository.deleteByIdAndApplicationKind(applicationId, applicationKind)
     }
 
-    override fun findById(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
-
-    override fun deleteById(applicationId: UUID) {
-        applicationRepository.deleteById(applicationId)
-    }
-
-    override fun deleteAll() {
+    override fun deleteAll() =
         applicationRepository.deleteAll()
+
+    override fun deleteAllByApplicationKind(applicationKind: ApplicationKind) {
+        applicationRepository.deleteAllByApplicationKind(applicationKind)
     }
 
-    override fun findAll() =
-        applicationRepository.findAll().map { applicationMapper.toDomain(it) }
+    override fun findByUserId(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
 
-    override fun findByUserId(userId: UUID) =
-        applicationRepository.findByUserId(userId).let { applicationMapper.toDomain(it) }
+    override fun findAllByApplicationKind(applicationKind: ApplicationKind) =
+        applicationRepository.findAllByApplicationKind(applicationKind).map { applicationMapper.toDomain(it) }
 
-    override fun findOKApplication(id: UUID) =
-        applicationRepository.findByUserIdAndStatus(id, Status.OK).let {
+    override fun findByUserIdAndStatusAndApplicationKind(status: Status, id: UUID, applicationKind: ApplicationKind) =
+        applicationRepository.findByUserIdAndStatusAndApplicationKind(id, status, applicationKind).let {
             applicationMapper.toDomain(it)
         }
 
     override fun save(application: Application) = applicationRepository.save(applicationMapper.toEntity(application))
 
-    override fun findByFloor(floor: Int) =
+    override fun findByFloorAndApplicationKind(floor: Int, applicationKind: ApplicationKind) =
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -76,7 +80,8 @@ class ApplicationPersistenceAdapter(
                         2 -> 3
                         else -> throw FloorNotFoundException
                     }
-                )
+                ),
+                QApplicationJapEntity.applicationJapEntity.applicationKind.eq(applicationKind)
             )
             .fetch()
             .map { applicationMapper.toDomain(it) }
@@ -93,16 +98,17 @@ class ApplicationPersistenceAdapter(
                     .and(QApplicationJapEntity.applicationJapEntity.classNum.eq(QUserJpaEntity.userJpaEntity.classNum))
                     .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
             ).where(
-                QUserJpaEntity.userJpaEntity.id.`in`(userIds)
+                QUserJpaEntity.userJpaEntity.xquareId.`in`(userIds)
             )
             .fetch()
 
         return applications.map { applicationMapper.toDomain(it) }
     }
 
-    override fun findByGradeAndClassNum(
+    override fun findByGradeAndClassNumAndApplicationKind(
         grade: Int,
-        classNum: Int
+        classNum: Int,
+        applicationKind: ApplicationKind
     ) = jpaQueryFactory
         .selectFrom(QApplicationJapEntity.applicationJapEntity)
         .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -114,12 +120,13 @@ class ApplicationPersistenceAdapter(
         .where(
             QUserJpaEntity.userJpaEntity.grade.eq(grade),
             QUserJpaEntity.userJpaEntity.classNum.eq(classNum),
-            QApplicationJapEntity.applicationJapEntity.status.eq(Status.QUIET)
+            QApplicationJapEntity.applicationJapEntity.status.eq(Status.QUIET),
+            QApplicationJapEntity.applicationJapEntity.applicationKind.eq(applicationKind)
         )
         .fetch()
         .map { applicationMapper.toDomain(it) }
 
-    override fun findAllByStatus(status: Status) =
+    override fun findAllByStatusAndApplicationKind(status: Status, applicationKind: ApplicationKind) =
         jpaQueryFactory
             .selectFrom(QApplicationJapEntity.applicationJapEntity)
             .innerJoin(QUserJpaEntity.userJpaEntity)
@@ -129,7 +136,9 @@ class ApplicationPersistenceAdapter(
                     .and(QApplicationJapEntity.applicationJapEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
             )
             .where(
-                QApplicationJapEntity.applicationJapEntity.status.eq(status)
+                QApplicationJapEntity.applicationJapEntity.status.eq(status),
+                QApplicationJapEntity.applicationJapEntity.applicationKind.eq(applicationKind)
+
             )
             .fetch()
             .map { applicationMapper.toDomain(it) }

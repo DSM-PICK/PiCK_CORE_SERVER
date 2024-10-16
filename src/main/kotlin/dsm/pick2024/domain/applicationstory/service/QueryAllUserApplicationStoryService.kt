@@ -16,23 +16,22 @@ class QueryAllUserApplicationStoryService(
 ) : QueryAllUserApplicationStoryUseCase {
     @Transactional(readOnly = true)
     override fun queryAllUSerApplicationStory(): List<QueryUserClassResponse> {
-        val students = queryStatusPort.findAll()
+        return queryStatusPort.findAll()
+            .map { student ->
+                val applicationStory =
+                    queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
+                val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0
+                val earlyReturnCnt = applicationStory.count { it.type == Type.EARLY_RETURN } ?: 0
 
-        return students.map { student ->
-            val applicationStory =
-                queryAllApplicationStoryPort.findAllByUserId(student.userId) ?: throw UserNotFoundException
-            val applicationCnt = applicationStory.count { it.type == Type.APPLICATION } ?: 0
-            val earlyReturnCnt = applicationStory.count { it.type == Type.EARLY_RETURN } ?: 0
-
-            QueryUserClassResponse(
-                id = student.userId,
-                name = student.userName,
-                grade = student.grade,
-                classNum = student.classNum,
-                num = student.num,
-                applicationCnt = applicationCnt,
-                earlyReturnCnt = earlyReturnCnt
-            )
-        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+                QueryUserClassResponse(
+                    id = student.userId,
+                    userName = student.userName,
+                    grade = student.grade,
+                    classNum = student.classNum,
+                    num = student.num,
+                    applicationCnt = applicationCnt,
+                    earlyReturnCnt = earlyReturnCnt
+                )
+            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }

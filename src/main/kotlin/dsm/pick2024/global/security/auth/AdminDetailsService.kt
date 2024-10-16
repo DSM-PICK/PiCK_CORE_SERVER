@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service
 class AdminDetailsService(
     private val adminFacadeUseCase: AdminFacadeUseCase
 ) : UserDetailsService {
-    override fun loadUserByUsername(username: String): UserDetails {
-        val admin = adminFacadeUseCase.getAdminByAdminId(username)
+    override fun loadUserByUsername(adminId: String): UserDetails {
+        val admin = adminFacadeUseCase.getAdminByAdminId(adminId)
         return AuthDetails(admin!!.adminId, admin.role)
     }
 }

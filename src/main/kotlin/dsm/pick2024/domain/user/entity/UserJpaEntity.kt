@@ -13,6 +13,12 @@ import javax.persistence.Enumerated
 class UserJpaEntity(
     id: UUID,
 
+    @Column(
+        columnDefinition = "BINARY(16)",
+        nullable = false
+    )
+    val xquareId: UUID,
+
     @Column(name = "account_id", nullable = false, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
 
@@ -33,6 +39,9 @@ class UserJpaEntity(
 
     @Column(name = "birth_day", nullable = false)
     val birthDay: LocalDate,
+
+    @Column(name = "device_token", nullable = true)
+    val deviceToken: String?,
 
     @Column(name = "profile_file_name", nullable = true)
     val profile: String ? = null,

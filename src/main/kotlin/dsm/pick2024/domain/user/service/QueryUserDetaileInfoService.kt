@@ -19,7 +19,7 @@ class QueryUserDetaileInfoService(
         val user = userFacadeUseCase.currentUser()
         return QueryUserDetailsInfoResponse(
             profile = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) },
-            name = user.name,
+            userName = user.name,
             birthDay = user.birthDay,
             grade = user.grade,
             classNum = user.classNum,

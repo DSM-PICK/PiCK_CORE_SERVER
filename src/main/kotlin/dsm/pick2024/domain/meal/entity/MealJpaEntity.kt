@@ -1,10 +1,13 @@
 package dsm.pick2024.domain.meal.entity
 
+import dsm.pick2024.domain.meal.enum.MealType
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 
 @Entity(name = "tbl_meal")
 class MealJpaEntity(
@@ -13,13 +16,12 @@ class MealJpaEntity(
     @Column(nullable = false, columnDefinition = "DATE")
     val mealDate: LocalDate,
 
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = true, columnDefinition = "TEXT")
-    val breakfast: String?,
+    val mealType: MealType?,
 
-    @Column(nullable = true, columnDefinition = "TEXT")
-    val lunch: String?,
+    val menu: String? = null,
 
-    @Column(nullable = true, columnDefinition = "TEXT")
-    val dinner: String?
+    val cal: String?
 
 ) : BaseUUIDEntity(id)
