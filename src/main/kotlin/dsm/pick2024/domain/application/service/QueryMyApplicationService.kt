@@ -32,14 +32,13 @@ class QueryMyApplicationService(
                 ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
-
             userId = application.userId,
             userName = application.userName,
             teacherName = application.teacherName!!,
             start = application.start.take(5),
             end = application.end!!.take(5),
             reason = application.reason,
-            profile = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+            profile = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) },
             grade = user.grade,
             classNum = user.classNum,
             num = user.num,

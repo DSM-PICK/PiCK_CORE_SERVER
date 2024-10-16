@@ -18,11 +18,11 @@ class QueryUserSimpleInfoService(
     override fun queryUserSimpleInfo(): QueryUserSimpleInfoResponse {
         val user = userFacadeUseCase.currentUser()
         return QueryUserSimpleInfoResponse(
-            user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) },
             user.name,
             user.grade,
             user.classNum,
-            user.num
+            user.num,
+            user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
         )
     }
 }

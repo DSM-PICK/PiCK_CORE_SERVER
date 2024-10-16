@@ -5,5 +5,5 @@ data class QueryUserSimpleInfoResponse(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val profile: String ? = null,
+    val profile: String ? = null
 )
