@@ -115,7 +115,7 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/application/status",
                 "/weekend-meal/my-status",
-                "/user/profile"
+                "/user/profile",
                 "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
@@ -146,7 +146,6 @@ class SecurityConfig(
                 "/weekend-meal/excel/grade"
             ).hasRole(Role.SCH.name)
             .anyRequest().authenticated()
-//            .anyRequest().permitAll()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
