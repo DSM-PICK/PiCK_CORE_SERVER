@@ -56,9 +56,4 @@ class TimetableController(
     @PatchMapping("/change")
     fun changeTimetable(@RequestBody request: ChangeTimetableRequest) =
         modifyTimetableUseCase.modifyTimetable(request)
-
-//    @GetMapping("/search")
-//    fun autocomplete(@RequestParam("subject") prefix: String): List<String> {
-//        return autocompleteService.autocompleteSubjectName(prefix)
-//    }
 }
