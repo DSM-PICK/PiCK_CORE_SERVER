@@ -21,7 +21,7 @@ data class QueryAllAttendanceResponse(
         attendance: Attendance,
         classroomName: String
     ) : this(
-        attendance.id!!,
+        attendance.userId,
         attendance.userName,
         attendance.grade,
         attendance.classNum,
