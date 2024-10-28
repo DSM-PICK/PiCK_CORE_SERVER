@@ -4,6 +4,7 @@ import dsm.pick2024.domain.schedule.exception.ScheduleNotFoundException
 import dsm.pick2024.domain.schedule.port.`in`.QueryDateScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
+import dsm.pick2024.global.config.cache.CacheName
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,7 +17,7 @@ class QueryDateScheduleService(
     private val querySchedulePort: QuerySchedulePort
 ) : QueryDateScheduleUseCase {
 
-    @Cacheable(value = ["schedules"], key = "#date")
+    @Cacheable(value = [CacheName.SCHEDULES], key = "#date")
     @Transactional(readOnly = true)
     override fun queryDateScheduleUseCase(date: LocalDate): List<ScheduleResponse> {
         val schedule = querySchedulePort.findAllByDate(date)
