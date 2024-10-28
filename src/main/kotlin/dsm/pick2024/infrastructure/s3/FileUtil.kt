@@ -23,9 +23,8 @@ class FileUtil(
     @Value("\${cloud.aws.s3.bucket}")
     lateinit var bucketName: String
 
-    companion object {
-        const val EXP_TIME = 1000 * 60 * 60 * 1
-    }
+    @Value("\${cloud.aws.s3.exp-time}")
+    private lateinit var s3Exp: String
 
     fun upload(file: MultipartFile, path: String): String {
         val ext = verificationFile(file)
@@ -56,7 +55,7 @@ class FileUtil(
 
     fun generateObjectUrl(fileName: String, path: String): String {
         val expiration = Date().apply {
-            time += EXP_TIME
+            time += s3Exp.toLong()
         }
 
         return amazonS3.generatePresignedUrl(

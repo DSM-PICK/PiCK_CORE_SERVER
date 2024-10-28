@@ -17,12 +17,7 @@ class ModifyTimetableService(
 ) : ModifyTimetableUseCase {
     @Transactional
     override fun modifyTimetable(request: ChangeTimetableRequest) {
-        val timetable = queryTimeTablePort.findByDayOfWeekAndPeriodAndGradeAndClassNum(
-            request.dayWeek,
-            request.period,
-            request.grade,
-            request.classNum
-        ) ?: throw TimetableNotFoundException
+        val timetable = queryTimeTablePort.findById(request.id) ?: throw TimetableNotFoundException
 
         Subject.values().find { it.subjectName == request.subject }
             ?: throw InvalidSubjectException
