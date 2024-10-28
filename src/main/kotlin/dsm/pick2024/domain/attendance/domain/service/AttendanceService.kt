@@ -20,7 +20,7 @@ class AttendanceService {
             LocalTime.of(15, 30) to LocalTime.of(16, 30), // 7교시
             LocalTime.of(16, 40) to LocalTime.of(18, 40), // 8교시
             LocalTime.of(18, 40) to LocalTime.of(19, 40), // 9교시
-            LocalTime.of(19, 40) to LocalTime.of(20, 30), // 10교시
+            LocalTime.of(19, 40) to LocalTime.of(20, 30) // 10교시
         )
         val periodNames = listOf(
             "1교시", "2교시", "3교시", "4교시", "5교시",
