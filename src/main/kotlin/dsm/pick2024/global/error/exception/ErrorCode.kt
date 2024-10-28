@@ -41,6 +41,7 @@ enum class ErrorCode(
     INVALID_PERIOD(400, "Invalid period"),
     INVALID_TIME(400, "Invalid Time"),
     INVALID_SUBJECT(400, "Invalid Subject"),
+    UNABLE_APPLY(400, "Unable To Apply"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
