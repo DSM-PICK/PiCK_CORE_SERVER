@@ -40,10 +40,6 @@ class TimetableController(
         @RequestParam(name = "class_num") classNum: Int
     ) =
         queryTeacherTimetableUseCase.queryTeacherTimetable(grade, classNum)
-//
-//    @Operation(summary = "과목 전체 조회")
-//    @GetMapping("/subjects")
-//    fun getSubjectNames() = querySubjectNameUseCase.getAllSubjectNames()
 
     @Operation(summary = "과목 전체 조회")
     @GetMapping("/subjects")

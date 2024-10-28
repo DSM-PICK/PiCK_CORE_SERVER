@@ -6,6 +6,7 @@ import dsm.pick2024.domain.timetable.entity.QTimetableJpaEntity
 import dsm.pick2024.domain.timetable.mapper.TimetableMapper
 import dsm.pick2024.domain.timetable.peristence.repository.TimetableRepository
 import dsm.pick2024.domain.timetable.port.out.TimetablePort
+import java.util.UUID
 import org.springframework.stereotype.Component
 
 @Component
@@ -24,6 +25,12 @@ class TimetablePersistenceAdapter(
     override fun saveAll(timetables: MutableList<Timetable>) {
         val entities = timetables.map { timetableMapper.toEntity(it) }
         timetableRepository.saveAll(entities)
+    }
+
+    override fun findById(id: UUID): Timetable? {
+        return timetableRepository.findById(id).let {
+            timetableMapper.toDomain(it.get())
+        }
     }
 
     override fun findTimetableByDayWeekPort(dayWeek: Int, grade: Int, classNum: Int): List<Timetable> {
