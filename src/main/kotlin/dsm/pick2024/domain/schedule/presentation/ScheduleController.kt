@@ -53,7 +53,6 @@ class ScheduleController(
         @RequestBody modifyScheduleRequest: ModifyScheduleRequest
     ) = modifyScheduleUseCase.modifyModify(modifyScheduleRequest)
 
-    @Cacheable(value = ["monthScheduleCache"], key = "#month.value")
     @Operation(summary = "월 별로 학사일정조회 api")
     @GetMapping("/month")
     fun scheduleMonth(
@@ -66,7 +65,7 @@ class ScheduleController(
     @DeleteMapping("/delete/{scheduleId}")
     fun deleteSchedule(
         @PathVariable(name = "scheduleId") id: UUID
-    ) = deleteScheduleUseCase.deleteSchedule(id)
+    ) = deleteScheduleUseCase.  deleteSchedule(id)
 
     @Operation(summary = "나이스 학사일정 저장 api")
     @PostMapping("/save")
@@ -75,7 +74,7 @@ class ScheduleController(
         @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
 
-    @Cacheable(value = ["dayScheduleCache"], key = "#date")
+    
     @Operation(summary = "일 별 학사일정조회 api")
     @GetMapping("/date")
     fun queryDateSchedule(
