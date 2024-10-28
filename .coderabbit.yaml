@@ -1,0 +1,14 @@
+language: "ko-KR"  # 사용 언어를 한국어로 설정
+early_access: false  #  접근 프로그램에 참여하지 않음
+reviews:  # 리뷰 설정
+    profile: "chill"  # 리뷰 프로필 설정 (편안한 스타일)
+    request_changes_workflow: false  # 변경 요청을 위한 워크플로우 비활성화
+    high_level_summary: true  # 높은 수준의 요약을 활성화
+    poem: true  # 시 작성 활성화
+    review_status: true  # 리뷰 상태 표시 활성화
+    collapse_walkthrough: false  # 단계별 가이드를 기본적으로 접어서 표시
+    auto_review:  # 자동 리뷰 설정
+        enabled: true  # 자동 리뷰 기능 활성화
+        drafts: false  # 초안에 대한 자동 리뷰 비활성화
+chat:  # 채팅 관련 설정
+    auto_reply: true  # 자동 응답 기능 활성화
