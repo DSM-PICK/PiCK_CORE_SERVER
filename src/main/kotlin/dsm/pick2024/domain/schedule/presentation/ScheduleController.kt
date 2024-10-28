@@ -11,7 +11,6 @@ import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleReque
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -65,7 +64,7 @@ class ScheduleController(
     @DeleteMapping("/delete/{scheduleId}")
     fun deleteSchedule(
         @PathVariable(name = "scheduleId") id: UUID
-    ) = deleteScheduleUseCase.  deleteSchedule(id)
+    ) = deleteScheduleUseCase.deleteSchedule(id)
 
     @Operation(summary = "나이스 학사일정 저장 api")
     @PostMapping("/save")
@@ -74,7 +73,6 @@ class ScheduleController(
         @RequestParam(name = "end") end: String
     ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
 
-    
     @Operation(summary = "일 별 학사일정조회 api")
     @GetMapping("/date")
     fun queryDateSchedule(

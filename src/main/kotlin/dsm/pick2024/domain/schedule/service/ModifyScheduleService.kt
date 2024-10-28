@@ -6,7 +6,6 @@ import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.request.ModifyScheduleRequest
 import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.CachePut
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
