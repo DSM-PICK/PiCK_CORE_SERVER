@@ -24,7 +24,7 @@ class FileUtil(
     lateinit var bucketName: String
 
     companion object {
-        const val EXP_TIME = 1000 * 60 * 60 * 1
+        const val EXP_TIME = 1000 * 60 * 60 * 24 * 7
     }
 
     fun upload(file: MultipartFile, path: String): String {
