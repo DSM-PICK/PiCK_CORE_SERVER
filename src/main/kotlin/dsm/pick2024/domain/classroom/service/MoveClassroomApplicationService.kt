@@ -1,8 +1,10 @@
 package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.AleadyApplyingMovementException
+import dsm.pick2024.domain.classroom.exception.UnableApplyException
 import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
@@ -18,12 +20,17 @@ class MoveClassroomApplicationService(
     private val saveClassRoomPort: SaveClassRoomPort,
     private val existClassRoomPort: ExistClassRoomPort,
     private val userFacadeUseCase: UserFacadeUseCase,
+    private val existsApplicationPort: ExistsApplicationPort,
     private val eventPublisher: ApplicationEventPublisher
 ) : MoveClassroomApplicationUseCase {
 
     @Transactional
     override fun moveClassroomApplication(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser()
+
+        if (existsApplicationPort.existByUserId(user.xquareId)) {
+            throw UnableApplyException
+        }
 
         if (existClassRoomPort.existsByUserId(user.xquareId)) {
             throw AleadyApplyingMovementException
