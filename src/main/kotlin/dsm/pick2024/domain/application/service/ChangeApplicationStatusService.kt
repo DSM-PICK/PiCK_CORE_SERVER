@@ -41,7 +41,6 @@ class ChangeApplicationStatusService(
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
         } else {
-
             val updateApplicationList = request.idList.map { id ->
                 val application = findApplicationById(id)
                 updateApplication(application, admin.name)
