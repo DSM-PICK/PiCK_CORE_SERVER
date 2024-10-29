@@ -1,5 +1,7 @@
 package dsm.pick2024.domain.timetable.service
 
+import dsm.pick2024.domain.timetable.enum.Subject
+import dsm.pick2024.domain.timetable.exception.InvalidSubjectException
 import dsm.pick2024.domain.timetable.exception.TimetableNotFoundException
 import dsm.pick2024.domain.timetable.port.`in`.ModifyTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
@@ -15,12 +17,10 @@ class ModifyTimetableService(
 ) : ModifyTimetableUseCase {
     @Transactional
     override fun modifyTimetable(request: ChangeTimetableRequest) {
-        val timetable = queryTimeTablePort.findByDayOfWeekAndPeriodAndGradeAndClassNum(
-            request.dayWeek,
-            request.period,
-            request.grade,
-            request.classNum
-        ) ?: throw TimetableNotFoundException
+        val timetable = queryTimeTablePort.findById(request.id) ?: throw TimetableNotFoundException
+
+        Subject.values().find { it.subjectName == request.subject }
+            ?: throw InvalidSubjectException
 
         saveTimetablePort.save(
             timetable.copy(

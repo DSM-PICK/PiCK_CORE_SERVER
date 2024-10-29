@@ -112,7 +112,6 @@ class AttendanceService {
                 } else {
                     null
                 }
-            }
-            .filterNotNull()
+            }.filterNotNull()
     }
 }

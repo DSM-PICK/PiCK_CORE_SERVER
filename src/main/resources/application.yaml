@@ -57,6 +57,7 @@ cloud:
             secretKey: ${AWS_SECRET_KEY}
         s3:
             bucket: ${AWS_BUCKET}
+            exp-time: 604800000
         region:
             static: ${AWS_STATIC}
         stack:

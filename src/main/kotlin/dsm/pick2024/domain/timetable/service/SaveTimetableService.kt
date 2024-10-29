@@ -17,24 +17,28 @@ class SaveTimetableService(
     override fun saveTimetable() {
         val timetableEntities = neisTimetableFeignClientService.getNeisInfoToEntity()
 
-        val updatedTimetableEntities = timetableEntities?.map { timetable ->
+        val updatedTimetableEntities = timetableEntities?.mapNotNull { timetable ->
             val subject = updatedSubjectName(timetable.subjectName)
 
-            Timetable(
-                id = timetable.id,
-                grade = timetable.grade,
-                classNum = timetable.classNum,
-                period = timetable.period,
-                subjectName = subject,
-                dayWeek = timetable.dayWeek
-            )
+            if (subject == "토요휴업일") {
+                null
+            } else {
+                Timetable(
+                    id = timetable.id,
+                    grade = timetable.grade,
+                    classNum = timetable.classNum,
+                    period = timetable.period,
+                    subjectName = subject,
+                    dayWeek = timetable.dayWeek
+                )
+            }
         }?.toMutableList()
 
         updatedTimetableEntities?.let { saveAllTimetablePort.saveAll(it) }
     }
 
     private fun updatedSubjectName(subjectName: String): String {
-        val cleanName = subjectName.replace(Regex("^\\(.*?\\)\\s*"), "")
+        val cleanName = subjectName.replace(Regex("[\\[\\(].*?[\\]\\)]"), "")
 
         return when (cleanName) {
             "* 데이터베이스 구현", "* SQL활용" -> "DB 프로그래밍"

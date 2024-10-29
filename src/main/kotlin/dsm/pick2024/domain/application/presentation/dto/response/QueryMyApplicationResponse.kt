@@ -10,6 +10,7 @@ data class QueryMyApplicationResponse(
     val start: String,
     val end: String,
     val reason: String,
+    val profile: String?,
     val grade: Int,
     val classNum: Int,
     val num: Int,

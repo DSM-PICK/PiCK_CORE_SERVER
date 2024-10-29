@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class ChangeAllAttendanceService(
+class
+ChangeAllAttendanceService(
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort
 ) : ChangeAllAttendanceUseCase {
@@ -31,6 +32,7 @@ class ChangeAllAttendanceService(
                 attendance.period9,
                 attendance.period10
             )
+
             val add = attendance.copy(
                 period6 = list.getOrElse(0) { defaultPeriods[0] },
                 period7 = list.getOrElse(1) { defaultPeriods[1] },
@@ -38,8 +40,10 @@ class ChangeAllAttendanceService(
                 period9 = list.getOrElse(3) { defaultPeriods[3] },
                 period10 = list.getOrElse(4) { defaultPeriods[4] }
             )
+
             update.add(add)
         }
+
         saveAttendancePort.saveAll(update)
     }
 }

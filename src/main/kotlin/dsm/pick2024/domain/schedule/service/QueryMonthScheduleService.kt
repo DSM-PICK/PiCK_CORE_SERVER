@@ -3,6 +3,8 @@ package dsm.pick2024.domain.schedule.service
 import dsm.pick2024.domain.schedule.port.`in`.QueryMonthScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.QuerySchedulePort
 import dsm.pick2024.domain.schedule.presentation.dto.response.ScheduleResponse
+import dsm.pick2024.global.config.cache.CacheName
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Month
@@ -15,6 +17,7 @@ class QueryMonthScheduleService(
     private val querySchedulePort: QuerySchedulePort
 ) : QueryMonthScheduleUseCase {
 
+    @Cacheable(value = [CacheName.SCHEDULES], key = "#year.value + '-' + #month.value")
     @Transactional(readOnly = true)
     override fun scheduleMonth(
         year: Year,

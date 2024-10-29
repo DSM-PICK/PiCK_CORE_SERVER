@@ -2,6 +2,7 @@ package dsm.pick2024.domain.timetable.presentation
 
 import dsm.pick2024.domain.timetable.port.`in`.ModifyTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryDayTimetableUseCase
+import dsm.pick2024.domain.timetable.port.`in`.QuerySubjectNameUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryTeacherTimetableUseCase
 import dsm.pick2024.domain.timetable.port.`in`.QueryWeekTimetableUseCase
 import dsm.pick2024.domain.timetable.presentation.dto.request.ChangeTimetableRequest
@@ -21,7 +22,8 @@ class TimetableController(
     private val queryDayTimetableUseCase: QueryDayTimetableUseCase,
     private val queryWeekTimetableUseCase: QueryWeekTimetableUseCase,
     private val queryTeacherTimetableUseCase: QueryTeacherTimetableUseCase,
-    private val modifyTimetableUseCase: ModifyTimetableUseCase
+    private val modifyTimetableUseCase: ModifyTimetableUseCase,
+    private val querySubjectNameUseCase: QuerySubjectNameUseCase
 ) {
     @Operation(summary = "당일 시간표 조회 API")
     @GetMapping("/today")
@@ -38,10 +40,10 @@ class TimetableController(
         @RequestParam(name = "class_num") classNum: Int
     ) =
         queryTeacherTimetableUseCase.queryTeacherTimetable(grade, classNum)
-//
-//    @Operation(summary = "과목 전체 조회")
-//    @GetMapping("/subjects")
-//    fun getSubjectNames() = querySubjectNameUseCase.getAllSubjectNames()
+
+    @Operation(summary = "과목 전체 조회")
+    @GetMapping("/subjects")
+    fun getSubjectNames() = querySubjectNameUseCase.getAllSubjectNames()
 
     @Operation(summary = "시간표 수정")
     @PatchMapping("/change")
