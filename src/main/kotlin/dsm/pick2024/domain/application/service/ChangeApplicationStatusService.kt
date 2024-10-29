@@ -40,31 +40,33 @@ class ChangeApplicationStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
+        } else {
+
+            val updateApplicationList = request.idList.map { id ->
+                val application = findApplicationById(id)
+                updateApplication(application, admin.name)
+            }
+
+            val applicationStory = updateApplicationList.map { it ->
+                createApplicationStory(it)
+            }
+
+            val attendance = updateApplicationList.map { it ->
+                val attendanceId = queryAttendancePort.findByUserId(it.userId)
+                attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
+            }.toMutableList()
+
+            saveApplicationPort.saveAll(updateApplicationList)
+            applicationStorySaveAllPort.saveAll(applicationStory)
+            saveAttendancePort.saveAll(attendance)
+            eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
         }
-
-        val updateApplicationList = request.idList.map { id ->
-            val application = findApplicationById(id)
-            updateApplication(application, admin.name)
-        }
-
-        val applicationStory = updateApplicationList.map { it ->
-            createApplicationStory(it)
-        }
-
-        val attendance = updateApplicationList.map { it ->
-            val attendanceId = queryAttendancePort.findByUserId(it.userId)
-            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
-        }.toMutableList()
-
-        saveApplicationPort.saveAll(updateApplicationList)
-        applicationStorySaveAllPort.saveAll(applicationStory)
-        saveAttendancePort.saveAll(attendance)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
-        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
-        idList.forEach { id ->
+        val applicationList = idList.map { findApplicationById(it) }
+        eventPublisher.publishEvent(ChangeStatusRequest(this, applicationList.map { it.userId }))
+        idList.map { id ->
             val application = findApplicationById(id)
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
         }
