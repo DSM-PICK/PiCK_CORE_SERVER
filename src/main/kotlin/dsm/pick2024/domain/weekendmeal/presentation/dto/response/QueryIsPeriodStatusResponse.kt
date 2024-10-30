@@ -1,7 +1,9 @@
 package dsm.pick2024.domain.weekendmeal.presentation.dto.response
 
+import java.time.LocalDate
+
 data class QueryIsPeriodStatusResponse(
     val status: Boolean,
-    val start: String,
-    val end: String
+    val start: LocalDate?,
+    val end: LocalDate?
 )
