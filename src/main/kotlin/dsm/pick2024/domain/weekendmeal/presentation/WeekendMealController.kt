@@ -77,14 +77,14 @@ class WeekendMealController(
         printExcelClassWeekendMealUseCase.execute(httpServletResponse, grade, classNum)
 
     @Operation(summary = "주말급식 유저 정보 저장 API")
-    @PostMapping("/saveAll")
+    @PostMapping("/application-list")
     fun saveAll(
         @RequestParam key: String
     ) = saveAllWeekendMealUserUseCase.saveAll(key)
 
     @Operation(summary = "주말급식 유저 전체 조회 API")
-    @GetMapping("/hey")
-    fun hey() = queryAllWeekendMealStatus.findAll()
+    @GetMapping("/application-list")
+    fun getAllWeekendMealApplicationList() = queryAllWeekendMealStatus.findAll()
 
     @Operation(summary = "주말급식 신청기간 변경 API")
     @PatchMapping("/period")

@@ -38,10 +38,6 @@ class SecurityConfig(
                 "/admin/refresh",
                 "/user/login",
                 "/user/refresh",
-                "/", "/swagger-ui/**",
-                "/v3/api-docs/**",
-                "/dsm-pick/swagger-ui/index.html",
-                "/dsm-pick/swagger-ui/index.html/**",
                 "/main"
             ).permitAll()
             .antMatchers(
@@ -94,7 +90,7 @@ class SecurityConfig(
                 "/after/change",
                 "/class-room/status",
                 "/class",
-                "weekend-meal/period",
+                "/weekend-meal/period",
                 "/timetable/change"
             ).hasRole(Role.SCH.name)
             .antMatchers(
@@ -126,7 +122,7 @@ class SecurityConfig(
                 "/application/simple",
                 "/class-room/move",
                 "/early-return/my",
-                "meal/date",
+                "/meal/date",
                 "/timetable/today",
                 "/timetable/week",
                 "/weekend-meal/my",
