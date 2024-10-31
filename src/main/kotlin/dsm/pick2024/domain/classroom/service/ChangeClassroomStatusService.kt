@@ -36,33 +36,33 @@ class ChangeClassroomStatusService(
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
             eventPublisher.publishEvent(ChangeStatusRequest(this, request.idList))
+        } else {
+            val update = mutableListOf<Classroom>()
+            val updateAttendanceList = mutableListOf<Attendance>()
+
+            request.idList.forEach { id ->
+                val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
+
+                val updatedClassroom = classroom.copy(status = OK)
+                update.add(updatedClassroom)
+
+                val updatedAttendance = queryAttendancePort.findByUserId(classroom.userId)?.run {
+                    copy(
+                        period6 = getStatus(classroom, period6, 6),
+                        period7 = getStatus(classroom, period7, 7),
+                        period8 = getStatus(classroom, period8, 8),
+                        period9 = getStatus(classroom, period9, 9),
+                        period10 = getStatus(classroom, period10, 10)
+                    )
+                } ?: throw UserNotFoundException
+
+                updateAttendanceList.add(updatedAttendance)
+            }
+
+            saveClassRoomPort.saveAll(update)
+            saveAttendancePort.saveAll(updateAttendanceList)
+            eventPublisher.publishEvent(ChangeStatusRequest(this, updateAttendanceList.map { it.userId }))
         }
-
-        val update = mutableListOf<Classroom>()
-        val updateAttendanceList = mutableListOf<Attendance>()
-
-        request.idList.forEach { id ->
-            val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
-
-            val updatedClassroom = classroom.copy(status = OK)
-            update.add(updatedClassroom)
-
-            val updatedAttendance = queryAttendancePort.findByUserId(classroom.userId)?.run {
-                copy(
-                    period6 = getStatus(classroom, period6, 6),
-                    period7 = getStatus(classroom, period7, 7),
-                    period8 = getStatus(classroom, period8, 8),
-                    period9 = getStatus(classroom, period9, 9),
-                    period10 = getStatus(classroom, period10, 10)
-                )
-            } ?: throw UserNotFoundException
-
-            updateAttendanceList.add(updatedAttendance)
-        }
-
-        saveClassRoomPort.saveAll(update)
-        saveAttendancePort.saveAll(updateAttendanceList)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateAttendanceList.map { it.userId }))
     }
 
     private fun getStatus(
