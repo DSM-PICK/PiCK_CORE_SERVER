@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.LocalDate.now
+import java.time.ZoneId
 
 @Service
 class QueryIsWeekendMealPeriodService(
@@ -16,7 +17,7 @@ class QueryIsWeekendMealPeriodService(
 
     @Transactional(readOnly = true)
     override fun isWeekendMealPeriod(): QueryIsPeriodStatusResponse {
-        val today = now()
+        val today = now(ZoneId.of("Asia/Seoul"))
         val periods = queryWeekendMealPeriodPort.queryAllWeekendMeal()
 
         val currentPeriod = findCurrentPeriod(today, periods)
@@ -32,7 +33,7 @@ class QueryIsWeekendMealPeriodService(
 
     private fun findCurrentPeriod(today: LocalDate, periods: List<WeekendMealPeriod>): WeekendMealPeriod? {
         return periods.find {
-            today.isAfter(it.start.minusDays(1)) && today.isBefore(it.end.plusDays(1))
+            (today.isEqual(it.start) || today.isAfter(it.start)) && today.isBefore(it.end.plusDays(1))
         }
     }
 

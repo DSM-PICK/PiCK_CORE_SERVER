@@ -6,6 +6,7 @@ import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMea
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate.*
+import java.time.ZoneId
 
 @Service
 class QueryWeekendMealApplicationService(
@@ -14,12 +15,12 @@ class QueryWeekendMealApplicationService(
 
     @Transactional
     override fun queryWeekendMealApplication(): QueryWeekendMealStatusResponse {
-        val today = now()
+        val today = now(ZoneId.of("Asia/Seoul"))
 
         val periods = queryWeekendMealPeriodPort.queryAllWeekendMeal()
 
         val period = periods.find {
-            today.isAfter(it.start.minusDays(1)) && today.isBefore(it.end.plusDays(1))
+            (today.isEqual(it.start) || today.isAfter(it.start)) && today.isBefore(it.end.plusDays(1))
         }
 
         val status = period != null
