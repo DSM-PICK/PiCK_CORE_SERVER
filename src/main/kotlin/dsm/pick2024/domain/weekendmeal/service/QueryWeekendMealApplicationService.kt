@@ -17,7 +17,6 @@ class QueryWeekendMealApplicationService(
     override fun queryWeekendMealApplication(): QueryWeekendMealStatusResponse {
         val today = now(ZoneId.of("Asia/Seoul"))
 
-
         val periods = queryWeekendMealPeriodPort.queryAllWeekendMeal()
 
         val period = periods.find {
