@@ -38,7 +38,7 @@ class QueryIsWeekendMealPeriodService(
     }
 
     private fun findNextPeriod(today: LocalDate, periods: List<WeekendMealPeriod>): WeekendMealPeriod? {
-        return periods.filter { it.start.isAfter(today) }
-            .minByOrNull { it.start }
+        return periods.firstOrNull { it.start.isAfter(today) }
+            ?: periods.lastOrNull { it.end.isBefore(today) }
     }
 }
