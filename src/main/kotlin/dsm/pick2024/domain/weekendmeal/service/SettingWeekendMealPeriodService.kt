@@ -19,15 +19,15 @@ class SettingWeekendMealPeriodService(
         val weekendMealPeriod = queryWeekendMealPeriodPort.queryWeekendMealById(admin!!)
         saveWeekendMealPeriodPort.save(
             weekendMealPeriod?.copy(
-                id = admin,
                 start = request.start,
                 end = request.end,
-                month = request.month
+                month = request.month,
+                adminId = admin
             ) ?: WeekendMealPeriod(
-                id = admin,
                 start = request.start,
                 end = request.end,
-                month = request.month
+                month = request.month,
+                adminId = admin
             )
         )
     }

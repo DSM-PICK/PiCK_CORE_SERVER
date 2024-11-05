@@ -11,5 +11,6 @@ class WeekendMealPeriodJpaEntity(
     id: UUID?,
     val start: LocalDate,
     val end: LocalDate,
-    val month: Month
+    val month: Month,
+    val adminId: UUID
 ) : BaseUUIDEntity(id)

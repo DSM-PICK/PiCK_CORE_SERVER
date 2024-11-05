@@ -12,7 +12,8 @@ class WeekendMealPeriodMapper {
                 id = id,
                 start = start,
                 end = end,
-                month = month
+                month = month,
+                adminId = adminId
             )
         }
 
@@ -22,7 +23,8 @@ class WeekendMealPeriodMapper {
                 id = id,
                 start = start,
                 end = end,
-                month = month
+                month = month,
+                adminId = adminId
             )
         }
 }
