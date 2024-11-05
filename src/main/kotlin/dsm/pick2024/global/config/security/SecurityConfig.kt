@@ -38,7 +38,11 @@ class SecurityConfig(
                 "/admin/refresh",
                 "/user/login",
                 "/user/refresh",
-                "/main"
+                "/main",
+                "/swagger-ui/**",
+                "/v3/api-docs/**",
+                "/dsm-pick/swagger-ui/index.html",
+                "/dsm-pick/swagger-ui/index.html/**",
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
