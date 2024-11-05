@@ -21,6 +21,10 @@ class WeekendMealPeriodPersistenceAdapter(
         return weekendMealPeriodRepository.findById(id)?.let { weekendMealPeriodMapper.toDomain(it) }
     }
 
+    override fun queryWeekendMealByAdminId(id: UUID): WeekendMealPeriod? {
+        return weekendMealPeriodRepository.findByAdminId(id)?.let { weekendMealPeriodMapper.toDomain(it) }
+    }
+
     override fun queryAllWeekendMeal(): List<WeekendMealPeriod> {
         return weekendMealPeriodRepository.findAll().map { weekendMealPeriodMapper.toDomain(it) }
     }
