@@ -24,18 +24,12 @@ class NoticePersistenceAdapter(
     override fun deleteById(id: UUID) = noticeRepository.deleteById(id)
 
     override fun findByToday(): List<Notice> {
-        val today = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
-
         return jpaQueryFactory
             .selectFrom(QNoticeJpaEntity.noticeJpaEntity)
-            .where(
-                QNoticeJpaEntity.noticeJpaEntity.createAt.year().eq(today.year)
-                    .and(QNoticeJpaEntity.noticeJpaEntity.createAt.month().eq(today.monthValue))
-                    .and(QNoticeJpaEntity.noticeJpaEntity.createAt.dayOfMonth().eq(today.dayOfMonth))
-            )
+            .orderBy(QNoticeJpaEntity.noticeJpaEntity.createAt.desc())
+            .limit(5)
             .fetch()
             .map { noticeMapper.toDomain(it) }
-            .sortedByDescending { it.createAt }
     }
 
     override fun findAll() =
