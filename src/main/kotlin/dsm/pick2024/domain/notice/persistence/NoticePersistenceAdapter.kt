@@ -7,8 +7,6 @@ import dsm.pick2024.domain.notice.mapper.NoticeMapper
 import dsm.pick2024.domain.notice.persistence.repository.NoticeRepository
 import dsm.pick2024.domain.notice.port.out.NoticePort
 import org.springframework.stereotype.Component
-import java.time.LocalDateTime
-import java.time.ZoneId
 import java.util.*
 
 @Component
