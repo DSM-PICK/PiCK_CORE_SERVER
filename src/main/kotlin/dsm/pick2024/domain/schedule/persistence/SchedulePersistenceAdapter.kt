@@ -56,4 +56,8 @@ class SchedulePersistenceAdapter(
         val entities = schedule.map { scheduleMapper.toEntity(it) }
         scheduleRepository.saveAll(entities)
     }
+
+    override fun deleteAll() {
+        scheduleRepository.deleteAll()
+    }
 }

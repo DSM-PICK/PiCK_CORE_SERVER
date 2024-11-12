@@ -35,7 +35,7 @@ class ResetAttendanceService(
 
     private fun getStatus(currentStatus: AttendanceStatus) =
         when (currentStatus) {
-            AttendanceStatus.PICNIC, AttendanceStatus.EMPLOYMENT -> currentStatus
+            AttendanceStatus.DROPOUT, AttendanceStatus.PICNIC, AttendanceStatus.EMPLOYMENT -> currentStatus
             else -> AttendanceStatus.ATTENDANCE
         }
 }

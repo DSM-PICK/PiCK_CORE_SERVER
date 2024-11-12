@@ -7,5 +7,6 @@ enum class AttendanceStatus {
     DISALLOWED, // 무단
     PICNIC, // 현체
     EMPLOYMENT, // 취업
-    GO_HOME //귀가
+    GO_HOME, //귀가
+    DROPOUT //자퇴
 }
