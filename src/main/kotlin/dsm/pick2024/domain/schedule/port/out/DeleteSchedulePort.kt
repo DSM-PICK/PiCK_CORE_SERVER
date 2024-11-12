@@ -4,4 +4,6 @@ import java.util.UUID
 
 interface DeleteSchedulePort {
     fun deleteById(id: UUID)
+
+    fun deleteAll()
 }

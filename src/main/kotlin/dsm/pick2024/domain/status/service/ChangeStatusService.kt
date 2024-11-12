@@ -35,7 +35,7 @@ class ChangeStatusService(
             )
             updateStatuses.add(updatedStatus)
 
-            if (requests.statusType in setOf(EMPLOYMENT, PICNIC, ATTENDANCE)) {
+            if (requests.statusType in setOf(EMPLOYMENT, PICNIC, ATTENDANCE, DROPOUT)) {
                 val attendance = queryAttendancePort.findByUserId(requests.userId)
                     ?: throw UserNotFoundException
 
@@ -56,6 +56,7 @@ class ChangeStatusService(
     private fun updatePeriodStatus(statusType: StatusType): AttendanceStatus {
         return when (statusType) {
             PICNIC -> AttendanceStatus.PICNIC
+            DROPOUT -> AttendanceStatus.DROPOUT
             EMPLOYMENT -> AttendanceStatus.EMPLOYMENT
             else -> AttendanceStatus.ATTENDANCE
         }

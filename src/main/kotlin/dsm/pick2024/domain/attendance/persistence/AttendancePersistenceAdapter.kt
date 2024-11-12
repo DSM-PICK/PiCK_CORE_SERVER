@@ -3,6 +3,7 @@ package dsm.pick2024.domain.attendance.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.entity.QAttendanceJpaEntity
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.mapper.AttendanceMapper
 import dsm.pick2024.domain.attendance.persistence.repository.AttendanceRepository
 import dsm.pick2024.domain.attendance.port.out.AttendancePort
@@ -27,11 +28,15 @@ class AttendancePersistenceAdapter(
 
     override fun findAll() = attendanceJpaRepository.findAll().map { attendanceMapper.toDomain(it) }
 
-    override fun findByFloor(floor: Int): List<Attendance>? = attendanceJpaRepository.findByFloor(floor).map {
-        attendanceMapper.toDomain(
-            it
-        )
-    }
+    override fun findByFloor(floor: Int): List<Attendance>? =
+        jpaQueryFactory
+            .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
+            .where(
+                QAttendanceJpaEntity.attendanceJpaEntity.floor.eq(floor),
+                QAttendanceJpaEntity.attendanceJpaEntity.period6.ne(AttendanceStatus.DROPOUT)
+            )
+            .fetch()
+            .map { attendanceMapper.toDomain(it) }
 
     override fun findByGradeAndClassNum(
         grade: Int,
@@ -40,7 +45,8 @@ class AttendancePersistenceAdapter(
         .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
         .where(
             QAttendanceJpaEntity.attendanceJpaEntity.grade.eq(grade),
-            QAttendanceJpaEntity.attendanceJpaEntity.classNum.eq(classNum)
+            QAttendanceJpaEntity.attendanceJpaEntity.classNum.eq(classNum),
+            QAttendanceJpaEntity.attendanceJpaEntity.period6.ne(AttendanceStatus.DROPOUT)
         )
         .fetch()
         .map { attendanceMapper.toDomain(it) }
@@ -49,7 +55,8 @@ class AttendancePersistenceAdapter(
         jpaQueryFactory
             .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
             .where(
-                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club)
+                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club),
+                QAttendanceJpaEntity.attendanceJpaEntity.period6.ne(AttendanceStatus.DROPOUT)
             )
             .fetch()
             .map { attendanceMapper.toDomain(it) }
