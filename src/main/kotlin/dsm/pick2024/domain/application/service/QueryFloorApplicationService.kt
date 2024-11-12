@@ -19,16 +19,11 @@ class QueryFloorApplicationService(
 
     @Transactional(readOnly = true)
     override fun queryFloorAndStatusApplication(floor: Int, status: Status): List<QueryApplicationResponse> {
-        val today = LocalDate.now().dayOfWeek
-
         val applications = when (floor) {
             2, 3, 4 -> {
-                val filteredClassrooms = if (today == 2 || today == 5) {
-                    queryApplicationPort.queryApplicationWithAttendance(floor)
-                } else {
+                val filterClassroomList =
                     queryApplicationPort.findByFloorAndApplicationKind(floor, ApplicationKind.APPLICATION)
-                }
-                filteredClassrooms.filter { it.status == status }
+                filterClassroomList.filter { it.status == status }
             }
             5 -> {
                 queryAllApplicationPort.findAllByStatusAndApplicationKind(status, ApplicationKind.APPLICATION)
