@@ -39,21 +39,19 @@ class QueryClubAttendanceService(
                 classNum = it.classNum,
                 num = it.num,
                 status = returnStatus,
-                classroomName = classroomName!!
+                classroomName = classroomName
             )
-        }.filter {
-            it.status == AttendanceStatus.DROPOUT || it.status == AttendanceStatus.EMPLOYMENT
         }.sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
     }
     private fun returnStatus(period: Int, attendance: Attendance): AttendanceStatus {
         return when (period) {
-            6 -> attendance!!.period6
-            7 -> attendance!!.period7
-            8 -> attendance!!.period8
-            9 -> attendance!!.period9
-            10 -> attendance!!.period10
+            6 -> attendance.period6
+            7 -> attendance.period7
+            8 -> attendance.period8
+            9 -> attendance.period9
+            10 -> attendance.period10
             else -> throw InvalidPeriodException
         }
     }

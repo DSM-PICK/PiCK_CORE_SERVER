@@ -3,6 +3,7 @@ package dsm.pick2024.domain.attendance.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.entity.QAttendanceJpaEntity
+import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.mapper.AttendanceMapper
 import dsm.pick2024.domain.attendance.persistence.repository.AttendanceRepository
 import dsm.pick2024.domain.attendance.port.out.AttendancePort
@@ -49,7 +50,8 @@ class AttendancePersistenceAdapter(
         jpaQueryFactory
             .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
             .where(
-                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club)
+                QAttendanceJpaEntity.attendanceJpaEntity.club.eq(club),
+                QAttendanceJpaEntity.attendanceJpaEntity.period6.ne(AttendanceStatus.DROPOUT)
             )
             .fetch()
             .map { attendanceMapper.toDomain(it) }
