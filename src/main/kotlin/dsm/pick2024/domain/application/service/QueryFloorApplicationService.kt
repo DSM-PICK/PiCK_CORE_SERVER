@@ -7,7 +7,6 @@ import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
 import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
-import org.joda.time.LocalDate
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
