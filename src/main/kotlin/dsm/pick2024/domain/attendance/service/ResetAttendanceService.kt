@@ -5,6 +5,7 @@ import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
+import dsm.pick2024.domain.status.entity.enum.StatusType
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -35,7 +36,7 @@ class ResetAttendanceService(
 
     private fun getStatus(currentStatus: AttendanceStatus) =
         when (currentStatus) {
-            AttendanceStatus.PICNIC, AttendanceStatus.EMPLOYMENT -> currentStatus
+            AttendanceStatus.DROPOUT, AttendanceStatus.PICNIC, AttendanceStatus.EMPLOYMENT -> currentStatus
             else -> AttendanceStatus.ATTENDANCE
         }
 }
