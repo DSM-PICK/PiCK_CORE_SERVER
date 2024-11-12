@@ -69,9 +69,7 @@ class ScheduleController(
     @Operation(summary = "나이스 학사일정 저장 api")
     @PostMapping("/save")
     fun saveSchedule(
-        @RequestParam(name = "start") start: String,
-        @RequestParam(name = "end") end: String
-    ) = scheduleUseCase.saveNeisInfoToDatabase(start, end)
+    ) = scheduleUseCase.saveNeisInfoToDatabase()
 
     @Operation(summary = "일 별 학사일정조회 api")
     @GetMapping("/date")

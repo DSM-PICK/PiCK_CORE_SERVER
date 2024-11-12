@@ -15,4 +15,6 @@ interface ScheduleRepository : Repository<ScheduleJpaEntity, UUID> {
     fun saveAll(entity: Iterable<ScheduleJpaEntity>)
 
     fun findAllByDate(date: LocalDate): List<ScheduleJpaEntity>?
+
+    fun deleteAll()
 }

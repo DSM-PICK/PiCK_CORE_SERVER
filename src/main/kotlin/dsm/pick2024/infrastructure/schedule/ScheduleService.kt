@@ -5,6 +5,8 @@ import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
+import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
+import dsm.pick2024.domain.schedule.service.SaveScheduleService
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.DeleteTimeTablePort
@@ -20,7 +22,8 @@ class ScheduleService(
     private val mealUseCase: MealUseCase,
     private val resetAttendanceUseCase: ResetAttendanceUseCase,
     private val resetStatusUseCase: ResetStatusUseCase,
-    private val saveTimetableUseCase: SaveTimetableUseCase
+    private val saveTimetableUseCase: SaveTimetableUseCase,
+    private val saveScheduleUseCase: SaveScheduleUseCase
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -44,5 +47,10 @@ class ScheduleService(
     fun saveTimetable() {
         deleteTimetablePort.deleteAll()
         saveTimetableUseCase.saveTimetable()
+    }
+
+    @Scheduled(cron = "0 0 8 * * ?")
+    fun saveSchedule() {
+        saveScheduleUseCase.saveNeisInfoToDatabase()
     }
 }
