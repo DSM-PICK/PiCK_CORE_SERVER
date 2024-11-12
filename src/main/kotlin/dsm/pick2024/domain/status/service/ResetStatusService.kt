@@ -10,13 +10,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetStatusService(
-    private val querystatusPort: QueryStatusPort,
+    private val queryStatusPort: QueryStatusPort,
     private val saveStatusPort: SaveStatusPort
 ) : ResetStatusUseCase {
 
     @Transactional(readOnly = true)
     override fun reset() {
-        val allStudent = querystatusPort.findAll()
+        val allStudent = queryStatusPort.findAll()
         val update = mutableListOf<Status>()
 
         allStudent.map { it ->
