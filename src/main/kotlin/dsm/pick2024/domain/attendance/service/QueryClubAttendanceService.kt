@@ -41,6 +41,8 @@ class QueryClubAttendanceService(
                 status = returnStatus,
                 classroomName = classroomName!!
             )
+        }.filter {
+            it.status == AttendanceStatus.DROPOUT || it.status == AttendanceStatus.EMPLOYMENT
         }.sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
