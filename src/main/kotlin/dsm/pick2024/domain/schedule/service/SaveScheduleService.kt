@@ -6,8 +6,6 @@ import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
 import dsm.pick2024.global.config.cache.CacheName
 import dsm.pick2024.infrastructure.feign.NeisScheduleFeignClientService
 import org.springframework.cache.annotation.CacheEvict
-import org.springframework.context.annotation.Configuration
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -23,7 +21,6 @@ class SaveScheduleService(
     @CacheEvict(value = [CacheName.SCHEDULES], allEntries = true)
     @Transactional
     override fun saveNeisInfoToDatabase() {
-
         val (start, end) = formatDate()
         deleteSchedulePort.deleteAll()
         val scheduleForSave =
