@@ -6,7 +6,6 @@ import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
-import dsm.pick2024.domain.schedule.service.SaveScheduleService
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.DeleteTimeTablePort
