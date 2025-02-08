@@ -17,7 +17,6 @@ class QueryTimetableService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val fileUtil: FileUtil
 ) : QueryDayTimetableUseCase {
-    // @Cacheable(value = ["dayTimetableCache"], key = "#root.methodName")
     @Transactional(readOnly = true)
     override fun queryDayTimetable(): DayTimetableResponse {
         val user = userFacadeUseCase.currentUser()
