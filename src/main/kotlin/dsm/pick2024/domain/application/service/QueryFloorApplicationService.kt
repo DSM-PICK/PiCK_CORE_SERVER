@@ -30,7 +30,7 @@ class QueryFloorApplicationService(
             else -> throw FloorNotFoundException
         }
 
-        return applications.map { QueryApplicationResponse(it) }.sortedWith(
+        return applications.map { QueryApplicationResponse(it) }.distinctBy { it.id }.sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
     }
