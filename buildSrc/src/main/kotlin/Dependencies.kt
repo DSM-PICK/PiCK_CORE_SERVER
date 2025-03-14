@@ -57,4 +57,6 @@ object Dependencies {
 
     const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
 
+    const val SPRING_BATCH = "org.springframework.boot:spring-boot-starter-batch"
+
 }
