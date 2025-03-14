@@ -38,20 +38,23 @@ class SaveTimetableService(
     }
 
     private fun updatedSubjectName(subjectName: String): String {
-        val cleanName = subjectName.replace(Regex("[\\[\\(].*?[\\]\\)]"), "")
+        val cleanName = subjectName.replace(Regex("[\\[\\(].*?[\\]\\)]|\\d|공통"), "")
 
         return when (cleanName) {
             "* 데이터베이스 구현", "* SQL활용" -> "DB 프로그래밍"
             "* 응용SW 변경관리" -> "응용SW 변경관리"
             "* 응용SW 운영관리" -> "디지털 포렌식"
+            "* 응용SW 기초 기술 활용" -> "응용 소프트웨어 기초"
             "* 정보통신기기 PCB보드 개발" -> "정보통신기기 PCB보드 개발"
             "* 정보통신기기 펌웨어구현" -> "정보통신기기 펌웨어구현"
             "* 빅데이터 분석 결과 시각화", "빅데이터 분석 결과 시각화" -> "빅데이터 분석"
             "* 시스템 유지보수관리" -> "시스템 유지보수관리"
             "* 시스템 점검관리" -> "시스템 점검관리"
-            "자율활동", "동아리활동" -> "창체"
+            "자율활동", "동아리활동", "자율·자치활동" -> "창체"
             "자료구조와 알고리즘" -> "자료구조"
             "미술 창작" -> "미술"
+            "서버 구축 및 운영" -> "서버 프로그래밍 실무"
+            "머신러닝 딥러닝" -> "빅데이터 실무"
             else -> cleanName
         }
     }
