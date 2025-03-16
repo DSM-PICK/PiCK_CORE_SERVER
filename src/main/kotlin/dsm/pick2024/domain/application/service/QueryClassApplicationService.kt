@@ -28,7 +28,7 @@ class QueryClassApplicationService(
                 .map { QueryApplicationResponse(it) }
         }
 
-        return applications.sortedWith(
+        return applications.distinctBy { it.id }.sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
     }
