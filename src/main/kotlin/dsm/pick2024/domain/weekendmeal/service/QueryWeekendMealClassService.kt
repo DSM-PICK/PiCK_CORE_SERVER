@@ -26,5 +26,5 @@ class QueryWeekendMealClassService(
                 classNum = it.classNum,
                 num = it.num
             )
-        }
+        }.distinctBy { it.id }
 }

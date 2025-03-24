@@ -32,5 +32,5 @@ class QueryClassAllAttendanceService(
                         classroomName
                     )
                 }
-            }.sortedWith(compareBy { it.num })
+            }.distinctBy { it.id }.sortedWith(compareBy { it.num })
 }

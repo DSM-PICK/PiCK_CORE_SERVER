@@ -23,7 +23,7 @@ class QueryAllWeekendMealStatus(
                     classNum = meal.classNum,
                     num = meal.num
                 )
-            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+            }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 
         return responseList
     }

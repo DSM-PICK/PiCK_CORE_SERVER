@@ -32,6 +32,6 @@ class QueryAllUserApplicationStoryService(
                     applicationCnt = applicationCnt,
                     earlyReturnCnt = earlyReturnCnt
                 )
-            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+            }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }
