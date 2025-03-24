@@ -14,7 +14,7 @@ class QueryAllAfterSchoolStudentService(
     @Transactional(readOnly = true)
     override fun queryAfterSchoolStudentAll() =
         queryAfterSchoolPort.findAll()
-            .map { QueryAfterSchoolStudentAllResponse(it) }.sortedWith(
+            .map { QueryAfterSchoolStudentAllResponse(it) }.distinctBy { it.id }.sortedWith(
                 compareBy({ it.grade }, { it.classNum }, { it.num })
             )
 }
