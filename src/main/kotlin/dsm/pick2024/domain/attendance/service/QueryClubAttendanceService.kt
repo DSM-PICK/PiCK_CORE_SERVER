@@ -41,7 +41,7 @@ class QueryClubAttendanceService(
                 status = returnStatus,
                 classroomName = classroomName
             )
-        }.sortedWith(
+        }.distinctBy { it.id }.sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
     }

@@ -45,7 +45,7 @@ class QueryClassAttendanceService(
                         classroomName = classroomName!!
                     )
                 }
-            }.sortedWith(compareBy { it.num })
+            }.distinctBy { it.id }.sortedWith(compareBy { it.num })
     private fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
         return when (period) {
             6 -> user!!.period6

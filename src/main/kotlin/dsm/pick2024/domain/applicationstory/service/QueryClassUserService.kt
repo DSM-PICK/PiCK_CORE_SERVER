@@ -36,7 +36,7 @@ class QueryClassUserService(
                 applicationCnt = applicationCnt,
                 earlyReturnCnt = earlyReturnCnt
             )
-        }.sortedWith(
+        }.distinctBy { it.id }.sortedWith(
             compareBy { it.num }
         )
     }

@@ -32,7 +32,7 @@ class QueryClassStatusService(
                         num = classStatus.num,
                         status = classStatus.status
                     )
-                }.sortedWith(
+                }.distinctBy { it.userId }.sortedWith(
                     compareBy { it.num }
                 )
 

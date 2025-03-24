@@ -37,7 +37,7 @@ class QueryClubAllAttendanceService(
             val classroomName = getClassroomName(it.userId)
 
             QueryAllAttendanceResponse(it, classroomName)
-        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+        }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 
     private fun getClassroomName(userId: UUID): String {

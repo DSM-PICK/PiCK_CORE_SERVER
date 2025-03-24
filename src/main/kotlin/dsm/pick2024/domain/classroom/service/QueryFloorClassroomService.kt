@@ -54,6 +54,6 @@ class QueryFloorClassroomService(
                 start = classroom.startPeriod,
                 end = classroom.endPeriod
             )
-        }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+        }.distinctBy { it.userId }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     }
 }

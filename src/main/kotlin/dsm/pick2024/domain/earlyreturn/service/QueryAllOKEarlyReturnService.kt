@@ -20,5 +20,5 @@ class QueryAllOKEarlyReturnService(
             .filter { it.status == Status.OK }
             .map { it ->
                 QueryAllOKEarlyReturnResponse(it)
-            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+            }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }

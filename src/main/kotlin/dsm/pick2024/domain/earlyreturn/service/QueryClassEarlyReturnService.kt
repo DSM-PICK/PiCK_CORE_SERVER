@@ -23,7 +23,7 @@ class QueryClassEarlyReturnService(
         queryAllApplicationPort.findAllByStatusAndApplicationKind(Status.QUIET, ApplicationKind.EARLY_RETURN)
             .map {
                 QueryEarlyReturnResponse(it)
-            }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
+            }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
         queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.QUIET }
