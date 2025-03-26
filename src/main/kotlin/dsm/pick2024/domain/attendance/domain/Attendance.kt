@@ -20,4 +20,10 @@ data class Attendance(
     val period8: AttendanceStatus,
     val period9: AttendanceStatus,
     val period10: AttendanceStatus
-)
+
+){
+
+    fun updateClub(clubName: String): Attendance {
+        return this.copy(club = clubName)
+    }
+}
