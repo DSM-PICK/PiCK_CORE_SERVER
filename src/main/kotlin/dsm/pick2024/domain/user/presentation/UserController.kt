@@ -1,11 +1,6 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.user.port.`in`.LoginUseCase
-import dsm.pick2024.domain.user.port.`in`.QueryUserAllUseCase
-import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
-import dsm.pick2024.domain.user.port.`in`.QueryUserSimpleInfoUseCase
-import dsm.pick2024.domain.user.port.`in`.UploadUserProfileUseCase
-import dsm.pick2024.domain.user.port.`in`.UserTokenRefreshUseCase
+import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
@@ -30,7 +25,8 @@ class UserController(
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase,
-    private val uploadUserProfileUseCase: UploadUserProfileUseCase
+    private val uploadUserProfileUseCase: UploadUserProfileUseCase,
+    private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase
 ) {
     @Operation(summary = "유저 로그인 API")
     @PostMapping("/login")
@@ -59,4 +55,8 @@ class UserController(
     @Operation(summary = "유저 프로필 업로드 API")
     @PatchMapping("/profile")
     fun upload(@RequestParam("file")file: MultipartFile) = uploadUserProfileUseCase.uploadUserProfile(file)
+
+    @Operation(summary = "엑셀 파일 동아리 정보 업데이트 API")
+    @PostMapping("/club")
+    fun updateClub(@RequestParam("file")file: MultipartFile) = updateUserClubFromExcelUseCase.updateUserClubFromExcel(file)
 }
