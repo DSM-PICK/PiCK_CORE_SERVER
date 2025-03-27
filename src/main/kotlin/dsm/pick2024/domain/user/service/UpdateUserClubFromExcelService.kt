@@ -28,27 +28,31 @@ class UpdateUserClubFromExcelService(
         }
 
         var excel: Workbook? = null
+        try{
 
-        if (extension == "xlsx") {
-            excel = XSSFWorkbook(file.inputStream)
-        } else {
-            excel = HSSFWorkbook(file.inputStream)
-        }
-
-        val worksheet: Sheet = excel.getSheetAt(0)
-
-        for (i in 2 until worksheet.physicalNumberOfRows) {
-            val row: Row = worksheet.getRow(i)
-            val studentNum = row.getCell(0).toString().trim()
-            val clubName = row.getCell(2).toString().trim()
-            if (studentNum != "" && clubName != "") {
-                updateClub(
-                    studentNum.substring(0, 1).toInt(),
-                    studentNum.substring(1, 2).toInt(),
-                    studentNum.substring(2, 4).toInt(),
-                    clubName
-                )
+            if (extension == "xlsx") {
+                excel = XSSFWorkbook(file.inputStream)
+            } else {
+                excel = HSSFWorkbook(file.inputStream)
             }
+
+            val worksheet: Sheet = excel.getSheetAt(0)
+
+            for (i in 2 until worksheet.physicalNumberOfRows) {
+                val row: Row = worksheet.getRow(i)
+                val studentNum = row.getCell(0).toString().trim()
+                val clubName = row.getCell(2).toString().trim()
+                if (studentNum != "" && clubName != "") {
+                    updateClub(
+                        studentNum.substring(0, 1).toInt(),
+                        studentNum.substring(1, 2).toInt(),
+                        studentNum.substring(2, 4).toInt(),
+                        clubName
+                    )
+                }
+            }
+        } finally {
+            excel?.close()
         }
     }
 
