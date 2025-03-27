@@ -21,7 +21,7 @@ class UpdateUserClubFromExcelService(
 ) : UpdateUserClubFromExcelUseCase {
     @Transactional
     override fun updateUserClubFromExcel(file: MultipartFile) {
-        val extension = FileNameUtils.getExtension(file.originalFilename!!)
+        val extension = FileNameUtils.getExtension(file.originalFilename!!).lowercase()
 
         if (extension != "xls" && extension != "xlsx") {
             throw NotExtensionXslException
