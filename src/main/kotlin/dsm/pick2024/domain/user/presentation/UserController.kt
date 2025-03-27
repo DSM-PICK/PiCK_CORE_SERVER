@@ -58,5 +58,7 @@ class UserController(
 
     @Operation(summary = "엑셀 파일 동아리 정보 업데이트 API")
     @PostMapping("/club")
-    fun updateClub(@RequestParam("file")file: MultipartFile) = updateUserClubFromExcelUseCase.updateUserClubFromExcel(file)
+    fun updateClub(@RequestParam("file")file: MultipartFile) = updateUserClubFromExcelUseCase.updateUserClubFromExcel(
+        file
+    )
 }

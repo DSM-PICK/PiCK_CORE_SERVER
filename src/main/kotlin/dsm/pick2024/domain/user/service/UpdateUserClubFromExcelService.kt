@@ -15,15 +15,15 @@ import org.springframework.web.multipart.MultipartFile
 import javax.transaction.Transactional
 
 @Service
-class UpdateUserClubFromExcelService (
+class UpdateUserClubFromExcelService(
     private val attendancePersistenceAdapter: AttendancePersistenceAdapter,
     private val saveAttendancePort: SaveAttendancePort
-): UpdateUserClubFromExcelUseCase {
+) : UpdateUserClubFromExcelUseCase {
     @Transactional
     override fun updateUserClubFromExcel(file: MultipartFile) {
         val extension = FileNameUtils.getExtension(file.originalFilename!!)
 
-        if(extension != "xls" && extension != "xlsx") {
+        if (extension != "xls" && extension != "xlsx") {
             throw NotExtensionXslException
         }
 
@@ -31,17 +31,17 @@ class UpdateUserClubFromExcelService (
 
         if (extension == "xlsx") {
             excel = XSSFWorkbook(file.inputStream)
-        } else{
+        } else {
             excel = HSSFWorkbook(file.inputStream)
         }
 
         val worksheet: Sheet = excel.getSheetAt(0)
 
-        for(i in 2 until worksheet.physicalNumberOfRows){
+        for (i in 2 until worksheet.physicalNumberOfRows) {
             val row: Row = worksheet.getRow(i)
             val studentNum = row.getCell(0).toString().trim()
             val clubName = row.getCell(2).toString().trim()
-            if(studentNum != "" && clubName != "") {
+            if (studentNum != "" && clubName != "") {
                 updateClub(
                     studentNum.substring(0, 1).toInt(),
                     studentNum.substring(1, 2).toInt(),
@@ -52,9 +52,8 @@ class UpdateUserClubFromExcelService (
         }
     }
 
-    private fun updateClub(grade:Int, classNum:Int, num:Int, clubName:String){
+    private fun updateClub(grade: Int, classNum: Int, num: Int, clubName: String) {
         val attendance = attendancePersistenceAdapter.findByStudentNum(grade, classNum, num)
         attendance?.updateClub(clubName)?.let { saveAttendancePort.save(it) }
     }
-
 }

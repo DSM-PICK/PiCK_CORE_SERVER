@@ -62,5 +62,5 @@ class AttendancePersistenceAdapter(
             .map { attendanceMapper.toDomain(it) }
 
     override fun findByStudentNum(grade: Int, classNum: Int, num: Int): Attendance? =
-        attendanceJpaRepository.findByGradeAndClassNumAndNum(grade,classNum,num).let { attendanceMapper.toDomain(it) }
+        attendanceJpaRepository.findByGradeAndClassNumAndNum(grade, classNum, num).let { attendanceMapper.toDomain(it) }
 }
