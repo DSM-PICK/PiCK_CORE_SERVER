@@ -1,11 +1,9 @@
 package dsm.pick2024.domain.user.service
 
-import dsm.pick2024.domain.attendance.persistence.AttendancePersistenceAdapter
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.user.exception.NotExtensionXslException
 import dsm.pick2024.domain.user.port.`in`.UpdateUserClubFromExcelUseCase
-import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.apache.commons.compress.utils.FileNameUtils
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Row
@@ -30,8 +28,7 @@ class UpdateUserClubFromExcelService(
         }
 
         var excel: Workbook? = null
-        try{
-
+        try {
             if (extension == "xlsx") {
                 excel = XSSFWorkbook(file.inputStream)
             } else {
