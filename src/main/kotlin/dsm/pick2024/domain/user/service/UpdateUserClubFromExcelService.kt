@@ -1,9 +1,11 @@
 package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.attendance.persistence.AttendancePersistenceAdapter
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.user.exception.NotExtensionXslException
 import dsm.pick2024.domain.user.port.`in`.UpdateUserClubFromExcelUseCase
+import dsm.pick2024.domain.user.port.out.QueryUserPort
 import org.apache.commons.compress.utils.FileNameUtils
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Row
@@ -16,7 +18,7 @@ import javax.transaction.Transactional
 
 @Service
 class UpdateUserClubFromExcelService(
-    private val attendancePersistenceAdapter: AttendancePersistenceAdapter,
+    private val queryAttendancePort: QueryAttendancePort,
     private val saveAttendancePort: SaveAttendancePort
 ) : UpdateUserClubFromExcelUseCase {
     @Transactional
@@ -57,7 +59,7 @@ class UpdateUserClubFromExcelService(
     }
 
     private fun updateClub(grade: Int, classNum: Int, num: Int, clubName: String) {
-        val attendance = attendancePersistenceAdapter.findByStudentNum(grade, classNum, num)
+        val attendance = queryAttendancePort.findByStudentNum(grade, classNum, num)
         attendance?.updateClub(clubName)?.let { saveAttendancePort.save(it) }
     }
 }
