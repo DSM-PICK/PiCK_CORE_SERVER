@@ -42,7 +42,7 @@ class ScheduleService(
         resetAttendanceUseCase.resetAttendance()
     }
 
-    @Scheduled(cron = "0 0 14 * * SUN")
+    @Scheduled(cron = "0 0 6-23 * * 1-5", zone = "Asia/Seoul")
     fun saveTimetable() {
         deleteTimetablePort.deleteAll()
         saveTimetableUseCase.saveTimetable()
