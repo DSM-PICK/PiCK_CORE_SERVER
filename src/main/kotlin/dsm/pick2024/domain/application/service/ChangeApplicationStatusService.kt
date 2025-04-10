@@ -98,6 +98,7 @@ class ChangeApplicationStatusService(
             start = startAndEnd.first(),
             end = startAndEnd.last(),
             date = application.date,
+            returnTeacherName = null,
             type = Type.APPLICATION,
             userId = application.userId
         )
