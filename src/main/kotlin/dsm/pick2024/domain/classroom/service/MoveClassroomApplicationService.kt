@@ -10,6 +10,7 @@ import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
 import dsm.pick2024.domain.event.dto.UserInfoRequest
+import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -49,6 +50,6 @@ class MoveClassroomApplicationService(
                 status = Status.QUIET
             )
         )
-        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.xquareId))
     }
 }
