@@ -17,6 +17,7 @@ import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
+import dsm.pick2024.domain.event.enums.EventTopic
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -58,7 +59,9 @@ class ChangeApplicationStatusService(
             saveApplicationPort.saveAll(updateApplicationList)
             applicationStorySaveAllPort.saveAll(applicationStory)
             saveAttendancePort.saveAll(attendance)
-            eventPublisher.publishEvent(ChangeStatusRequest(this, updateApplicationList.map { it.userId }))
+            eventPublisher.publishEvent(
+                ChangeStatusRequest(EventTopic.HANDLE_EVENT, updateApplicationList.map { it.userId })
+            )
         }
     }
 
@@ -95,6 +98,7 @@ class ChangeApplicationStatusService(
             start = startAndEnd.first(),
             end = startAndEnd.last(),
             date = application.date,
+            returnTeacherName = null,
             type = Type.APPLICATION,
             userId = application.userId
         )

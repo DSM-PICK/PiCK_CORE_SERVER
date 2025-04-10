@@ -22,4 +22,8 @@ class ApplicationStoryPersistenceAdapter(
         applicationStoryRepository.findAllByUserId(userId)
             .map { it.let { story -> applicationStoryMapper.toDomain(story) } }
             .sortedByDescending { it.date }
+
+    override fun save(applicationStory: ApplicationStory) {
+        applicationStoryRepository.save(applicationStoryMapper.toEntity(applicationStory))
+    }
 }

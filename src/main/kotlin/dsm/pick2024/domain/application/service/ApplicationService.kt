@@ -9,6 +9,7 @@ import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.event.dto.UserInfoRequest
+import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -47,6 +48,6 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.xquareId))
     }
 }
