@@ -13,6 +13,11 @@ data class ApplicationStory(
     val start: String,
     val end: String? = null,
     val userName: String,
+    val returnTeacherName: String? = null,
     val date: LocalDate,
     val type: Type
-)
+) {
+    fun updateReturnTeacher(returnTeacherName: String?): ApplicationStory {
+        return this.copy(returnTeacherName = returnTeacherName)
+    }
+}
