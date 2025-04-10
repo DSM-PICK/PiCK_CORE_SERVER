@@ -28,6 +28,9 @@ class ApplicationStoryJpaEntity(
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,
 
+    @Column(name = "return_teacher_name", nullable = true, columnDefinition = "VARCHAR(10)")
+    val teacherName: String? = null,
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "type", nullable = false, columnDefinition = "VARCHAR(20)")
     val type: Type,
