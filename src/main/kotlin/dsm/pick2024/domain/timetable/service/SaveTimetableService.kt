@@ -38,7 +38,6 @@ class SaveTimetableService(
     }
 
     override fun saveNextWeekTimeTable() {
-
     }
 
     private fun updatedSubjectName(subjectName: String): String {
