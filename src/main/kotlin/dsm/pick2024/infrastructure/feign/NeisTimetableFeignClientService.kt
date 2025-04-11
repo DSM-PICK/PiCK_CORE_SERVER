@@ -27,6 +27,7 @@ class NeisTimetableFeignClientService(
                 schoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
                 atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
                 //요청을 보낸 날짜에 baseDay를 더한 후의 일주일 시간표를 변경한다.
+
                 startedYmd = runDay.plusDays(baseDay).toString().replace("-", ""),
                 endedYmd = runDay.plusDays(baseDay + 7).toString().replace("-", "")
             )
