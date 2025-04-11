@@ -29,8 +29,8 @@ class NeisTimetableFeignClientService(
                 atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
                 //요청을 보낸 날짜에 baseDay를 더한 후의 일주일 시간표를 변경한다.
 
-                startedYmd = runDay.with(java.time.DayOfWeek.MONDAY).toString().replace("-", ""),
-                endedYmd = runDay.with(java.time.DayOfWeek.MONDAY).plusDays(7).toString().replace("-", "")
+                startedYmd = runDay.with(java.time.DayOfWeek.SUNDAY).toString().replace("-", ""),
+                endedYmd = runDay.with(java.time.DayOfWeek.SUNDAY).plusDays(7).toString().replace("-", "")
             )
         val timetableJson =
             Gson().fromJson(
