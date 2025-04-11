@@ -14,4 +14,6 @@ interface AttendanceRepository : Repository<AttendanceJpaEntity, UUID> {
     fun findAll(): List<AttendanceJpaEntity>
 
     fun findByFloor(floor: Int): List<AttendanceJpaEntity>
+
+    fun findByGradeAndClassNumAndNum(grade: Int, classNum: Int, number: Int): AttendanceJpaEntity
 }
