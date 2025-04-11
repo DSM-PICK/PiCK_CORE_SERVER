@@ -45,7 +45,13 @@ class ScheduleService(
     @Scheduled(cron = "0 0 6-23 * * 1-5", zone = "Asia/Seoul")
     fun saveTimetable() {
         deleteTimetablePort.deleteAll()
-        saveTimetableUseCase.saveTimetable()
+        saveTimetableUseCase.saveTimetable(0)
+    }
+
+    @Scheduled(cron = "0 0 2 * * 6", zone = "Asia/Seoul")
+    fun saveNextWeekTimeTable() {
+        deleteTimetablePort.deleteAll()
+        saveTimetableUseCase.saveTimetable(3)
     }
 
     @Scheduled(cron = "0 0 8 * * ?")
