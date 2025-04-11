@@ -14,8 +14,8 @@ class SaveTimetableService(
 ) : SaveTimetableUseCase {
 
     @Transactional
-    override fun saveTimetable() {
-        val timetableEntities = neisTimetableFeignClientService.getNeisInfoToEntity()
+    override fun saveTimetable(baseTime: Long) {
+        val timetableEntities = neisTimetableFeignClientService.getNeisInfoToEntity(baseTime)
 
         val updatedTimetableEntities = timetableEntities?.mapNotNull { timetable ->
             val subject = updatedSubjectName(timetable.subjectName)
@@ -35,6 +35,10 @@ class SaveTimetableService(
         }?.toMutableList()
 
         updatedTimetableEntities?.let { saveAllTimetablePort.saveAll(it) }
+    }
+
+    override fun saveNextWeekTimeTable() {
+
     }
 
     private fun updatedSubjectName(subjectName: String): String {

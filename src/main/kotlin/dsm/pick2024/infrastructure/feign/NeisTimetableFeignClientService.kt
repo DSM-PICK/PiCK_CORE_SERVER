@@ -16,9 +16,10 @@ class NeisTimetableFeignClientService(
     private val neisKey: String,
     private val neisFeignClient: NeisFeignClient
 ) {
-    fun getNeisInfoToEntity(): MutableList<Timetable>? {
+    fun getNeisInfoToEntity(baseDay : Long): MutableList<Timetable>? {
         val runDay = LocalDate.now()
-
+        println(runDay.plusDays(baseDay).toString().replace("-", ""))
+        println(runDay.plusDays(baseDay+7).toString().replace("-", ""))
         val neisTimetableServiceInfoString =
             neisFeignClient.hisTimetable(
                 key = neisKey,
@@ -27,8 +28,9 @@ class NeisTimetableFeignClientService(
                 pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
                 schoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
                 atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
-                startedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).toString().replace("-", ""),
-                endedYmd = runDay.withDayOfMonth(runDay.dayOfMonth).plusDays(7).toString().replace("-", "")
+                //요청을 보낸 날짜에 baseDay를 더한 후의 일주일 시간표를 변경한다.
+                startedYmd = runDay.plusDays(baseDay).toString().replace("-", ""),
+                endedYmd = runDay.plusDays(baseDay+7).toString().replace("-", "")
             )
         val timetableJson =
             Gson().fromJson(
