@@ -3,6 +3,7 @@ package dsm.pick2024.domain.classroom.service
 import dsm.pick2024.domain.classroom.port.`in`.BackUserClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.event.dto.UserInfoRequest
+import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -18,6 +19,6 @@ class BackUserClassroomService(
     override fun backClassroom() {
         val user = userFacadeUseCase.currentUser()
         deleteClassRoomPort.deleteByUserId(user.xquareId)
-        eventPublisher.publishEvent(UserInfoRequest(this, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.xquareId))
     }
 }

@@ -6,6 +6,7 @@ import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.event.dto.UserInfoRequest
+import dsm.pick2024.domain.event.enums.EventTopic
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -23,8 +24,8 @@ class ReturnApplicationReturnService(
             val application = queryApplicationPort.findByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
                 ?: throw ApplicationNotFoundException
 
-            deleteApplicationPort.deleteByIdAndApplicationKind(it, ApplicationKind.APPLICATION)
-            eventPublisher.publishEvent(UserInfoRequest(this, application.userId))
+            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
+            eventPublisher.publishEvent(UserInfoRequest(EventTopic.UPDATE_RETURN_TEACHER, application.userId))
         }
     }
 }

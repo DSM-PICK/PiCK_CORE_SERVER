@@ -16,7 +16,8 @@ class ApplicationStoryMapper {
                 userName = userName,
                 date = date,
                 type = type,
-                userId = userId
+                userId = userId,
+                teacherName = returnTeacherName
             )
         }
 
@@ -30,7 +31,8 @@ class ApplicationStoryMapper {
                 userName = userName,
                 date = date,
                 type = type,
-                userId = userId
+                userId = userId,
+                returnTeacherName = teacherName
             )
         }
 }
