@@ -37,9 +37,6 @@ class SaveTimetableService(
         updatedTimetableEntities?.let { saveAllTimetablePort.saveAll(it) }
     }
 
-    override fun saveNextWeekTimeTable() {
-    }
-
     private fun updatedSubjectName(subjectName: String): String {
         val cleanName = subjectName.replace(Regex("[\\[\\(].*?[\\]\\)]|\\d|공통"), "")
 
