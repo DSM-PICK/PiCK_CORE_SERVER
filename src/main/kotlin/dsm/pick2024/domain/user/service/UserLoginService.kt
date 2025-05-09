@@ -58,7 +58,6 @@ class UserLoginService(
             birthDay = xquareUser.birthDay,
             role = xquareUser.userRole,
             profile = xquareUser.profileImageUrl,
-            xquareId = xquareUser.id,
             deviceToken = userLoginRequest.deviceToken
         )
         userSavePort.save(newUser)
