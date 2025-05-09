@@ -9,6 +9,7 @@ import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.DeleteTimeTablePort
+import dsm.pick2024.domain.weekendmeal.port.`in`.UpdateWeekendMealUseCase
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
@@ -22,7 +23,8 @@ class ScheduleService(
     private val resetAttendanceUseCase: ResetAttendanceUseCase,
     private val resetStatusUseCase: ResetStatusUseCase,
     private val saveTimetableUseCase: SaveTimetableUseCase,
-    private val saveScheduleUseCase: SaveScheduleUseCase
+    private val saveScheduleUseCase: SaveScheduleUseCase,
+    private val updateWeekendMealUseCase: UpdateWeekendMealUseCase,
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -58,4 +60,11 @@ class ScheduleService(
     fun saveSchedule() {
         saveScheduleUseCase.saveNeisInfoToDatabase()
     }
+
+    @Scheduled(cron = "0 0 23 L * ?")
+    fun weekendMealStatusReset(){
+        updateWeekendMealUseCase.execute()
+    }
+
+
 }
