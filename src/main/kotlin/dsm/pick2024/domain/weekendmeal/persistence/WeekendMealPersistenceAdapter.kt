@@ -79,6 +79,5 @@ class WeekendMealPersistenceAdapter(
             .update(QWeekendMealJpaEntity.weekendMealJpaEntity)
             .set(QWeekendMealJpaEntity.weekendMealJpaEntity.status, Status.NO)
             .execute()
-
     }
 }

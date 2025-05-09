@@ -24,7 +24,7 @@ class ScheduleService(
     private val resetStatusUseCase: ResetStatusUseCase,
     private val saveTimetableUseCase: SaveTimetableUseCase,
     private val saveScheduleUseCase: SaveScheduleUseCase,
-    private val updateWeekendMealUseCase: UpdateWeekendMealUseCase,
+    private val updateWeekendMealUseCase: UpdateWeekendMealUseCase
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -62,9 +62,7 @@ class ScheduleService(
     }
 
     @Scheduled(cron = "0 0 23 L * ?")
-    fun weekendMealStatusReset(){
+    fun weekendMealStatusReset() {
         updateWeekendMealUseCase.execute()
     }
-
-
 }

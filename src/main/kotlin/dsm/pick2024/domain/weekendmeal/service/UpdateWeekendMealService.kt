@@ -8,11 +8,10 @@ import javax.transaction.Transactional
 @Service
 class UpdateWeekendMealService(
     private val updateWeekendMealPort: UpdateWeekendMealPort
-    ): UpdateWeekendMealUseCase {
+) : UpdateWeekendMealUseCase {
 
     @Transactional
-    override fun execute(){
+    override fun execute() {
         updateWeekendMealPort.resetStatus()
     }
-
 }
