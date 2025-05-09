@@ -73,4 +73,12 @@ class WeekendMealPersistenceAdapter(
             .let { result ->
                 result?.map { weekendMealMapper.toDomain(it) } ?: emptyList()
             }
+
+    override fun resetStatus() {
+        jpaQueryFactory
+            .update(QWeekendMealJpaEntity.weekendMealJpaEntity)
+            .set(QWeekendMealJpaEntity.weekendMealJpaEntity.status, Status.NO)
+            .execute()
+
+    }
 }
