@@ -78,6 +78,7 @@ class WeekendMealPersistenceAdapter(
         jpaQueryFactory
             .update(QWeekendMealJpaEntity.weekendMealJpaEntity)
             .set(QWeekendMealJpaEntity.weekendMealJpaEntity.status, Status.NO)
+            .where(QWeekendMealJpaEntity.weekendMealJpaEntity.status.eq(Status.OK))
             .execute()
     }
 }
