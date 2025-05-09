@@ -56,12 +56,12 @@ class ScheduleService(
         saveTimetableUseCase.saveTimetable(4)
     }
 
-    @Scheduled(cron = "0 0 8 * * ?")
+    @Scheduled(cron = "0 0 8 * * ?", zone = "Asia/Seoul")
     fun saveSchedule() {
         saveScheduleUseCase.saveNeisInfoToDatabase()
     }
 
-    @Scheduled(cron = "0 0 23 L * ?")
+    @Scheduled(cron = "0 0 23 L * ?", zone = "Asia/Seoul")
     fun weekendMealStatusReset() {
         updateWeekendMealUseCase.execute()
     }
