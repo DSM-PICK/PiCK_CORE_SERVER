@@ -70,3 +70,12 @@ servlet:
 
 firebase:
     url: ${FIREBASE_URL}
+
+mail:
+    host: smtp.gmail.com
+    port: ${MAIL_PORT:587}
+    username: ${MAIL}
+    password: ${MAIL_PASSWORD}
+    auth: true
+    enable: true
+    required: true
