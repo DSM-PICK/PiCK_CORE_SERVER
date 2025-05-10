@@ -13,10 +13,10 @@ import javax.persistence.Enumerated
 class UserJpaEntity(
     id: UUID,
 
-    @Column(name = "account_id", nullable = false, unique = true, columnDefinition = "VARCHAR(40)")
+    @Column(name = "account_id", nullable = true, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
 
-    @Column(name = "password", nullable = false, columnDefinition = "CHAR(60)")
+    @Column(name = "password", nullable = true, columnDefinition = "CHAR(60)")
     val password: String,
 
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(10)")
