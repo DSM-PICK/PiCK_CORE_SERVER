@@ -16,16 +16,11 @@ class UserPersistenceAdapter(
     private val jpaQueryFactory: JPAQueryFactory
 ) : UserPort {
 
-    override fun findById(userId: UUID): User? {
-        val entity = userRepository.findById(userId)
-        return userMapper.toDomain(entity.get())
-    }
+    override fun findByUserId(userId: UUID): User? = userRepository.findById(userId)?.let { userMapper.toDomain(it) }
 
     override fun findByAccountId(accountId: String): User? =
         userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
 
-    override fun findByXquareId(xquareId: UUID): User? =
-        userRepository.findByXquareId(xquareId)?.let { userMapper.toDomain(it) }
 
     override fun findByStudentNum(
         grade: Int,

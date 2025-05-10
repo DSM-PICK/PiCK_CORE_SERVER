@@ -22,5 +22,5 @@ class UserFacade(
         queryUserPort.findByAccountId(accountId) ?: throw UserNotFoundException
 
     override fun getUserByXquareId(userId: UUID) =
-        queryUserPort.findByXquareId(userId) ?: throw UserNotFoundException
+        queryUserPort.findByUserId(userId) ?: throw UserNotFoundException
 }

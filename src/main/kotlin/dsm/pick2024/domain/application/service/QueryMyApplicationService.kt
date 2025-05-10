@@ -27,7 +27,7 @@ class QueryMyApplicationService(
         val application =
             queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
                 Status.OK,
-                user.xquareId,
+                user.id,
                 ApplicationKind.APPLICATION
             )
                 ?: throw ApplicationNotFoundException

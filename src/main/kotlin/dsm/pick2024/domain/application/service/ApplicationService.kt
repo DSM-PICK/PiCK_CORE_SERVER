@@ -28,7 +28,7 @@ class ApplicationService(
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
-        if (existsApplicationPort.existByUserId(user.xquareId)) {
+        if (existsApplicationPort.existByUserId(user.id)) {
             throw AlreadyApplyingForPicnicException
         }
 
@@ -43,11 +43,11 @@ class ApplicationService(
                 grade = user.grade,
                 classNum = user.classNum,
                 num = user.num,
-                userId = user.xquareId,
+                userId = user.id,
                 applicationType = request.applicationType,
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.xquareId))
+        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.id))
     }
 }

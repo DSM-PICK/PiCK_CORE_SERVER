@@ -23,7 +23,7 @@ class QueryMyEarlyReturnService(
         val earlyReturn =
             queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
                 Status.OK,
-                user.xquareId,
+                user.id,
                 ApplicationKind.EARLY_RETURN
             )
                 ?: throw EarlyReturnApplicationNotFoundException

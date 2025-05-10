@@ -29,13 +29,13 @@ class MainService(
 
     override fun main(userId: String, session: WebSocketSession) {
         val user = userFacadeUseCase.getUserByAccountId(userId)
-        val newStatus = findStatus(user.xquareId)
+        val newStatus = findStatus(user.id)
         publishStatusUpdate(newStatus, user.accountId)
     }
 
     override fun onHandleEvent(userId: UUID) {
         val user = userFacadeUseCase.getUserByXquareId(userId)
-        val newStatus = findStatus(user.xquareId)
+        val newStatus = findStatus(user.id)
         publishStatusUpdate(newStatus, user.accountId)
     }
 

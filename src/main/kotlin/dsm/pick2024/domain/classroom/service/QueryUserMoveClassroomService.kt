@@ -16,7 +16,7 @@ class QueryUserMoveClassroomService(
     @Transactional(readOnly = true)
     override fun queryUserMoveClassroom(): UserMoveClassroomResponse {
         val user = userFacadeUseCase.currentUser()
-        val move = queryClassroomPort.findOKClassroom(user.xquareId)
+        val move = queryClassroomPort.findOKClassroom(user.id)
             ?: throw ClassroomNotFoundException
 
         return UserMoveClassroomResponse(move.userName, move.classroomName, move.startPeriod, move.endPeriod)
