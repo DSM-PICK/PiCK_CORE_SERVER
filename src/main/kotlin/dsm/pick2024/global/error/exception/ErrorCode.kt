@@ -16,6 +16,9 @@ enum class ErrorCode(
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
 
+    EXPIRED_EMAIL_CODE(401, "Expired Email Code"),
+    EMAIL_CODE_MISSMATCH(401, "Email Mismatch"),
+
     USER_NOT_FOUND(404, "User Not Found"),
     ADMIN_NOT_FOUND(404, "Admin Not Found"),
     SELF_STUDY_NOT_FOUND(404, "Self Study Not Found"),
