@@ -54,7 +54,9 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**"
+                "/schedule/**",
+                "mail/send",
+                "mail/verify"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
