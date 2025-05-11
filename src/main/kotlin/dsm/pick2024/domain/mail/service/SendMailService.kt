@@ -53,7 +53,7 @@ class SendMailService(
     }
 
     private fun generateAuthCode(): String {
-        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return (1..CODE_LENGTH)
             .map { chars[Random.nextInt(chars.length)] }
             .joinToString("")
