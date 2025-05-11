@@ -21,7 +21,6 @@ class UserPersistenceAdapter(
     override fun findByAccountId(accountId: String): User? =
         userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
 
-
     override fun findByStudentNum(
         grade: Int,
         classNum: Int,
