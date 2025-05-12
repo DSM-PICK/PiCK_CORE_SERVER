@@ -57,4 +57,6 @@ object Dependencies {
 
     const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
 
+    //smtp
+    const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
 }

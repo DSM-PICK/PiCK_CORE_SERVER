@@ -21,7 +21,6 @@ class UserPersistenceAdapter(
     fun existByEmail(email: String) : Boolean {
         return userRepository.existsByEmail(email)
 
-
     override fun findByStudentNum(
         grade: Int,
         classNum: Int,

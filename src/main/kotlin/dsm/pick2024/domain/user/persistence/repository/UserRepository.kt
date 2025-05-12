@@ -4,7 +4,6 @@ import dsm.pick2024.domain.user.entity.UserJpaEntity
 import org.springframework.data.repository.Repository
 import java.util.*
 
-
 interface UserRepository : Repository<UserJpaEntity, UUID> {
 
     fun save(user: UserJpaEntity): UserJpaEntity
