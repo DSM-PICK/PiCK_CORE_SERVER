@@ -8,5 +8,4 @@ interface UserFacadeUseCase {
 
     fun getUserByAccountId(accountId: String): User
 
-    fun getUserByXquareId(userId: UUID): User
 }

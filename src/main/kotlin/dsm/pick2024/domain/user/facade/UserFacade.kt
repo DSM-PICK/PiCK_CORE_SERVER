@@ -14,13 +14,12 @@ class UserFacade(
 ) : UserFacadeUseCase {
 
     override fun currentUser(): User {
-        val accountId = SecurityContextHolder.getContext().authentication.name
-        return getUserByAccountId(accountId)
+        val email = SecurityContextHolder.getContext().authentication.name
+        return getUserByEmail(email)
     }
 
     override fun getUserByAccountId(accountId: String) =
         queryUserPort.findByAccountId(accountId) ?: throw UserNotFoundException
-
-    override fun getUserByXquareId(userId: UUID) =
-        queryUserPort.findByUserId(userId) ?: throw UserNotFoundException
+    fun getUserByEmail(email: String) =
+        queryUserPort.findByAccountId(email) ?: throw UserNotFoundException
 }
