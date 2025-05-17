@@ -46,6 +46,7 @@ class SecurityConfig(
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
+                "/user/club",
                 "/after/**",
                 "/meal",
                 "/notice",
