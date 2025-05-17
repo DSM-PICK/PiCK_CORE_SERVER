@@ -23,7 +23,7 @@ data class Attendance(
 
 ) {
 
-    fun updateClub(clubName: String): Attendance {
-        return this.copy(club = clubName)
+    fun updateClub(clubName: String, floor: Int, place: String): Attendance {
+        return this.copy(club = clubName, floor = floor, place = place)
     }
 }
