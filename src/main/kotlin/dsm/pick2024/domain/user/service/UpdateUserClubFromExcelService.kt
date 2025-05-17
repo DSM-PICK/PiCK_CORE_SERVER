@@ -25,7 +25,6 @@ class UpdateUserClubFromExcelService(
     val STUDENT_FLOOR_INDEX = 7
     val START_DATA_INDEX = 2
 
-
     @Transactional
     override fun updateUserClubFromExcel(file: MultipartFile) {
         val extension = FileNameUtils.getExtension(file.originalFilename!!).lowercase()
@@ -57,7 +56,7 @@ class UpdateUserClubFromExcelService(
                         studentNum.substring(2, 4).toInt(),
                         clubName,
                         floor.substring(0, 1).toInt(),
-                        place,
+                        place
                     )
                 }
             }
