@@ -18,9 +18,6 @@ class UserPersistenceAdapter(
 
     override fun findByUserId(userId: UUID): User? = userRepository.findById(userId)?.let { userMapper.toDomain(it) }
 
-    fun existByEmail(email: String) : Boolean {
-        return userRepository.existsByEmail(email)
-
     override fun findByStudentNum(
         grade: Int,
         classNum: Int,
@@ -35,7 +32,20 @@ class UserPersistenceAdapter(
 
     override fun existsByAccountId(accountId: String) = userRepository.existsByAccountId(accountId)
 
-    override fun save(user: User) {
-        userRepository.save(userMapper.toEntity(user))
+    override fun save(user: User): User {
+        val entity = userMapper.toEntity(user)
+        val saved = userRepository.save(entity)
+        return userMapper.toDomain(saved)
     }
+
+    override fun getUserById(id: UUID): User? {
+        return userRepository.findById(id)?.let { userMapper.toDomain(it) }
+    }
+
+    override fun findByAccountId(accountId: String): User? {
+        return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
+    }
+
+
+
 }
