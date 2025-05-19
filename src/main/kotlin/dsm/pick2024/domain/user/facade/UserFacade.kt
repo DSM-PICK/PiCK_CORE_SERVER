@@ -22,4 +22,8 @@ class UserFacade(
         queryUserPort.findByAccountId(accountId) ?: throw UserNotFoundException
     fun getUserByEmail(email: String) =
         queryUserPort.findByAccountId(email) ?: throw UserNotFoundException
+
+    override fun getUserById(id: UUID): User {
+        return queryUserPort.findByUserId(id) ?: throw UserNotFoundException
+    }
 }
