@@ -8,4 +8,6 @@ interface UserFacadeUseCase {
 
     fun getUserByAccountId(accountId: String): User
 
+    fun getUserById(id : UUID) : User
+
 }
