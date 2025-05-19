@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.user.port.`in`.LoginUseCase
+import dsm.pick2024.domain.user.port.`in`.GoogleLoginUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserAllUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserSimpleInfoUseCase
@@ -25,18 +25,13 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 @RequestMapping("/user")
 class UserController(
-    private val loginUseCase: LoginUseCase,
+    private val loginUseCase: GoogleLoginUseCase,
     private val userTokenRefreshUseCase: UserTokenRefreshUseCase,
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase,
     private val uploadUserProfileUseCase: UploadUserProfileUseCase
 ) {
-    @Operation(summary = "유저 로그인 API")
-    @PostMapping("/login")
-    fun login(
-        @RequestBody userLoginRequest: UserLoginRequest
-    ): TokenResponse = loginUseCase.login(userLoginRequest)
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
