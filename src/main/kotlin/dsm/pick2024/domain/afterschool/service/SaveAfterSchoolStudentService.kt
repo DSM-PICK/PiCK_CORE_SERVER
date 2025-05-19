@@ -25,7 +25,7 @@ class SaveAfterSchoolStudentService(
                     ?: throw UserNotFoundException
 
                 AfterSchoolStudent(
-                    userId = user.id,
+                    userId = user.id!!,
                     grade = grade,
                     classNum = classNum,
                     num = num,

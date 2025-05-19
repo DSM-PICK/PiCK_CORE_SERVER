@@ -29,7 +29,7 @@ class MoveClassroomApplicationService(
     override fun moveClassroomApplication(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        if (existsApplicationPort.existByUserId(user.id)) {
+        if (existsApplicationPort.existByUserId(user.id!!)) {
             throw UnableApplyException
         }
 
