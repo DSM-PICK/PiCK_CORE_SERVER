@@ -1,4 +1,4 @@
-package dsm.pick2024.infrastructure.feign.client.dto.response
+package dsm.pick2024.infrastructure.feign.neis.dto.request
 
 data class NeisFeignClientMealServiceDietInfoResponse(
     val mealServiceDietInfo: List<MealServiceDietInfo>
