@@ -12,8 +12,8 @@ import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
-import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
-import dsm.pick2024.infrastructure.feign.client.dto.request.XquareRequest
+import dsm.pick2024.infrastructure.feign.xquare.client.XquareFeignClient
+import dsm.pick2024.infrastructure.feign.xquare.dto.request.XquareRequest
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

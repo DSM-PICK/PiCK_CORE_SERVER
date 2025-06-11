@@ -1,4 +1,4 @@
-package dsm.pick2024.infrastructure.feign.client.property
+package dsm.pick2024.infrastructure.feign.neis.property
 
 object NeisFeignProperty {
     const val KEY = "KEY"

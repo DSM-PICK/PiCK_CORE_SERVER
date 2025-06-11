@@ -3,7 +3,7 @@ package dsm.pick2024.domain.meal.service
 import dsm.pick2024.domain.meal.domain.Meal
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.meal.port.out.SaveMealPort
-import dsm.pick2024.infrastructure.feign.NeisMealFeignClientService
+import dsm.pick2024.infrastructure.feign.neis.NeisMealFeignClientService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

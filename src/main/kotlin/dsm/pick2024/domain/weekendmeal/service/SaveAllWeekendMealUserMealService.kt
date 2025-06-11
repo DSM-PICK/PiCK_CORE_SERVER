@@ -4,7 +4,7 @@ import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.persistence.WeekendMealPersistenceAdapter
 import dsm.pick2024.domain.weekendmeal.port.`in`.SaveAllWeekendMealUserUseCase
-import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
+import dsm.pick2024.infrastructure.feign.xquare.client.XquareFeignClient
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

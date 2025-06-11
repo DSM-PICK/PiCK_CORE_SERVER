@@ -1,10 +1,10 @@
-package dsm.pick2024.infrastructure.feign
+package dsm.pick2024.infrastructure.feign.neis
 
 import com.google.gson.Gson
 import dsm.pick2024.domain.schedule.domain.Schedule
-import dsm.pick2024.infrastructure.feign.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.client.dto.response.NeisFeignClientScheduleResponse
-import dsm.pick2024.infrastructure.feign.client.property.NeisFeignClientRequestProperty
+import dsm.pick2024.infrastructure.feign.neis.client.NeisFeignClient
+import dsm.pick2024.infrastructure.feign.neis.dto.request.NeisFeignClientScheduleResponse
+import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignClientRequestProperty
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.time.LocalDate

@@ -3,7 +3,7 @@ package dsm.pick2024.domain.timetable.service
 import dsm.pick2024.domain.timetable.domain.Timetable
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.SaveTimetablePort
-import dsm.pick2024.infrastructure.feign.NeisTimetableFeignClientService
+import dsm.pick2024.infrastructure.feign.neis.NeisTimetableFeignClientService
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
