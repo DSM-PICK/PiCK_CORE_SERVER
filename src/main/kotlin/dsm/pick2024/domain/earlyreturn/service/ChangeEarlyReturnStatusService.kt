@@ -39,9 +39,10 @@ class ChangeEarlyReturnStatusService(
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
+        val userIdList = request.idList.stream().map { findApplicationById(it).userId }.toList()
 
         if (request.status == Status.NO) {
-            handleStatusNo(request.idList)
+            handleStatusNo(userIdList)
             return
         }
 
