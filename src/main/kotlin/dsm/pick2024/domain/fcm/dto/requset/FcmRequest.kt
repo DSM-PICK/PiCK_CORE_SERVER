@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.fcm.requset.requset
+package dsm.pick2024.domain.fcm.dto.requset
 
 import dsm.pick2024.domain.user.domain.User
 
