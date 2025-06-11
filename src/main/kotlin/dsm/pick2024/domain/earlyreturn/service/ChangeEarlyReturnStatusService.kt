@@ -39,9 +39,10 @@ class ChangeEarlyReturnStatusService(
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
+        val userIdList = request.idList.stream().map { findApplicationById(it).userId }.toList()
 
         if (request.status == Status.NO) {
-            handleStatusNo(request.idList)
+            handleStatusNo(request.idList, userIdList)
             return
         }
 
@@ -65,8 +66,8 @@ class ChangeEarlyReturnStatusService(
         eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturnList.map { it.userId }))
     }
 
-    private fun handleStatusNo(idList: List<UUID>) {
-        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
+    private fun handleStatusNo(idList: List<UUID>, userIdList: List<UUID>) {
+        eventPublisher.publishEvent(ChangeStatusRequest(this, userIdList))
         idList.forEach { id ->
             deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
         }
