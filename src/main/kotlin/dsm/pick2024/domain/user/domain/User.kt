@@ -2,7 +2,6 @@ package dsm.pick2024.domain.user.domain
 
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.annotation.Aggregate
-import java.time.LocalDate
 import java.util.UUID
 
 @Aggregate
@@ -20,19 +19,6 @@ data class User(
  {
     fun updateProfileFileName(fileName: String?): User {
         return this.copy(profile = fileName)
-    }
-
-    companion object {
-        fun fromGoogle(accountId: String, name: String, profile: String?): User {
-            return User(
-                id = null,
-                accountId = accountId,
-                name = name,
-                profile = profile,
-                role = Role.STU,
-                deviceToken = null
-            )
-        }
     }
 
 }

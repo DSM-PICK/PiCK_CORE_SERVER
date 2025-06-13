@@ -1,20 +1,15 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.user.port.`in`.GoogleLoginUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserAllUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
 import dsm.pick2024.domain.user.port.`in`.QueryUserSimpleInfoUseCase
 import dsm.pick2024.domain.user.port.`in`.UploadUserProfileUseCase
 import dsm.pick2024.domain.user.port.`in`.UserTokenRefreshUseCase
-import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
-import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -25,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 @RequestMapping("/user")
 class UserController(
-    private val loginUseCase: GoogleLoginUseCase,
     private val userTokenRefreshUseCase: UserTokenRefreshUseCase,
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
