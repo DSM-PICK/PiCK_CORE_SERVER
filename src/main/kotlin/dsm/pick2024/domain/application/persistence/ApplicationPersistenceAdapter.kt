@@ -5,6 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.entity.QApplicationJapEntity
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.mapper.ApplicationMapper
 import dsm.pick2024.domain.application.persistence.repository.ApplicationRepository
 import dsm.pick2024.domain.application.port.out.ApplicationPort
@@ -38,8 +39,10 @@ class ApplicationPersistenceAdapter(
     ) =
         applicationRepository.existsByStatusAndUserIdAndApplicationKind(status, userId, applicationKind)
 
-    override fun findById(id: UUID) =
-        applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
+    override fun findById(id: UUID): Application {
+        val entity = applicationRepository.findById(id) ?: throw ApplicationNotFoundException
+        return applicationMapper.toDomain(entity)
+    }
 
     override fun deleteByIdAndApplicationKind(applicationId: UUID, applicationKind: ApplicationKind) {
         applicationRepository.deleteByIdAndApplicationKind(applicationId, applicationKind)
@@ -52,7 +55,10 @@ class ApplicationPersistenceAdapter(
         applicationRepository.deleteAllByApplicationKind(applicationKind)
     }
 
-    override fun findByUserId(id: UUID) = applicationRepository.findById(id).let { applicationMapper.toDomain(it) }
+    override fun findByUserId(userId: UUID): Application {
+        val entity = applicationRepository.findById(userId) ?: throw ApplicationNotFoundException
+        return applicationMapper.toDomain(entity)
+    }
 
     override fun findAllByApplicationKind(applicationKind: ApplicationKind) =
         applicationRepository.findAllByApplicationKind(applicationKind).map { applicationMapper.toDomain(it) }
