@@ -1,6 +1,7 @@
 package dsm.pick2024.infrastructure.googleoauth.service
 
 import com.google.auth.oauth2.GoogleCredentials
+import dsm.pick2024.infrastructure.googleoauth.exception.GoogleOauthFailedException
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
 import dsm.pick2024.infrastructure.util.redis.RedisUtil
 import org.springframework.beans.factory.annotation.Value
@@ -19,14 +20,18 @@ class GoogleOauthService(
         val cached = redisUtil.getData(REDIS_KEY)
         if (!cached.isNullOrBlank()) return cached
 
-        val credentials = GoogleCredentials
-            .fromStream(url.openStream())
-            .createScoped("https://www.googleapis.com/auth/firebase.messaging")
+        return try {
+            val credentials = GoogleCredentials
+                .fromStream(url.openStream())
+                .createScoped("https://www.googleapis.com/auth/firebase.messaging")
 
-        credentials.refreshIfExpired()
-        val token = credentials.accessToken.tokenValue
+            credentials.refreshIfExpired()
+            val token = credentials.accessToken.tokenValue
 
-        redisUtil.setDataExpire(REDIS_KEY, token, 3600)
-        return token
+            redisUtil.setDataExpire(REDIS_KEY, token, 3600)
+            token
+        } catch (e: Exception) {
+            throw GoogleOauthFailedException
+        }
     }
 }
