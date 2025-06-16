@@ -8,7 +8,7 @@ import java.util.*
 interface QueryApplicationPort {
     fun findByUserId(userId: UUID): Application?
 
-    fun findById(id: UUID): Application?
+    fun findById(id: UUID): Application
 
     fun findByGradeAndClassNumAndApplicationKind(
         grade: Int,

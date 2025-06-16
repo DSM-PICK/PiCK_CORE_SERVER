@@ -22,7 +22,6 @@ class ReturnApplicationReturnService(
     override fun returnApplicationStatus(applicationId: List<UUID>) {
         applicationId.map {
             val application = queryApplicationPort.findById(it)
-                ?: throw ApplicationNotFoundException
 
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
             eventPublisher.publishEvent(UserInfoRequest(EventTopic.UPDATE_RETURN_TEACHER, application.userId))
