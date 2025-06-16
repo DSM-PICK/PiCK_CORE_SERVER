@@ -43,10 +43,10 @@ class ChangeApplicationStatusService(
     @Transactional
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
-
-        val deviceTokens = request.idList.mapNotNull {
+        val applications = request.idList.map { findApplicationById(it) }
+        val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserByXquareId(
-                findApplicationById(it).userId
+                it.userId
             ).deviceToken
         }.filter { it.isNotBlank() }
 
@@ -64,9 +64,8 @@ class ChangeApplicationStatusService(
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
         } else {
-            val updateApplicationList = request.idList.map { id ->
-                val application = findApplicationById(id)
-                updateApplication(application, admin.name)
+            val updateApplicationList = applications.map {
+                updateApplication(it, admin.name)
             }
 
             val applicationStory = updateApplicationList.map { it ->
