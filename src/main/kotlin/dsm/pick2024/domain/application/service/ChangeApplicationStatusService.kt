@@ -55,8 +55,6 @@ class ChangeApplicationStatusService(
                 sendMessageUseCase.execute(deviceTokens, "외출 신청 반려 안내", "${admin.name} 선생님이 외출 신청을 반려하셨습니다.")
             }
             Status.OK -> {
-                println(deviceTokens)
-                println("asdf")
                 sendMessageUseCase.execute(deviceTokens, "외출 신청 승인 안내", "${admin.name} 선생님이 외출 신청을 승인하셨습니다.")
             }
             else -> {
