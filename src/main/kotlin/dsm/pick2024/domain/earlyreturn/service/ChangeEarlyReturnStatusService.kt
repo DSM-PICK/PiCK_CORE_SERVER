@@ -2,7 +2,6 @@ package dsm.pick2024.domain.earlyreturn.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
@@ -43,10 +42,11 @@ class ChangeEarlyReturnStatusService(
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
+        val applications = request.idList.map { findApplicationById(it) }
 
-        val deviceTokens = request.idList.mapNotNull {
+        val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserByXquareId(
-                findApplicationById(it).userId
+                it.userId
             ).deviceToken
         }.filter { it.isNotBlank() }
 
@@ -66,9 +66,8 @@ class ChangeEarlyReturnStatusService(
             return
         }
 
-        val updateEarlyReturnList = request.idList.map { id ->
-            val application = findApplicationById(id)
-            updateEarlyReturn(application, admin.name)
+        val updateEarlyReturnList = applications.map {
+            updateEarlyReturn(it, admin.name)
         }
 
         val applicationStory = updateEarlyReturnList.map { earlyReturn ->
