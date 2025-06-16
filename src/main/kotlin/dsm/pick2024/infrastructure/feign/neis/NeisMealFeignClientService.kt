@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import dsm.pick2024.domain.meal.domain.Meal
 import dsm.pick2024.domain.meal.enum.MealType
 import dsm.pick2024.infrastructure.feign.neis.client.NeisFeignClient
-import dsm.pick2024.infrastructure.feign.neis.dto.request.NeisFeignClientMealServiceDietInfoResponse
+import dsm.pick2024.infrastructure.feign.neis.dto.response.NeisFeignClientMealServiceDietInfoResponse
 import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignClientRequestProperty
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
