@@ -2,6 +2,7 @@ package dsm.pick2024.domain.earlyreturn.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
@@ -87,6 +88,10 @@ class ChangeEarlyReturnStatusService(
 
     private fun handleStatusNo(idList: List<UUID>) {
         eventPublisher.publishEvent(ChangeStatusRequest(this, idList.map { findApplicationById(it).userId }))
+        idList.map { id ->
+            val application = findApplicationById(id)
+            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
+        }
     }
 
     private fun updateEarlyReturn(application: Application, adminName: String): Application {
