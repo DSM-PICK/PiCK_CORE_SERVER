@@ -49,5 +49,6 @@ enum class ErrorCode(
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
     FEIGN_SERVER_ERROR(500, "Feign Server Error"),
     GOOGLE_OAUTH_SERVER_ERROR(500, "Google Oauth Server Error"),
-    FCM_SERVER_ERROR(500, "Fem Server Error")
+    FCM_SERVER_ERROR(500, "Fem Server Error"),
+    FCM_INITIALIZATION_ERROR(500, "FCM Initialization Error"),
 }

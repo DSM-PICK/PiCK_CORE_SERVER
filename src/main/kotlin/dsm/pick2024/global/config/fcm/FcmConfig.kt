@@ -3,6 +3,7 @@ package dsm.pick2024.global.config.fcm
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
+import dsm.pick2024.domain.fcm.exception.FcmInitializationException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import java.net.URL
@@ -27,6 +28,7 @@ class FcmConfig(
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            throw FcmInitializationException
         }
     }
 }
