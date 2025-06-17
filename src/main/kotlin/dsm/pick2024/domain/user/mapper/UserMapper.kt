@@ -10,6 +10,7 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
     override fun toEntity(domain: User) = domain.run {
         UserJpaEntity(
             accountId = accountId,
+            password = password,
             name = name,
             profile = profile,
             role = role,
@@ -24,6 +25,7 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
         User(
             id = id,
             accountId = accountId,
+            password = password,
             name = name,
             profile = profile,
             role = role,
