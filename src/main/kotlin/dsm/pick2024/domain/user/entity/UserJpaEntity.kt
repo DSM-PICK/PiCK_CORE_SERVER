@@ -14,6 +14,9 @@ class UserJpaEntity(
     @Column(name = "account_id", nullable = true, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
 
+    @Column(name = "password", nullable = false)
+    val password: String,
+
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(10)")
     val name: String,
 
