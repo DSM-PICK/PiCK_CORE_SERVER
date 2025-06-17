@@ -8,6 +8,7 @@ import java.util.UUID
 data class User(
     val id: UUID? = null,
     val accountId: String,
+    val password : String,
     val name: String,
     val grade: Int = 0,
     val classNum: Int = 0,
