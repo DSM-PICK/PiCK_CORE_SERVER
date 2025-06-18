@@ -4,7 +4,7 @@ import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.DeleteSchedulePort
 import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
 import dsm.pick2024.global.config.cache.CacheName
-import dsm.pick2024.infrastructure.feign.NeisScheduleFeignClientService
+import dsm.pick2024.infrastructure.feign.neis.NeisScheduleFeignClientService
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
