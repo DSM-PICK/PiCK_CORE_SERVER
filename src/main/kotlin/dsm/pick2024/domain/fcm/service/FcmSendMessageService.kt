@@ -16,7 +16,7 @@ class FcmSendMessageService(
         val token = googleOauthServicePort.getToken()
         deviceTokens.filter { it.isNotBlank() }
             .forEach {
-                sendMessage(generateMessage(it, title, body),token)
+                sendMessage(generateMessage(it, title, body), token)
             }
     }
 
