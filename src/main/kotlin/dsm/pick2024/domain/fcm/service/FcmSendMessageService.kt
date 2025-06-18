@@ -13,14 +13,14 @@ class FcmSendMessageService(
 ) : FcmSendMessageUseCase {
 
     override fun execute(deviceTokens: List<String>, title: String, body: String) {
+        val token = googleOauthServicePort.getToken()
         deviceTokens.filter { it.isNotBlank() }
             .forEach {
-                sendMessage(generateMessage(it, title, body))
+                sendMessage(generateMessage(it, title, body),token)
             }
     }
 
-    private fun sendMessage(fcmMessage: FcmMessage) {
-        val token = googleOauthServicePort.getToken()
+    private fun sendMessage(fcmMessage: FcmMessage, token: String) {
         fcmClient.sendMessage("Bearer " + token, fcmMessage)
     }
 
