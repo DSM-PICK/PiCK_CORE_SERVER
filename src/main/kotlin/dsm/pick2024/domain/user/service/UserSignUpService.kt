@@ -1,22 +1,20 @@
 package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.domain.User
-import dsm.pick2024.domain.user.port.`in`.CreateUserUseCase
+import dsm.pick2024.domain.user.port.`in`.UserSignUpUseCase
 import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
-import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class UserSignUpService (
     private val savePort: UserSavePort,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider
-) : CreateUserUseCase{
+) : UserSignUpUseCase{
 
     override fun createUser(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)

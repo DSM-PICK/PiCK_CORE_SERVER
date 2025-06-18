@@ -3,14 +3,11 @@ package dsm.pick2024.domain.user.presentation
 import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
-import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.util.UUID
 
 @Tag(name = "user API")
 @RestController
@@ -21,7 +18,7 @@ class UserController(
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase,
     private val uploadUserProfileUseCase: UploadUserProfileUseCase,
-    private val createUserUseCase: CreateUserUseCase,
+    private val userSignUpUseCase: UserSignUpUseCase,
     private val jwtTokenProvider: JwtTokenProvider
 ) {
 
@@ -50,6 +47,6 @@ class UserController(
     @Operation(summary = "유저 회원가입 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    fun signUp(@RequestBody request: UserSignUpRequest)  = createUserUseCase.createUser(request)
+    fun signUp(@RequestBody request: UserSignUpRequest)  = userSignUpUseCase.createUser(request)
 
 }
