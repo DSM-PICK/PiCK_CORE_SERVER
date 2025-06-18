@@ -4,6 +4,9 @@ import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.port.`in`.CreateUserUseCase
 import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
+import dsm.pick2024.global.security.jwt.JwtTokenProvider
+import dsm.pick2024.global.security.jwt.dto.TokenResponse
+import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
@@ -11,10 +14,11 @@ import java.util.*
 @Service
 class UserSignUpService (
     private val savePort: UserSavePort,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    private val jwtTokenProvider: JwtTokenProvider
 ) : CreateUserUseCase{
 
-    override fun createUser(request: UserSignUpRequest): UUID {
+    override fun createUser(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
         val user = User(
@@ -28,6 +32,9 @@ class UserSignUpService (
             role = request.role
         )
 
-        return savePort.save(user).id!!
+        val id = savePort.save(user).id!!
+
+        return jwtTokenProvider.generateToken(id.toString(), request.role.name)
+
     }
 }
