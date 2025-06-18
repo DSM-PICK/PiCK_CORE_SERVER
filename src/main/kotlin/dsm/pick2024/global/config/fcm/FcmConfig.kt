@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct
 
 @Configuration
 class FcmConfig(
-    @Value("\${firebase.url}")
+    @Value("\${firebase.messaging.url.key}")
     private val url: URL
 ) {
     @PostConstruct
