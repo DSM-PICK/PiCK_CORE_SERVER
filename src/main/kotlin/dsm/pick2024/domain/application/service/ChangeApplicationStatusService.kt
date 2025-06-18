@@ -5,7 +5,7 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -37,7 +37,8 @@ class ChangeApplicationStatusService(
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
     private val sendMessageUseCase: FcmSendMessageUseCase,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val applicationFinderUseCase: ApplicationFinderUseCase
 ) : ChangeApplicationStatusUseCase {
 
     @Transactional
@@ -96,8 +97,7 @@ class ChangeApplicationStatusService(
     }
 
     private fun findApplicationById(id: UUID): Application {
-        return queryApplicationPort.findById(id)
-            ?: throw ApplicationNotFoundException
+        return applicationFinderUseCase.findByIdOrThrow(id)
     }
 
     private fun updateApplication(application: Application, adminName: String): Application {

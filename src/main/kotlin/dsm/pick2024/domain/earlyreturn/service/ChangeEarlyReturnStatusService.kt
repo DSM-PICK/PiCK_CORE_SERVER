@@ -6,7 +6,7 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
@@ -37,7 +37,8 @@ class ChangeEarlyReturnStatusService(
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
     private val fcmSendMessageUseCase: FcmSendMessageUseCase,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val applicationFinderUseCase: ApplicationFinderUseCase
 ) : ChangeEarlyReturnStatusUseCase {
 
     @Transactional
@@ -102,8 +103,7 @@ class ChangeEarlyReturnStatusService(
     }
 
     private fun findApplicationById(id: UUID): Application {
-        return queryApplicationPort.findById(id)
-            ?: throw ApplicationNotFoundException
+        return applicationFinderUseCase.findByIdOrThrow(id)
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
