@@ -10,11 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserSignUpService (
+class UserSignUpService(
     private val savePort: UserSavePort,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider
-) : UserSignUpUseCase{
+) : UserSignUpUseCase {
 
     override fun createUser(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
@@ -33,6 +33,5 @@ class UserSignUpService (
         val id = savePort.save(user).id!!
 
         return jwtTokenProvider.generateToken(id.toString(), request.role.name)
-
     }
 }

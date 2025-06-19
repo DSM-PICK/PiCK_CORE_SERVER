@@ -8,7 +8,7 @@ import java.util.UUID
 data class User(
     val id: UUID? = null,
     val accountId: String,
-    val password : String,
+    val password: String,
     val name: String,
     val grade: Int = 0,
     val classNum: Int = 0,
@@ -16,10 +16,8 @@ data class User(
     val profile: String? = null,
     val role: Role,
     val deviceToken: String? = null
-)
- {
+) {
     fun updateProfileFileName(fileName: String?): User {
         return this.copy(profile = fileName)
     }
-
 }

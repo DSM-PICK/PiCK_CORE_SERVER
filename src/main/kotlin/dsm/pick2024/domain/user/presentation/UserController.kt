@@ -47,6 +47,5 @@ class UserController(
     @Operation(summary = "유저 회원가입 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    fun signUp(@RequestBody request: UserSignUpRequest)  = userSignUpUseCase.createUser(request)
-
+    fun signUp(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.createUser(request)
 }

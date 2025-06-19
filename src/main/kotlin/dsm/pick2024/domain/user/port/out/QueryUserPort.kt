@@ -16,5 +16,5 @@ interface QueryUserPort {
 
     fun findByUserId(userId: UUID): User?
 
-    fun getUserById(userId: UUID) : User?
+    fun getUserById(userId: UUID): User?
 }

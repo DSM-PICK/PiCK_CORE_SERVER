@@ -35,5 +35,4 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             num = num
         )
     }
-
 }

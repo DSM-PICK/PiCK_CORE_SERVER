@@ -45,7 +45,4 @@ class UserPersistenceAdapter(
     override fun findByAccountId(accountId: String): User? {
         return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
     }
-
-
-
 }
