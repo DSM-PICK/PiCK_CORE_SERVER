@@ -10,5 +10,4 @@ data class UserSignUpRequest(
     val classNum: Int,
     val num: Int,
     val role: Role
-) {
-}
+)
