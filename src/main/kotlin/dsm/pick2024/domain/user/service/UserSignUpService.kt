@@ -16,7 +16,7 @@ class UserSignUpService(
     private val jwtTokenProvider: JwtTokenProvider
 ) : UserSignUpUseCase {
 
-    override fun createUser(request: UserSignUpRequest): TokenResponse {
+    override fun execute(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
         val user = User(
@@ -30,8 +30,8 @@ class UserSignUpService(
             role = request.role
         )
 
-        val id = savePort.save(user).id!!
+        val accountId = savePort.save(user).accountId
 
-        return jwtTokenProvider.generateToken(id.toString(), request.role.name)
+        return jwtTokenProvider.generateToken(accountId, request.role.name)
     }
 }
