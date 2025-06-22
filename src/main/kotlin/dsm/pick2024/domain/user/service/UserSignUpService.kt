@@ -19,19 +19,22 @@ class UserSignUpService(
     override fun execute(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
-        val user = User(
-            accountId = request.accountId,
-            password = encodedPassword,
-            name = request.name,
-            grade = request.grade,
-            classNum = request.classNum,
-            num = request.num,
-            profile = null,
-            role = request.role
-        )
-
+        val user = request.toEntity(encodedPassword)
         val accountId = savePort.save(user).accountId
 
         return jwtTokenProvider.generateToken(accountId, request.role.name)
+    }
+
+    private fun UserSignUpRequest.toEntity(encodedPassword: String): User {
+        return User(
+            accountId = this.accountId,
+            password = encodedPassword,
+            name = this.name,
+            grade = this.grade,
+            classNum = this.classNum,
+            num = this.num,
+            profile = null,
+            role = this.role
+        )
     }
 }
