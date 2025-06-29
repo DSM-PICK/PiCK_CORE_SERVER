@@ -1,7 +1,10 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
+import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.exception.AlreadyApplyingForPicnicException
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
@@ -24,6 +27,7 @@ class ChangeApplicationStatusService(
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
         val applications = request.idList.map { applicationFinderUseCase.findByIdOrThrow(it) }
+        applications.forEach { application -> if(application.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
 
         val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserByXquareId(it.userId).deviceToken
