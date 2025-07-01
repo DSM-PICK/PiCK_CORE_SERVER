@@ -1,12 +1,8 @@
 package dsm.pick2024.domain.earlyreturn.service.processor
 
-import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
-import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
@@ -16,7 +12,6 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
-import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import java.util.*
@@ -29,10 +24,10 @@ class EarlyReturnApprovalProcessor(
     private val queryAttendancePort: QueryAttendancePort,
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
-    private val sendMessageUseCase: FcmSendMessageUseCase,
-    ):EarlyReturnStatusProcessor(sendMessageUseCase) {
+    private val sendMessageUseCase: FcmSendMessageUseCase
+) : EarlyReturnStatusProcessor(sendMessageUseCase) {
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
-        val updateEarlyReturnList = applications.map {it.copy(teacherName = adminName, status = Status.OK)}
+        val updateEarlyReturnList = applications.map { it.copy(teacherName = adminName, status = Status.OK) }
 
         val applicationStory = updateEarlyReturnList.map { earlyReturn ->
             createApplicationStory(earlyReturn)
