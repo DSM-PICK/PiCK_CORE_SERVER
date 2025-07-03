@@ -22,7 +22,7 @@ class UserSignUpService(
     override fun execute(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
-        if (existsUserPort.existsByAccountId(request.accountId)){
+        if (existsUserPort.existsByAccountId(request.accountId)) {
             throw DuplicateUserException
         }
 

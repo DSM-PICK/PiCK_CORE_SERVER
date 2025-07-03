@@ -11,11 +11,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class UserLoginService (
+class UserLoginService(
     private val passwordEncoder: PasswordEncoder,
     private val queryUserPort: QueryUserPort,
-    private val jwtTokenProvider: JwtTokenProvider,
-):UserLoginUseCase{
+    private val jwtTokenProvider: JwtTokenProvider
+) : UserLoginUseCase {
     override fun execute(request: UserLoginRequest): TokenResponse {
         val user = queryUserPort.findByAccountId(request.accountId) ?: throw UserNotFoundException
 

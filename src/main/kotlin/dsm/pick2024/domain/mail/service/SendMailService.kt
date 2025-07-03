@@ -31,7 +31,6 @@ class SendMailService(
             throw UserNotFoundException
         }
 
-
         val email = request.mail + mailProperties.dsmPostFix
 
         println(email)
@@ -46,12 +45,15 @@ class SendMailService(
         helper.setSubject("[PiCK] ${request.title}")
         helper.setFrom(InternetAddress(mailProperties.username, "PiCK"))
 
-        val content = loadEmailTemplate().replace("\${authCode}", authCode).replace("\${message}", request.message).replace("\${title}", request.title)
-
+        val template = loadEmailTemplate()
+        val content = template
+            .replace("\${authCode}", authCode)
+            .replace("\${message}", request.message)
+            .replace("\${title}", request.title)
 
         helper.setText(content, true)
-         try {
-        mailSender.send(message)
+        try {
+            mailSender.send(message)
         } catch (e: Exception) {
             redisUtilPort.deleteData(email)
             throw InternalServerErrorException

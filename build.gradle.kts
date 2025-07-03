@@ -85,7 +85,6 @@ dependencies {
     implementation(Dependencies.WEB_SOCKET)
 
     implementation(Dependencies.SMTP)
-
 }
 
 tasks.withType<KotlinCompile> {
