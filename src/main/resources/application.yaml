@@ -25,6 +25,19 @@ spring:
 
     cache:
         type: simple
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: ${MAIL}
+        password: ${MAIL_PASSWORD}
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+
 
 auth:
     jwt:
