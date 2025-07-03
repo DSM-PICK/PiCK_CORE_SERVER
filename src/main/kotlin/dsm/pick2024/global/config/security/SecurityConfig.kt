@@ -43,7 +43,9 @@ class SecurityConfig(
                 "/v3/api-docs/**",
                 "/dsm-pick/swagger-ui/index.html",
                 "/dsm-pick/swagger-ui/index.html/**",
-                "/user/signup"
+                "/user/signup",
+                "mail/verify",
+                "mail/send"
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
@@ -55,9 +57,7 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**",
-                "mail/send",
-                "mail/verify"
+                "/schedule/**"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
