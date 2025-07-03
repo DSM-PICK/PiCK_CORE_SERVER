@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.user.presentation
 
 import dsm.pick2024.domain.user.port.`in`.*
+import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import io.swagger.v3.oas.annotations.Operation
@@ -19,7 +20,7 @@ class UserController(
     private val queryUserAllUseCase: QueryUserAllUseCase,
     private val uploadUserProfileUseCase: UploadUserProfileUseCase,
     private val userSignUpUseCase: UserSignUpUseCase,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val userLoginUseCase: UserLoginUseCase,
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
@@ -44,8 +45,13 @@ class UserController(
     @PatchMapping("/profile")
     fun upload(@RequestParam("file")file: MultipartFile) = uploadUserProfileUseCase.uploadUserProfile(file)
 
+    @Operation(summary = "유저 로그인 API")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/login")
+    fun signUp(@RequestBody request: UserLoginRequest) = userLoginUseCase.execute(request)
+
     @Operation(summary = "유저 회원가입 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    fun signUp(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
+    fun login(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
 }
