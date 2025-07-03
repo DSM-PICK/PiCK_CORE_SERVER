@@ -34,7 +34,7 @@ class MainService(
     }
 
     override fun onHandleEvent(userId: UUID) {
-        val user = userFacadeUseCase.getUserByXquareId(userId)
+        val user = userFacadeUseCase.getUserById(userId)
         val newStatus = findStatus(user.id)
         publishStatusUpdate(newStatus, user.accountId)
     }

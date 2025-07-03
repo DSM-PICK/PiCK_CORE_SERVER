@@ -46,7 +46,7 @@ class ChangeApplicationStatusService(
         val admin = adminFacadeUseCase.currentAdmin()
         val applications = request.idList.map { findApplicationById(it) }
         val deviceTokens = applications.mapNotNull {
-            userFacadeUseCase.getUserByXquareId(
+            userFacadeUseCase.getUserById(
                 it.userId
             ).deviceToken
         }.filter { it.isNotBlank() }
