@@ -15,11 +15,15 @@ class UserPersistenceAdapter(
     private val userMapper: UserMapper,
     private val jpaQueryFactory: JPAQueryFactory
 ) : UserPort {
+    override fun findByAccountId(accountId: String): User? =
+        userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
+
 
     override fun findByUserId(userId: UUID): User? = userRepository.findById(userId)?.let { userMapper.toDomain(it) }
 
-    fun existByEmail(email: String) : Boolean {
-        return userRepository.existsByEmail(email)
+    fun existByAccountId(accountId: String): Boolean {
+        return userRepository.existsByAccountId(accountId)
+    }
 
     override fun findByStudentNum(
         grade: Int,
@@ -38,4 +42,5 @@ class UserPersistenceAdapter(
     override fun save(user: User) {
         userRepository.save(userMapper.toEntity(user))
     }
+
 }
