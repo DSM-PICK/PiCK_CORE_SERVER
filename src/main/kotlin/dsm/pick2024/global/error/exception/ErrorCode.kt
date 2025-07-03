@@ -10,6 +10,7 @@ enum class ErrorCode(
     ALREADY_APPLYING_EARLY_RETURN(409, "Already applying For Early Return Application"),
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
+    DUPLICATE_USER(409, "Duplicate User"),
 
     FEIGN_UNAUTHORIZED(401, "Feign UnAuthorized"),
     PASSWORD_MISS_MATCH(401, "Password Miss Match"),
