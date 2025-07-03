@@ -46,8 +46,12 @@ enum class ErrorCode(
     INVALID_SUBJECT(400, "Invalid Subject"),
     UNABLE_APPLY(400, "Unable To Apply"),
 
+    NOT_EXTENSION_XSL(415, "Not Extension XSL"),
+
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
     FEIGN_SERVER_ERROR(500, "Feign Server Error"),
-    FCM_SERVER_ERROR(500, "Fem Server Error")
+    GOOGLE_OAUTH_SERVER_ERROR(500, "Google Oauth Server Error"),
+    FCM_SERVER_ERROR(500, "Fem Server Error"),
+    FCM_INITIALIZATION_ERROR(500, "FCM Initialization Error")
 }

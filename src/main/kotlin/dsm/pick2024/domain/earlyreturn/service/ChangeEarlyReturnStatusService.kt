@@ -6,7 +6,7 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
@@ -18,6 +18,8 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
+import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
+import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -33,21 +35,41 @@ class ChangeEarlyReturnStatusService(
     private val saveAttendancePort: SaveAttendancePort,
     private val queryAttendancePort: QueryAttendancePort,
     private val attendanceService: AttendanceService,
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
+    private val fcmSendMessageUseCase: FcmSendMessageUseCase,
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val applicationFinderUseCase: ApplicationFinderUseCase
 ) : ChangeEarlyReturnStatusUseCase {
 
     @Transactional
     override fun statusEarlyReturn(request: StatusEarlyReturnRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
+        val applications = request.idList.map { findApplicationById(it) }
+
+        val deviceTokens = applications.mapNotNull {
+            userFacadeUseCase.getUserByXquareId(
+                it.userId
+            ).deviceToken
+        }.filter { it.isNotBlank() }
+
+        when (request.status) {
+            Status.NO -> {
+                fcmSendMessageUseCase.execute(deviceTokens, "조귀귀가 신청 반려 안내", "${admin.name} 선생님이 조귀귀가 신청을 반려하셨습니다.")
+            }
+            Status.OK -> {
+                fcmSendMessageUseCase.execute(deviceTokens, "조귀귀가 신청 승인 안내", "${admin.name} 선생님이 조귀귀가 신청을 승인하셨습니다.")
+            }
+            else -> {
+            }
+        }
 
         if (request.status == Status.NO) {
             handleStatusNo(request.idList)
             return
         }
 
-        val updateEarlyReturnList = request.idList.map { id ->
-            val application = findApplicationById(id)
-            updateEarlyReturn(application, admin.name)
+        val updateEarlyReturnList = applications.map {
+            updateEarlyReturn(it, admin.name)
         }
 
         val applicationStory = updateEarlyReturnList.map { earlyReturn ->
@@ -66,9 +88,10 @@ class ChangeEarlyReturnStatusService(
     }
 
     private fun handleStatusNo(idList: List<UUID>) {
-        eventPublisher.publishEvent(ChangeStatusRequest(this, idList))
-        idList.forEach { id ->
-            deleteApplicationPort.deleteByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
+        eventPublisher.publishEvent(ChangeStatusRequest(this, idList.map { findApplicationById(it).userId }))
+        idList.map { id ->
+            val application = findApplicationById(id)
+            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
         }
     }
 
@@ -80,8 +103,7 @@ class ChangeEarlyReturnStatusService(
     }
 
     private fun findApplicationById(id: UUID): Application {
-        return queryApplicationPort.findByIdAndApplicationKind(id, ApplicationKind.EARLY_RETURN)
-            ?: throw ApplicationNotFoundException
+        return applicationFinderUseCase.findByIdOrThrow(id)
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {

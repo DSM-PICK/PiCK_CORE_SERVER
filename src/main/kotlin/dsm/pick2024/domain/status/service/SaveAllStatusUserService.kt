@@ -4,7 +4,7 @@ import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.entity.enum.StatusType
 import dsm.pick2024.domain.status.port.`in`.SaveAllStatusUserUseCase
 import dsm.pick2024.domain.status.port.out.SaveStatusPort
-import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
+import dsm.pick2024.infrastructure.feign.xquare.client.XquareFeignClient
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

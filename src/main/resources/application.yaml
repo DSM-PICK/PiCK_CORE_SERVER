@@ -69,5 +69,10 @@ servlet:
         max-request-size: 10MB
 
 firebase:
-    url: ${FIREBASE_URL}
+    messaging:
+        url:
+            host: ${FIREBASE_HOST}
+            path: ${FIREBASE_PATH}
+            key: ${FIREBASE_KEY_JSON}
+            credentials: ${FIREBASE_CREDENTIALS_URL}
 

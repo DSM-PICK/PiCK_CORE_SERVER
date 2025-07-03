@@ -12,6 +12,12 @@ interface QueryAttendancePort {
         classNum: Int
     ): List<Attendance>
 
+    fun findByStudentNum(
+        grade: Int,
+        classNum: Int,
+        num: Int
+    ): Attendance?
+
     fun findByClub(club: String): List<Attendance>?
 
     fun findByUserId(userId: UUID): Attendance?

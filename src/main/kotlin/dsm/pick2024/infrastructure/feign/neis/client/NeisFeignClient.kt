@@ -1,6 +1,6 @@
-package dsm.pick2024.infrastructure.feign.client
+package dsm.pick2024.infrastructure.feign.neis.client
 
-import dsm.pick2024.infrastructure.feign.client.property.NeisFeignProperty
+import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignProperty
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam

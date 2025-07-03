@@ -57,6 +57,9 @@ object Dependencies {
 
     const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
 
+    const val GOOGLE_OAUTH = "com.google.auth:google-auth-library-oauth2-http:${DependencyVersions.GOOGLE_OAUTH2}"
+
+
     //smtp
     const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
 }

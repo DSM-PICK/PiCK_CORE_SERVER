@@ -22,7 +22,7 @@ interface ApplicationRepository : Repository<ApplicationJapEntity, UUID> {
 
     fun saveAll(entity: Iterable<ApplicationJapEntity>)
 
-    fun findById(id: UUID): ApplicationJapEntity
+    fun findById(id: UUID): ApplicationJapEntity?
 
     fun findByUserId(userId: UUID): ApplicationJapEntity
 
