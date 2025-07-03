@@ -1,7 +1,9 @@
 package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.user.domain.User
+import dsm.pick2024.domain.user.exception.DuplicateUserException
 import dsm.pick2024.domain.user.port.`in`.UserSignUpUseCase
+import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
@@ -13,11 +15,16 @@ import org.springframework.stereotype.Service
 class UserSignUpService(
     private val savePort: UserSavePort,
     private val passwordEncoder: PasswordEncoder,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val existsUserPort: ExistsUserPort
 ) : UserSignUpUseCase {
 
     override fun execute(request: UserSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
+
+        if (existsUserPort.existsByAccountId(request.accountId)){
+            throw DuplicateUserException
+        }
 
         val user = request.toEntity(encodedPassword)
         val accountId = savePort.save(user).accountId
