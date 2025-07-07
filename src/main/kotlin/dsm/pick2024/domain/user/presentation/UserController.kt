@@ -1,8 +1,9 @@
 package dsm.pick2024.domain.user.presentation
 
 import dsm.pick2024.domain.user.port.`in`.*
+import dsm.pick2024.domain.user.presentation.dto.request.PasswordResetRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
-import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
+import dsm.pick2024.domain.user.service.PasswordResetService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -19,7 +20,8 @@ class UserController(
     private val queryUserAllUseCase: QueryUserAllUseCase,
     private val uploadUserProfileUseCase: UploadUserProfileUseCase,
     private val userSignUpUseCase: UserSignUpUseCase,
-    private val userLoginUseCase: UserLoginUseCase
+    private val userLoginUseCase: UserLoginUseCase,
+    private val userPasswordResetService: PasswordResetService
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
@@ -49,8 +51,7 @@ class UserController(
     @PostMapping("/login")
     fun signUp(@RequestBody request: UserLoginRequest) = userLoginUseCase.execute(request)
 
-    @Operation(summary = "유저 회원가입 API")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/signup")
-    fun login(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
+    @Operation(summary = "유저 비밀번호 변경")
+    @PostMapping("/password")
+    fun login(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
 }
