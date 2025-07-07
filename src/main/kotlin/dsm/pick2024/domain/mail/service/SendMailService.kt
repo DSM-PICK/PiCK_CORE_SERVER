@@ -33,8 +33,6 @@ class SendMailService(
 
         val email = request.mail + mailProperties.dsmPostFix
 
-        println(email)
-        println(org.joda.time.DateTime.now().toString())
         val authCode = generateAuthCode()
         redisUtilPort.setDataExpire(request.mail, authCode, 600)
 
