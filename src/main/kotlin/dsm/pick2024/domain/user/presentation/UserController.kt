@@ -3,7 +3,6 @@ package dsm.pick2024.domain.user.presentation
 import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.PasswordResetRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
-import dsm.pick2024.domain.user.service.PasswordResetService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -18,7 +17,10 @@ class UserController(
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase,
-    private val uploadUserProfileUseCase: UploadUserProfileUseCase
+    private val uploadUserProfileUseCase: UploadUserProfileUseCase,
+    private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase,
+    private val userLoginUseCase: UserLoginUseCase,
+    private val userPasswordResetService: PasswordResetUseCase,
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
