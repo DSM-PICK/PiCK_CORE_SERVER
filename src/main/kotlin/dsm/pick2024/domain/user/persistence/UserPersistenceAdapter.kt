@@ -3,6 +3,7 @@ package dsm.pick2024.domain.user.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.domain.user.mapper.UserMapper
 import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import dsm.pick2024.domain.user.port.out.UserPort
@@ -44,5 +45,13 @@ class UserPersistenceAdapter(
 
     override fun findByAccountId(accountId: String): User? {
         return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
+    }
+
+    override fun updateUserPassword(userId: UUID, password: String) {
+        jpaQueryFactory
+            .update(QUserJpaEntity.userJpaEntity)
+            .set(QUserJpaEntity.userJpaEntity.password, password)
+            .where(QUserJpaEntity.userJpaEntity.id.eq(userId))
+            .execute()
     }
 }
