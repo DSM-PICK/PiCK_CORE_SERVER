@@ -16,6 +16,7 @@ enum class ErrorCode(
     PASSWORD_MISS_MATCH(401, "Password Miss Match"),
     INVALID_TOKEN(401, "Invalid Token"),
     EXPIRED_TOKEN(401, "Expired Token"),
+    SECRET_KEY_MISS_MATCH(401, "Secret Key Miss Match"),
 
     EXPIRED_EMAIL_CODE(401, "Expired Email Code"),
     EMAIL_CODE_MISSMATCH(401, "Email Mismatch"),
