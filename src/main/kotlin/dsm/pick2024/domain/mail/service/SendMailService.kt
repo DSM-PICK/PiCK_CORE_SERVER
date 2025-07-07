@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.mail.service
 
-import com.google.api.client.util.DateTime
 import dsm.pick2024.domain.mail.port.`in`.SendMailUseCase
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
 import dsm.pick2024.domain.user.exception.UserNotFoundException

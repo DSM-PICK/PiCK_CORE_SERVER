@@ -20,4 +20,8 @@ data class User(
     fun updateProfileFileName(fileName: String?): User {
         return this.copy(profile = fileName)
     }
+
+    fun resetPassword(password: String): User {
+        return this.copy(password = password)
+    }
 }

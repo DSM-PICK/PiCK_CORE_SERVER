@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.user.service
 
-import dsm.pick2024.domain.mail.exception.MailCodeMissMatchException
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
@@ -47,7 +46,7 @@ class UserSignUpService(
             classNum = this.classNum,
             num = this.num,
             profile = null,
-            role = Role.STU,
+            role = Role.STU
         )
     }
 }

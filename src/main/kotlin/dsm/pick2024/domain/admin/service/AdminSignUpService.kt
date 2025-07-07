@@ -23,14 +23,14 @@ class AdminSignUpService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val adminSavePort: AdminSavePort,
     private val adminProperties: AdminProperties
-) :AdminSignUpUseCase {
+) : AdminSignUpUseCase {
     override fun execute(request: AdminSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
         if (existsByAdminIdPort.existsByAdminId(request.accountId)) {
             throw DuplicateUserException
         }
-        if(adminProperties.secretKey != request.secretKey) {
+        if (adminProperties.secretKey != request.secretKey) {
             throw SecretKeyMissMatchException
         }
 
@@ -49,7 +49,7 @@ class AdminSignUpService(
             name = this.name,
             grade = this.grade,
             classNum = this.classNum,
-            role = Role.SCH,
+            role = Role.SCH
         )
     }
 }

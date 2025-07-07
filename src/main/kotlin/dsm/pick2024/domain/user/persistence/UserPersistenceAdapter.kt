@@ -3,7 +3,6 @@ package dsm.pick2024.domain.user.persistence
 import com.querydsl.jpa.impl.JPAQueryFactory
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
-import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.domain.user.mapper.UserMapper
 import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import dsm.pick2024.domain.user.port.out.UserPort

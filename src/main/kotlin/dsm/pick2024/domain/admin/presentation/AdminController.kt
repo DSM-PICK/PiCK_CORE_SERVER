@@ -3,7 +3,6 @@ package dsm.pick2024.domain.admin.presentation
 import dsm.pick2024.domain.admin.port.`in`.*
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
-import dsm.pick2024.domain.admin.service.AdminSignUpService
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
