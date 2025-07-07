@@ -2,6 +2,7 @@ package dsm.pick2024.domain.mail.service
 
 import dsm.pick2024.domain.mail.port.`in`.SendMailUseCase
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
+import dsm.pick2024.domain.user.exception.DuplicateUserException
 import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
@@ -21,14 +22,10 @@ class SendMailService(
     private val mailSender: JavaMailSender,
     private val redisUtilPort: RedisUtilPort,
     private val mailProperties: MailProperties,
-    private val existsUserPort: ExistsUserPort
 ) : SendMailUseCase {
     private val CODE_LENGTH = 6
 
     override fun execute(request: SendMailRequest) {
-        if (!existsUserPort.existsByAccountId(request.mail)) {
-            throw UserNotFoundException
-        }
 
         val email = request.mail + mailProperties.dsmPostFix
 
