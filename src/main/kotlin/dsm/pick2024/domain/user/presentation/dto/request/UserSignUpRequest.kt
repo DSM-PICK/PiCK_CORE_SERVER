@@ -9,5 +9,5 @@ data class UserSignUpRequest(
     val grade: Int,
     val classNum: Int,
     val num: Int,
-    val role: Role
+    val code: String
 )
