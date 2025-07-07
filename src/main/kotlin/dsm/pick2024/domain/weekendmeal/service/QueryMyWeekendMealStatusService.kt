@@ -15,7 +15,7 @@ class QueryMyWeekendMealStatusService(
 
     @Transactional(readOnly = true)
     override fun queryMyWeekendMealStatus(): QueryStatusResponse {
-        val weekend = queryWeekendMealPort.findByUserId(userFacade.currentUser().id)
+        val weekend = queryWeekendMealPort.findByUserId(userFacade.currentUser().id!!)
         return QueryStatusResponse(weekend!!.status)
     }
 }

@@ -1,0 +1,11 @@
+package dsm.pick2024.domain.user.presentation.dto.request
+
+data class UserSignUpRequest(
+    val accountId: String,
+    val password: String,
+    val name: String,
+    val grade: Int,
+    val classNum: Int,
+    val num: Int,
+    val code: String
+)

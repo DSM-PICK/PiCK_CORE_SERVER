@@ -84,6 +84,8 @@ dependencies {
 
     implementation(Dependencies.WEB_SOCKET)
 
+    implementation(Dependencies.SMTP)
+
     implementation(Dependencies.GOOGLE_OAUTH)
 }
 
