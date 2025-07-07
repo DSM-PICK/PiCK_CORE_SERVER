@@ -1,8 +1,10 @@
 package dsm.pick2024.domain.user.presentation
 
+import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.PasswordResetRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
+import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -21,6 +23,7 @@ class UserController(
     private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase,
     private val userLoginUseCase: UserLoginUseCase,
     private val userPasswordResetService: PasswordResetUseCase,
+    private val userSignUpUseCase: UserSignUpUseCase,
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
@@ -50,6 +53,11 @@ class UserController(
     fun updateClub(@RequestParam("file")file: MultipartFile) = updateUserClubFromExcelUseCase.updateUserClubFromExcel(
         file
     )
+
+    @Operation(summary = "유저 회원가입 API")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/signup")
+    fun login(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
 
     @Operation(summary = "유저 로그인 API")
     @ResponseStatus(HttpStatus.CREATED)
