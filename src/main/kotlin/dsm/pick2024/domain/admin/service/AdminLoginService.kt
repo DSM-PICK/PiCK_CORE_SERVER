@@ -10,6 +10,7 @@ import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
+import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import dsm.pick2024.infrastructure.feign.client.XquareFeignClient
@@ -24,39 +25,17 @@ import org.springframework.transaction.annotation.Transactional
 class AdminLoginService(
     private val queryAdminPort: QueryAdminPort,
     private val passwordEncoder: PasswordEncoder,
-    private val existsByAdminIdPort: ExistsByAdminIdPort,
-    private val xquareFeignClient: XquareFeignClient,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val adminSavePort: AdminSavePort
 ) : AdminLoginUseCase {
 
     @Transactional
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-        if (!existsByAdminIdPort.existsByAdminId(adminLoginRequest.adminId)) {
-            val xquareUser = xquareFeignClient.xquareUser(
-                XquareRequest(adminLoginRequest.adminId, adminLoginRequest.password)
-            )
-            if (Role.SCH != xquareUser.userRole) throw NotAdminException
+        val user = queryAdminPort.findByAdminId(adminLoginRequest.adminId) ?: throw AdminNotFoundException
 
-            adminSavePort.save(
-                Admin(
-                    adminId = xquareUser.accountId,
-                    password = xquareUser.password,
-                    name = xquareUser.name,
-                    role = Role.SCH,
-                    grade = xquareUser.grade,
-                    classNum = xquareUser.classNum
-                )
-            )
-
-            return jwtTokenProvider.generateToken(xquareUser.accountId, Role.SCH.toString())
-        } else {
-            val admin = queryAdminPort.findByAdminId(adminLoginRequest.adminId)
-                ?: throw AdminNotFoundException
-
-            if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) throw PasswordMissMatchException
-
-            return jwtTokenProvider.generateToken(admin.adminId, Role.SCH.toString())
+        if (!passwordEncoder.matches(adminLoginRequest.password, user.password)) {
+            throw PasswordMissMatchException
         }
+
+        return jwtTokenProvider.generateToken(adminLoginRequest.adminId, user.role.name)
     }
 }
