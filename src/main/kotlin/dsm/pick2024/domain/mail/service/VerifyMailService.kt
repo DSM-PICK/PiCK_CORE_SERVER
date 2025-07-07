@@ -3,7 +3,7 @@ package dsm.pick2024.domain.mail.service
 import dsm.pick2024.domain.mail.exception.ExpiredMailCodeException
 import dsm.pick2024.domain.mail.exception.MailCodeMissMatchException
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
-import dsm.pick2024.infrastructure.util.port.RedisUtilPort
+import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
 import org.springframework.stereotype.Service
 
 @Service

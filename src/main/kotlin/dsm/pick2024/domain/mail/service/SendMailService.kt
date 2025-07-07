@@ -6,7 +6,7 @@ import dsm.pick2024.domain.user.exception.UserNotFoundException
 import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
-import dsm.pick2024.infrastructure.util.port.RedisUtilPort
+import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
 import org.springframework.core.io.ClassPathResource
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
