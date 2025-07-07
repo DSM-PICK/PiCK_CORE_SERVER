@@ -87,5 +87,8 @@ firebase:
 google:
     client-id: ${GOOGLE_CLIENT_ID}
     client-secret: ${GOOGLE_CLIENT_SECRET}
-    redirect-uri: ${GOOGLE_REDIRECT_URI}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}\
+
+admin:
+    secret-key: ${ADMIN_SECRET_KEY}
 
