@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service
 class VerifyMailService(
     private val redisUtilPort: RedisUtilPort
 ) : VerifyMailUseCase {
-    override fun execute(request: VerifyMailRequest): Boolean {
-        val redisCode = redisUtilPort.getData(request.mail) ?: throw ExpiredMailCodeException
+    override fun execute(code: String, accountId: String): Unit {
+        val redisCode = redisUtilPort.getData(accountId) ?: throw ExpiredMailCodeException
 
-        return if (redisCode == request.code) {
-            redisUtilPort.deleteData(request.mail)
-            true
+        if (redisCode == code) {
+            redisUtilPort.deleteData(accountId)
         } else {
             throw MailCodeMissMatchException
         }

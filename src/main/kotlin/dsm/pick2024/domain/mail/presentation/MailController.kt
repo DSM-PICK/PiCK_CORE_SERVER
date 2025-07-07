@@ -14,13 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/mail")
 class MailController(
     private val sendMailService: SendMailService,
-    private val verifyMailService: VerifyMailService
 ) {
     @Operation(summary = "메일 전송 api")
     @PostMapping("/send")
     fun sendMail(@RequestBody sendMailRequest: SendMailRequest) = sendMailService.execute(sendMailRequest)
-
-    @Operation(summary = "메일 인증코드 확인 api")
-    @PostMapping("/verify")
-    fun verifyMail(@RequestBody verifyMailRequest: VerifyMailRequest) = verifyMailService.execute(verifyMailRequest)
 }
