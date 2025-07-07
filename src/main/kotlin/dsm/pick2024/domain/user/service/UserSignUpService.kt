@@ -1,6 +1,9 @@
 package dsm.pick2024.domain.user.service
 
+import dsm.pick2024.domain.mail.exception.MailCodeMissMatchException
+import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
+import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.DuplicateUserException
 import dsm.pick2024.domain.user.port.`in`.UserSignUpUseCase
 import dsm.pick2024.domain.user.port.out.ExistsUserPort
@@ -16,7 +19,8 @@ class UserSignUpService(
     private val savePort: UserSavePort,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val existsUserPort: ExistsUserPort
+    private val existsUserPort: ExistsUserPort,
+    private val verifyMailUseCase: VerifyMailUseCase
 ) : UserSignUpUseCase {
 
     override fun execute(request: UserSignUpRequest): TokenResponse {
@@ -26,10 +30,12 @@ class UserSignUpService(
             throw DuplicateUserException
         }
 
+        verifyMailUseCase.execute(request.code, request.accountId)
+
         val user = request.toEntity(encodedPassword)
         val accountId = savePort.save(user).accountId
 
-        return jwtTokenProvider.generateToken(accountId, request.role.name)
+        return jwtTokenProvider.generateToken(accountId, Role.STU.name)
     }
 
     private fun UserSignUpRequest.toEntity(encodedPassword: String): User {
@@ -41,7 +47,7 @@ class UserSignUpService(
             classNum = this.classNum,
             num = this.num,
             profile = null,
-            role = this.role
+            role = Role.STU,
         )
     }
 }
