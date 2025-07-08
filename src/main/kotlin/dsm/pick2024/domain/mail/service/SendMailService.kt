@@ -2,9 +2,6 @@ package dsm.pick2024.domain.mail.service
 
 import dsm.pick2024.domain.mail.port.`in`.SendMailUseCase
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
-import dsm.pick2024.domain.user.exception.DuplicateUserException
-import dsm.pick2024.domain.user.exception.UserNotFoundException
-import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
 import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
@@ -21,12 +18,11 @@ import kotlin.random.Random
 class SendMailService(
     private val mailSender: JavaMailSender,
     private val redisUtilPort: RedisUtilPort,
-    private val mailProperties: MailProperties,
+    private val mailProperties: MailProperties
 ) : SendMailUseCase {
     private val CODE_LENGTH = 6
 
     override fun execute(request: SendMailRequest) {
-
         val email = request.mail + mailProperties.dsmPostFix
 
         val authCode = generateAuthCode()

@@ -37,11 +37,10 @@ class UserSignUpService(
 
         verifyMailUseCase.execute(request.code, request.accountId)
 
-
         val user = request.toEntity(encodedPassword)
         val savedUser = savePort.save(user)
 
-        savedUser.let{
+        savedUser.let {
             saveAttendancePort.save(
                 Attendance(
                     userId = it.id!!,
@@ -53,7 +52,7 @@ class UserSignUpService(
                     period7 = AttendanceStatus.ATTENDANCE,
                     period8 = AttendanceStatus.ATTENDANCE,
                     period9 = AttendanceStatus.ATTENDANCE,
-                    period10 = AttendanceStatus.ATTENDANCE,
+                    period10 = AttendanceStatus.ATTENDANCE
                 )
             )
         }

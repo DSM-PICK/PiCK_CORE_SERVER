@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.user.presentation
 
-import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.user.port.`in`.*
 import dsm.pick2024.domain.user.presentation.dto.request.PasswordResetRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
@@ -23,7 +22,7 @@ class UserController(
     private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase,
     private val userLoginUseCase: UserLoginUseCase,
     private val userPasswordResetService: PasswordResetUseCase,
-    private val userSignUpUseCase: UserSignUpUseCase,
+    private val userSignUpUseCase: UserSignUpUseCase
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
