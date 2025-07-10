@@ -25,7 +25,7 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
     override fun toDomain(entity: AfterSchoolStudentJpaEntity) =
         entity.run {
             AfterSchoolStudent(
-                id = id,
+                id = id!!,
                 userId = userId,
                 grade = grade,
                 classNum = classNum,

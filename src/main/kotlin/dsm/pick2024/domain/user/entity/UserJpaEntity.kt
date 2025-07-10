@@ -2,6 +2,7 @@ package dsm.pick2024.domain.user.entity
 
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.base.BaseUUIDEntity
+import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
@@ -9,6 +10,8 @@ import javax.persistence.Enumerated
 
 @Entity(name = "tbl_user")
 class UserJpaEntity(
+
+    id: UUID?,
 
     @Column(name = "account_id", nullable = true, unique = true, columnDefinition = "VARCHAR(40)")
     val accountId: String,
@@ -38,4 +41,4 @@ class UserJpaEntity(
     @Column(nullable = false)
     val role: Role
 
-) : BaseUUIDEntity()
+) : BaseUUIDEntity(id)

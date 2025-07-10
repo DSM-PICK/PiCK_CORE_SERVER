@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component
 class UserMapper : GenericMapper<UserJpaEntity, User> {
     override fun toEntity(domain: User) = domain.run {
         UserJpaEntity(
+            id = id,
             accountId = accountId,
             password = password,
             name = name,
@@ -23,7 +24,7 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
 
     override fun toDomain(entity: UserJpaEntity) = entity.run {
         User(
-            id = id,
+            id = id!!,
             accountId = accountId,
             password = password,
             name = name,

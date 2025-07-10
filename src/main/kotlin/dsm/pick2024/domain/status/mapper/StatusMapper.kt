@@ -22,7 +22,7 @@ class StatusMapper {
     fun toDomain(entity: StatusJpaEntity): Status =
         entity.run {
             Status(
-                id = id,
+                id = id!!,
                 userId = userId,
                 userName = userName,
                 grade = grade,

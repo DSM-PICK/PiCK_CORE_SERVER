@@ -22,7 +22,7 @@ class WeekendMealMapper {
     fun toDomain(entity: WeekendMealJpaEntity) =
         entity.run {
             WeekendMeal(
-                id = id,
+                id = id!!,
                 userId = userId,
                 grade = grade,
                 classNum = classNum,

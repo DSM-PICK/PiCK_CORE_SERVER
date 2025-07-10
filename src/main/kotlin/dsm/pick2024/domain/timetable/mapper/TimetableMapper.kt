@@ -21,7 +21,7 @@ class TimetableMapper {
     fun toDomain(entity: TimetableJpaEntity) =
         entity.run {
             Timetable(
-                id = id,
+                id = id!!,
                 grade = grade,
                 classNum = classNum,
                 period = period,

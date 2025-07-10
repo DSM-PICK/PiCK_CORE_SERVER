@@ -29,7 +29,7 @@ class ApplicationMapper {
     fun toDomain(entity: ApplicationJapEntity) =
         entity.run {
             Application(
-                id = id,
+                id = id!!,
                 reason = reason,
                 start = start,
                 end = end,
