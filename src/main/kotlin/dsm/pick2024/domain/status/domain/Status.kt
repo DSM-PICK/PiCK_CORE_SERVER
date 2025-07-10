@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class Status(
-    val id: UUID = UUID(0,0),
+    val id: UUID = UUID(0, 0),
     val userId: UUID,
     val userName: String,
     val grade: Int,

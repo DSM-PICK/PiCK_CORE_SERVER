@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class User(
-    val id: UUID = UUID(0,0),
+    val id: UUID = UUID(0, 0),
     val accountId: String,
     val password: String,
     val name: String,

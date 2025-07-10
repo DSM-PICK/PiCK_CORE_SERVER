@@ -9,8 +9,8 @@ import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
 abstract class BaseUUIDEntity(
-    id : UUID?
-){
+    id: UUID?
+) {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")

@@ -9,7 +9,7 @@ import java.util.UUID
 
 @Aggregate
 data class Application(
-    val id: UUID = UUID(0,0),
+    val id: UUID = UUID(0, 0),
     val userId: UUID,
     val reason: String,
     val date: LocalDate,
