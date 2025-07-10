@@ -34,7 +34,7 @@ class AdminController(
     @PostMapping("/signup")
     fun signUp(
         @RequestBody request: AdminSignUpRequest
-    ) = adminSignUpUseCase.execute(request)
+    ): TokenResponse = adminSignUpUseCase.execute(request)
 
     @Operation(summary = "어드민 토큰 재발급 API")
     @PutMapping("/refresh")
