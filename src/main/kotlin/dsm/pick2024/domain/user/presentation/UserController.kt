@@ -56,14 +56,14 @@ class UserController(
     @Operation(summary = "유저 회원가입 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    fun login(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
+    fun signUp(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
 
     @Operation(summary = "유저 로그인 API")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/login")
-    fun signUp(@RequestBody request: UserLoginRequest) = userLoginUseCase.execute(request)
+    fun login(@RequestBody request: UserLoginRequest) = userLoginUseCase.execute(request)
 
     @Operation(summary = "유저 비밀번호 변경")
     @PostMapping("/password")
-    fun login(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
+    fun passwordReset(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
 }
