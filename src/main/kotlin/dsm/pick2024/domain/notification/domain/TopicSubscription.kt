@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class TopicSubscription(
-    val id: UUID? = null,
+    val id: UUID = UUID(0,0),
     val topic: Topic,
     val deviceToken: String,
     val isSubscribed: Boolean = false,

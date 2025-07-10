@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class Attendance(
-    val id: UUID? = null,
+    val id: UUID = UUID(0,0),
     val userId: UUID,
     val grade: Int,
     val classNum: Int,
