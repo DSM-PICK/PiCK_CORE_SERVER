@@ -6,10 +6,12 @@ import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
 import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
 import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.FileSystemResource
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 import org.springframework.util.FileCopyUtils
+import java.io.File
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 import kotlin.random.Random
@@ -20,11 +22,11 @@ class SendMailService(
     private val redisUtilPort: RedisUtilPort,
     private val mailProperties: MailProperties
 ) : SendMailUseCase {
+
     private val CODE_LENGTH = 6
 
     override fun execute(request: SendMailRequest) {
         val email = request.mail + mailProperties.dsmPostFix
-
         val authCode = generateAuthCode()
         redisUtilPort.setDataExpire(request.mail, authCode, 600)
 
@@ -35,6 +37,9 @@ class SendMailService(
         helper.setSubject("[PiCK] ${request.title}")
         helper.setFrom(InternetAddress(mailProperties.username, "PiCK"))
 
+        val logo = FileSystemResource(File("src/main/resources/static/PiCK_Logo.png"))
+        helper.addInline("pick_logo", logo, "image/png")
+
         val template = loadEmailTemplate()
         val content = template
             .replace("\${authCode}", authCode)
@@ -42,6 +47,7 @@ class SendMailService(
             .replace("\${title}", request.title)
 
         helper.setText(content, true)
+
         try {
             mailSender.send(message)
         } catch (e: Exception) {
