@@ -12,7 +12,7 @@ data class AdminSignUpRequest(
     @field:Size(min = 8, max = 30)
     val password: String,
     @field:NotBlank
-    @field:Size(min = 1, max= 10)
+    @field:Size(min = 1, max = 10)
     val name: String,
     @field:Min(0)
     @field:Max(3)
