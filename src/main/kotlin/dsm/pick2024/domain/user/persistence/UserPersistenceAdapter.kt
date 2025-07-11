@@ -8,6 +8,7 @@ import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import dsm.pick2024.domain.user.port.out.UserPort
 import java.util.UUID
 import org.springframework.stereotype.Component
+import javax.transaction.Transactional
 
 @Component
 class UserPersistenceAdapter(
@@ -42,6 +43,7 @@ class UserPersistenceAdapter(
         return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
     }
 
+    @Transactional
     override fun updateUserPassword(userId: UUID, password: String) {
         jpaQueryFactory
             .update(QUserJpaEntity.userJpaEntity)
