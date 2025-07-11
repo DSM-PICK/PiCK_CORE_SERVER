@@ -43,7 +43,7 @@ class UserSignUpService(
         savedUser.let {
             saveAttendancePort.save(
                 Attendance(
-                    userId = it.id!!,
+                    userId = it.id,
                     grade = it.grade,
                     classNum = it.classNum,
                     num = it.num,
