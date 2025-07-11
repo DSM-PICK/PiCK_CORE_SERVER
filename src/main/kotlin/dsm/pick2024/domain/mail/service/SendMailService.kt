@@ -6,12 +6,10 @@ import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
 import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
 import org.springframework.core.io.ClassPathResource
-import org.springframework.core.io.FileSystemResource
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 import org.springframework.util.FileCopyUtils
-import java.io.File
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 import kotlin.random.Random
@@ -37,7 +35,7 @@ class SendMailService(
         helper.setSubject("[PiCK] ${request.title}")
         helper.setFrom(InternetAddress(mailProperties.username, "PiCK"))
 
-        val logo = FileSystemResource(File("src/main/resources/static/PiCK_Logo.png"))
+        val logo = ClassPathResource("static/PiCK_Logo.png")
         helper.addInline("pick_logo", logo, "image/png")
 
         val template = loadEmailTemplate()
