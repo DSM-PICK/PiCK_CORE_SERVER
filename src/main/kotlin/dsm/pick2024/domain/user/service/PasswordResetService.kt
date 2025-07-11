@@ -22,6 +22,6 @@ class PasswordResetService(
 
         verifyMailUseCase.execute(request.code, user.accountId)
 
-        updateUserPort.updateUserPassword(user.id!!, passwordEncoder.encode(request.password))
+        updateUserPort.updateUserPassword(user.id, passwordEncoder.encode(request.password))
     }
 }
