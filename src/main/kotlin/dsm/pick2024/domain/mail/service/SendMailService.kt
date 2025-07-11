@@ -49,7 +49,7 @@ class SendMailService(
         try {
             mailSender.send(message)
         } catch (e: Exception) {
-            redisUtilPort.deleteData(email)
+            redisUtilPort.deleteData(request.mail)
             throw InternalServerErrorException
         }
     }
