@@ -14,6 +14,7 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import javax.crypto.SecretKey
 
 @Service
 class AdminSignUpService(
@@ -27,12 +28,9 @@ class AdminSignUpService(
     override fun execute(request: AdminSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
-        if (existsByAdminIdPort.existsByAdminId(request.accountId)) {
-            throw DuplicateUserException
-        }
-        if (adminProperties.secretKey != request.secretKey) {
-            throw SecretKeyMissMatchException
-        }
+        checkDuplicateAccountId(request.accountId)
+
+        checkSecretKey(request.secretKey)
 
         verifyMailUseCase.execute(request.code, request.accountId)
 
@@ -40,6 +38,18 @@ class AdminSignUpService(
         adminSavePort.save(user)
 
         return jwtTokenProvider.generateToken(request.accountId, Role.SCH.name)
+    }
+
+    private fun checkDuplicateAccountId(accountId: String) {
+        if (existsByAdminIdPort.existsByAdminId(accountId)) {
+            throw DuplicateUserException
+        }
+    }
+
+    private fun checkSecretKey(key: String){
+        if(adminProperties.secretKey != key){
+            throw SecretKeyMissMatchException
+        }
     }
 
     private fun AdminSignUpRequest.toEntity(encodedPassword: String): Admin {
