@@ -14,7 +14,6 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import javax.crypto.SecretKey
 
 @Service
 class AdminSignUpService(
@@ -46,8 +45,8 @@ class AdminSignUpService(
         }
     }
 
-    private fun checkSecretKey(key: String){
-        if(adminProperties.secretKey != key){
+    private fun checkSecretKey(key: String) {
+        if (adminProperties.secretKey != key) {
             throw SecretKeyMissMatchException
         }
     }
