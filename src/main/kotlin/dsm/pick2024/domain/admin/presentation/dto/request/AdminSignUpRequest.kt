@@ -14,11 +14,9 @@ data class AdminSignUpRequest(
     @field:NotBlank
     @field:Size(min = 1, max = 10)
     val name: String,
-    @field:Min(0)
-    @field:Max(3)
+    @field:Size(min = 0, max = 3)
     val grade: Int,
-    @field:Min(0)
-    @field:Max(4)
+    @field:Size(min = 0, max = 4)
     val classNum: Int,
     @field:NotBlank
     val code: String,
