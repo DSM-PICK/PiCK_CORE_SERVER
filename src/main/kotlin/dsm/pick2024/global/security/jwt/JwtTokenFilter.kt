@@ -10,7 +10,7 @@ class JwtTokenFilter(
     private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
 
-    private val excludedPaths = listOf("/user/signup","/admin/signup","/user/login","/admin/login")
+    private val excludedPaths = listOf("/user/signup", "/admin/signup", "/user/login", "/admin/login")
 
     override fun doFilterInternal(
         request: HttpServletRequest,
