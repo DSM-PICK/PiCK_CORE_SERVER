@@ -18,7 +18,7 @@ class AttendancePersistenceAdapter(
 ) : AttendancePort {
 
     override fun save(attendance: Attendance) = attendanceJpaRepository.save(attendanceMapper.toEntity(attendance))
-    override fun saveAll(attendance: MutableList<Attendance>) {
+    override fun saveAll(attendance: List<Attendance>) {
         val entities = attendance.map { attendanceMapper.toEntity(it) }
         attendanceJpaRepository.saveAll(entities)
     }
