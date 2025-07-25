@@ -20,7 +20,7 @@ class TopicSubscriptionMapper {
     fun toDomain(entity: TopicSubscriptionJpaEntity) =
         entity.run {
             TopicSubscription(
-                id = id,
+                id = id!!,
                 topic = topic,
                 isSubscribed = isSubscribed,
                 deviceToken = deviceToken,

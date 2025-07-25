@@ -28,7 +28,9 @@ class ChangeApplicationStatusService(
         applications.forEach { a -> if (a.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
 
         val deviceTokens = applications.mapNotNull {
-            userFacadeUseCase.getUserByXquareId(it.userId).deviceToken
+            userFacadeUseCase.getUserById(
+                it.userId
+            ).deviceToken
         }.filter { it.isNotBlank() }
 
         if (request.status == Status.OK) {

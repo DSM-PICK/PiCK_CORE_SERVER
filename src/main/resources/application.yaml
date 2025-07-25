@@ -25,6 +25,19 @@ spring:
 
     cache:
         type: simple
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: ${MAIL}
+        password: ${MAIL_PASSWORD}
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+
 
 auth:
     jwt:
@@ -75,3 +88,12 @@ firebase:
             path: ${FIREBASE_PATH}
             key: ${FIREBASE_KEY_JSON}
             credentials: ${FIREBASE_CREDENTIALS_URL}
+
+google:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    redirect-uri: ${GOOGLE_REDIRECT_URI}\
+
+admin:
+    secret-key: ${ADMIN_SECRET_KEY}
+

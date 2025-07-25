@@ -42,7 +42,10 @@ class SecurityConfig(
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
                 "/dsm-pick/swagger-ui/index.html",
-                "/dsm-pick/swagger-ui/index.html/**"
+                "/dsm-pick/swagger-ui/index.html/**",
+                "/user/signup",
+                "/mail/send",
+                "/admin/signup"
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,

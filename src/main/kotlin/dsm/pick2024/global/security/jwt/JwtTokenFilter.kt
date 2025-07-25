@@ -9,11 +9,21 @@ import javax.servlet.http.HttpServletResponse
 class JwtTokenFilter(
     private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
+
+    private val excludedPaths = listOf("/user/signup", "/admin/signup", "/user/login", "/admin/login")
+
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        val path = request.requestURI
+
+        if (excludedPaths.any { path.endsWith(it) }) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         val token = jwtTokenProvider.resolveToken(request)
 
         token?.run {

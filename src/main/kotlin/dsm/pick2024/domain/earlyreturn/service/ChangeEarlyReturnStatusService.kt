@@ -30,7 +30,7 @@ class ChangeEarlyReturnStatusService(
         applications.forEach { a -> if (a.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
 
         val deviceTokens = applications.mapNotNull {
-            userFacadeUseCase.getUserByXquareId(
+            userFacadeUseCase.getUserById(
                 it.userId
             ).deviceToken
         }.filter { it.isNotBlank() }

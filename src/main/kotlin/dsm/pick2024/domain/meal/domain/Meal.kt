@@ -7,7 +7,7 @@ import java.util.UUID
 
 @Aggregate
 data class Meal(
-    val id: UUID? = null,
+    val id: UUID = UUID(0, 0),
     val mealDate: LocalDate,
     val mealType: MealType?,
     val menu: String?,

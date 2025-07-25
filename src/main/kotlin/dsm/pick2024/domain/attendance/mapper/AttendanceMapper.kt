@@ -30,7 +30,7 @@ class AttendanceMapper : GenericMapper<AttendanceJpaEntity, Attendance> {
     override fun toDomain(entity: AttendanceJpaEntity) =
         entity.run {
             Attendance(
-                id = id,
+                id = id!!,
                 userId = userId,
                 grade = grade,
                 classNum = classNum,

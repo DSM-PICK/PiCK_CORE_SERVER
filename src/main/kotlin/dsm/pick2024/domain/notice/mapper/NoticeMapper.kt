@@ -20,7 +20,7 @@ class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
 
     override fun toDomain(entity: NoticeJpaEntity) = entity.run {
         Notice(
-            id = id,
+            id = id!!,
             title = title,
             content = content,
             createAt = createAt,

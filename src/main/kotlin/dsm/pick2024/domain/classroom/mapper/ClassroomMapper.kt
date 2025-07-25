@@ -27,7 +27,7 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
     override fun toDomain(entity: ClassroomJpaEntity) =
         entity.run {
             Classroom(
-                id = id,
+                id = id!!,
                 classroomName = classroomName,
                 floor = floor,
                 userName = userName,

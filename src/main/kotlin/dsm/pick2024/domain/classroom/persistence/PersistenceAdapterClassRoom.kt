@@ -107,7 +107,7 @@ class PersistenceAdapterClassRoom(
                     .and(QClassroomJpaEntity.classroomJpaEntity.num.eq(QUserJpaEntity.userJpaEntity.num))
             )
             .where(
-                QUserJpaEntity.userJpaEntity.xquareId.`in`(userIds)
+                QUserJpaEntity.userJpaEntity.id.`in`(userIds)
             )
             .fetch()
 

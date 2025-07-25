@@ -20,7 +20,7 @@ class WeekendMealPeriodMapper {
     fun toDomain(entity: WeekendMealPeriodJpaEntity) =
         entity.run {
             WeekendMealPeriod(
-                id = id,
+                id = id!!,
                 start = start,
                 end = end,
                 month = month,

@@ -1,38 +1,29 @@
 package dsm.pick2024.domain.user.presentation
 
 import dsm.pick2024.domain.user.port.`in`.*
+import dsm.pick2024.domain.user.presentation.dto.request.PasswordResetRequest
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
-import dsm.pick2024.global.security.jwt.dto.TokenResponse
+import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
 @Tag(name = "user API")
 @RestController
 @RequestMapping("/user")
 class UserController(
-    private val loginUseCase: LoginUseCase,
     private val userTokenRefreshUseCase: UserTokenRefreshUseCase,
     private val queryUserSimpleInfoUseCase: QueryUserSimpleInfoUseCase,
     private val queryUserDetailsInfoUseCase: QueryUserDetailsInfoUseCase,
     private val queryUserAllUseCase: QueryUserAllUseCase,
     private val uploadUserProfileUseCase: UploadUserProfileUseCase,
-    private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase
+    private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase,
+    private val userLoginUseCase: UserLoginUseCase,
+    private val userPasswordResetService: PasswordResetUseCase,
+    private val userSignUpUseCase: UserSignUpUseCase
 ) {
-    @Operation(summary = "유저 로그인 API")
-    @PostMapping("/login")
-    fun login(
-        @RequestBody userLoginRequest: UserLoginRequest
-    ): TokenResponse = loginUseCase.login(userLoginRequest)
 
     @Operation(summary = "유저 토큰 재발급 API")
     @PutMapping("/refresh")
@@ -61,4 +52,18 @@ class UserController(
     fun updateClub(@RequestParam("file")file: MultipartFile) = updateUserClubFromExcelUseCase.updateUserClubFromExcel(
         file
     )
+
+    @Operation(summary = "유저 회원가입 API")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/signup")
+    fun signUp(@RequestBody request: UserSignUpRequest) = userSignUpUseCase.execute(request)
+
+    @Operation(summary = "유저 로그인 API")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/login")
+    fun login(@RequestBody request: UserLoginRequest) = userLoginUseCase.execute(request)
+
+    @Operation(summary = "유저 비밀번호 변경")
+    @PostMapping("/password")
+    fun passwordReset(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
 }
