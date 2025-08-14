@@ -1,4 +1,4 @@
-# PICK2024_SERVER
+# PICK_SERVER
 ### RULE
 + 커밋명 앞에 refactor, modify, add, bug 를 붙인다 ex) add :: application dto
 + PR 올리기 전에  ./gradlew ktlintFormat 하기
