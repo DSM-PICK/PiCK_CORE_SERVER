@@ -45,6 +45,7 @@ class SecurityConfig(
                 "/dsm-pick/swagger-ui/index.html/**",
                 "/user/signup",
                 "/mail/send",
+                "/mail/check",
                 "/admin/signup"
             ).permitAll()
             .antMatchers(
