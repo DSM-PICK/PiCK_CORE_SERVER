@@ -35,7 +35,7 @@ class UserSignUpService(
             throw DuplicateUserException
         }
 
-        verifyMailUseCase.verifyAndConsume(request.code,request.accountId)
+        verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
         val user = request.toEntity(encodedPassword)
         val savedUser = savePort.save(user)
