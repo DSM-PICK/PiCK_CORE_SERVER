@@ -21,7 +21,7 @@ class MailController(
     @PostMapping("/send")
     fun sendMail(@RequestBody sendMailRequest: SendMailRequest) = sendMailService.execute(sendMailRequest)
 
-    @Operation(summary = "")
+    @Operation(summary = "메일에 발송된 코드가 맞는지 확인")
     @PostMapping("/check")
     fun checkMail(@RequestBody request: UserCheckCodeRequest) = mailCheckCodeService.execute(request)
 }
