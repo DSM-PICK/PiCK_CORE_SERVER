@@ -20,7 +20,7 @@ class PasswordResetService(
     override fun execute(request: PasswordResetRequest) {
         val user = userFacadeUseCase.currentUser()
 
-        verifyMailUseCase.execute(request.code, user.accountId)
+        verifyMailUseCase.verifyAndConsume(request.code, user.accountId)
 
         updateUserPort.updateUserPassword(user.id, passwordEncoder.encode(request.password))
     }
