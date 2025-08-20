@@ -10,6 +10,6 @@ class MailCheckCodeService(
     private val verifyMailUseCase: VerifyMailUseCase
 ) : MailCheckCodeUseCase {
     override fun execute(request: UserCheckCodeRequest): Boolean {
-        return (verifyMailUseCase.verifyOnly(request.code,request.email))
+        return (verifyMailUseCase.verifyOnly(request.code, request.email))
     }
 }

@@ -46,7 +46,7 @@ class SecurityConfig(
                 "/user/signup",
                 "/mail/send",
                 "/mail/check",
-                "/admin/signup",
+                "/admin/signup"
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,

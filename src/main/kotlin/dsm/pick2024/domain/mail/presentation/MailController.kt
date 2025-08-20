@@ -3,7 +3,6 @@ package dsm.pick2024.domain.mail.presentation
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
 import dsm.pick2024.domain.mail.service.MailCheckCodeService
 import dsm.pick2024.domain.mail.service.SendMailService
-import dsm.pick2024.domain.mail.service.VerifyMailService
 import dsm.pick2024.domain.user.presentation.dto.request.UserCheckCodeRequest
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.web.bind.annotation.PostMapping
