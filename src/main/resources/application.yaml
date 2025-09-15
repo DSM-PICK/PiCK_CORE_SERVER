@@ -50,6 +50,8 @@ auth:
 server:
     servlet:
         context-path: /dsm-pick
+    url:
+        ${SERVER_URL}
 
 url:
     neis: ${NEIS_URL}
