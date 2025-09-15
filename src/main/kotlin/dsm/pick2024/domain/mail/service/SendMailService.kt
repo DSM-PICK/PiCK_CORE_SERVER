@@ -26,7 +26,6 @@ class SendMailService(
 
     private val CODE_LENGTH = 6
 
-
     override fun execute(request: SendMailRequest) {
         println("SERVER_URL = $SERVER_URL")
 
@@ -40,7 +39,6 @@ class SendMailService(
         helper.setTo(email)
         helper.setSubject("[PiCK] ${request.title}")
         helper.setFrom(InternetAddress(mailProperties.username, "PiCK"))
-
 
         val template = loadEmailTemplate()
         val content = template
