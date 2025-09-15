@@ -5,6 +5,7 @@ import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
 import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
 import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -18,12 +19,17 @@ import kotlin.random.Random
 class SendMailService(
     private val mailSender: JavaMailSender,
     private val redisUtilPort: RedisUtilPort,
-    private val mailProperties: MailProperties
+    private val mailProperties: MailProperties,
+    @Value("\${server.url}")
+    private val SERVER_URL: String
 ) : SendMailUseCase {
 
     private val CODE_LENGTH = 6
 
+
     override fun execute(request: SendMailRequest) {
+        println("SERVER_URL = $SERVER_URL")
+
         val email = request.mail + mailProperties.dsmPostFix
         val authCode = generateAuthCode()
         redisUtilPort.setDataExpire(request.mail, authCode, 600)
@@ -35,14 +41,13 @@ class SendMailService(
         helper.setSubject("[PiCK] ${request.title}")
         helper.setFrom(InternetAddress(mailProperties.username, "PiCK"))
 
-        val logo = ClassPathResource("static/PiCK_Logo.png")
-        helper.addInline("pick_logo", logo, "image/png")
 
         val template = loadEmailTemplate()
         val content = template
             .replace("\${authCode}", authCode)
             .replace("\${message}", request.message)
             .replace("\${title}", request.title)
+            .replace("\${serverUrl}", SERVER_URL)
 
         helper.setText(content, true)
 
