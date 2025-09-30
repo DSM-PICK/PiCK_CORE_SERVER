@@ -18,7 +18,7 @@ class PasswordResetService(
 ) : PasswordResetUseCase {
     @Transactional
     override fun execute(request: PasswordResetRequest) {
-        val user = userFacadeUseCase.currentUser()
+        val user = userFacadeUseCase.getUserByAccountId(request.accountId)
 
         verifyMailUseCase.verifyAndConsume(request.code, user.accountId)
 
