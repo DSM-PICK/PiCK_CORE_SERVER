@@ -47,7 +47,8 @@ class SecurityConfig(
                 "/mail/send",
                 "/mail/check",
                 "/admin/signup",
-                "/PiCK_Logo.png"
+                "/PiCK_Logo.png",
+                "/user/password"
             ).permitAll()
             .antMatchers(
                 HttpMethod.POST,
