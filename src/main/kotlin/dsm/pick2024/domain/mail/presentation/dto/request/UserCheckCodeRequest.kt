@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.user.presentation.dto.request
+package dsm.pick2024.domain.mail.presentation.dto.request
 
 data class UserCheckCodeRequest(
     val email: String,

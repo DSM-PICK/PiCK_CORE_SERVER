@@ -2,7 +2,7 @@ package dsm.pick2024.domain.mail.service
 
 import dsm.pick2024.domain.mail.port.`in`.MailCheckCodeUseCase
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
-import dsm.pick2024.domain.user.presentation.dto.request.UserCheckCodeRequest
+import dsm.pick2024.domain.mail.presentation.dto.request.UserCheckCodeRequest
 import org.springframework.stereotype.Service
 
 @Service
