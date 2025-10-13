@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.mail.presentation
 
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
-import dsm.pick2024.domain.mail.presentation.dto.request.UserCheckCodeRequest
+import dsm.pick2024.domain.mail.presentation.dto.request.CheckMailRequest
 import dsm.pick2024.domain.mail.service.MailCheckCodeService
 import dsm.pick2024.domain.mail.service.SendMailService
 import io.swagger.v3.oas.annotations.Operation
@@ -22,5 +22,5 @@ class MailController(
 
     @Operation(summary = "메일에 발송된 코드가 맞는지 확인")
     @PostMapping("/check")
-    fun checkMail(@RequestBody request: UserCheckCodeRequest) = mailCheckCodeService.execute(request)
+    fun checkMail(@RequestBody request: CheckMailRequest) = mailCheckCodeService.execute(request)
 }
