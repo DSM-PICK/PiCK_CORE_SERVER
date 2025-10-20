@@ -7,7 +7,7 @@ import java.util.UUID
 interface AdminRepository : JpaRepository<AdminJpaEntity, UUID> {
     fun existsByName(name: String): Boolean
 
-    fun findByAdminId(adminId: String): AdminJpaEntity
+    fun findByAdminId(adminId: String): AdminJpaEntity?
 
     fun existsByAdminId(adminId: String): Boolean
 
