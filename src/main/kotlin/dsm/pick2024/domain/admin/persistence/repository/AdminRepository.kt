@@ -14,5 +14,5 @@ interface AdminRepository : JpaRepository<AdminJpaEntity, UUID> {
     fun findByGradeAndClassNum(
         grade: Int,
         classNum: Int
-    ): AdminJpaEntity
+    ): AdminJpaEntity?
 }
