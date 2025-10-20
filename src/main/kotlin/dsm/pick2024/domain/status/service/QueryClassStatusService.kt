@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.status.service
 
+import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.persistence.AdminPersistenceAdapter
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.out.QueryStatusPort
@@ -18,7 +19,7 @@ class QueryClassStatusService(
         grade: Int,
         classNum: Int
     ): QueryClassResponse {
-        val teacher = adminPersistenceAdapter.findByGradeAndClassNum(grade, classNum)
+        val teacher = adminPersistenceAdapter.findByGradeAndClassNum(grade, classNum) ?: throw AdminNotFoundException
 
         val classStatusList =
             queryStatusPort.findByGradeAndClassNum(grade, classNum)
