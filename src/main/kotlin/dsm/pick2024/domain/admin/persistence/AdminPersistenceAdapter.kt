@@ -37,4 +37,11 @@ class AdminPersistenceAdapter(
             .selectFrom(QAdminJpaEntity.adminJpaEntity)
             .fetch()
             .map { adminMapper.toDomain(it) }
+
+    override fun findBYAdminByName(name: String): List<Admin> =
+        jpaQueryFactory
+            .selectFrom(QAdminJpaEntity.adminJpaEntity)
+            .where(QAdminJpaEntity.adminJpaEntity.name.eq(name))
+            .fetch()
+            .map { adminMapper.toDomain(it) }
 }
