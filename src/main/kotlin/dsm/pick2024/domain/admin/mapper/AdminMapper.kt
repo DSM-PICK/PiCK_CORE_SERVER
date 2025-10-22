@@ -17,7 +17,7 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             classNum = classNum,
             adminId = adminId,
             role = role,
-            deviceToken = deviceToken,
+            deviceToken = deviceToken
         )
     }
 
