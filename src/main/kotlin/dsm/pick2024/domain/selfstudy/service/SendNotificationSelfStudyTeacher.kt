@@ -18,11 +18,11 @@ class SendNotificationSelfStudyTeacher(
         val teacher = selfStudyPort.findByDaySelfStudy(LocalDate.now()).map { it }
 
         teacher.map {
-            val admin = queryAdminPort.findBYAdminByName(it.teacherName)?: throw AdminNotFoundException
+            val admin = queryAdminPort.findBYAdminByName(it.teacherName) ?: throw AdminNotFoundException
             admin.map { a ->
-                if(a.deviceToken != null){
+                if (a.deviceToken != null) {
                     fcmSendPort.send(
-                        deviceToken =  a.deviceToken,
+                        deviceToken = a.deviceToken,
                         title = "[PiCK] 자습감독 알림",
                         body = "${a.name}선생님은 오늘 ${it.floor}층 자습감독 선생님입니다."
                     )
