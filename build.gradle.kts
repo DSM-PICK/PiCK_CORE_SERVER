@@ -31,31 +31,23 @@ repositories {
 
 dependencies {
 
-    // Database
     implementation(Dependencies.SPRING_DATA_JPA)
     implementation(Dependencies.SPRING_REDIS)
     runtimeOnly(Dependencies.MYSQL_CONNECTOR)
 
-    // Web
     implementation(Dependencies.SPRING_WEB)
 
-    // Security
     implementation(Dependencies.SPRING_SECURITY)
 
-    // Kotlin
     implementation(Dependencies.JACKSON)
     implementation(Dependencies.KOTLIN_REFLECT)
 
-    // Test
     testImplementation(Dependencies.SPRING_TEST)
 
-    // Valid
     implementation(Dependencies.SPRING_VALIDATION)
 
-    // Json
     implementation(Dependencies.JSON)
 
-    // Jwt
     implementation(Dependencies.JWT)
 
     implementation(Dependencies.MYSQL_CONNECTOR)
