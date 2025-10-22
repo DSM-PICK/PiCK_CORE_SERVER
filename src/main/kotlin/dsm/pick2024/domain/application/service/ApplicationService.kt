@@ -1,5 +1,7 @@
 package dsm.pick2024.domain.application.service
 
+import dsm.pick2024.domain.admin.exception.AdminNotFoundException
+import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
@@ -10,6 +12,7 @@ import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
 import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.event.enums.EventTopic
+import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -22,7 +25,9 @@ class ApplicationService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
+    private val fcmSendPort: FcmSendPort,
+    private val queryAdminPort: QueryAdminPort
 ) : ApplicationUseCase {
 
     @Transactional
@@ -48,6 +53,19 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
+        val admin = queryAdminPort.findByGradeAndClassNum(
+            grade = user.grade,
+            classNum = user.classNum
+        ) ?: throw AdminNotFoundException
+
+        admin.deviceToken?.let {
+            fcmSendPort.send(
+                deviceToken = it,
+                title = "[PiCK] ${user.name} 학생이 외출을 신청했습니다.",
+                body = "사유: ${request.reason}"
+            )
+        }
+
         eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.id))
     }
 }
