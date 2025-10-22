@@ -5,8 +5,10 @@ import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.domain.selfstudy.port.`in`.SendNotificationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
+import org.springframework.stereotype.Service
 import java.time.LocalDate
 
+@Service
 class SendNotificationSelfStudyTeacher(
     private val queryAdminPort: QueryAdminPort,
     private val selfStudyPort: SelfStudyPort,
