@@ -62,4 +62,7 @@ object Dependencies {
 
     //smtp
     const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
+
+    //quartz
+    const val QUARTZ = "org.quartz-scheduler:quartz"
 }
