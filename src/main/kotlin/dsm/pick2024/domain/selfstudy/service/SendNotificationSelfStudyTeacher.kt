@@ -1,9 +1,9 @@
-package dsm.pick2024.domain.schedule.service
+package dsm.pick2024.domain.selfstudy.service
 
 import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
-import dsm.pick2024.domain.schedule.port.`in`.SendNotificationSelfStudyTeacherUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.SendNotificationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
 import java.time.LocalDate
 
