@@ -27,6 +27,9 @@ class AdminJpaEntity(
     @Column(name = "class_num", columnDefinition = "int(4)")
     val classNum: Int? = null,
 
+    @Column(name = "device_token", nullable = true)
+    val deviceToken: String? = null,
+
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     val role: Role
