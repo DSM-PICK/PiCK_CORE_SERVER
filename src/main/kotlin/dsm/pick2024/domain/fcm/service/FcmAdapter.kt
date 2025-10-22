@@ -21,7 +21,8 @@ class FcmAdapter(
     }
 
     override fun send(deviceToken: String, title: String, body: String) {
-
+        val token = googleOauthServicePort.getToken()
+        sendMessage(generateMessage(deviceToken.trim(), title, body), token)
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
