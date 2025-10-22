@@ -4,13 +4,13 @@ import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
+import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 @Service
 class EarlyReturnRejectionProcessor(
-    sendMessageUseCase: FcmSendMessageUseCase,
+    sendMessageUseCase: FcmSendPort,
     private val eventPublisher: ApplicationEventPublisher,
     private val deleteApplicationPort: DeleteApplicationPort
 

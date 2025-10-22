@@ -1,23 +1,27 @@
 package dsm.pick2024.domain.fcm.service
 
 import dsm.pick2024.domain.fcm.domain.FcmMessage
-import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
+import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
 import org.springframework.stereotype.Service
 
 @Service
-class FcmSendMessageService(
+class FcmAdapter(
     private val fcmClient: FcmClient,
     private val googleOauthServicePort: GoogleOauthServicePort
-) : FcmSendMessageUseCase {
+) : FcmSendPort {
 
-    override fun execute(deviceTokens: List<String>, title: String, body: String) {
+    override fun sendAll(deviceTokens: List<String>, title: String, body: String) {
         val token = googleOauthServicePort.getToken()
         deviceTokens.filter { it.isNotBlank() }
             .forEach {
                 sendMessage(generateMessage(it, title, body), token)
             }
+    }
+
+    override fun send(deviceToken: String, title: String, body: String) {
+
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {

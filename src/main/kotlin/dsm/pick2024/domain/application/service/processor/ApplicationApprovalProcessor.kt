@@ -11,7 +11,7 @@ import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.event.enums.EventTopic
-import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
+import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
@@ -23,7 +23,7 @@ class ApplicationApprovalProcessor(
     private val saveAttendancePort: SaveAttendancePort,
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
-    sendMessageUseCase: FcmSendMessageUseCase
+    sendMessageUseCase: FcmSendPort
 ) : ApplicationStatusProcessor(sendMessageUseCase) {
 
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {

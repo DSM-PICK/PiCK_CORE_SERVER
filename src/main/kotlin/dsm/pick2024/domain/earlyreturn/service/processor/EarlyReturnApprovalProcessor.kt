@@ -11,10 +11,9 @@ import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.fcm.port.`in`.FcmSendMessageUseCase
+import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class EarlyReturnApprovalProcessor(
@@ -24,7 +23,7 @@ class EarlyReturnApprovalProcessor(
     private val queryAttendancePort: QueryAttendancePort,
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
-    private val sendMessageUseCase: FcmSendMessageUseCase
+    private val sendMessageUseCase: FcmSendPort
 ) : EarlyReturnStatusProcessor(sendMessageUseCase) {
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
         val updateEarlyReturnList = applications.map { it.copy(teacherName = adminName, status = Status.OK) }
