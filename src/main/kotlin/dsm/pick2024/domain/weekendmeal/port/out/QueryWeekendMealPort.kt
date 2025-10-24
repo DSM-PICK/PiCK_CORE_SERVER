@@ -13,7 +13,7 @@ interface QueryWeekendMealPort {
 
     fun findAll(): List<WeekendMeal>
 
-    fun findByUserId(id: UUID): WeekendMeal
+    fun findByUserId(id: UUID): WeekendMeal?
 
     fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status): List<WeekendMeal>
 }

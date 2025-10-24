@@ -28,7 +28,7 @@ class NotificationWeekendMealService(
             when (LocalDate.now()) {
                 weekendMealPeriod.end -> {
                     users.map {
-                        val status = queryWeekendMealPort.findByUserId(it.id).status
+                        val status = queryWeekendMealPort.findByUserId(it.id)!!.status
                         if (it.deviceToken != null) {
                             fcmSendPort.send(
                                 deviceToken = it.deviceToken,
