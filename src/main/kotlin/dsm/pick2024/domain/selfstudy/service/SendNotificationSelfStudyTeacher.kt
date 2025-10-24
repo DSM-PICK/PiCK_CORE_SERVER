@@ -5,6 +5,7 @@ import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.domain.selfstudy.port.`in`.SendNotificationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
+import org.apache.coyote.http11.Constants.a
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -19,14 +20,12 @@ class SendNotificationSelfStudyTeacher(
 
         teacher.map {
             val admin = queryAdminPort.findBYAdminByName(it.teacherName) ?: throw AdminNotFoundException
-            admin.map { a ->
-                if (a.deviceToken != null) {
-                    fcmSendPort.send(
-                        deviceToken = a.deviceToken,
-                        title = "[PiCK] 자습감독 알림",
-                        body = "${a.name}선생님은 오늘 ${it.floor}층 자습감독 선생님입니다."
-                    )
-                }
+            if (admin.deviceToken != null) {
+                fcmSendPort.send(
+                    deviceToken = admin.deviceToken,
+                    title = "[PiCK] 자습감독 알림",
+                    body = "${admin.name}선생님은 오늘 ${it.floor}층 자습감독 선생님입니다."
+                )
             }
         }
     }

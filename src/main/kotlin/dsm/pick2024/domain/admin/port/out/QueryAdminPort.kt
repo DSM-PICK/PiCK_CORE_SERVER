@@ -10,5 +10,5 @@ interface QueryAdminPort {
 
     fun findByAdminId(adminId: String): Admin?
 
-    fun findBYAdminByName(name: String): List<Admin>?
+    fun findBYAdminByName(name: String): Admin?
 }
