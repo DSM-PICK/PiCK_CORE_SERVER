@@ -79,8 +79,6 @@ dependencies {
     implementation(Dependencies.SMTP)
 
     implementation(Dependencies.GOOGLE_OAUTH)
-
-    implementation(Dependencies.QUARTZ)
 }
 
 tasks.withType<KotlinCompile> {
