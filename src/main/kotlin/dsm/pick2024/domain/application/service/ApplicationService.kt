@@ -60,7 +60,7 @@ class ApplicationService(
         deviceToken?.let {
             fcmSendPort.send(
                 deviceToken = it,
-                title = "[PiCK] ${user.name} 학생이 외출을 신청했습니다.",
+                title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 외출을 신청했습니다.",
                 body = "사유: ${request.reason}"
             )
         }
