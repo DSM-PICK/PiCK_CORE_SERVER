@@ -1,5 +1,7 @@
 package dsm.pick2024.domain.weekendmeal.persistence
 
+import dsm.pick2024.domain.admin.exception.AdminNotFoundException
+import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMealPeriod
 import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealPeriodMapper
 import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealPeriodRepository
@@ -10,11 +12,13 @@ import java.util.*
 @Component
 class WeekendMealPeriodPersistenceAdapter(
     private val weekendMealPeriodMapper: WeekendMealPeriodMapper,
-    private val weekendMealPeriodRepository: WeekendMealPeriodRepository
+    private val weekendMealPeriodRepository: WeekendMealPeriodRepository,
+    private val adminRepository: AdminRepository
 ) : WeekendMealPeriodPort {
 
     override fun save(weekendMealPeriod: WeekendMealPeriod) {
-        weekendMealPeriodRepository.save(weekendMealPeriodMapper.toEntity(weekendMealPeriod))
+        val admin = adminRepository.findById(weekendMealPeriod.adminId).orElseThrow { AdminNotFoundException }
+        weekendMealPeriodRepository.save(weekendMealPeriodMapper.toEntity(weekendMealPeriod, admin))
     }
 
     override fun queryWeekendMealById(id: UUID): WeekendMealPeriod? {
@@ -22,7 +26,7 @@ class WeekendMealPeriodPersistenceAdapter(
     }
 
     override fun queryWeekendMealByAdminId(id: UUID): WeekendMealPeriod? {
-        return weekendMealPeriodRepository.findByAdminId(id)?.let { weekendMealPeriodMapper.toDomain(it) }
+        return weekendMealPeriodRepository.findByAdmin_Id(id)?.let { weekendMealPeriodMapper.toDomain(it) }
     }
 
     override fun queryAllWeekendMeal(): List<WeekendMealPeriod> {
