@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
-import dsm.pick2024.domain.user.port.out.QueryUserPort
+import dsm.pick2024.domain.user.port.`in`.UserFinderUseCase
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 @Service
 class NotificationWeekendMealService(
-    private val queryUserPort: QueryUserPort,
+    private val userFinderUseCase: UserFinderUseCase,
     private val weekendMealPeriodPort: WeekendMealPeriodPort,
     private val fcmSendPort: FcmSendPort,
     private val queryWeekendMealPort: QueryWeekendMealPort
@@ -24,7 +24,7 @@ class NotificationWeekendMealService(
     override fun execute() {
         val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(LocalDate.now())
         if (weekendMealPeriod != null) {
-            val users = queryUserPort.userAll()
+            val users = userFinderUseCase.userAllOrThrow()
             when (LocalDate.now()) {
                 weekendMealPeriod.end -> {
                     users.map {
