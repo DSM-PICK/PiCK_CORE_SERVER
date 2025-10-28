@@ -2,6 +2,7 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
@@ -19,7 +20,7 @@ import java.util.UUID
 
 @Service
 class MainService(
-    private val queryApplicationPort: QueryApplicationPort,
+    private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
@@ -66,11 +67,11 @@ class MainService(
         existApplicationPort.existsByUserIdAndApplicationKind(userId, kind)
 
     private fun findApplication(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+        applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
             Status.OK,
             userId,
             ApplicationKind.APPLICATION
-        )?.let {
+        ).let {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 start = it.start.take(5),
@@ -81,11 +82,11 @@ class MainService(
         }
 
     private fun findEarlyReturn(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+        applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
             Status.OK,
             userId,
             ApplicationKind.EARLY_RETURN
-        )?.let {
+        ).let {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 start = it.start.take(5),
@@ -107,16 +108,16 @@ class MainService(
 
     private fun waiting(userId: UUID, type: Main): WaitingResponse? {
         val status = when (type) {
-            Main.APPLICATION -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            Main.APPLICATION -> applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.QUIET,
                 userId,
                 ApplicationKind.APPLICATION
-            )?.status
-            Main.EARLY_RETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            ).status
+            Main.EARLY_RETURN -> applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.QUIET,
                 userId,
                 ApplicationKind.EARLY_RETURN
-            )?.status
+            ).status
             Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
         }
 
