@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.weekendmeal.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
+import dsm.pick2024.domain.user.exception.UserNotFoundException
+import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.entity.QWeekendMealJpaEntity
 import dsm.pick2024.domain.weekendmeal.enums.Status
@@ -14,21 +16,26 @@ import java.util.UUID
 class WeekendMealPersistenceAdapter(
     private val weekendMealRepository: WeekendMealRepository,
     private val weekendMealMapper: WeekendMealMapper,
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
+    private val userRepository: UserRepository
 ) : WeekendMealPort {
     override fun save(weekendMeal: WeekendMeal) {
-        weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal))
+        val user = userRepository.findById(weekendMeal.userId) ?: throw UserNotFoundException
+        weekendMealRepository.save(weekendMealMapper.toEntity(weekendMeal, user))
     }
 
     override fun saveAll(weekendMeals: MutableList<WeekendMeal>) {
-        val entities = weekendMeals.map { weekendMealMapper.toEntity(it) }
+        val entities = weekendMeals.map {
+            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            weekendMealMapper.toEntity(it, user)
+        }
 
         weekendMealRepository.saveAll(entities)
     }
 
-    override fun findByUserId(id: UUID) = weekendMealRepository.findByUserId(id).let { weekendMealMapper.toDomain(it) }
+    override fun findByUserId(id: UUID) = weekendMealRepository.findByUser_Id(id).let { weekendMealMapper.toDomain(it) }
 
-    override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUserId(id)
+    override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUser_Id(id)
 
     override fun findByGradeAndClassNum(
         grade: Int,
