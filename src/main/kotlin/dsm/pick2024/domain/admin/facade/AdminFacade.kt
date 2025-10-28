@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.admin.facade
 
 import dsm.pick2024.domain.admin.domain.Admin
-import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import org.springframework.security.core.context.SecurityContextHolder
@@ -16,7 +15,4 @@ class AdminFacade(
         val name = SecurityContextHolder.getContext().authentication.name
         return getAdminByAdminId(name)
     }
-
-    override fun getAdminByAdminId(adminId: String) =
-        queryAdminPort.findByAdminId(adminId) ?: throw AdminNotFoundException
 }
