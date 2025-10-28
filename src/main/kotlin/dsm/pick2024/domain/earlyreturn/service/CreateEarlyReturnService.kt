@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service
 
-import dsm.pick2024.domain.admin.port.out.QueryAdminPort
+import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
@@ -25,7 +25,7 @@ class CreateEarlyReturnService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
-    private val queryAdminPort: QueryAdminPort,
+    private val adminFinderUseCase: AdminFinderUseCase,
     private val fcmSendPort: FcmSendPort
 ) : CreateEarlyReturnUseCase {
     @Transactional
@@ -51,10 +51,10 @@ class CreateEarlyReturnService(
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
-        val deviceToken = queryAdminPort.findByGradeAndClassNum(
+        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
             grade = user.grade,
             classNum = user.classNum
-        )?.deviceToken
+        ).deviceToken
 
         deviceToken?.let {
             fcmSendPort.send(
