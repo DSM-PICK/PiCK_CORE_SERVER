@@ -1,12 +1,18 @@
 package dsm.pick2024.domain.user.entity
 
+import dsm.pick2024.domain.afterschool.entity.AfterSchoolStudentJpaEntity
+import dsm.pick2024.domain.application.entity.ApplicationJpaEntity
+import dsm.pick2024.domain.classroom.entity.ClassroomJpaEntity
 import dsm.pick2024.domain.user.entity.enums.Role
+import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+
+import javax.persistence.OneToOne
 
 @Entity(name = "tbl_user")
 class UserJpaEntity(
@@ -39,6 +45,18 @@ class UserJpaEntity(
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    val role: Role
+    val role: Role,
+
+    @OneToOne(mappedBy = "user")
+    val weekendMeal: WeekendMealJpaEntity? = null,
+
+    @OneToOne(mappedBy = "user")
+    val afterSchoolStudent: AfterSchoolStudentJpaEntity? = null,
+
+    @OneToOne(mappedBy = "user")
+    val classroom: ClassroomJpaEntity? = null,
+
+    @OneToOne(mappedBy = "user")
+    val application: ApplicationJpaEntity? = null
 
 ) : BaseUUIDEntity(id)
