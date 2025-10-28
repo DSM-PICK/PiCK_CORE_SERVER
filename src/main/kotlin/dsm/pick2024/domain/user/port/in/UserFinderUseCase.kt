@@ -10,7 +10,7 @@ interface UserFinderUseCase {
         grade: Int,
         classNum: Int,
         num: Int
-    ): User?
+    ): User
 
     fun userAllOrThrow(): List<User>
 
