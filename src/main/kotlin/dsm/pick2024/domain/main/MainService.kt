@@ -4,7 +4,6 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort

@@ -1,12 +1,9 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase

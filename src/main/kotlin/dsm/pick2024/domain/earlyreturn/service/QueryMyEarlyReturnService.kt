@@ -3,7 +3,6 @@ package dsm.pick2024.domain.earlyreturn.service
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.earlyreturn.exception.EarlyReturnApplicationNotFoundException
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
