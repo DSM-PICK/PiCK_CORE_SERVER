@@ -2,7 +2,6 @@ package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.admin.port.`in`.QueryAdminAllUseCase
-import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import org.springframework.stereotype.Service
 
 @Service
