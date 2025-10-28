@@ -14,9 +14,9 @@ interface QueryApplicationPort {
         grade: Int,
         classNum: Int,
         applicationKind: ApplicationKind
-    ): List<Application>
+    ): List<Application>?
 
-    fun findByFloorAndApplicationKind(floor: Int, applicationKind: ApplicationKind): List<Application>
+    fun findByFloorAndApplicationKind(floor: Int, applicationKind: ApplicationKind): List<Application>?
 
     fun findByUserIdAndStatusAndApplicationKind(
         status: Status,
@@ -24,5 +24,5 @@ interface QueryApplicationPort {
         applicationKind: ApplicationKind
     ): Application?
 
-    fun queryApplicationWithAttendance(floor: Int): List<Application>
+    fun queryApplicationWithAttendance(floor: Int): List<Application>?
 }
