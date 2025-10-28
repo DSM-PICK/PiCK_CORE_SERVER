@@ -2,16 +2,16 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryClassApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassApplicationService(
-    private val queryApplicationPort: QueryApplicationPort,
+    private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val queryAllApplicationPort: QueryAllApplicationPort
 ) : QueryClassApplicationUseCase {
     @Transactional(readOnly = true)
@@ -23,7 +23,11 @@ class QueryClassApplicationService(
             queryAllApplicationPort.findAllByStatusAndApplicationKind(Status.QUIET, ApplicationKind.APPLICATION)
                 .map { QueryApplicationResponse(it) }
         } else {
-            queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.APPLICATION)
+            applicationFinderUseCase.findByGradeAndClassNumAndApplicationKindOrThrow(
+                grade,
+                classNum,
+                ApplicationKind.APPLICATION
+            )
                 .filter { it.status == Status.QUIET }
                 .map { QueryApplicationResponse(it) }
         }
