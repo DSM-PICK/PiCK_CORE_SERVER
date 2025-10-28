@@ -12,5 +12,5 @@ interface WeekendMealPeriodRepository : Repository<WeekendMealPeriodJpaEntity, U
 
     fun findAll(): List<WeekendMealPeriodJpaEntity>
 
-    fun findByAdminId(id: UUID): WeekendMealPeriodJpaEntity?
+    fun findByAdmin_Id(id: UUID): WeekendMealPeriodJpaEntity?
 }
