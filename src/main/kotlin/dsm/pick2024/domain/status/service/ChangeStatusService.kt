@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.status.service
 
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.status.domain.Status
 import dsm.pick2024.domain.status.entity.enum.StatusType
@@ -11,7 +11,6 @@ import dsm.pick2024.domain.status.port.`in`.ChangeStatusUseCase
 import dsm.pick2024.domain.status.port.out.QueryStatusPort
 import dsm.pick2024.domain.status.port.out.SaveStatusPort
 import dsm.pick2024.domain.status.presentation.dto.request.ChangeStatusRequest
-import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 class ChangeStatusService(
     private val queryStatusPort: QueryStatusPort,
     private val saveStatusPort: SaveStatusPort,
-    private val queryAttendancePort: QueryAttendancePort,
+    private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort
 ) : ChangeStatusUseCase {
     @Transactional
@@ -36,8 +35,7 @@ class ChangeStatusService(
             updateStatuses.add(updatedStatus)
 
             if (requests.statusType in setOf(EMPLOYMENT, PICNIC, ATTENDANCE, DROPOUT, GO_HOME)) {
-                val attendance = queryAttendancePort.findByUserId(requests.userId)
-                    ?: throw UserNotFoundException
+                val attendance = attendanceFinderUseCase.findByUserIdOrThrow(requests.userId)
 
                 val updatedAttendance = attendance.copy(
                     period6 = updatePeriodStatus(requests.statusType),
