@@ -6,15 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ClassroomRepository : JpaRepository<ClassroomJpaEntity, UUID> {
-    fun findByUser_Id(userId: UUID): ClassroomJpaEntity
+    fun findByUserId(userId: UUID): ClassroomJpaEntity
 
-    fun existsByUser_Id(userId: UUID): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
-    fun existsByStatusAndUser_Id(status: Status, userId: UUID): Boolean
+    fun existsByStatusAndUserId(status: Status, userId: UUID): Boolean
 
-    fun deleteByUser_Id(userId: UUID)
+    fun deleteByUserId(userId: UUID)
 
-    fun findByUser_IdAndStatus(
+    fun findByUserIdAndStatus(
         id: UUID,
         status: Status
     ): ClassroomJpaEntity

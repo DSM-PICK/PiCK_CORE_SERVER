@@ -37,9 +37,9 @@ class WeekendMealPersistenceAdapter(
     }
 
     override fun findByUserId(id: UUID) =
-        weekendMealRepository.findByUser_Id(id)?.let { weekendMealMapper.toDomain(it) }
+        weekendMealRepository.findByUserId(id)?.let { weekendMealMapper.toDomain(it) }
 
-    override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUser_Id(id)
+    override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUserId(id)
 
     override fun findByGradeAndClassNum(
         grade: Int,

@@ -5,7 +5,7 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface AfterSchoolStudentRepository : Repository<AfterSchoolStudentJpaEntity, UUID> {
-    fun findByUser_Id(id: UUID): AfterSchoolStudentJpaEntity?
+    fun findByUserId(id: UUID): AfterSchoolStudentJpaEntity?
 
     fun findById(id: UUID): AfterSchoolStudentJpaEntity?
 

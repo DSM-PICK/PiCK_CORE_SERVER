@@ -28,17 +28,17 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun deleteByUserId(userId: UUID) {
-        classroomRepository.deleteByUser_Id(userId)
+        classroomRepository.deleteByUserId(userId)
     }
 
     override fun findByUserId(userId: UUID) =
-        classroomRepository.findByUser_Id(userId).let { classroomMapper.toDomain(it) }
+        classroomRepository.findByUserId(userId).let { classroomMapper.toDomain(it) }
 
     override fun existsByUserId(userId: UUID) =
-        classroomRepository.existsByUser_Id(userId)
+        classroomRepository.existsByUserId(userId)
 
     override fun existOKByUserId(userId: UUID) =
-        classroomRepository.existsByStatusAndUser_Id(Status.OK, userId)
+        classroomRepository.existsByStatusAndUserId(Status.OK, userId)
 
     override fun findAll() = classroomRepository.findAll().map { classroomMapper.toDomain(it) }
 
@@ -55,7 +55,7 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun findOKClassroom(id: UUID) =
-        classroomRepository.findByUser_IdAndStatus(id, Status.OK).let {
+        classroomRepository.findByUserIdAndStatus(id, Status.OK).let {
             classroomMapper.toDomain(it)
         }
 

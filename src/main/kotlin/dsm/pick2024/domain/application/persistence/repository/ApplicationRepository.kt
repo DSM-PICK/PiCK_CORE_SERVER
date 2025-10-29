@@ -7,14 +7,14 @@ import org.springframework.data.repository.Repository
 import java.util.UUID
 
 interface ApplicationRepository : Repository<ApplicationJpaEntity, UUID> {
-    fun existsByUser_Id(userId: UUID): Boolean
+    fun existsByUserId(userId: UUID): Boolean
 
-    fun existsByUser_IdAndApplicationKind(
+    fun existsByUserIdAndApplicationKind(
         userId: UUID,
         applicationKind: ApplicationKind
     ): Boolean
 
-    fun existsByStatusAndUser_IdAndApplicationKind(
+    fun existsByStatusAndUserIdAndApplicationKind(
         status: Status,
         userId: UUID,
         applicationKind: ApplicationKind
@@ -24,7 +24,7 @@ interface ApplicationRepository : Repository<ApplicationJpaEntity, UUID> {
 
     fun findById(id: UUID): ApplicationJpaEntity?
 
-    fun findByUser_Id(userId: UUID): ApplicationJpaEntity?
+    fun findByUserId(userId: UUID): ApplicationJpaEntity?
 
     fun deleteByIdAndApplicationKind(id: UUID, applicationKind: ApplicationKind)
 
@@ -38,7 +38,7 @@ interface ApplicationRepository : Repository<ApplicationJpaEntity, UUID> {
 
     fun deleteAllByApplicationKind(applicationKind: ApplicationKind)
 
-    fun findByUser_IdAndStatusAndApplicationKind(
+    fun findByUserIdAndStatusAndApplicationKind(
         id: UUID,
         status: Status,
         applicationKind: ApplicationKind

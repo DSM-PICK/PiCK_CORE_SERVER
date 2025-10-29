@@ -32,17 +32,17 @@ class ApplicationPersistenceAdapter(
         applicationRepository.saveAll(entities)
     }
 
-    override fun existByUserId(userId: UUID) = applicationRepository.existsByUser_Id(userId)
+    override fun existByUserId(userId: UUID) = applicationRepository.existsByUserId(userId)
 
     override fun existsByUserIdAndApplicationKind(userId: UUID, applicationKind: ApplicationKind) =
-        applicationRepository.existsByUser_IdAndApplicationKind(userId, applicationKind)
+        applicationRepository.existsByUserIdAndApplicationKind(userId, applicationKind)
 
     override fun existsByStatusAndUserIdAndApplicationKind(
         status: Status,
         userId: UUID,
         applicationKind: ApplicationKind
     ) =
-        applicationRepository.existsByStatusAndUser_IdAndApplicationKind(status, userId, applicationKind)
+        applicationRepository.existsByStatusAndUserIdAndApplicationKind(status, userId, applicationKind)
 
     override fun findById(id: UUID): Application? {
         return applicationRepository.findById(id)?.let { applicationMapper.toDomain(it) }
@@ -61,7 +61,7 @@ class ApplicationPersistenceAdapter(
 
     override fun findByUserId(userId: UUID) =
 
-        applicationRepository.findByUser_Id(userId)?.let { applicationMapper.toDomain(it) }
+        applicationRepository.findByUserId(userId)?.let { applicationMapper.toDomain(it) }
 
     override fun findAllByApplicationKind(applicationKind: ApplicationKind) =
         applicationRepository.findAllByApplicationKind(applicationKind).map { applicationMapper.toDomain(it) }
@@ -71,7 +71,7 @@ class ApplicationPersistenceAdapter(
         id: UUID,
         applicationKind: ApplicationKind
     ): Application? {
-        return applicationRepository.findByUser_IdAndStatusAndApplicationKind(
+        return applicationRepository.findByUserIdAndStatusAndApplicationKind(
             id,
             status,
             applicationKind
