@@ -10,16 +10,16 @@ interface QueryClassroomPort {
 
     fun findOKClassroom(id: UUID): Classroom?
 
-    fun findAll(): List<Classroom>
+    fun findAll(): List<Classroom>?
 
     fun queryGradeClassroom(
         grade: Int,
         classNum: Int
-    ): List<Classroom>
+    ): List<Classroom>?
 
-    fun queryFloorClassroom(floor: Int): List<Classroom>
+    fun queryFloorClassroom(floor: Int): List<Classroom>?
 
-    fun findAllByStatus(status: Status): List<Classroom>
+    fun findAllByStatus(status: Status): List<Classroom>?
 
-    fun queryFloorClassroomWithAttendance(floor: Int): List<Classroom>
+    fun queryFloorClassroomWithAttendance(floor: Int): List<Classroom>?
 }
