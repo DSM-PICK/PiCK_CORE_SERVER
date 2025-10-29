@@ -6,7 +6,7 @@ import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import org.springframework.stereotype.Component
 
 @Component
-class WeekendMealMapper{
+class WeekendMealMapper {
     fun toEntity(domain: WeekendMeal, user: UserJpaEntity) =
         domain.run {
             WeekendMealJpaEntity(

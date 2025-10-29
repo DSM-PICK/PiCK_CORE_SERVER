@@ -25,15 +25,19 @@ class WeekendMealPersistenceAdapter(
     }
 
     override fun saveAll(weekendMeals: MutableList<WeekendMeal>) {
+        val userIds = weekendMeals.map { it.userId }
+        val users = userRepository.findAllByIdIn(userIds).associateBy { it.id }
+
         val entities = weekendMeals.map {
-            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            val user = users[it.userId] ?: throw UserNotFoundException
             weekendMealMapper.toEntity(it, user)
         }
 
         weekendMealRepository.saveAll(entities)
     }
 
-    override fun findByUserId(id: UUID) = weekendMealRepository.findByUser_Id(id).let { weekendMealMapper.toDomain(it) }
+    override fun findByUserId(id: UUID) =
+        weekendMealRepository.findByUser_Id(id)?.let { weekendMealMapper.toDomain(it) }
 
     override fun existsByUserId(id: UUID) = weekendMealRepository.existsByUser_Id(id)
 
@@ -63,7 +67,7 @@ class WeekendMealPersistenceAdapter(
     }
 
     override fun findById(id: UUID): WeekendMeal? {
-        return weekendMealRepository.findById(id).let { weekendMealMapper.toDomain(it) }
+        return weekendMealRepository.findById(id)?.let { weekendMealMapper.toDomain(it) }
     }
 
     override fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status) =
