@@ -19,10 +19,14 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     private val userRepository: UserRepository
 ) : AfterSchoolStudentPort {
     override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
+        val userIds = afterSchool.map { it.userId }
+        val users = userRepository.findAllById(userIds).associateBy { it.id }
+
         val entities = afterSchool.map {
-            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            val user = users[it.userId] ?: throw UserNotFoundException
             afterSchoolStudentMapper.toEntity(it, user)
         }
+
         afterSchoolStudentRepository.saveAll(entities)
     }
 
