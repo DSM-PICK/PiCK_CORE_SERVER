@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.Month
 import java.util.UUID
 import javax.persistence.Entity
+import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
@@ -16,7 +17,7 @@ class WeekendMealPeriodJpaEntity(
     val end: LocalDate,
     val month: Month,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id")
     val admin: AdminJpaEntity
 ) : BaseUUIDEntity(id)
