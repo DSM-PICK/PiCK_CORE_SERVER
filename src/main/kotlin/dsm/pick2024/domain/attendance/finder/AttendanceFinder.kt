@@ -4,6 +4,7 @@ import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -21,7 +22,7 @@ class AttendanceFinder(
         queryAttendancePort.findByStudentNum(grade, classNum, num) ?: throw AdminNotFoundException
 
     override fun findByClubOrThrow(club: String) =
-        queryAttendancePort.findByClub(club) ?: throw AdminNotFoundException
+        queryAttendancePort.findByClub(club) ?: throw ClubNotFoundException
 
     override fun findByUserIdOrThrow(userId: UUID) =
         queryAttendancePort.findByUserId(userId) ?: throw AdminNotFoundException
