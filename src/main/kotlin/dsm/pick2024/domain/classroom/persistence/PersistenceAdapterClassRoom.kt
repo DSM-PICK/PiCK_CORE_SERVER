@@ -9,6 +9,8 @@ import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
 import dsm.pick2024.domain.classroom.persistence.repository.ClassroomRepository
 import dsm.pick2024.domain.classroom.port.out.ClassRoomPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
+import dsm.pick2024.domain.user.exception.UserNotFoundException
+import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -17,24 +19,26 @@ class PersistenceAdapterClassRoom(
     private val classroomMapper: ClassroomMapper,
     private val classroomRepository: ClassroomRepository,
     private val jpaQueryFactory: JPAQueryFactory,
-    private val attendancePort: QueryAttendancePort
+    private val attendancePort: QueryAttendancePort,
+    private val userRepository: UserRepository
 ) : ClassRoomPort {
     override fun save(classroom: Classroom) {
-        classroomRepository.save(classroomMapper.toEntity(classroom))
+        val user = userRepository.findById(classroom.userId) ?: throw UserNotFoundException
+        classroomRepository.save(classroomMapper.toEntity(classroom, user))
     }
 
     override fun deleteByUserId(userId: UUID) {
-        classroomRepository.deleteByUserId(userId)
+        classroomRepository.deleteByUser_Id(userId)
     }
 
     override fun findByUserId(userId: UUID) =
-        classroomRepository.findByUserId(userId).let { classroomMapper.toDomain(it) }
+        classroomRepository.findByUser_Id(userId).let { classroomMapper.toDomain(it) }
 
     override fun existsByUserId(userId: UUID) =
-        classroomRepository.existsByUserId(userId)
+        classroomRepository.existsByUser_Id(userId)
 
     override fun existOKByUserId(userId: UUID) =
-        classroomRepository.existsByStatusAndUserId(Status.OK, userId)
+        classroomRepository.existsByStatusAndUser_Id(Status.OK, userId)
 
     override fun findAll() = classroomRepository.findAll().map { classroomMapper.toDomain(it) }
 
@@ -43,12 +47,15 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun saveAll(classroom: List<Classroom>) {
-        val entities = classroom.map { classroomMapper.toEntity(it) }
+        val entities = classroom.map {
+            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            classroomMapper.toEntity(it, user)
+        }
         classroomRepository.saveAll(entities)
     }
 
     override fun findOKClassroom(id: UUID) =
-        classroomRepository.findByUserIdAndStatus(id, Status.OK).let {
+        classroomRepository.findByUser_IdAndStatus(id, Status.OK).let {
             classroomMapper.toDomain(it)
         }
 
