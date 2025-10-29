@@ -31,10 +31,10 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     }
 
     override fun findByUserId(id: UUID) =
-        afterSchoolStudentRepository.findByUser_Id(id).let { afterSchoolStudentMapper.toDomain(it) }
+        afterSchoolStudentRepository.findByUser_Id(id)?.let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun findById(id: UUID) =
-        afterSchoolStudentRepository.findById(id).let { afterSchoolStudentMapper.toDomain(it) }
+        afterSchoolStudentRepository.findById(id)?.let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun deleteById(id: UUID) {
         afterSchoolStudentRepository.deleteById(id)
