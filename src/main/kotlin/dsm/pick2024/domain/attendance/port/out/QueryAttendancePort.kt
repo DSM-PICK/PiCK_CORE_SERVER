@@ -5,12 +5,12 @@ import java.util.*
 
 interface QueryAttendancePort {
 
-    fun findAll(): List<Attendance>
+    fun findAll(): List<Attendance>?
 
     fun findByGradeAndClassNum(
         grade: Int,
         classNum: Int
-    ): List<Attendance>
+    ): List<Attendance>?
 
     fun findByStudentNum(
         grade: Int,

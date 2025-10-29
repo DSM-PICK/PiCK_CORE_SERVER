@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.user.service
 
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.user.exception.NotExtensionXslException
 import dsm.pick2024.domain.user.port.`in`.UpdateUserClubFromExcelUseCase
@@ -16,7 +16,7 @@ import javax.transaction.Transactional
 
 @Service
 class UpdateUserClubFromExcelService(
-    private val queryAttendancePort: QueryAttendancePort,
+    private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort
 ) : UpdateUserClubFromExcelUseCase {
     val STUDENT_NUM_INDEX = 1
@@ -66,7 +66,7 @@ class UpdateUserClubFromExcelService(
     }
 
     private fun updateClub(grade: Int, classNum: Int, num: Int, clubName: String, floor: Int, place: String) {
-        val attendance = queryAttendancePort.findByStudentNum(grade, classNum, num)
-        attendance?.updateClub(clubName, floor, place)?.let { saveAttendancePort.save(it) }
+        val attendance = attendanceFinderUseCase.findByStudentNumOrThrow(grade, classNum, num)
+        attendance.updateClub(clubName, floor, place).let { saveAttendancePort.save(it) }
     }
 }

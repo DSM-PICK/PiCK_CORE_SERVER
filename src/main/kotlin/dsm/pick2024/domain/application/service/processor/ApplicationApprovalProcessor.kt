@@ -7,7 +7,7 @@ import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.event.enums.EventTopic
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service
 class ApplicationApprovalProcessor(
     private val saveApplicationPort: SaveApplicationPort,
     private val applicationStorySaveAllPort: SaveAllApplicationStoryPort,
-    private val queryAttendancePort: QueryAttendancePort,
+    private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort,
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
@@ -43,8 +43,8 @@ class ApplicationApprovalProcessor(
         }
 
         val attendances = updateApplications.map {
-            val attendanceId = queryAttendancePort.findByUserId(it.userId)
-            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId!!)
+            val attendanceId = attendanceFinderUseCase.findByUserIdOrThrow(it.userId)
+            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId)
         }
 
         saveApplicationPort.saveAll(updateApplications)
