@@ -5,10 +5,12 @@ import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.weekendmeal.entity.WeekendMealPeriodJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.OneToMany
 
 @Entity(name = "tbl_admin")
@@ -34,9 +36,9 @@ class AdminJpaEntity(
     @Column(nullable = false)
     val role: Role,
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val weekendMealPeriods: MutableList<WeekendMealPeriodJpaEntity> = mutableListOf(),
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = [CascadeType.ALL], orphanRemoval = true)
     val notices: MutableList<NoticeJpaEntity> = mutableListOf()
 ) : BaseUUIDEntity(id)
