@@ -1,19 +1,23 @@
 package dsm.pick2024.domain.classroom.entity
 
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.JoinColumn
+import javax.persistence.OneToOne
 
 @Entity(name = "tbl_classroom")
 class ClassroomJpaEntity(
     id: UUID?,
 
-    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
-    val userId: UUID,
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    val user: UserJpaEntity,
 
     @Column(name = "classroom", nullable = false, columnDefinition = "VARCHAR(20)")
     val classroomName: String,
