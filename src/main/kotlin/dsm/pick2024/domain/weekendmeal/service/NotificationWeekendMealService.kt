@@ -4,7 +4,7 @@ import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.domain.user.port.`in`.UserFinderUseCase
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
-import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
+import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -14,7 +14,7 @@ class NotificationWeekendMealService(
     private val userFinderUseCase: UserFinderUseCase,
     private val weekendMealPeriodPort: WeekendMealPeriodPort,
     private val fcmSendPort: FcmSendPort,
-    private val queryWeekendMealPort: QueryWeekendMealPort
+    private val weekendMealFinderUseCase: WeekendMealFinderUseCase
 ) : NotificationWeekendMealUseCase {
     companion object {
         private const val OK = "신청하셨습니다."
@@ -28,7 +28,7 @@ class NotificationWeekendMealService(
             when (LocalDate.now()) {
                 weekendMealPeriod.end -> {
                     users.map {
-                        val status = queryWeekendMealPort.findByUserId(it.id)!!.status
+                        val status = weekendMealFinderUseCase.findByUserIdOrThrow(it.id).status
                         if (it.deviceToken != null) {
                             fcmSendPort.send(
                                 deviceToken = it.deviceToken,
