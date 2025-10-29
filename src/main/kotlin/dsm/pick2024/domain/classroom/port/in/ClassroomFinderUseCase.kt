@@ -4,7 +4,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.classroom.domain.Classroom
 import java.util.*
 
-interface ClassroomFinderUserCase {
+interface ClassroomFinderUseCase {
     fun findByUserIdOrThrow(userId: UUID): Classroom
 
     fun findOKClassroomOrThrow(id: UUID): Classroom
