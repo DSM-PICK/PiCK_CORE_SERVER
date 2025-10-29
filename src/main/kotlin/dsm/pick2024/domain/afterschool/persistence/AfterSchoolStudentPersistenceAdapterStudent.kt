@@ -6,6 +6,8 @@ import dsm.pick2024.domain.afterschool.entity.QAfterSchoolStudentJpaEntity
 import dsm.pick2024.domain.afterschool.mapper.AfterSchoolStudentMapper
 import dsm.pick2024.domain.afterschool.persistence.repository.AfterSchoolStudentRepository
 import dsm.pick2024.domain.afterschool.port.out.AfterSchoolStudentPort
+import dsm.pick2024.domain.user.exception.UserNotFoundException
+import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -13,15 +15,19 @@ import java.util.UUID
 class AfterSchoolStudentPersistenceAdapterStudent(
     private val afterSchoolStudentMapper: AfterSchoolStudentMapper,
     private val afterSchoolStudentRepository: AfterSchoolStudentRepository,
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
+    private val userRepository: UserRepository
 ) : AfterSchoolStudentPort {
     override fun saveAll(afterSchool: List<AfterSchoolStudent>) {
-        val entities = afterSchool.map { afterSchoolStudentMapper.toEntity(it) }
+        val entities = afterSchool.map {
+            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            afterSchoolStudentMapper.toEntity(it, user)
+        }
         afterSchoolStudentRepository.saveAll(entities)
     }
 
     override fun findByUserId(id: UUID) =
-        afterSchoolStudentRepository.findByUserId(id).let { afterSchoolStudentMapper.toDomain(it) }
+        afterSchoolStudentRepository.findByUser_Id(id).let { afterSchoolStudentMapper.toDomain(it) }
 
     override fun findById(id: UUID) =
         afterSchoolStudentRepository.findById(id).let { afterSchoolStudentMapper.toDomain(it) }
@@ -31,7 +37,8 @@ class AfterSchoolStudentPersistenceAdapterStudent(
     }
 
     override fun save(afterSchoolStudent: AfterSchoolStudent) {
-        val entity = afterSchoolStudentMapper.toEntity(afterSchoolStudent)
+        val user = userRepository.findById(afterSchoolStudent.userId) ?: throw UserNotFoundException
+        val entity = afterSchoolStudentMapper.toEntity(afterSchoolStudent, user)
         afterSchoolStudentRepository.save(entity)
     }
 
