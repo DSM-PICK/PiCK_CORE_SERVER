@@ -1,15 +1,17 @@
 package dsm.pick2024.domain.application.mapper
 
 import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.entity.ApplicationJapEntity
+import dsm.pick2024.domain.application.entity.ApplicationJpaEntity
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import org.springframework.stereotype.Component
 
 @Component
 class ApplicationMapper {
-    fun toEntity(domain: Application) =
+    fun toEntity(domain: Application, user: UserJpaEntity) =
         domain.run {
-            ApplicationJapEntity(
+            ApplicationJpaEntity(
                 id = id,
+                user = user,
                 reason = reason,
                 start = start,
                 end = end,
@@ -20,16 +22,16 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                userId = userId,
                 applicationType = applicationType,
                 applicationKind = applicationKind
             )
         }
 
-    fun toDomain(entity: ApplicationJapEntity) =
+    fun toDomain(entity: ApplicationJpaEntity) =
         entity.run {
             Application(
                 id = id!!,
+                userId = user.id!!,
                 reason = reason,
                 start = start,
                 end = end,
@@ -40,7 +42,6 @@ class ApplicationMapper {
                 grade = grade,
                 classNum = classNum,
                 num = num,
-                userId = userId,
                 applicationType = applicationType,
                 applicationKind = applicationKind
             )
