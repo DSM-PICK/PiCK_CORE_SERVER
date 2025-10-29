@@ -3,6 +3,7 @@ package dsm.pick2024.domain.admin.presentation
 import dsm.pick2024.domain.admin.port.`in`.*
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
+import dsm.pick2024.domain.admin.presentation.dto.request.SecretKeyRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -22,7 +23,8 @@ class AdminController(
     private val adminTokenRefreshUseCase: AdminTokenRefreshUseCase,
     private val queryAdminNameUseCase: QueryAdminNameUseCase,
     private val queryAdminAllUseCase: QueryAdminAllUseCase,
-    private val adminSignUpUseCase: AdminSignUpUseCase
+    private val adminSignUpUseCase: AdminSignUpUseCase,
+    private val verifySecretKeyUseCase: VerifySecretKeyUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -49,4 +51,10 @@ class AdminController(
     @Operation(summary = "어드민 이름 전체 조회 API")
     @GetMapping("/all")
     fun findAllAdmin() = queryAdminAllUseCase.queryAdminAll()
+
+    @Operation(summary = "어드민 시크릿 키 확인 API")
+    @PostMapping("/key")
+    fun verifyKey(
+        @RequestBody request: SecretKeyRequest
+    ) = verifySecretKeyUseCase.verifySecretKey(request)
 }
