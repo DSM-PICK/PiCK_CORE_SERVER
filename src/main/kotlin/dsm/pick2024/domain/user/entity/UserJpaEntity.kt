@@ -8,10 +8,12 @@ import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.weekendmeal.entity.WeekendMealJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.*
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
 import javax.persistence.OneToMany
 import javax.persistence.OneToOne
 
@@ -48,19 +50,19 @@ class UserJpaEntity(
     @Column(nullable = false)
     val role: Role,
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     val weekendMeal: WeekendMealJpaEntity? = null,
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     val afterSchoolStudent: AfterSchoolStudentJpaEntity? = null,
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     val classroom: ClassroomJpaEntity? = null,
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     val application: ApplicationJpaEntity? = null,
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     val applicationStories: MutableList<ApplicationStoryJpaEntity> = mutableListOf()
 
 ) : BaseUUIDEntity(id)

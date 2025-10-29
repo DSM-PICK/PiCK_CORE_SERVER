@@ -19,7 +19,7 @@ class ApplicationStoryJpaEntity(
     @Column(name = "reason", nullable = false, columnDefinition = "TEXT")
     val reason: String,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: UserJpaEntity,
 

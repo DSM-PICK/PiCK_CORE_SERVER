@@ -15,7 +15,7 @@ import javax.persistence.OneToOne
 class AfterSchoolStudentJpaEntity(
     id: UUID?,
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     val user: UserJpaEntity,
 
