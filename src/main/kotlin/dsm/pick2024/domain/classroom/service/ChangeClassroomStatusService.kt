@@ -13,8 +13,8 @@ import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Comp
 import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period8
 import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period9
 import dsm.pick2024.domain.classroom.domain.Classroom
-import dsm.pick2024.domain.classroom.exception.ClassroomNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
@@ -30,13 +30,14 @@ class ChangeClassroomStatusService(
     private val saveClassRoomPort: SaveClassRoomPort,
     private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort,
-    private val eventPublisher: ApplicationEventPublisher
+    private val eventPublisher: ApplicationEventPublisher,
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : ChangeClassroomStatusUseCase {
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
         if (request.status == NO) {
             for (id in request.idList) {
-                val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
+                val classroom = classroomFinderUseCase.findByUserIdOrThrow(id)
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
             }
             eventPublisher.publishEvent(ChangeStatusRequest(this, request.idList))
@@ -45,7 +46,7 @@ class ChangeClassroomStatusService(
             val updateAttendanceList = mutableListOf<Attendance>()
 
             request.idList.forEach { id ->
-                val classroom = queryClassroomPort.findByUserId(id) ?: throw ClassroomNotFoundException
+                val classroom = classroomFinderUseCase.findByUserIdOrThrow(id)
 
                 val updatedClassroom = classroom.copy(status = OK)
                 update.add(updatedClassroom)
