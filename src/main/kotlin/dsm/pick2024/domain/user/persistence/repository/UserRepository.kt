@@ -14,6 +14,8 @@ interface UserRepository : Repository<UserJpaEntity, UUID> {
 
     fun findAllById(ids: Iterable<UUID>): List<UserJpaEntity>
 
+    fun findAllByIdIn(ids: List<UUID>): List<UserJpaEntity>
+
     fun existsByAccountId(accountId: String): Boolean
 
     fun findByGradeAndClassNumAndNum(

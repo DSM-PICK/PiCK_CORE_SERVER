@@ -17,10 +17,14 @@ class ApplicationStoryPersistenceAdapter(
 ) : ApplicationStoryPort {
 
     override fun saveAll(applicationStory: List<ApplicationStory>) {
+        val userIds = applicationStory.map { it.userId }
+        val users = userRepository.findAllByIdIn(userIds).associateBy { it.id }
+
         val entities = applicationStory.map {
-            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            val user = users[it.userId] ?: throw UserNotFoundException
             applicationStoryMapper.toEntity(it, user)
         }
+
         applicationStoryRepository.saveAll(entities)
     }
 
