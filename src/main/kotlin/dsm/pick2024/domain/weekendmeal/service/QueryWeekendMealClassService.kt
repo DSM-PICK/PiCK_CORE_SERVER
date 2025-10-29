@@ -2,7 +2,6 @@ package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
-import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMealResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

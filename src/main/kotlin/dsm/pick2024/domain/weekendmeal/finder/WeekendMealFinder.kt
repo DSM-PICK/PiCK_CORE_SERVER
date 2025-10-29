@@ -12,7 +12,7 @@ class WeekendMealFinder(
     private val queryWeekendMealPort: QueryWeekendMealPort
 ) : WeekendMealFinderUseCase {
     override fun findByIdOrThrow(id: UUID) =
-        queryWeekendMealPort.findByUserId(id) ?: throw WeekendMealNotFoundException
+        queryWeekendMealPort.findById(id) ?: throw WeekendMealNotFoundException
 
     override fun findByGradeAndClassNumOrThrow(grade: Int, classNum: Int) =
         queryWeekendMealPort.findByGradeAndClassNum(grade, classNum) ?: throw WeekendMealNotFoundException
