@@ -2,20 +2,20 @@ package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.domain.Attendance
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ResetAttendanceService(
-    private val queryAttendancePort: QueryAttendancePort,
+    private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort
 ) : ResetAttendanceUseCase {
     @Transactional
     override fun resetAttendance() {
-        val allStudent = queryAttendancePort.findAll()
+        val allStudent = attendanceFinderUseCase.findAllOrThrow()
         val update = mutableListOf<Attendance>()
 
         allStudent.map { attendance ->
