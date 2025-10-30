@@ -5,8 +5,8 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
@@ -20,11 +20,11 @@ import java.util.UUID
 @Service
 class MainService(
     private val applicationFinderUseCase: ApplicationFinderUseCase,
-    private val queryClassroomPort: QueryClassroomPort,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : MainUseCase {
 
     override fun main(userId: String, session: WebSocketSession) {
@@ -95,7 +95,7 @@ class MainService(
         }
 
     private fun findClassroom(userId: UUID) =
-        queryClassroomPort.findByUserId(userId)?.let {
+        classroomFinderUseCase.findByUserIdOrThrow(userId).let {
             QueryMainUserMoveClassroomResponse(
                 userName = it.userName,
                 classroom = it.classroomName,
@@ -117,7 +117,7 @@ class MainService(
                 userId,
                 ApplicationKind.EARLY_RETURN
             ).status
-            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
+            Main.CLASSROOM -> classroomFinderUseCase.findByUserIdOrThrow(userId).status
         }
 
         return if (status == Status.QUIET) WaitingResponse(type) else null

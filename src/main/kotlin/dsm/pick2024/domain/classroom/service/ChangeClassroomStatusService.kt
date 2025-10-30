@@ -16,7 +16,6 @@ import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
 import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import org.springframework.context.ApplicationEventPublisher
@@ -25,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeClassroomStatusService(
-    private val queryClassroomPort: QueryClassroomPort,
     private val deleteClassRoomPort: DeleteClassRoomPort,
     private val saveClassRoomPort: SaveClassRoomPort,
     private val attendanceFinderUseCase: AttendanceFinderUseCase,

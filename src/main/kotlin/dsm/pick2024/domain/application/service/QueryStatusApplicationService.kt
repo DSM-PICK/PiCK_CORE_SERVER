@@ -5,14 +5,14 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.`in`.QueryStatusApplicationUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryStatusApplicationResponse
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryStatusApplicationService(
     private val queryAllApplicationPort: QueryAllApplicationPort,
-    private val queryClassroomPort: QueryClassroomPort
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryStatusApplicationUseCase {
 
     @Transactional(readOnly = true)
@@ -26,7 +26,7 @@ class QueryStatusApplicationService(
         val request = allEarlyReturns.count { it.status == Status.QUIET } +
             allApplications.count { it.status == Status.QUIET }
 
-        val classMove = queryClassroomPort.findAll().count { it.status == Status.OK }
+        val classMove = classroomFinderUseCase.findAllOrThrow().count { it.status == Status.OK }
 
         return QueryStatusApplicationResponse(out, request, classMove)
     }

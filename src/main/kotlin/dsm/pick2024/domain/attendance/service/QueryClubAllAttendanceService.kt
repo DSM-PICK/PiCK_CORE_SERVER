@@ -4,7 +4,7 @@ import dsm.pick2024.domain.attendance.exception.InvalidTimeException
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAllAttendanceUseCase
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import java.time.LocalTime
 import java.util.UUID
 import org.springframework.dao.EmptyResultDataAccessException
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClubAllAttendanceService(
     private val attendanceFinderUseCase: AttendanceFinderUseCase,
-    private val queryClassRoomPort: QueryClassroomPort
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClubAllAttendanceUseCase {
 
     companion object {
@@ -40,7 +40,7 @@ class QueryClubAllAttendanceService(
 
     private fun getClassroomName(userId: UUID): String {
         return try {
-            val classroom = queryClassRoomPort.findOKClassroom(userId)
+            val classroom = classroomFinderUseCase.findOKClassroomOrThrow(userId)
             classroom?.takeIf {
                 isContainTime(it.startPeriod, it.endPeriod)
             }?.classroomName ?: ""

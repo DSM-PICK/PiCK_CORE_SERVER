@@ -3,15 +3,15 @@ package dsm.pick2024.domain.classroom.service
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryClassroomResponse
 import org.joda.time.LocalDate
 import org.springframework.stereotype.Service
 
 @Service
 class QueryFloorClassroomService(
-    private val queryClassroomPort: QueryClassroomPort,
+    private val classroomFinderUseCase: ClassroomFinderUseCase,
     private val attendanceFinderUseCase: AttendanceFinderUseCase
 ) : QueryFloorClassroomUseCase {
 
@@ -24,14 +24,14 @@ class QueryFloorClassroomService(
         val classrooms = when (floor) {
             2, 3, 4 -> {
                 val filteredClassrooms = if (today == 2 || today == 5) {
-                    queryClassroomPort.queryFloorClassroomWithAttendance(floor)
+                    classroomFinderUseCase.queryFloorClassroomWithAttendanceOrThrow(floor)
                 } else {
-                    queryClassroomPort.queryFloorClassroom(floor)
+                    classroomFinderUseCase.queryFloorClassroomOrThrow(floor)
                 }
                 filteredClassrooms.filter { it.status == status }
             }
             5 -> {
-                queryClassroomPort.findAllByStatus(status)
+                classroomFinderUseCase.findAllByStatusOrThrow(status)
             }
             else -> throw FloorNotFoundException
         }
