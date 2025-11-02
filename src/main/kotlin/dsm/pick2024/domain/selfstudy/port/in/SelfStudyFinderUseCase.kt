@@ -7,11 +7,11 @@ import java.time.Year
 
 interface SelfStudyFinderUseCase {
 
-    fun findByDateList(date: LocalDate): List<SelfStudy>
+    fun findByDateListOrThrow(date: LocalDate): List<SelfStudy>
 
-    fun findByDaySelfStudy(date: LocalDate): List<SelfStudy>
+    fun findByDaySelfStudyOrThrow(date: LocalDate): List<SelfStudy>
 
-    fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy>
+    fun findByMonthSelfStudyTeacherOrThrow(year: Year, month: Month): List<SelfStudy>
 
-    fun findByTodayTeacher(teacher: String): SelfStudy
+    fun findByTodayTeacherOrThrow(teacher: String): SelfStudy
 }

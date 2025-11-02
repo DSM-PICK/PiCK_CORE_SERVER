@@ -12,15 +12,15 @@ import java.time.Year
 class SelfStudyFinder(
     private val querySelfStudyPort: QuerySelfStudyPort
 ) : SelfStudyFinderUseCase {
-    override fun findByDateList(date: LocalDate) =
+    override fun findByDateListOrThrow(date: LocalDate) =
         querySelfStudyPort.findByDateList(date) ?: throw SelfStudyNotFoundException
 
-    override fun findByDaySelfStudy(date: LocalDate) =
+    override fun findByDaySelfStudyOrThrow(date: LocalDate) =
         querySelfStudyPort.findByDaySelfStudy(date) ?: throw SelfStudyNotFoundException
 
-    override fun findByMonthSelfStudyTeacher(year: Year, month: Month) =
+    override fun findByMonthSelfStudyTeacherOrThrow(year: Year, month: Month) =
         querySelfStudyPort.findByMonthSelfStudyTeacher(year, month) ?: throw SelfStudyNotFoundException
 
-    override fun findByTodayTeacher(teacher: String) =
+    override fun findByTodayTeacherOrThrow(teacher: String) =
         querySelfStudyPort.findByTodayTeacher(teacher) ?: throw SelfStudyNotFoundException
 }
