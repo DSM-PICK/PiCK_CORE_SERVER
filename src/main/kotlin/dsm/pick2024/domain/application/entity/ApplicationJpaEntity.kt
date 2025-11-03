@@ -20,7 +20,7 @@ class ApplicationJpaEntity(
     id: UUID?,
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     val user: UserJpaEntity,
 
     @Column(name = "reason", nullable = false)

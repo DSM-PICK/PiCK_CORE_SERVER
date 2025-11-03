@@ -17,7 +17,7 @@ class WeekendMealJpaEntity(
     id: UUID?,
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     val user: UserJpaEntity,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
