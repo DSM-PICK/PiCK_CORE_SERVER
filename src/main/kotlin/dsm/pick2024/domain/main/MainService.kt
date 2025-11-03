@@ -2,11 +2,11 @@ package dsm.pick2024.domain.main
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMainMyApplicationResponse
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMoveClassroomResponse
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
@@ -19,12 +19,12 @@ import java.util.UUID
 
 @Service
 class MainService(
-    private val queryApplicationPort: QueryApplicationPort,
-    private val queryClassroomPort: QueryClassroomPort,
+    private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
     private val eventPublisher: ApplicationEventPublisher,
-    private val userFacadeUseCase: UserFacadeUseCase
+    private val userFacadeUseCase: UserFacadeUseCase,
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : MainUseCase {
 
     override fun main(userId: String, session: WebSocketSession) {
@@ -66,11 +66,11 @@ class MainService(
         existApplicationPort.existsByUserIdAndApplicationKind(userId, kind)
 
     private fun findApplication(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+        applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
             Status.OK,
             userId,
             ApplicationKind.APPLICATION
-        )?.let {
+        ).let {
             QueryMainMyApplicationResponse(
                 userId = userId,
                 start = it.start.take(5),
@@ -81,11 +81,11 @@ class MainService(
         }
 
     private fun findEarlyReturn(userId: UUID) =
-        queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+        applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
             Status.OK,
             userId,
             ApplicationKind.EARLY_RETURN
-        )?.let {
+        ).let {
             QuerySimpleMyEarlyResponse(
                 userId = userId,
                 start = it.start.take(5),
@@ -95,7 +95,7 @@ class MainService(
         }
 
     private fun findClassroom(userId: UUID) =
-        queryClassroomPort.findByUserId(userId)?.let {
+        classroomFinderUseCase.findByUserIdOrThrow(userId).let {
             QueryMainUserMoveClassroomResponse(
                 userName = it.userName,
                 classroom = it.classroomName,
@@ -107,17 +107,17 @@ class MainService(
 
     private fun waiting(userId: UUID, type: Main): WaitingResponse? {
         val status = when (type) {
-            Main.APPLICATION -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            Main.APPLICATION -> applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.QUIET,
                 userId,
                 ApplicationKind.APPLICATION
-            )?.status
-            Main.EARLY_RETURN -> queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            ).status
+            Main.EARLY_RETURN -> applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.QUIET,
                 userId,
                 ApplicationKind.EARLY_RETURN
-            )?.status
-            Main.CLASSROOM -> queryClassroomPort.findByUserId(userId)?.status
+            ).status
+            Main.CLASSROOM -> classroomFinderUseCase.findByUserIdOrThrow(userId).status
         }
 
         return if (status == Status.QUIET) WaitingResponse(type) else null

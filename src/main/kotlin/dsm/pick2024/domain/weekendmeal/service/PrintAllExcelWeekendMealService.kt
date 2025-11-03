@@ -24,7 +24,7 @@ import org.apache.poi.ss.util.CellRangeAddress
 
 @Service
 class PrintAllExcelWeekendMealService(
-    private val weekendMealPort: QueryWeekendMealPort
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : PrintExcelWeekendMealUseCase {
 
     @Transactional(readOnly = true)
@@ -33,7 +33,7 @@ class PrintAllExcelWeekendMealService(
         val workbook: Workbook = XSSFWorkbook()
 
         // 주말급식 정보
-        val userList: List<WeekendMeal> = weekendMealPort.findAll().sortedWith(
+        val userList: List<WeekendMeal> = queryWeekendMealPort.findAll().sortedWith(
             compareBy({ it.grade }, { it.classNum }, { it.num })
         )
 
@@ -156,7 +156,7 @@ class PrintAllExcelWeekendMealService(
         var totalCount = 0
 
         (1..3).forEachIndexed { i, grade ->
-            val count = weekendMealPort.findByStatus(OK).filter { it.grade == grade }.size
+            val count = queryWeekendMealPort.findByStatus(OK).filter { it.grade == grade }.size
             summarySheet.createRow(startRow + i + 1).apply {
                 createCell(startCell).apply {
                     setCellValue("${grade}학년")

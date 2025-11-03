@@ -38,6 +38,6 @@ class AdminPersistenceAdapter(
             .fetch()
             .map { adminMapper.toDomain(it) }
 
-    override fun findByAdminByName(name: String): Admin? =
+    override fun findByAdminName(name: String): Admin? =
         adminRepository.findByName(name)?.let { adminMapper.toDomain(it) }
 }

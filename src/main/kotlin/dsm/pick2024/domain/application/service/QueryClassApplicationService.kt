@@ -23,7 +23,11 @@ class QueryClassApplicationService(
             queryAllApplicationPort.findAllByStatusAndApplicationKind(Status.QUIET, ApplicationKind.APPLICATION)
                 .map { QueryApplicationResponse(it) }
         } else {
-            queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.APPLICATION)
+            queryApplicationPort.findByGradeAndClassNumAndApplicationKind(
+                grade,
+                classNum,
+                ApplicationKind.APPLICATION
+            )
                 .filter { it.status == Status.QUIET }
                 .map { QueryApplicationResponse(it) }
         }

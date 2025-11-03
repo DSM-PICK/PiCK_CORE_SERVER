@@ -18,7 +18,7 @@ class QueryFloorEarlyReturnService(
 
         queryApplicationPort.findByFloorAndApplicationKind(floor, ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.QUIET }
-            .map { it ->
+            .map {
                 QueryEarlyReturnResponse(it)
             }
 }

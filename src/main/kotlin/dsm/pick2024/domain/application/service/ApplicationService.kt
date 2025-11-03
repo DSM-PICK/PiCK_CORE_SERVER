@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.application.service
 
-import dsm.pick2024.domain.admin.port.out.QueryAdminPort
+import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
@@ -26,7 +26,7 @@ class ApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
     private val fcmSendPort: FcmSendPort,
-    private val queryAdminPort: QueryAdminPort
+    private val adminFinderUseCase: AdminFinderUseCase
 ) : ApplicationUseCase {
 
     @Transactional
@@ -52,10 +52,10 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        val deviceToken = queryAdminPort.findByGradeAndClassNum(
+        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
             grade = user.grade,
             classNum = user.classNum
-        )?.deviceToken
+        ).deviceToken
 
         deviceToken?.let {
             fcmSendPort.send(

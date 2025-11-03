@@ -7,11 +7,11 @@ import java.time.Year
 
 interface QuerySelfStudyPort {
 
-    fun findByDateList(date: LocalDate): List<SelfStudy?>
+    fun findByDateList(date: LocalDate): List<SelfStudy>?
 
-    fun findByDaySelfStudy(date: LocalDate): List<SelfStudy>
+    fun findByDaySelfStudy(date: LocalDate): List<SelfStudy>?
 
-    fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy>
+    fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy>?
 
     fun findByTodayTeacher(teacher: String): SelfStudy?
 }

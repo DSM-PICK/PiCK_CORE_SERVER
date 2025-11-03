@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
-import dsm.pick2024.domain.application.persistence.finder.ApplicationFinder
+import dsm.pick2024.domain.application.finder.ApplicationFinder
 import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.event.dto.UserInfoRequest

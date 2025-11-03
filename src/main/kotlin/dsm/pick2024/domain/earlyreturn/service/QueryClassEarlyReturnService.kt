@@ -25,9 +25,13 @@ class QueryClassEarlyReturnService(
                 QueryEarlyReturnResponse(it)
             }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
-        queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, ApplicationKind.EARLY_RETURN)
+        queryApplicationPort.findByGradeAndClassNumAndApplicationKind(
+            grade,
+            classNum,
+            ApplicationKind.EARLY_RETURN
+        )
             .filter { it.status == Status.QUIET }
-            .map { it ->
+            .map {
                 QueryEarlyReturnResponse(it)
             }
     }

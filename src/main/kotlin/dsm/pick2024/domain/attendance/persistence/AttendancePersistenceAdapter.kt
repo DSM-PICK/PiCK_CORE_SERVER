@@ -28,7 +28,7 @@ class AttendancePersistenceAdapter(
 
     override fun findAll() = attendanceJpaRepository.findAll().map { attendanceMapper.toDomain(it) }
 
-    override fun findByFloor(floor: Int): List<Attendance>? =
+    override fun findByFloor(floor: Int): List<Attendance> =
         jpaQueryFactory
             .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
             .where(
