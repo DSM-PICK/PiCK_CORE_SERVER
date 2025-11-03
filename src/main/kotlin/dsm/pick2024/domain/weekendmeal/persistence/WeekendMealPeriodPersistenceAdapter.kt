@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.weekendmeal.persistence
 
-import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMealPeriod
 import dsm.pick2024.domain.weekendmeal.mapper.WeekendMealPeriodMapper
 import dsm.pick2024.domain.weekendmeal.persistence.repository.WeekendMealPeriodRepository
@@ -11,13 +10,11 @@ import java.util.*
 @Component
 class WeekendMealPeriodPersistenceAdapter(
     private val weekendMealPeriodMapper: WeekendMealPeriodMapper,
-    private val weekendMealPeriodRepository: WeekendMealPeriodRepository,
-    private val adminRepository: AdminRepository
+    private val weekendMealPeriodRepository: WeekendMealPeriodRepository
 ) : WeekendMealPeriodPort {
 
     override fun save(weekendMealPeriod: WeekendMealPeriod) {
-        val admin = adminRepository.getReferenceById(weekendMealPeriod.adminId)
-        weekendMealPeriodRepository.save(weekendMealPeriodMapper.toEntity(weekendMealPeriod, admin))
+        weekendMealPeriodRepository.save(weekendMealPeriodMapper.toEntity(weekendMealPeriod))
     }
 
     override fun queryWeekendMealById(id: UUID): WeekendMealPeriod? {
