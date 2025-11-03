@@ -11,7 +11,6 @@ import javax.persistence.Enumerated
 import javax.persistence.FetchType
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
-import javax.persistence.OneToOne
 
 @Entity(name = "tbl_weekend_meal")
 class WeekendMealJpaEntity(

@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.notice.entity
 
 import dsm.pick2024.domain.admin.entity.AdminJpaEntity
+
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDateTime
 import java.util.UUID
