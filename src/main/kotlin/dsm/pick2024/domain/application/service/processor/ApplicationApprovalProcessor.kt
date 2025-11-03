@@ -43,8 +43,8 @@ class ApplicationApprovalProcessor(
         }
 
         val attendances = updateApplications.map {
-            val attendanceId = attendanceFinderUseCase.findByUserIdOrThrow(it.userId)
-            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendanceId)
+            val attendance = attendanceFinderUseCase.findByUserIdOrThrow(it.userId)
+            attendanceService.updateAttendanceToApplication(it.start, it.end!!, it.applicationType, attendance)
         }
 
         saveApplicationPort.saveAll(updateApplications)
