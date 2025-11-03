@@ -1,27 +1,23 @@
 package dsm.pick2024.domain.notice.mapper
 
-import dsm.pick2024.domain.admin.entity.AdminJpaEntity
+import dsm.pick2024.domain.admin.mapper.AdminMapper
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.NoticeJpaEntity
 import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
-    override fun toEntity(domain: Notice): NoticeJpaEntity {
-        TODO("Not yet implemented")
+class NoticeMapper(private val adminMapper: AdminMapper) : GenericMapper<NoticeJpaEntity, Notice> {
+    override fun toEntity(domain: Notice) = domain.run {
+        NoticeJpaEntity(
+            id = id,
+            title = title,
+            content = content,
+            createAt = createAt,
+            admin = adminMapper.toEntity(admin),
+            teacherName = teacherName
+        )
     }
-    fun toEntity(domain: Notice, admin: AdminJpaEntity) =
-        domain.run {
-            NoticeJpaEntity(
-                id = id,
-                title = title,
-                content = content,
-                createAt = createAt,
-                admin = admin,
-                teacherName = teacherName
-            )
-        }
 
     override fun toDomain(entity: NoticeJpaEntity) = entity.run {
         Notice(
@@ -29,7 +25,7 @@ class NoticeMapper : GenericMapper<NoticeJpaEntity, Notice> {
             title = title,
             content = content,
             createAt = createAt,
-            adminId = admin.id!!,
+            admin = adminMapper.toDomain(admin),
             teacherName = teacherName
         )
     }
