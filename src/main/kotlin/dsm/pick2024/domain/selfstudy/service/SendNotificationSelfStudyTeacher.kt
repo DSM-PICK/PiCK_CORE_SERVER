@@ -17,7 +17,7 @@ class SendNotificationSelfStudyTeacher(
         val selfStudies = selfStudyFinderUseCase.findByDaySelfStudyOrThrow(LocalDate.now()).map { it }
 
         selfStudies.map {
-            val admin = adminFinderUseCase.findByAdminByNameOrThrow(it.teacherName)
+            val admin = adminFinderUseCase.findByAdminNameOrThrow(it.teacherName)
             admin.deviceToken?.let {
                     token ->
                 fcmSendPort.send(

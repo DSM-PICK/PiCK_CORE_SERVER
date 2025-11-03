@@ -15,6 +15,6 @@ class AdminFinder(
     override fun findByAdminIdOrThrow(adminId: String) =
         queryAdminPort.findByAdminId(adminId) ?: throw AdminNotFoundException
 
-    override fun findByAdminByNameOrThrow(name: String) =
-        queryAdminPort.findByAdminByName(name) ?: throw AdminNotFoundException
+    override fun findByAdminNameOrThrow(name: String) =
+        queryAdminPort.findByAdminName(name) ?: throw AdminNotFoundException
 }

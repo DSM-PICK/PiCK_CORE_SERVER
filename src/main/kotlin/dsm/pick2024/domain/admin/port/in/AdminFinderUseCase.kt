@@ -7,5 +7,5 @@ interface AdminFinderUseCase {
 
     fun findByAdminIdOrThrow(adminId: String): Admin
 
-    fun findByAdminByNameOrThrow(name: String): Admin
+    fun findByAdminNameOrThrow(name: String): Admin
 }
