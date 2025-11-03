@@ -2,20 +2,19 @@ package dsm.pick2024.domain.afterschool.mapper
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.entity.AfterSchoolStudentJpaEntity
-import dsm.pick2024.domain.user.entity.UserJpaEntity
+import dsm.pick2024.domain.user.mapper.UserMapper
 import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
-class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, AfterSchoolStudent> {
+class AfterSchoolStudentMapper(
+    private val userMapper: UserMapper
+) : GenericMapper<AfterSchoolStudentJpaEntity, AfterSchoolStudent> {
     override fun toEntity(domain: AfterSchoolStudent): AfterSchoolStudentJpaEntity {
-        TODO("Not yet implemented")
-    }
-    fun toEntity(domain: AfterSchoolStudent, user: UserJpaEntity) =
-        domain.run {
+        return domain.run {
             AfterSchoolStudentJpaEntity(
                 id = id,
-                user = user,
+                user = userMapper.toEntity(user),
                 grade = grade,
                 classNum = classNum,
                 num = num,
@@ -25,12 +24,13 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
                 status3 = status3
             )
         }
+    }
 
     override fun toDomain(entity: AfterSchoolStudentJpaEntity) =
         entity.run {
             AfterSchoolStudent(
                 id = id!!,
-                userId = user.id!!,
+                user = userMapper.toDomain(user),
                 grade = grade,
                 classNum = classNum,
                 num = num,
