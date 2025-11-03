@@ -17,7 +17,7 @@ class AfterSchoolStudentJpaEntity(
     id: UUID?,
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     val user: UserJpaEntity,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
