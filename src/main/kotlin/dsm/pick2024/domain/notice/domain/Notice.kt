@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.notice.domain
 
-import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.global.annotation.Aggregate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -11,6 +10,6 @@ data class Notice(
     val title: String,
     val content: String,
     val createAt: LocalDateTime,
-    val admin: Admin,
+    val adminId: UUID,
     val teacherName: String
 )
