@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.admin.finder
 
-import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.admin.port.out.QueryAdminPort
@@ -12,9 +11,6 @@ class AdminFinder(
 ) : AdminFinderUseCase {
     override fun findByGradeAndClassNumOrThrow(grade: Int, classNum: Int) =
         queryAdminPort.findByGradeAndClassNum(grade, classNum) ?: throw AdminNotFoundException
-
-    override fun findAllOrThrow(): List<Admin> =
-        queryAdminPort.findAll() ?: throw AdminNotFoundException
 
     override fun findByAdminIdOrThrow(adminId: String) =
         queryAdminPort.findByAdminId(adminId) ?: throw AdminNotFoundException

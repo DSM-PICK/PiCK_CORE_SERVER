@@ -6,7 +6,7 @@ interface QueryAdminPort {
 
     fun findByGradeAndClassNum(grade: Int, classNum: Int): Admin?
 
-    fun findAll(): List<Admin>?
+    fun findAll(): List<Admin>
 
     fun findByAdminId(adminId: String): Admin?
 
