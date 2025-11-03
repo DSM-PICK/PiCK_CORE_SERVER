@@ -24,7 +24,7 @@ class NotificationWeekendMealService(
     override fun execute() {
         val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(LocalDate.now())
         if (weekendMealPeriod != null) {
-            val users = queryUserPort.userAll()
+            val users = queryUserPort.findAll()
             when (LocalDate.now()) {
                 weekendMealPeriod.end -> {
                     users.map {

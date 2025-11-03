@@ -25,7 +25,7 @@ class UserPersistenceAdapter(
         num: Int
     ) = userRepository.findByGradeAndClassNumAndNum(grade, classNum, num)?.let { userMapper.toDomain(it) }
 
-    override fun userAll() =
+    override fun findAll() =
         jpaQueryFactory
             .selectFrom(QUserJpaEntity.userJpaEntity)
             .fetch()

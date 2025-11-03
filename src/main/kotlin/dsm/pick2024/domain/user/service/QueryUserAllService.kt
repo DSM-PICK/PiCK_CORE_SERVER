@@ -13,7 +13,7 @@ class QueryUserAllService(
 
     @Transactional(readOnly = true)
     override fun queryUserAll() =
-        queryUserPort.userAll()
+        queryUserPort.findAll()
             .map {
                 QueryUserSimpleInfoResponse(
                     userName = it.name,
