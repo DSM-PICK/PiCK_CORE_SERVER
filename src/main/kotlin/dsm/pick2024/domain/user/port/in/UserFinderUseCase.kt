@@ -12,7 +12,5 @@ interface UserFinderUseCase {
         num: Int
     ): User
 
-    fun userAllOrThrow(): List<User>
-
     fun findByUserIdOrThrow(userId: UUID): User
 }

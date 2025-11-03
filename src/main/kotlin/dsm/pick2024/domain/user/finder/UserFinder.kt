@@ -16,9 +16,6 @@ class UserFinder(
     override fun findByStudentNumOrThrow(grade: Int, classNum: Int, num: Int) =
         queryUserPort.findByStudentNum(grade, classNum, num) ?: throw UserNotFoundException
 
-    override fun userAllOrThrow() =
-        queryUserPort.userAll() ?: throw UserNotFoundException
-
     override fun findByUserIdOrThrow(userId: UUID) =
         queryUserPort.findByUserId(userId) ?: throw UserNotFoundException
 }

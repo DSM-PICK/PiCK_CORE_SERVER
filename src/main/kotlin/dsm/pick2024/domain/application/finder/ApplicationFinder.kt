@@ -18,23 +18,10 @@ class ApplicationFinder(
         return queryApplicationPort.findByUserId(id) ?: throw ApplicationNotFoundException
     }
 
-    override fun findByGradeAndClassNumAndApplicationKindOrThrow(
-        grade: Int,
-        classNum: Int,
-        applicationKind: ApplicationKind
-    ) = queryApplicationPort.findByGradeAndClassNumAndApplicationKind(grade, classNum, applicationKind)
-        ?: throw ApplicationNotFoundException
-
-    override fun findByFloorAndApplicationKindOrThrow(floor: Int, applicationKind: ApplicationKind): List<Application> =
-        queryApplicationPort.findByFloorAndApplicationKind(floor, applicationKind) ?: throw ApplicationNotFoundException
-
     override fun findByUserIdAndStatusAndApplicationKindOrThrow(
         status: Status,
         id: UUID,
         applicationKind: ApplicationKind
     ) = queryApplicationPort.findByUserIdAndStatusAndApplicationKind(status, id, applicationKind)
         ?: throw ApplicationNotFoundException
-
-    override fun queryApplicationWithAttendanceOrThrow(floor: Int) =
-        queryApplicationPort.queryApplicationWithAttendance(floor) ?: throw ApplicationNotFoundException
 }

@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.attendance.service
 
 import dsm.pick2024.domain.attendance.exception.InvalidTimeException
-import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAllAttendanceUseCase
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendanceResponse
 import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import java.time.LocalTime
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAllAttendanceService(
-    private val attendanceFinderUseCase: AttendanceFinderUseCase,
+    private val queryAttendancePort: QueryAttendancePort,
     private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClubAllAttendanceUseCase {
 
@@ -29,7 +29,7 @@ class QueryClubAllAttendanceService(
 
     @Transactional(readOnly = true)
     override fun queryClubAllAttendance(club: String): List<QueryAllAttendanceResponse> {
-        val students = attendanceFinderUseCase.findByClubOrThrow(club)
+        val students = queryAttendancePort.findByClub(club)
 
         return students.map { it ->
             val classroomName = getClassroomName(it.userId)
@@ -40,8 +40,8 @@ class QueryClubAllAttendanceService(
 
     private fun getClassroomName(userId: UUID): String {
         return try {
-            val classroom = classroomFinderUseCase.findOKClassroomOrThrow(userId)
-            classroom?.takeIf {
+            val classroom = classroomFinderUseCase.findByUserIdOrThrow(userId)
+            classroom.takeIf {
                 isContainTime(it.startPeriod, it.endPeriod)
             }?.classroomName ?: ""
         } catch (e: EmptyResultDataAccessException) {

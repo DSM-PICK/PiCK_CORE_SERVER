@@ -3,8 +3,8 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
-import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
 import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import org.springframework.dao.EmptyResultDataAccessException
@@ -13,13 +13,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClubAttendanceService(
-    private val attendanceFinderUseCase: AttendanceFinderUseCase,
+    private val queryAttendancePort: QueryAttendancePort,
     private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
     override fun queryClubAttendance(period: Int, club: String): List<QueryAttendanceResponse> {
-        val students = attendanceFinderUseCase.findByClubOrThrow(club)
+        val students = queryAttendancePort.findByClub(club)
 
         return students.map {
             val classroomName = try {

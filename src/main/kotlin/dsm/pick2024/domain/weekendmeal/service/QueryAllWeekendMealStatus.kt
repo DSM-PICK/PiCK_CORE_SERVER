@@ -1,17 +1,17 @@
 package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryAllWeekendMealStatusUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
+import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMealResponse
 import org.springframework.stereotype.Service
 
 @Service
 class QueryAllWeekendMealStatus(
-    private val weekendMealFinderUseCase: WeekendMealFinderUseCase
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : QueryAllWeekendMealStatusUseCase {
 
     override fun findAll(): List<QueryWeekendMealResponse> {
-        val weekendMeal = weekendMealFinderUseCase.findAllOrThrow()
+        val weekendMeal = queryWeekendMealPort.findAll()
 
         val responseList =
             weekendMeal.map { meal ->

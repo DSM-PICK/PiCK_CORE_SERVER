@@ -2,8 +2,8 @@ package dsm.pick2024.domain.earlyreturn.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.QueryAllApplicationPort
+import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryEarlyReturnResponse
 import org.springframework.stereotype.Service
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClassEarlyReturnService(
     private val queryAllApplicationPort: QueryAllApplicationPort,
-    private val applicationFinderUseCase: ApplicationFinderUseCase
+    private val queryApplicationPort: QueryApplicationPort
 ) : QueryClassEarlyReturnUseCase {
 
     @Transactional(readOnly = true)
@@ -25,7 +25,7 @@ class QueryClassEarlyReturnService(
                 QueryEarlyReturnResponse(it)
             }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
     } else {
-        applicationFinderUseCase.findByGradeAndClassNumAndApplicationKindOrThrow(
+        queryApplicationPort.findByGradeAndClassNumAndApplicationKind(
             grade,
             classNum,
             ApplicationKind.EARLY_RETURN

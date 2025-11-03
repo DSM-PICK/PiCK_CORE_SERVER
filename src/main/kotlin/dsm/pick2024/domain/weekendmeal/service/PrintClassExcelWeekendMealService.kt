@@ -5,7 +5,7 @@ import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.enums.Status.NO
 import dsm.pick2024.domain.weekendmeal.enums.Status.OK
 import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelClassWeekendMealUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
+import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import java.time.LocalDate
 import javax.servlet.http.HttpServletResponse
 import org.apache.poi.ss.usermodel.BorderStyle
@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PrintClassExcelWeekendMealService(
-    private val weekendMealFinderUseCase: WeekendMealFinderUseCase
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : PrintExcelClassWeekendMealUseCase {
 
     @Transactional(readOnly = true)
@@ -118,7 +118,7 @@ class PrintClassExcelWeekendMealService(
 
         // Body Rows
         val userList: List<WeekendMeal> =
-            weekendMealFinderUseCase.findByGradeAndClassNumOrThrow(grade, classNum).sortedBy { it.num }
+            queryWeekendMealPort.findByGradeAndClassNum(grade, classNum).sortedBy { it.num }
 
         userList.forEachIndexed { index, user ->
             val bodyRow: Row = sheet.createRow(index + 4)
@@ -141,7 +141,7 @@ class PrintClassExcelWeekendMealService(
         summaryCell.setCellValue("합계")
         summaryCell.cellStyle = bodyCellStyle
         summaryRow.createCell(4).setCellValue(
-            weekendMealFinderUseCase.findByGradeAndClassNumAndStatusOrThrow(grade, classNum, OK)
+            queryWeekendMealPort.findByGradeAndClassNumAndStatus(grade, classNum, OK)
                 .count().toString()
         )
         summaryRow.createCell(5).setCellValue("-")

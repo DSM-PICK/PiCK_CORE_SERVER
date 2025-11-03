@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.attendance.service
 
-import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAllAttendanceUseCase
+import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendanceResponse
 import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import org.springframework.dao.EmptyResultDataAccessException
@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassAllAttendanceService(
-    private val attendanceFinderUseCase: AttendanceFinderUseCase,
+    private val queryAttendancePort: QueryAttendancePort,
     private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClassAllAttendanceUseCase {
     @Transactional(readOnly = true)
     override fun queryClassAllAttendance(grade: Int, classNum: Int) =
-        attendanceFinderUseCase.findByGradeAndClassNumOrThrow(grade, classNum)
+        queryAttendancePort.findByGradeAndClassNum(grade, classNum)
             .map { it ->
                 val userId = it.userId
                 val classroomName = try {

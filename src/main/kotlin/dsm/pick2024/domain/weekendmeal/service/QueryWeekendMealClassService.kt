@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.weekendmeal.service
 
 import dsm.pick2024.domain.weekendmeal.port.`in`.QueryWeekendMealClassUseCase
-import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
+import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
 import dsm.pick2024.domain.weekendmeal.presentation.dto.response.QueryWeekendMealResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class QueryWeekendMealClassService(
-    private val weekendMealFinderUseCase: WeekendMealFinderUseCase
+    private val queryWeekendMealPort: QueryWeekendMealPort
 ) : QueryWeekendMealClassUseCase {
 
     override fun queryWeekendMealClass(
         grade: Int,
         classNum: Int
-    ) = weekendMealFinderUseCase.findByGradeAndClassNumOrThrow(grade, classNum)
+    ) = queryWeekendMealPort.findByGradeAndClassNum(grade, classNum)
         .map {
             QueryWeekendMealResponse(
                 id = it.id,

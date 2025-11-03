@@ -7,13 +7,13 @@ import java.util.UUID
 interface QueryWeekendMealPort {
     fun findById(id: UUID): WeekendMeal?
 
-    fun findByGradeAndClassNum(grade: Int, classNum: Int): List<WeekendMeal>?
+    fun findByGradeAndClassNum(grade: Int, classNum: Int): List<WeekendMeal>
 
-    fun findByStatus(status: Status): List<WeekendMeal>?
+    fun findByStatus(status: Status): List<WeekendMeal>
 
-    fun findAll(): List<WeekendMeal>?
+    fun findAll(): List<WeekendMeal>
 
     fun findByUserId(id: UUID): WeekendMeal?
 
-    fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status): List<WeekendMeal>?
+    fun findByGradeAndClassNumAndStatus(grade: Int, classNum: Int, status: Status): List<WeekendMeal>
 }
