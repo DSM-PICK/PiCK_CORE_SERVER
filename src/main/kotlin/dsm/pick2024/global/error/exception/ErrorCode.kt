@@ -44,6 +44,8 @@ enum class ErrorCode(
     ALREADY_APPLYING_PICNIC(409, "이미 외출을 신청했습니다."),
     ALREADY_APPLYING_MOVEMENT(409, "이미 이동 신청을 진행하였습니다."),
     DUPLICATE_USER(409, "중복된 사용자입니다"),
+    REGISTERED_CLASS_AND_GRADE_AND_NUM(409, "이미 존재하는 학번입니다. 가까운 픽에 문의하세요"),
+    REGISTERED_CLASS_AND_GRADE(409, "이미 담당 선생님이 존재하는 학년,반입니다. 가까운 픽에 문의하세요"),
 
     NOT_EXTENSION_XSL(415, "XSL 확장자가 아닙니다"),
 
