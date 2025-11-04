@@ -40,4 +40,7 @@ class AdminPersistenceAdapter(
 
     override fun findByAdminName(name: String): Admin? =
         adminRepository.findByName(name)?.let { adminMapper.toDomain(it) }
+
+    override fun isGradeAndClassRegistered(grade: Int, classNum: Int) =
+        adminRepository.existsByGradeAndClassNum(grade, classNum)
 }

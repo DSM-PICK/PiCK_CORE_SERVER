@@ -11,6 +11,8 @@ enum class ErrorCode(
     ALREADY_APPLYING_PICNIC(409, "Already applying For Picnic Application"),
     ALREADY_APPLYING_MOVEMENT(409, "Already applying for movement"),
     DUPLICATE_USER(409, "Duplicate User"),
+    REGISTERED_CLASS_AND_GRADE(409, "Registered Class and Grade"),
+    REGISTERED_CLASS_AND_GRADE_AND_NUM(409, "Registered Class and Grade and Num"),
 
     FEIGN_UNAUTHORIZED(401, "Feign UnAuthorized"),
     PASSWORD_MISS_MATCH(401, "Password Miss Match"),
