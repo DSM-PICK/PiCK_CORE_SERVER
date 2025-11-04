@@ -19,7 +19,7 @@ enum class ErrorCode(
     SECRET_KEY_MISS_MATCH(401, "비밀 키가 일치하지 않습니다"),
 
     EXPIRED_EMAIL_CODE(401, "만료된 이메일 인증 코드입니다"),
-    EMAIL_CODE_MISSMATCH(401, "이메일 인증 코드가 일치하지 않습니다"),
+    EMAIL_CODE_MISMATCH(401, "이메일 인증 코드가 일치하지 않습니다"),
 
     USER_NOT_FOUND(404, "사용자를 찾을 수 없습니다"),
     ADMIN_NOT_FOUND(404, "관리자를 찾을 수 없습니다"),
