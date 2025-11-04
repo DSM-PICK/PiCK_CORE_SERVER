@@ -1,10 +1,12 @@
 package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.domain.Admin
+import dsm.pick2024.domain.admin.exception.RegisteredClassAndGrade
 import dsm.pick2024.domain.admin.exception.SecretKeyMissMatchException
 import dsm.pick2024.domain.admin.port.`in`.AdminSignUpUseCase
 import dsm.pick2024.domain.admin.port.out.AdminSavePort
 import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
+import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.properties.AdminProperties
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
@@ -22,7 +24,8 @@ class AdminSignUpService(
     private val verifyMailUseCase: VerifyMailUseCase,
     private val jwtTokenProvider: JwtTokenProvider,
     private val adminSavePort: AdminSavePort,
-    private val adminProperties: AdminProperties
+    private val adminProperties: AdminProperties,
+    private val queryAdminPort: QueryAdminPort
 ) : AdminSignUpUseCase {
     override fun execute(request: AdminSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
@@ -30,6 +33,8 @@ class AdminSignUpService(
         checkDuplicateAccountId(request.accountId)
 
         checkSecretKey(request.secretKey)
+
+        checkRegisteredGradeAndClass(request.grade, request.classNum)
 
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
@@ -48,6 +53,12 @@ class AdminSignUpService(
     private fun checkSecretKey(key: String) {
         if (adminProperties.secretKey != key) {
             throw SecretKeyMissMatchException
+        }
+    }
+
+    private fun checkRegisteredGradeAndClass(grade: Int, classNum: Int) {
+        if (queryAdminPort.isGradeAndClassRegistered(grade, classNum)) {
+            throw RegisteredClassAndGrade
         }
     }
 

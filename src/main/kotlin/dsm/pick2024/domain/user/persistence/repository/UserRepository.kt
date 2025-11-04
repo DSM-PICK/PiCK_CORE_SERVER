@@ -23,4 +23,6 @@ interface UserRepository : Repository<UserJpaEntity, UUID> {
         classNum: Int,
         num: Int
     ): UserJpaEntity?
+
+    fun existsByGradeAndClassNumAndNum(grade: Int, classNum: Int, num: Int): Boolean
 }

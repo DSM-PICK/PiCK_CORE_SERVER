@@ -17,4 +17,6 @@ interface AdminRepository : JpaRepository<AdminJpaEntity, UUID> {
     ): AdminJpaEntity?
 
     fun findByName(name: String): AdminJpaEntity?
+
+    fun existsByGradeAndClassNum(grade: Int, classNum: Int): Boolean
 }

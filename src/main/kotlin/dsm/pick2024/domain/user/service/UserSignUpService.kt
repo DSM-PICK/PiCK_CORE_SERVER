@@ -7,6 +7,7 @@ import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.DuplicateUserException
+import dsm.pick2024.domain.user.exception.RegisteredClassAndGradeAndNum
 import dsm.pick2024.domain.user.port.`in`.UserSignUpUseCase
 import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.domain.user.port.out.UserSavePort
@@ -35,6 +36,7 @@ class UserSignUpService(
             throw DuplicateUserException
         }
 
+        checkRegisteredGradeAndClassNumAndNum(request.grade, request.classNum, request.num)
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
         val user = request.toEntity(encodedPassword)
@@ -58,6 +60,12 @@ class UserSignUpService(
         }
 
         return jwtTokenProvider.generateToken(savedUser.accountId, Role.STU.name)
+    }
+
+    private fun checkRegisteredGradeAndClassNumAndNum(grade: Int, classNum: Int, num: Int) {
+        if (existsUserPort.existsByGradeAndClassNumAndNum(grade, classNum, num)) {
+            throw RegisteredClassAndGradeAndNum
+        }
     }
 
     private fun UserSignUpRequest.toEntity(encodedPassword: String): User {
