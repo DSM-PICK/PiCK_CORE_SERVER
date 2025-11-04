@@ -40,9 +40,9 @@ enum class ErrorCode(
     TIMETABLE_NOT_FOUND(404, "시간표를 찾을 수 없습니다"),
 
     EXISTS_SELF_STUDY_TEACHER(409, "자습 교사가 이미 존재합니다"),
-    ALREADY_APPLYING_EARLY_RETURN(409, "조기 귀가 신청이 이미 진행 중입니다"),
-    ALREADY_APPLYING_PICNIC(409, "소풍 신청이 이미 진행 중입니다"),
-    ALREADY_APPLYING_MOVEMENT(409, "이동 신청이 이미 진행 중입니다"),
+    ALREADY_APPLYING_EARLY_RETURN(409, "이미 조기귀가를 신청했습니다."),
+    ALREADY_APPLYING_PICNIC(409, "이미 외출을 신청했습니다."),
+    ALREADY_APPLYING_MOVEMENT(409, "이미 이동 신청을 진행하였습니다."),
     DUPLICATE_USER(409, "중복된 사용자입니다"),
 
     NOT_EXTENSION_XSL(415, "XSL 확장자가 아닙니다"),
