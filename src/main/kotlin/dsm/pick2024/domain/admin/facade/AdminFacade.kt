@@ -12,7 +12,7 @@ class AdminFacade(
 ) : AdminFacadeUseCase {
 
     override fun currentAdmin(): Admin {
-        val name = SecurityContextHolder.getContext().authentication.name
-        return adminFinderUseCase.findByAdminNameOrThrow(name)
+        val adminId = SecurityContextHolder.getContext().authentication.name
+        return adminFinderUseCase.findByAdminIdOrThrow(adminId)
     }
 }
