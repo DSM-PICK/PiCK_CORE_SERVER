@@ -1,6 +1,8 @@
 package dsm.pick2024.domain.notice.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
+import dsm.pick2024.domain.admin.exception.AdminNotFoundException
+import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
 import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.entity.QNoticeJpaEntity
 import dsm.pick2024.domain.notice.mapper.NoticeMapper
@@ -13,9 +15,13 @@ import java.util.*
 class NoticePersistenceAdapter(
     private val noticeRepository: NoticeRepository,
     private val noticeMapper: NoticeMapper,
-    private val jpaQueryFactory: JPAQueryFactory
+    private val jpaQueryFactory: JPAQueryFactory,
+    private val adminRepository: AdminRepository
 ) : NoticePort {
-    override fun save(notice: Notice) = noticeRepository.save(noticeMapper.toEntity(notice))
+    override fun save(notice: Notice) {
+        val admin = adminRepository.findById(notice.adminId).orElseThrow { AdminNotFoundException }
+        noticeRepository.save(noticeMapper.toEntity(notice, admin))
+    }
 
     override fun findById(noticeId: UUID) = noticeRepository.findById(noticeId).let { noticeMapper.toDomain(it) }
 

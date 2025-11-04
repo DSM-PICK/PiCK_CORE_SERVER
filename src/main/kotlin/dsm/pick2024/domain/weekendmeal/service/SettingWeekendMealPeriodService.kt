@@ -15,19 +15,19 @@ class SettingWeekendMealPeriodService(
     private val adminFacadeUseCase: AdminFacadeUseCase
 ) : SettingWeekendMealPeriodUseCase {
     override fun settingWeekendMealPeriod(request: SettingWeekendMealPeriodRequest) {
-        val admin = adminFacadeUseCase.currentAdmin().id
-        val weekendMealPeriod = queryWeekendMealPeriodPort.queryWeekendMealByAdminId(admin!!)
+        val admin = adminFacadeUseCase.currentAdmin()
+        val weekendMealPeriod = queryWeekendMealPeriodPort.queryWeekendMealByAdminId(admin.id)
         saveWeekendMealPeriodPort.save(
             weekendMealPeriod?.copy(
                 start = request.start,
                 end = request.end,
                 month = request.month,
-                adminId = admin
+                admin = admin
             ) ?: WeekendMealPeriod(
                 start = request.start,
                 end = request.end,
                 month = request.month,
-                adminId = admin
+                admin = admin
             )
         )
     }

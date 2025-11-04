@@ -9,6 +9,8 @@ import dsm.pick2024.domain.classroom.mapper.ClassroomMapper
 import dsm.pick2024.domain.classroom.persistence.repository.ClassroomRepository
 import dsm.pick2024.domain.classroom.port.out.ClassRoomPort
 import dsm.pick2024.domain.user.entity.QUserJpaEntity
+import dsm.pick2024.domain.user.exception.UserNotFoundException
+import dsm.pick2024.domain.user.persistence.repository.UserRepository
 import org.springframework.stereotype.Component
 import java.util.UUID
 
@@ -17,10 +19,12 @@ class PersistenceAdapterClassRoom(
     private val classroomMapper: ClassroomMapper,
     private val classroomRepository: ClassroomRepository,
     private val jpaQueryFactory: JPAQueryFactory,
-    private val attendancePort: QueryAttendancePort
+    private val attendancePort: QueryAttendancePort,
+    private val userRepository: UserRepository
 ) : ClassRoomPort {
     override fun save(classroom: Classroom) {
-        classroomRepository.save(classroomMapper.toEntity(classroom))
+        val user = userRepository.findById(classroom.userId) ?: throw UserNotFoundException
+        classroomRepository.save(classroomMapper.toEntity(classroom, user))
     }
 
     override fun deleteByUserId(userId: UUID) {
@@ -43,7 +47,10 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun saveAll(classroom: List<Classroom>) {
-        val entities = classroom.map { classroomMapper.toEntity(it) }
+        val entities = classroom.map {
+            val user = userRepository.findById(it.userId) ?: throw UserNotFoundException
+            classroomMapper.toEntity(it, user)
+        }
         classroomRepository.saveAll(entities)
     }
 

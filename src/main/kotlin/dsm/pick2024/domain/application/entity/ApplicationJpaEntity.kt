@@ -3,6 +3,7 @@ package dsm.pick2024.domain.application.entity
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.time.LocalDate
 import java.util.UUID
@@ -10,13 +11,17 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.OneToOne
 
 @Entity(name = "tbl_application")
-class ApplicationJapEntity(
+class ApplicationJpaEntity(
     id: UUID?,
 
-    @Column(name = "user_id", columnDefinition = "BINARY(16)")
-    val userId: UUID,
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
+    val user: UserJpaEntity,
 
     @Column(name = "reason", nullable = false)
     val reason: String,

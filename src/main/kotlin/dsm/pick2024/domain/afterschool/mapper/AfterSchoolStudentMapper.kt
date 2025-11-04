@@ -2,16 +2,18 @@ package dsm.pick2024.domain.afterschool.mapper
 
 import dsm.pick2024.domain.afterschool.domain.AfterSchoolStudent
 import dsm.pick2024.domain.afterschool.entity.AfterSchoolStudentJpaEntity
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.global.base.GenericMapper
 import org.springframework.stereotype.Component
 
 @Component
 class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, AfterSchoolStudent> {
-    override fun toEntity(domain: AfterSchoolStudent) =
+
+    fun toEntity(domain: AfterSchoolStudent, user: UserJpaEntity): AfterSchoolStudentJpaEntity =
         domain.run {
             AfterSchoolStudentJpaEntity(
                 id = id,
-                userId = userId,
+                user = user,
                 grade = grade,
                 classNum = classNum,
                 num = num,
@@ -22,11 +24,11 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
             )
         }
 
-    override fun toDomain(entity: AfterSchoolStudentJpaEntity) =
+    override fun toDomain(entity: AfterSchoolStudentJpaEntity): AfterSchoolStudent =
         entity.run {
             AfterSchoolStudent(
                 id = id!!,
-                userId = userId,
+                userId = user.id!!,
                 grade = grade,
                 classNum = classNum,
                 num = num,
@@ -36,4 +38,8 @@ class AfterSchoolStudentMapper : GenericMapper<AfterSchoolStudentJpaEntity, Afte
                 status3 = status3
             )
         }
+
+    override fun toEntity(domain: AfterSchoolStudent): AfterSchoolStudentJpaEntity {
+        throw UnsupportedOperationException("UserJpaEntity는 반드시 명시적으로 전달되어야 합니다.")
+    }
 }

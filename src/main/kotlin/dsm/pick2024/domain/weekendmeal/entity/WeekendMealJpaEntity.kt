@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.weekendmeal.entity
 
+import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
@@ -7,13 +8,17 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity(name = "tbl_weekend_meal")
 class WeekendMealJpaEntity(
     id: UUID?,
 
-    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
-    val userId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    val user: UserJpaEntity,
 
     @Column(name = "user_name", nullable = false, columnDefinition = "VARCHAR(10)")
     val userName: String,
