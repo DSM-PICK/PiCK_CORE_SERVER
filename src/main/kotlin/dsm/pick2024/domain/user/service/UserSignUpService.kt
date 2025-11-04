@@ -35,6 +35,7 @@ class UserSignUpService(
             throw DuplicateUserException
         }
 
+        checkRegisteredGradeAndClassNumAndNum(request.grade, request.classNum, request.num)
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
         val user = request.toEntity(encodedPassword)
@@ -58,6 +59,10 @@ class UserSignUpService(
         }
 
         return jwtTokenProvider.generateToken(savedUser.accountId, Role.STU.name)
+    }
+
+    private fun checkRegisteredGradeAndClassNumAndNum(grade: Int, classNum: Int, num: Int) {
+        existsUserPort.existsByGradeAndClassNumAndNum(grade, classNum, num)
     }
 
     private fun UserSignUpRequest.toEntity(encodedPassword: String): User {
