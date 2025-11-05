@@ -57,6 +57,9 @@ class AdminSignUpService(
     }
 
     private fun checkRegisteredGradeAndClass(grade: Int, classNum: Int) {
+        if (grade == 0 && classNum == 0) {
+            return
+        }
         if (queryAdminPort.isGradeAndClassRegistered(grade, classNum)) {
             throw RegisteredClassAndGrade
         }
