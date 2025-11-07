@@ -21,8 +21,8 @@ class QueryGradeClassroomService(
         val today = LocalDate.now().dayOfWeek
 
         return queryClassroomPort.queryGradeClassroom(grade, classNum)
-            .map { classroom -> //QueryFloorClassroomService와 중복 코드 해결
-                val move = if (today == 2 || today == 5) { //상수를 따로 class로 관리?
+            .map { classroom ->
+                val move = if (today == 2 || today == 5) {
                     queryAttendancePort.findByUserId(classroom.userId)?.place ?: ""
                 } else {
                     "${classroom.grade}-${classroom.classNum}"
