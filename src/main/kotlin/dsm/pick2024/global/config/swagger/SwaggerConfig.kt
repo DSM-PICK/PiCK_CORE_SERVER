@@ -12,7 +12,7 @@ class SwaggerConfig : WebMvcConfigurer {
     @Bean
     fun openApi(): OpenAPI {
         return OpenAPI()
-            .addServersItem(Server().url("/"))
+            .addServersItem(Server().url("/dsm-pick"))
             .info(
                 Info().title("PiCK API")
                     .description("PiCK api 입니다.")

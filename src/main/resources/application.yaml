@@ -38,6 +38,9 @@ spring:
                         enable: true
                         required: true
 
+    application:
+      admin:
+          enabled: false
 
 auth:
     jwt:
