@@ -182,7 +182,12 @@ class SecurityConfig(
         )
 
         configuration.allowedMethods = listOf(
-            "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
         )
 
         configuration.allowedHeaders = listOf("*")

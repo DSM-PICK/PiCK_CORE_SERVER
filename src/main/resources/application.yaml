@@ -98,4 +98,3 @@ google:
 
 admin:
     secret-key: ${ADMIN_SECRET_KEY}
-
