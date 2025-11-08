@@ -196,7 +196,6 @@ class SecurityConfig(
 
         configuration.maxAge = 3600L
 
-        // JWT 토큰 헤더 노출
         configuration.exposedHeaders = listOf(
             "Authorization",
             "Refresh-Token"
