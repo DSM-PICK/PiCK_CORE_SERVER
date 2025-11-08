@@ -16,8 +16,6 @@ class SwaggerConfig : WebMvcConfigurer {
     fun openApi(): OpenAPI {
         val apiKey = SecurityScheme()
             .type(SecurityScheme.Type.HTTP)
-            .`in`(SecurityScheme.In.HEADER)
-            .name("Authorization")
             .scheme("bearer")
             .bearerFormat("JWT")
 
