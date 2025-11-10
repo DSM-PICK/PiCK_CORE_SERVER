@@ -1,5 +1,6 @@
 package dsm.pick2024.global.security.jwt
 
+import io.jsonwebtoken.JwtException
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
@@ -10,24 +11,21 @@ class JwtTokenFilter(
     private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
 
-    private val excludedPaths = listOf("/user/signup", "/admin/signup", "/user/login", "/admin/login")
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val path = request.requestURI
-
-        if (excludedPaths.any { path.endsWith(it) }) {
-            filterChain.doFilter(request, response)
-            return
-        }
-
         val token = jwtTokenProvider.resolveToken(request)
 
-        token?.run {
-            SecurityContextHolder.getContext().authentication = jwtTokenProvider.authentication(token)
+        token?.let {
+            try {
+                val authentication = jwtTokenProvider.authentication(it)
+                SecurityContextHolder.getContext().authentication = authentication
+            } catch (_: io.jsonwebtoken.ExpiredJwtException) {
+            } catch (_: JwtException) {
+            } catch (_: Exception) {
+            }
         }
 
         filterChain.doFilter(request, response)
