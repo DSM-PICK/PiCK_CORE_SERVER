@@ -14,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
 import org.springframework.web.cors.CorsUtils
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @EnableWebSecurity
 class SecurityConfig(
@@ -23,10 +26,10 @@ class SecurityConfig(
     @Bean
     protected fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf()
-            .disable()
-            .formLogin().and().cors()
-            .disable()
+            .csrf().disable()
+            .formLogin().disable()
+            .cors()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
@@ -41,6 +44,8 @@ class SecurityConfig(
                 "/main",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
+                "/swagger-resources/**",
+                "/webjars/**",
                 "/dsm-pick/swagger-ui/index.html",
                 "/dsm-pick/swagger-ui/index.html/**",
                 "/user/signup",
@@ -166,4 +171,39 @@ class SecurityConfig(
 
     @Bean
     protected fun passwordEncoder() = BCryptPasswordEncoder()
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+
+        configuration.allowedOriginPatterns = listOf(
+            "https://*.dsmhs.kr",
+            "http://localhost:*",
+            "http://127.0.0.1:*"
+        )
+
+        configuration.allowedMethods = listOf(
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        )
+
+        configuration.allowedHeaders = listOf("*")
+
+        configuration.allowCredentials = true
+
+        configuration.maxAge = 3600L
+
+        configuration.exposedHeaders = listOf(
+            "Authorization",
+            "Refresh-Token"
+        )
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
 }

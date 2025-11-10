@@ -38,6 +38,9 @@ spring:
                         enable: true
                         required: true
 
+    application:
+      admin:
+          enabled: false
 
 auth:
     jwt:
@@ -98,4 +101,3 @@ google:
 
 admin:
     secret-key: ${ADMIN_SECRET_KEY}
-
