@@ -16,19 +16,21 @@ class AdminMapper : GenericMapper<AdminJpaEntity, Admin> {
             grade = grade,
             classNum = classNum,
             adminId = adminId,
-            role = role
+            role = role,
+            deviceToken = deviceToken
         )
     }
 
     override fun toDomain(entity: AdminJpaEntity) = entity.run {
         Admin(
-            id = id,
+            id = id!!,
             name = name,
             password = password,
             grade = grade,
             classNum = classNum,
             adminId = adminId,
-            role = role
+            role = role,
+            deviceToken = deviceToken
         )
     }
 }

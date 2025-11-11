@@ -3,25 +3,23 @@ package dsm.pick2024.domain.attendance.service
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.`in`.ChangeAttendanceUseCase
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.request.ChangeAttendanceRequest
-import dsm.pick2024.domain.user.exception.UserNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeAttendanceService(
     private val saveAttendancePort: SaveAttendancePort,
-    private val queryAttendancePort: QueryAttendancePort
+    private val attendanceFinderUseCase: AttendanceFinderUseCase
 ) : ChangeAttendanceUseCase {
 
     @Transactional
     override fun changeAttendance(period: Int, request: List<ChangeAttendanceRequest>) {
         val updatedAttendances = request.map { req ->
-            val attendance = queryAttendancePort.findByUserId(req.userId)
-                ?: throw UserNotFoundException
+            val attendance = attendanceFinderUseCase.findByUserIdOrThrow(req.userId)
 
             updateAttendance(period, attendance, req.status)
         }.toMutableList()

@@ -7,7 +7,7 @@ import java.util.UUID
 
 @Aggregate
 data class ApplicationStory(
-    val id: UUID? = null,
+    val id: UUID = UUID(0, 0),
     val reason: String,
     val userId: UUID,
     val start: String,

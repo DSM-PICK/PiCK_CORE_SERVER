@@ -17,9 +17,8 @@ class QueryWeekendMealClassService(
         classNum: Int
     ) = queryWeekendMealPort.findByGradeAndClassNum(grade, classNum)
         .map {
-                it ->
             QueryWeekendMealResponse(
-                id = it.id!!,
+                id = it.id,
                 userName = it.userName,
                 status = it.status,
                 grade = it.grade,

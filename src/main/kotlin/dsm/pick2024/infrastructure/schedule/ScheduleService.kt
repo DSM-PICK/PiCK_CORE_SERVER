@@ -6,9 +6,11 @@ import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
 import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
+import dsm.pick2024.domain.selfstudy.port.`in`.SendNotificationSelfStudyTeacherUseCase
 import dsm.pick2024.domain.status.port.`in`.ResetStatusUseCase
 import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.DeleteTimeTablePort
+import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.UpdateWeekendMealUseCase
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
@@ -24,7 +26,9 @@ class ScheduleService(
     private val resetStatusUseCase: ResetStatusUseCase,
     private val saveTimetableUseCase: SaveTimetableUseCase,
     private val saveScheduleUseCase: SaveScheduleUseCase,
-    private val updateWeekendMealUseCase: UpdateWeekendMealUseCase
+    private val updateWeekendMealUseCase: UpdateWeekendMealUseCase,
+    private val sendNotificationSelfStudyTeacherUseCase: SendNotificationSelfStudyTeacherUseCase,
+    private val notificationWeekendMealUseCase: NotificationWeekendMealUseCase
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -64,5 +68,15 @@ class ScheduleService(
     @Scheduled(cron = "0 0 23 L * ?", zone = "Asia/Seoul")
     fun weekendMealStatusReset() {
         updateWeekendMealUseCase.execute()
+    }
+
+    @Scheduled(cron = "0 0 8 * * 1-5", zone = "Asia/Seoul")
+    fun sendNotificationSelfStudyTeacher() {
+        sendNotificationSelfStudyTeacherUseCase.execute()
+    }
+
+    @Scheduled(cron = "0 0 8 * * *", zone = "Asia/Seoul")
+    fun notificationWeekendMeal() {
+        notificationWeekendMealUseCase.execute()
     }
 }

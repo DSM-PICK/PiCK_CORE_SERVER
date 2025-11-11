@@ -55,7 +55,7 @@ class AttendanceController(
         @RequestParam(name = "class_num") classNum: Int
     ) = queryClassAllAttendanceUseCase.queryClassAllAttendance(grade, classNum)
 
-    @Operation(summary = "동아리실 별 조회 api")
+    @Operation(summary = "동아리 별 교시 출결 조회")
     @GetMapping("/club")
     fun queryClubAttendance(
         @RequestParam(name = "period") period: Int,

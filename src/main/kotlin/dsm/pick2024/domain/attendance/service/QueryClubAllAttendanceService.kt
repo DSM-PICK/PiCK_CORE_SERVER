@@ -4,8 +4,7 @@ import dsm.pick2024.domain.attendance.exception.InvalidTimeException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAllAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
-import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import java.time.LocalTime
 import java.util.UUID
 import org.springframework.dao.EmptyResultDataAccessException
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClubAllAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val queryClassRoomPort: QueryClassroomPort
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClubAllAttendanceUseCase {
 
     companion object {
@@ -31,7 +30,6 @@ class QueryClubAllAttendanceService(
     @Transactional(readOnly = true)
     override fun queryClubAllAttendance(club: String): List<QueryAllAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
-            ?: throw ClubNotFoundException
 
         return students.map { it ->
             val classroomName = getClassroomName(it.userId)
@@ -42,8 +40,8 @@ class QueryClubAllAttendanceService(
 
     private fun getClassroomName(userId: UUID): String {
         return try {
-            val classroom = queryClassRoomPort.findOKClassroom(userId)
-            classroom?.takeIf {
+            val classroom = classroomFinderUseCase.findByUserIdOrThrow(userId)
+            classroom.takeIf {
                 isContainTime(it.startPeriod, it.endPeriod)
             }?.classroomName ?: ""
         } catch (e: EmptyResultDataAccessException) {

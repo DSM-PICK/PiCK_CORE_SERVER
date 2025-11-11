@@ -1,11 +1,12 @@
 package dsm.pick2024.domain.weekendmeal.mapper
 
+import dsm.pick2024.domain.admin.mapper.AdminMapper
 import dsm.pick2024.domain.weekendmeal.domain.WeekendMealPeriod
 import dsm.pick2024.domain.weekendmeal.entity.WeekendMealPeriodJpaEntity
 import org.springframework.stereotype.Component
 
 @Component
-class WeekendMealPeriodMapper {
+class WeekendMealPeriodMapper(private val adminMapper: AdminMapper) {
     fun toEntity(domain: WeekendMealPeriod) =
         domain.run {
             WeekendMealPeriodJpaEntity(
@@ -13,18 +14,18 @@ class WeekendMealPeriodMapper {
                 start = start,
                 end = end,
                 month = month,
-                adminId = adminId
+                admin = adminMapper.toEntity(admin)
             )
         }
 
     fun toDomain(entity: WeekendMealPeriodJpaEntity) =
         entity.run {
             WeekendMealPeriod(
-                id = id,
+                id = id!!,
                 start = start,
                 end = end,
                 month = month,
-                adminId = adminId
+                admin = adminMapper.toDomain(admin)
             )
         }
 }

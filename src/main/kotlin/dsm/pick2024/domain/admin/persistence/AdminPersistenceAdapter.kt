@@ -17,7 +17,7 @@ class AdminPersistenceAdapter(
     override fun existByName(name: String) = adminRepository.existsByName(name)
 
     override fun findByAdminId(adminId: String) =
-        adminRepository.findByAdminId(adminId).let { adminMapper.toDomain(it) }
+        adminRepository.findByAdminId(adminId)?.let { adminMapper.toDomain(it) }
 
     override fun existsByAdminId(adminId: String) = adminRepository.existsByAdminId(adminId)
 
@@ -29,7 +29,7 @@ class AdminPersistenceAdapter(
         grade: Int,
         classNum: Int
     ): Admin? {
-        return adminRepository.findByGradeAndClassNum(grade, classNum).let { adminMapper.toDomain(it) }
+        return adminRepository.findByGradeAndClassNum(grade, classNum)?.let { adminMapper.toDomain(it) }
     }
 
     override fun findAll(): List<Admin> =
@@ -37,4 +37,10 @@ class AdminPersistenceAdapter(
             .selectFrom(QAdminJpaEntity.adminJpaEntity)
             .fetch()
             .map { adminMapper.toDomain(it) }
+
+    override fun findByAdminName(name: String): Admin? =
+        adminRepository.findByName(name)?.let { adminMapper.toDomain(it) }
+
+    override fun isGradeAndClassRegistered(grade: Int, classNum: Int) =
+        adminRepository.existsByGradeAndClassNum(grade, classNum)
 }

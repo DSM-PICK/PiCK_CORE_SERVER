@@ -6,7 +6,7 @@ import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClassAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val queryClassroomPort: QueryClassroomPort
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClassAttendanceUseCase {
 
     @Transactional(readOnly = true)
@@ -27,8 +27,8 @@ class QueryClassAttendanceService(
             .map { it ->
                 val userId = it.userId
                 val classroomName = try {
-                    val classroom = queryClassroomPort.findOKClassroom(userId)
-                    classroom?.classroomName ?: ""
+                    val classroom = classroomFinderUseCase.findOKClassroomOrThrow(userId)
+                    classroom.classroomName
                 } catch (e: EmptyResultDataAccessException) {
                     ""
                 }
@@ -42,17 +42,17 @@ class QueryClassAttendanceService(
                         classNum = classNum,
                         num = num,
                         status = returnStatus,
-                        classroomName = classroomName!!
+                        classroomName = classroomName
                     )
                 }
             }.distinctBy { it.id }.sortedWith(compareBy { it.num })
     private fun returnStatus(period: Int, user: Attendance): AttendanceStatus {
         return when (period) {
-            6 -> user!!.period6
-            7 -> user!!.period7
-            8 -> user!!.period8
-            9 -> user!!.period9
-            10 -> user!!.period10
+            6 -> user.period6
+            7 -> user.period7
+            8 -> user.period8
+            9 -> user.period9
+            10 -> user.period10
             else -> throw InvalidPeriodException
         }
     }

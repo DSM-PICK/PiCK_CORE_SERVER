@@ -6,11 +6,12 @@ import java.util.UUID
 
 @Aggregate
 data class Admin(
-    val id: UUID? = null,
+    val id: UUID = UUID(0, 0),
     val name: String,
     val grade: Int?,
     val classNum: Int?,
     val password: String,
+    val deviceToken: String?,
     val adminId: String,
     val role: Role
 )

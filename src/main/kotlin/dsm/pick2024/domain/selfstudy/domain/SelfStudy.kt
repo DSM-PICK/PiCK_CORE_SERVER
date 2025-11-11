@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class SelfStudy(
-    val id: UUID? = null,
+    val id: UUID = UUID(0, 0),
     val floor: Int,
     val teacherName: String,
     val date: LocalDate

@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.status.service
 
-import dsm.pick2024.domain.admin.persistence.AdminPersistenceAdapter
+import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.status.port.`in`.QueryClassStatusUseCase
 import dsm.pick2024.domain.status.port.out.QueryStatusPort
 import dsm.pick2024.domain.status.presentation.dto.response.QueryClassResponse
@@ -11,14 +11,14 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClassStatusService(
     private val queryStatusPort: QueryStatusPort,
-    private val adminPersistenceAdapter: AdminPersistenceAdapter
+    private val adminFinderUseCase: AdminFinderUseCase
 ) : QueryClassStatusUseCase {
     @Transactional(readOnly = true)
     override fun queryClasStatus(
         grade: Int,
         classNum: Int
     ): QueryClassResponse {
-        val teacher = adminPersistenceAdapter.findByGradeAndClassNum(grade, classNum)
+        val teacher = adminFinderUseCase.findByGradeAndClassNumOrThrow(grade, classNum)
 
         val classStatusList =
             queryStatusPort.findByGradeAndClassNum(grade, classNum)

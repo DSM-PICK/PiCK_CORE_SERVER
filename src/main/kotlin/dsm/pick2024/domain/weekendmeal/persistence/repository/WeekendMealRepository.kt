@@ -11,13 +11,13 @@ interface WeekendMealRepository : Repository<WeekendMealJpaEntity, UUID> {
 
     fun saveAll(entity: Iterable<WeekendMealJpaEntity>)
 
-    fun findByUserId(id: UUID): WeekendMealJpaEntity
+    fun findByUserId(id: UUID): WeekendMealJpaEntity?
 
     fun existsByUserId(id: UUID): Boolean
 
     fun findAllByStatus(status: Status): List<WeekendMeal>
 
-    fun findById(id: UUID): WeekendMealJpaEntity
+    fun findById(id: UUID): WeekendMealJpaEntity?
 
     fun findAll(): List<WeekendMealJpaEntity>
 

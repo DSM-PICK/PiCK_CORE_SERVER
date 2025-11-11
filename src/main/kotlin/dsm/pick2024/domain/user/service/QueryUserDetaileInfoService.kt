@@ -23,7 +23,6 @@ class QueryUserDetaileInfoService(
         return QueryUserDetailsInfoResponse(
             profile = profileUrl?.substringBefore("?"),
             userName = user.name,
-            birthDay = user.birthDay,
             grade = user.grade,
             classNum = user.classNum,
             num = user.num,

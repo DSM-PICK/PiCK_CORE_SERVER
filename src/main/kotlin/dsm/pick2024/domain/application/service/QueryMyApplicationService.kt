@@ -2,9 +2,8 @@ package dsm.pick2024.domain.application.service
 
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
+import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
-import dsm.pick2024.domain.application.port.out.QueryApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryMyApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val queryApplicationPort: QueryApplicationPort,
+    private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val fileUtil: FileUtil
 ) : QueryMyApplicationUseCase {
 
@@ -25,12 +24,11 @@ class QueryMyApplicationService(
         val user = userFacadeUseCase.currentUser()
         val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
         val application =
-            queryApplicationPort.findByUserIdAndStatusAndApplicationKind(
+            applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.OK,
-                user.xquareId,
+                user.id,
                 ApplicationKind.APPLICATION
             )
-                ?: throw ApplicationNotFoundException
 
         return QueryMyApplicationResponse(
             userId = application.userId,

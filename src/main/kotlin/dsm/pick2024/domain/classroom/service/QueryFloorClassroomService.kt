@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.classroom.service
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
+import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.classroom.exception.FloorNotFoundException
 import dsm.pick2024.domain.classroom.port.`in`.QueryFloorClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class QueryFloorClassroomService(
     private val queryClassroomPort: QueryClassroomPort,
-    private val queryAttendancePort: QueryAttendancePort
+    private val attendanceFinderUseCase: AttendanceFinderUseCase
 ) : QueryFloorClassroomUseCase {
 
     override fun queryFloorClassroom(
@@ -38,7 +38,7 @@ class QueryFloorClassroomService(
 
         return classrooms.map { classroom ->
             val move = if (today == 2 || today == 5) {
-                queryAttendancePort.findByUserId(classroom.userId)?.place ?: ""
+                attendanceFinderUseCase.findByUserIdOrThrow(classroom.userId).place ?: ""
             } else {
                 "${classroom.grade}-${classroom.classNum}"
             }

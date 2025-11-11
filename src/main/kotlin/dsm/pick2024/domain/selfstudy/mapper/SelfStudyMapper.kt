@@ -19,7 +19,7 @@ class SelfStudyMapper : GenericMapper<SelfStudyJpaEntity, SelfStudy> {
 
     override fun toDomain(entity: SelfStudyJpaEntity) = entity.run {
         SelfStudy(
-            id = id,
+            id = id!!,
             floor = floor,
             teacherName = teacherName,
             date = date

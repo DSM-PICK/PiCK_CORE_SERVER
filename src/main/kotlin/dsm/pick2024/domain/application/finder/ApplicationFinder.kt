@@ -1,6 +1,8 @@
-package dsm.pick2024.domain.application.persistence.finder
+package dsm.pick2024.domain.application.finder
 
 import dsm.pick2024.domain.application.domain.Application
+import dsm.pick2024.domain.application.enums.ApplicationKind
+import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.exception.ApplicationNotFoundException
 import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.out.QueryApplicationPort
@@ -15,4 +17,11 @@ class ApplicationFinder(
     override fun findByUserIdOrThrow(id: UUID): Application {
         return queryApplicationPort.findByUserId(id) ?: throw ApplicationNotFoundException
     }
+
+    override fun findByUserIdAndStatusAndApplicationKindOrThrow(
+        status: Status,
+        id: UUID,
+        applicationKind: ApplicationKind
+    ) = queryApplicationPort.findByUserIdAndStatusAndApplicationKind(status, id, applicationKind)
+        ?: throw ApplicationNotFoundException
 }

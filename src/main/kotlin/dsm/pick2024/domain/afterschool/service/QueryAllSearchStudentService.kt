@@ -16,7 +16,7 @@ class QueryAllSearchStudentService(
     @Transactional(readOnly = true)
     override fun queryAllUser(): List<QueryUserSimpleInfoResponse> {
         val students = queryAfterSchoolPort.findAll().map { it.userId }
-        val users = queryUserPort.userAll()
+        val users = queryUserPort.findAll()
 
         return users.filterNot { user -> students.contains(user.id) }
             .map {

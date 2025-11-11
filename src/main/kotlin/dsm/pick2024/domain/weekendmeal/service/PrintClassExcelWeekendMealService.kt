@@ -142,7 +142,7 @@ class PrintClassExcelWeekendMealService(
         summaryCell.cellStyle = bodyCellStyle
         summaryRow.createCell(4).setCellValue(
             queryWeekendMealPort.findByGradeAndClassNumAndStatus(grade, classNum, OK)
-                ?.count().toString()
+                .count().toString()
         )
         summaryRow.createCell(5).setCellValue("-")
 

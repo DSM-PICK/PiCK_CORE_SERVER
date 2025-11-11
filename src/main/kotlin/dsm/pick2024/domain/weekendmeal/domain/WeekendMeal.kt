@@ -6,7 +6,7 @@ import java.util.UUID
 
 @Aggregate
 data class WeekendMeal(
-    val id: UUID? = null,
+    val id: UUID = UUID(0, 0),
     val userId: UUID,
     val userName: String,
     val grade: Int,

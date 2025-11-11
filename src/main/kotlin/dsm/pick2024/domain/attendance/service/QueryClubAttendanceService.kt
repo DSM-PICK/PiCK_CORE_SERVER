@@ -6,8 +6,7 @@ import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClubAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
-import dsm.pick2024.domain.earlyreturn.exception.ClubNotFoundException
+import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,18 +14,17 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class QueryClubAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val queryClassRoomPort: QueryClassroomPort
+    private val classroomFinderUseCase: ClassroomFinderUseCase
 ) : QueryClubAttendanceUseCase {
 
     @Transactional(readOnly = true)
     override fun queryClubAttendance(period: Int, club: String): List<QueryAttendanceResponse> {
         val students = queryAttendancePort.findByClub(club)
-            ?: throw ClubNotFoundException
 
-        return students.map { it ->
+        return students.map {
             val classroomName = try {
-                val classroom = queryClassRoomPort.findOKClassroom(it.userId)
-                classroom?.classroomName ?: ""
+                val classroom = classroomFinderUseCase.findOKClassroomOrThrow(it.userId)
+                classroom.classroomName
             } catch (e: EmptyResultDataAccessException) {
                 ""
             }

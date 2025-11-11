@@ -18,7 +18,7 @@ class AttendancePersistenceAdapter(
 ) : AttendancePort {
 
     override fun save(attendance: Attendance) = attendanceJpaRepository.save(attendanceMapper.toEntity(attendance))
-    override fun saveAll(attendance: MutableList<Attendance>) {
+    override fun saveAll(attendance: List<Attendance>) {
         val entities = attendance.map { attendanceMapper.toEntity(it) }
         attendanceJpaRepository.saveAll(entities)
     }
@@ -28,7 +28,7 @@ class AttendancePersistenceAdapter(
 
     override fun findAll() = attendanceJpaRepository.findAll().map { attendanceMapper.toDomain(it) }
 
-    override fun findByFloor(floor: Int): List<Attendance>? =
+    override fun findByFloor(floor: Int): List<Attendance> =
         jpaQueryFactory
             .selectFrom(QAttendanceJpaEntity.attendanceJpaEntity)
             .where(

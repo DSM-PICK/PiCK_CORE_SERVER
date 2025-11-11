@@ -12,9 +12,7 @@ interface QueryUserPort {
         num: Int
     ): User?
 
-    fun userAll(): List<User>
+    fun findAll(): List<User>
 
-    fun findById(userId: UUID): User?
-
-    fun findByXquareId(xquareId: UUID): User?
+    fun findByUserId(userId: UUID): User?
 }
