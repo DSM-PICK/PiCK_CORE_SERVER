@@ -45,7 +45,7 @@ class SendMailService(
             .replace("\${authCode}", authCode)
             .replace("\${message}", request.message)
             .replace("\${title}", request.title)
-            .replace("\${serverUrl}", SERVER_URL)
+            .replace("\${logoS3Url}", SERVER_URL)
 
         helper.setText(content, true)
 
