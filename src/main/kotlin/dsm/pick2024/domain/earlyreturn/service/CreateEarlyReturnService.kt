@@ -51,18 +51,6 @@ class CreateEarlyReturnService(
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
-        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
-            grade = user.grade,
-            classNum = user.classNum
-        ).deviceToken
-
-        deviceToken?.let {
-            fcmSendPort.send(
-                deviceToken = it,
-                title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 조기귀가를 신청했습니다.",
-                body = "사유: ${request.reason}"
-            )
-        }
 
         eventPublisher.publishEvent(UserInfoRequest(this, user.id))
     }
