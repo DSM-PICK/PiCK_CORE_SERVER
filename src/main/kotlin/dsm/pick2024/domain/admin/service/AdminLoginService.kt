@@ -2,6 +2,7 @@ package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.admin.port.`in`.AdminLoginUseCase
+import dsm.pick2024.domain.admin.port.out.AdminSavePort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
@@ -16,17 +17,20 @@ import org.springframework.transaction.annotation.Transactional
 class AdminLoginService(
     private val adminFinderUseCase: AdminFinderUseCase,
     private val passwordEncoder: PasswordEncoder,
-    private val jwtTokenProvider: JwtTokenProvider
+    private val jwtTokenProvider: JwtTokenProvider,
+    private val adminSavePort: AdminSavePort
 ) : AdminLoginUseCase {
 
     @Transactional
     override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-        val user = adminFinderUseCase.findByAdminIdOrThrow(adminLoginRequest.adminId)
+        val admin = adminFinderUseCase.findByAdminIdOrThrow(adminLoginRequest.adminId)
 
-        if (!passwordEncoder.matches(adminLoginRequest.password, user.password)) {
+        if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
             throw PasswordMissMatchException
         }
 
-        return jwtTokenProvider.generateToken(adminLoginRequest.adminId, user.role.name)
+        adminSavePort.save(admin.updateDeviceToken(adminLoginRequest.deviceToken))
+
+        return jwtTokenProvider.generateToken(adminLoginRequest.adminId, admin.role.name)
     }
 }
