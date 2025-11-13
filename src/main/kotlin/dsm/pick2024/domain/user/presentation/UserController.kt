@@ -71,5 +71,4 @@ class UserController(
     @Operation(summary = "회원 탈퇴 API")
     @DeleteMapping
     fun deleteUser() = userDeleteUseCase.delete()
-
 }
