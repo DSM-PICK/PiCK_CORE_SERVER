@@ -9,6 +9,6 @@ abstract class ApplicationStatusProcessor(
     abstract fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>)
 
     protected fun sendNotification(title: String, message: String, deviceTokens: List<String>) {
-        sendMessageUseCase.sendAll(deviceTokens, title, message)
+        //sendMessageUseCase.sendAll(deviceTokens, title, message)
     }
 }
