@@ -22,7 +22,8 @@ class UserController(
     private val updateUserClubFromExcelUseCase: UpdateUserClubFromExcelUseCase,
     private val userLoginUseCase: UserLoginUseCase,
     private val userPasswordResetService: PasswordResetUseCase,
-    private val userSignUpUseCase: UserSignUpUseCase
+    private val userSignUpUseCase: UserSignUpUseCase,
+    private val userDeleteUseCase: UserDeleteUseCase
 ) {
 
     @Operation(summary = "유저 토큰 재발급 API")
@@ -66,4 +67,9 @@ class UserController(
     @Operation(summary = "유저 비밀번호 변경")
     @PostMapping("/password")
     fun passwordReset(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
+
+    @Operation(summary = "회원 탈퇴 API")
+    @DeleteMapping
+    fun deleteUser() = userDeleteUseCase.delete()
+
 }
