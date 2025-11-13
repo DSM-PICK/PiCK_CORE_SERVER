@@ -55,7 +55,7 @@ class PersistenceAdapterClassRoom(
     }
 
     override fun findOKClassroom(id: UUID) =
-        classroomRepository.findByUserIdAndStatus(id, Status.OK).let {
+        classroomRepository.findByUserIdAndStatus(id, Status.OK)?.let {
             classroomMapper.toDomain(it)
         }
 

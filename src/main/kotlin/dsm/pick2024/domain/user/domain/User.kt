@@ -21,7 +21,7 @@ data class User(
         return this.copy(profile = fileName)
     }
 
-    fun resetPassword(password: String): User {
-        return this.copy(password = password)
+    fun updateDeviceToken(deviceToken: String?): User {
+        return this.copy(deviceToken = deviceToken)
     }
 }

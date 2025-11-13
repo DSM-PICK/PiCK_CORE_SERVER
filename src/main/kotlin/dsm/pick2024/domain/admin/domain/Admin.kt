@@ -14,4 +14,9 @@ data class Admin(
     val deviceToken: String?,
     val adminId: String,
     val role: Role
-)
+) {
+
+    fun updateDeviceToken(deviceToken: String?): Admin {
+        return this.copy(deviceToken = deviceToken)
+    }
+}
