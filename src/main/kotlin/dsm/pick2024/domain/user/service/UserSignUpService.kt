@@ -12,6 +12,9 @@ import dsm.pick2024.domain.user.port.`in`.UserSignUpUseCase
 import dsm.pick2024.domain.user.port.out.ExistsUserPort
 import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserSignUpRequest
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
+import dsm.pick2024.domain.weekendmeal.enums.Status
+import dsm.pick2024.domain.weekendmeal.port.out.SaveWeekendMealPort
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -25,7 +28,8 @@ class UserSignUpService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val existsUserPort: ExistsUserPort,
     private val verifyMailUseCase: VerifyMailUseCase,
-    private val saveAttendancePort: SaveAttendancePort
+    private val saveAttendancePort: SaveAttendancePort,
+    private val saveWeekendMealPort: SaveWeekendMealPort
 ) : UserSignUpUseCase {
 
     @Transactional
@@ -55,6 +59,16 @@ class UserSignUpService(
                     period8 = AttendanceStatus.ATTENDANCE,
                     period9 = AttendanceStatus.ATTENDANCE,
                     period10 = AttendanceStatus.ATTENDANCE
+                )
+            )
+            saveWeekendMealPort.save(
+                WeekendMeal(
+                    userId = it.id,
+                    userName = it.name,
+                    grade = it.grade,
+                    classNum = it.classNum,
+                    num = it.num,
+                    status = Status.NO
                 )
             )
         }
