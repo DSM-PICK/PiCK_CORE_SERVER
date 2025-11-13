@@ -91,7 +91,8 @@ class UserSignUpService(
             classNum = this.classNum,
             num = this.num,
             profile = null,
-            role = Role.STU
+            role = Role.STU,
+            deviceToken = this.deviceToken
         )
     }
 }

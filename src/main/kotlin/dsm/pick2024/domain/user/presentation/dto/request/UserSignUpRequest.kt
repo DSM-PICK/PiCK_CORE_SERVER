@@ -25,5 +25,6 @@ data class UserSignUpRequest(
     val num: Int,
     @field:NotBlank
     @field:Size(min = 6, max = 6)
-    val code: String
+    val code: String,
+    val deviceToken: String?
 )
