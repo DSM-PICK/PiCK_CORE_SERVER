@@ -18,6 +18,8 @@ interface UserRepository : Repository<UserJpaEntity, UUID> {
 
     fun existsByAccountId(accountId: String): Boolean
 
+    fun deleteById(userId : UUID)
+
     fun findByGradeAndClassNumAndNum(
         grade: Int,
         classNum: Int,
