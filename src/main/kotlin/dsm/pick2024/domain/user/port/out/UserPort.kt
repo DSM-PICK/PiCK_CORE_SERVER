@@ -4,4 +4,5 @@ interface UserPort :
     QueryUserPort,
     ExistsUserPort,
     UserSavePort,
-    UpdateUserPort
+    UpdateUserPort,
+    DeleteUserPort
