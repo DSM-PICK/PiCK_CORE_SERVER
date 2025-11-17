@@ -24,17 +24,13 @@ COPY --from=builder /app/extracted/dependencies/ ./
 COPY --from=builder /app/extracted/spring-boot-loader/ ./
 COPY --from=builder /app/extracted/snapshot-dependencies/ ./
 COPY --from=builder /app/extracted/application/ ./
-
-RUN EXIT_CODE=0; \
-    java -XX:ArchiveClassesAtExit=/app/app.jsa \
+RUN java -XX:ArchiveClassesAtExit=/app/app.jsa \
     -Dspring.context.exit=onRefresh \
-    org.springframework.boot.loader.launch.JarLauncher || EXIT_CODE=$?; \
+    org.springframework.boot.loader.launch.JarLauncher || true
 
-FROM gcr.io/distroless/java17-debian12:nonroot
+FROM gcr.io/distroless/java17-debian12:nonroot AS runtime
 WORKDIR /app
-
 COPY --from=optimizer /app/ ./
-
 EXPOSE 8080
 
 ENV JAVA_TOOL_OPTIONS="\
