@@ -16,7 +16,7 @@ RUN ./gradlew bootJar -x test --no-daemon --parallel --build-cache \
     -Dorg.gradle.parallel=true \
     -Dorg.gradle.jvmargs="-Xmx2g -XX:+UseParallelGC" && \
     mkdir -p extracted && \
-    java -Djarmode=layertools -jar build/libs/*.jar extract --destination extracted
+    java -Djarmode=layertools -jar build/libs/*[!-plain].jar extract --destination extracted
 
 FROM eclipse-temurin:17-jre AS optimizer
 WORKDIR /app
