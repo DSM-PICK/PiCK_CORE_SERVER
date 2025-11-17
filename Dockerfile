@@ -16,7 +16,16 @@ RUN ./gradlew bootJar -x test --no-daemon --parallel --build-cache \
     -Dorg.gradle.parallel=true \
     -Dorg.gradle.jvmargs="-Xmx2g -XX:+UseParallelGC" && \
     mkdir -p extracted && \
-    JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-plain.jar") && \
+    JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-plain.jar" | head -n 1) && \
+    if [ -z "$JAR_FILE" ]; then \
+        echo "ERROR: No executable JAR file found in build/libs" >&2; \
+        exit 1; \
+    fi && \
+    if [ ! -f "$JAR_FILE" ]; then \
+        echo "ERROR: JAR file does not exist: $JAR_FILE" >&2; \
+        exit 1; \
+    fi && \
+    echo "Using JAR file: $JAR_FILE" && \
     java -Djarmode=layertools -jar "$JAR_FILE" extract --destination extracted
 
 FROM eclipse-temurin:17-jre AS optimizer
@@ -50,11 +59,8 @@ ENV JAVA_TOOL_OPTIONS="\
 -XX:+TieredCompilation \
 -XX:+ExitOnOutOfMemoryError \
 -XX:+AlwaysPreTouch \
--XX:+UseNUMA \
 -XX:+DisableExplicitGC \
 -XX:ReservedCodeCacheSize=256m \
--XX:+UnlockExperimentalVMOptions \
--XX:+UseContainerCpuShares \
 -XX:SharedArchiveFile=/app/app.jsa \
 -Djava.security.egd=file:/dev/./urandom \
 -Dspring.backgroundpreinitializer.ignore=true \
