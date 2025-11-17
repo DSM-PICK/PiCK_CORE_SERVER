@@ -20,11 +20,11 @@ class ApplicationRejectionProcessor(
             deleteApplicationPort.deleteByIdAndApplicationKind(it.id!!, ApplicationKind.APPLICATION)
         }
 
-        sendNotification(
-            title = "외출 신청 반려 안내",
-            message = "$adminName 선생님이 외출 신청을 반려하셨습니다.",
-            deviceTokens = deviceTokens
-        )
+//        sendNotification(
+//            title = "외출 신청 반려 안내",
+//            message = "$adminName 선생님이 외출 신청을 반려하셨습니다.",
+//            deviceTokens = deviceTokens
+//        )
 
         eventPublisher.publishEvent(ChangeStatusRequest(this, applications.map { it.userId }))
     }
