@@ -15,18 +15,10 @@ RUN ./gradlew bootJar -x test --no-daemon --parallel --build-cache \
     -Dorg.gradle.caching=true \
     -Dorg.gradle.parallel=true \
     -Dorg.gradle.jvmargs="-Xmx2g -XX:+UseParallelGC" && \
-    mkdir -p extracted && \
     JAR_FILE=$(find build/libs -name "*.jar" ! -name "*-plain.jar" | head -n 1) && \
-    if [ -z "$JAR_FILE" ]; then \
-        echo "ERROR: No executable JAR file found in build/libs" >&2; \
-        exit 1; \
-    fi && \
-    if [ ! -f "$JAR_FILE" ]; then \
-        echo "ERROR: JAR file does not exist: $JAR_FILE" >&2; \
-        exit 1; \
-    fi && \
-    echo "Using JAR file: $JAR_FILE" && \
-    java -Djarmode=layertools -jar "$JAR_FILE" extract --destination extracted
+    if [ -z "$JAR_FILE" ]; then echo "ERROR: No JAR found" >&2; exit 1; fi && \
+    echo "Using JAR: $JAR_FILE" && \
+    java -Djarmode=layertools -jar "$JAR_FILE" extract --destination /app/extracted
 
 FROM eclipse-temurin:17-jre AS optimizer
 WORKDIR /app
@@ -36,35 +28,11 @@ COPY --from=builder /app/extracted/snapshot-dependencies/ ./
 COPY --from=builder /app/extracted/application/ ./
 RUN java -XX:ArchiveClassesAtExit=/app/app.jsa \
     -Dspring.context.exit=onRefresh \
-    org.springframework.boot.loader.launch.JarLauncher || true
+    org.springframework.boot.loader.JarLauncher || true
 
 FROM gcr.io/distroless/java17-debian12:nonroot AS runtime
 WORKDIR /app
 COPY --from=optimizer /app/ ./
 EXPOSE 8080
-
-ENV JAVA_TOOL_OPTIONS="\
--XX:+UseContainerSupport \
--XX:MaxRAMPercentage=75.0 \
--XX:InitialRAMPercentage=50.0 \
--XX:+UseG1GC \
--XX:MaxGCPauseMillis=100 \
--XX:G1HeapRegionSize=16m \
--XX:ParallelGCThreads=2 \
--XX:ConcGCThreads=1 \
--XX:+UseStringDeduplication \
--XX:+OptimizeStringConcat \
--XX:+UseCompressedOops \
--XX:+UseCompressedClassPointers \
--XX:+TieredCompilation \
--XX:+ExitOnOutOfMemoryError \
--XX:+AlwaysPreTouch \
--XX:+DisableExplicitGC \
--XX:ReservedCodeCacheSize=256m \
--XX:SharedArchiveFile=/app/app.jsa \
--Djava.security.egd=file:/dev/./urandom \
--Dspring.backgroundpreinitializer.ignore=true \
--Dspring.jmx.enabled=false \
--Dspring.main.lazy-initialization=false"
-
-ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:InitialRAMPercentage=50.0 -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1HeapRegionSize=16m -XX:ParallelGCThreads=2 -XX:ConcGCThreads=1 -XX:+UseStringDeduplication -XX:+OptimizeStringConcat -XX:+UseCompressedOops -XX:+UseCompressedClassPointers -XX:+TieredCompilation -XX:+ExitOnOutOfMemoryError -XX:+AlwaysPreTouch -XX:+DisableExplicitGC -XX:ReservedCodeCacheSize=256m -XX:SharedArchiveFile=/app/app.jsa -Djava.security.egd=file:/dev/./urandom -Dspring.backgroundpreinitializer.ignore=true -Dspring.jmx.enabled=false -Dspring.main.lazy-initialization=false"
+ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
