@@ -63,5 +63,8 @@ class AdminController(
 
     @Operation(summary = "어드민 비밀번호 변경")
     @PostMapping("/password")
-    fun passwordReset(@Valid @RequestBody request: AdminPasswordResetRequest) = adminPasswordResetUseCase.execute(request)
+    fun passwordReset(
+        @Valid @RequestBody
+        request: AdminPasswordResetRequest
+    ) = adminPasswordResetUseCase.execute(request)
 }
