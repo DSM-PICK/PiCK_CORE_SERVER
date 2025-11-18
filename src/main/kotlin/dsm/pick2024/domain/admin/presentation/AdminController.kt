@@ -2,6 +2,7 @@ package dsm.pick2024.domain.admin.presentation
 
 import dsm.pick2024.domain.admin.port.`in`.*
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
+import dsm.pick2024.domain.admin.presentation.dto.request.AdminPasswordResetRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.SecretKeyRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
@@ -24,7 +25,8 @@ class AdminController(
     private val queryAdminNameUseCase: QueryAdminNameUseCase,
     private val queryAdminAllUseCase: QueryAdminAllUseCase,
     private val adminSignUpUseCase: AdminSignUpUseCase,
-    private val verifySecretKeyUseCase: VerifySecretKeyUseCase
+    private val verifySecretKeyUseCase: VerifySecretKeyUseCase,
+    private val adminPasswordResetUseCase: AdminPasswordResetUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -57,4 +59,8 @@ class AdminController(
     fun verifyKey(
         @RequestBody request: SecretKeyRequest
     ) = verifySecretKeyUseCase.verifySecretKey(request)
+
+    @Operation(summary = "유저 비밀번호 변경")
+    @PostMapping("/password")
+    fun passwordReset(@RequestBody request: AdminPasswordResetRequest) = adminPasswordResetUseCase.execute(request)
 }
