@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @Tag(name = "admin API")
 @RestController
@@ -60,7 +61,7 @@ class AdminController(
         @RequestBody request: SecretKeyRequest
     ) = verifySecretKeyUseCase.verifySecretKey(request)
 
-    @Operation(summary = "유저 비밀번호 변경")
+    @Operation(summary = "어드민 비밀번호 변경")
     @PostMapping("/password")
-    fun passwordReset(@RequestBody request: AdminPasswordResetRequest) = adminPasswordResetUseCase.execute(request)
+    fun passwordReset(@Valid @RequestBody request: AdminPasswordResetRequest) = adminPasswordResetUseCase.execute(request)
 }
