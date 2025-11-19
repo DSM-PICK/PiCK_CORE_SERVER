@@ -11,7 +11,7 @@ import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.event.enums.EventTopic
-import dsm.pick2024.domain.fcm.port.out.FcmSendPort
+import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
@@ -23,8 +23,8 @@ class ApplicationApprovalProcessor(
     private val saveAttendancePort: SaveAttendancePort,
     private val attendanceService: AttendanceService,
     private val eventPublisher: ApplicationEventPublisher,
-    sendMessageUseCase: FcmSendPort
-) : ApplicationStatusProcessor(sendMessageUseCase) {
+    outboxFacadeUseCase: OutboxFacadeUseCase
+) : ApplicationStatusProcessor(outboxFacadeUseCase) {
 
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
         val updateApplications = applications.map { it.copy(teacherName = adminName, status = Status.OK) }

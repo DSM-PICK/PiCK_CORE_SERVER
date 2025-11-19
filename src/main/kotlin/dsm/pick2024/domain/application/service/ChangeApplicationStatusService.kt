@@ -31,7 +31,7 @@ class ChangeApplicationStatusService(
             userFacadeUseCase.getUserById(
                 it.userId
             ).deviceToken
-        }.filter { it.isNotBlank() }
+        }
 
         if (request.status == Status.OK) {
             approvalProcessor.process(applications, admin.name, deviceTokens)
