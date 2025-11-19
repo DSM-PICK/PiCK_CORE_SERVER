@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.devicetoken
 
 import dsm.pick2024.domain.devicetoken.enum.OSType
-import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
 import javax.persistence.*
@@ -10,9 +9,8 @@ import javax.persistence.*
 class DeviceTokenJpaEntity(
     id: UUID,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", updatable = true, nullable = false)
-    val user: UserJpaEntity,
+    @Column(name = "user_id")
+    var mailId: String,
 
     @Column(name = "device_token")
     val deviceToken: String? = null,
