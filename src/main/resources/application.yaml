@@ -43,7 +43,8 @@ spring:
           enabled: false
 
     kafka:
-        bootstrap-servers: localhost:29092
+        bootstrap-servers: ${BOOTSTRAP_SERVERS}
+
         producer:
             key-serializer: org.apache.kafka.common.serialization.StringSerializer
             value-serializer: org.apache.kafka.common.serialization.StringSerializer
