@@ -7,6 +7,7 @@ import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ApplicationRejectionProcessor(
@@ -15,6 +16,7 @@ class ApplicationRejectionProcessor(
     private val outboxFacadeUseCase: OutboxFacadeUseCase
 ) : ApplicationStatusProcessor(outboxFacadeUseCase) {
 
+    @Transactional
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
         applications.forEach {
             deleteApplicationPort.deleteByIdAndApplicationKind(it.id!!, ApplicationKind.APPLICATION)

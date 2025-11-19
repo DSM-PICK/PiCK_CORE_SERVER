@@ -14,6 +14,7 @@ import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class EarlyReturnApprovalProcessor(
@@ -25,6 +26,7 @@ class EarlyReturnApprovalProcessor(
     private val eventPublisher: ApplicationEventPublisher,
     private val outboxFacadeUseCase: OutboxFacadeUseCase
 ) : EarlyReturnStatusProcessor(outboxFacadeUseCase) {
+    @Transactional
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
         val updateEarlyReturnList = applications.map { it.copy(teacherName = adminName, status = Status.OK) }
 
