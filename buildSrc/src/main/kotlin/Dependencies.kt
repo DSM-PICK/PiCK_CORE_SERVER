@@ -49,7 +49,5 @@ object Dependencies {
 
     const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
 
-    const val DEBEZIUM = "io.debezium:debezium-connector-mysql:${DependencyVersions.DEBEZIUM}"
-
     const val KAFKA = "org.springframework.kafka:spring-kafka:${DependencyVersions.KAFKA}"
 }
