@@ -6,7 +6,6 @@ import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
-import org.bouncycastle.asn1.x500.style.RFC4519Style.title
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
