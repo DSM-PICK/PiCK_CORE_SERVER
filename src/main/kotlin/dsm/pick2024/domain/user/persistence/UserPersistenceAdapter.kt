@@ -46,6 +46,10 @@ class UserPersistenceAdapter(
         return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
     }
 
+    override fun deleteById(userId: UUID) {
+        userRepository.deleteById(userId)
+    }
+
     @Transactional
     override fun updateUserPassword(userId: UUID, password: String) {
         jpaQueryFactory

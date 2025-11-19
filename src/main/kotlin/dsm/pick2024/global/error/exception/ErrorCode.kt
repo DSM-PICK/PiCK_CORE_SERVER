@@ -49,6 +49,8 @@ enum class ErrorCode(
 
     NOT_EXTENSION_XSL(415, "XSL 확장자가 아닙니다"),
 
+    TOO_MANY_REQUEST(429, "너무 많은 요청입니다."),
+
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류"),
     FEIGN_SERVER_ERROR(500, "Feign 서버 오류"),

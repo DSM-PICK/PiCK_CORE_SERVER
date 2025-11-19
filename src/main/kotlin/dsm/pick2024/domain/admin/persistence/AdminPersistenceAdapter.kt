@@ -7,6 +7,8 @@ import dsm.pick2024.domain.admin.mapper.AdminMapper
 import dsm.pick2024.domain.admin.persistence.repository.AdminRepository
 import dsm.pick2024.domain.admin.port.out.AdminPort
 import org.springframework.stereotype.Component
+import java.util.UUID
+import javax.transaction.Transactional
 
 @Component
 class AdminPersistenceAdapter(
@@ -43,4 +45,13 @@ class AdminPersistenceAdapter(
 
     override fun isGradeAndClassRegistered(grade: Int, classNum: Int) =
         adminRepository.existsByGradeAndClassNum(grade, classNum)
+
+    @Transactional
+    override fun updateAdminPassword(adminId: UUID, password: String) {
+        jpaQueryFactory
+            .update(QAdminJpaEntity.adminJpaEntity)
+            .set(QAdminJpaEntity.adminJpaEntity.password, password)
+            .where(QAdminJpaEntity.adminJpaEntity.id.eq(adminId))
+            .execute()
+    }
 }
