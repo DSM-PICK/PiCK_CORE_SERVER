@@ -4,6 +4,7 @@ import dsm.pick2024.domain.mail.port.`in`.SendMailUseCase
 import dsm.pick2024.domain.mail.presentation.dto.request.SendMailRequest
 import dsm.pick2024.global.security.jwt.exception.InternalServerErrorException
 import dsm.pick2024.infrastructure.mail.MailProperties
+import dsm.pick2024.infrastructure.util.redis.port.RateLimiterPort
 import dsm.pick2024.infrastructure.util.redis.port.RedisUtilPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
@@ -20,6 +21,7 @@ class SendMailService(
     private val mailSender: JavaMailSender,
     private val redisUtilPort: RedisUtilPort,
     private val mailProperties: MailProperties,
+    private val rateLimiterPort: RateLimiterPort,
     @Value("\${server.url}")
     private val SERVER_URL: String
 ) : SendMailUseCase {
@@ -27,7 +29,7 @@ class SendMailService(
     private val CODE_LENGTH = 6
 
     override fun execute(request: SendMailRequest) {
-        println("SERVER_URL = $SERVER_URL")
+        rateLimiterPort.isAllowed(request.mail)
 
         val email = request.mail + mailProperties.dsmPostFix
         val authCode = generateAuthCode()
