@@ -14,7 +14,7 @@ class RateLimiter(
 
     private val REQUEST_LIMIT = 5L
 
-    private val TIME_WINDOW = Duration.ofMinutes(1)
+    private val TIME_WINDOW = Duration.ofMinutes(10)
 
     override fun isAllowed(key: String) {
         val valueOperations = redisTemplate.opsForValue()
