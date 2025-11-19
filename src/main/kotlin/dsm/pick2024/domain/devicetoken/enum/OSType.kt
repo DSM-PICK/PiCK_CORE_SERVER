@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.devicetoken.enum
 
-enum class OSEnum {
+enum class OSType {
     AOS,
     IOS,
     TEACHER_WEB,
