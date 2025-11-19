@@ -1,10 +1,9 @@
 package dsm.pick2024.domain.fcm.dto.request
 
-import dsm.pick2024.domain.user.domain.User
+import dsm.pick2024.domain.outbox.presentation.dto.payload.PayloadInterFace
 
 data class FcmRequest(
-    val users: List<User>,
+    val tokens: List<String?>,
     val title: String,
     val body: String
-
-)
+) : PayloadInterFace()

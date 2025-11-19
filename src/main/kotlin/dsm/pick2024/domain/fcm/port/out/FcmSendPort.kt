@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.fcm.port.out
 
+import dsm.pick2024.domain.fcm.dto.request.FcmRequest
+
 interface FcmSendPort {
-    fun sendAll(deviceTokens: List<String>, title: String, body: String)
-    fun send(deviceToken: String, title: String, body: String)
+    fun send(request: FcmRequest)
 }
