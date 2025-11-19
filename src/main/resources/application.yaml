@@ -66,7 +66,8 @@ open-feign:
 
 discord:
     webhook:
-        message: ${WEBHOOK_MESSAGE}
+        bugMessage: ${WEBHOOK_BUG_MESSAGE}
+        errorMessage: ${WEB_HOOK_ERROR_MESSAGE}
 
 cloud:
     aws:
