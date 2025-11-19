@@ -1,11 +1,12 @@
 package dsm.pick2024.domain.weekendmeal.service
 
-import dsm.pick2024.domain.fcm.port.out.FcmSendPort
+import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
+import org.bouncycastle.asn1.x500.style.RFC4519Style.title
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -13,8 +14,8 @@ import java.time.LocalDate
 class NotificationWeekendMealService(
     private val queryUserPort: QueryUserPort,
     private val weekendMealPeriodPort: WeekendMealPeriodPort,
-    private val fcmSendPort: FcmSendPort,
-    private val weekendMealFinderUseCase: WeekendMealFinderUseCase
+    private val weekendMealFinderUseCase: WeekendMealFinderUseCase,
+    private val outboxFacadeUseCase: OutboxFacadeUseCase
 ) : NotificationWeekendMealUseCase {
     companion object {
         private const val OK = "신청하셨습니다."
@@ -30,7 +31,7 @@ class NotificationWeekendMealService(
                     users.map {
                         val status = weekendMealFinderUseCase.findByUserIdOrThrow(it.id).status
                         if (it.deviceToken != null) {
-                            fcmSendPort.send(
+                            outboxFacadeUseCase.sendNotification(
                                 deviceToken = it.deviceToken,
                                 title = "[PiCK] 급식 신청 기간 알림",
                                 body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
@@ -46,7 +47,7 @@ class NotificationWeekendMealService(
                 weekendMealPeriod.start -> {
                     users.map {
                         if (it.deviceToken != null) {
-                            fcmSendPort.send(
+                            outboxFacadeUseCase.sendNotification(
                                 deviceToken = it.deviceToken,
                                 title = "[PiCK] 급식 신청 기간 알림",
                                 body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}"
