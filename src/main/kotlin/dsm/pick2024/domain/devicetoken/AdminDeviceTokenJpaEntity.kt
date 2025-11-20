@@ -7,7 +7,7 @@ import java.util.UUID
 import javax.persistence.*
 
 @Entity(name = "tbl_admin_device_token")
-class AdminDeviceToken(
+class AdminDeviceTokenJpaEntity(
     id: UUID,
 
     @ManyToOne(fetch = FetchType.LAZY)
