@@ -1,4 +1,4 @@
-package dsm.pick2024.domain.devicetoken
+package dsm.pick2024.domain.devicetoken.entity
 
 import dsm.pick2024.domain.admin.entity.AdminJpaEntity
 import dsm.pick2024.domain.devicetoken.enum.OSType
