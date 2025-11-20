@@ -6,7 +6,7 @@ import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
 import javax.persistence.*
 
-@Entity(name = "tbl_device_token")
+@Entity(name = "tbl_user_device_token")
 class UserDeviceTokenJpaEntity(
     id: UUID,
 
@@ -18,7 +18,7 @@ class UserDeviceTokenJpaEntity(
     val deviceToken: String? = null,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "os", nullable = false)
     val os: OSType
 
 ) : BaseUUIDEntity(id)
