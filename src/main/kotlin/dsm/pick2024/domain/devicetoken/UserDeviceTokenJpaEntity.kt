@@ -6,11 +6,8 @@ import java.util.UUID
 import javax.persistence.*
 
 @Entity(name = "tbl_device_token")
-class DeviceTokenJpaEntity(
+class UserDeviceTokenJpaEntity(
     id: UUID,
-
-    @Column(name = "user_id")
-    var mailId: String,
 
     @Column(name = "device_token")
     val deviceToken: String? = null,
