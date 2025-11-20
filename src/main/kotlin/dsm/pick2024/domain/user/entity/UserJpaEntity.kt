@@ -23,7 +23,7 @@ class UserJpaEntity(
     val name: String,
 
     @Column(name = "device_token", nullable = true)
-    val deviceToken: String?,
+    val deviceToken: String,
 
     @Column(name = "profile_file_name", nullable = true)
     val profile: String? = null,
