@@ -4,7 +4,13 @@ import dsm.pick2024.domain.devicetoken.enum.OSType
 import dsm.pick2024.domain.user.entity.UserJpaEntity
 import dsm.pick2024.global.base.BaseUUIDEntity
 import java.util.UUID
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.FetchType
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
 
 @Entity(name = "tbl_user_device_token")
 class UserDeviceTokenJpaEntity(
