@@ -2,7 +2,7 @@ package dsm.pick2024.domain.user.persistence.repository
 
 import dsm.pick2024.domain.user.entity.UserJpaEntity
 import org.springframework.data.repository.Repository
-import java.util.*
+import java.util.UUID
 
 interface UserRepository : Repository<UserJpaEntity, UUID> {
 
