@@ -42,6 +42,20 @@ spring:
       admin:
           enabled: false
 
+    kafka:
+        bootstrap-servers: ${BOOTSTRAP_SERVERS}
+
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+    level:
+        com.adjh.springbootkafka: DEBUG
+        org:
+            apache.kafka: INFO
+            springframework.kafka: INFO
+
 auth:
     jwt:
         secretKey: ${JWT_SECRET_KEY}

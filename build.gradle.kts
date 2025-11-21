@@ -79,6 +79,8 @@ dependencies {
     implementation(Dependencies.SMTP)
 
     implementation(Dependencies.GOOGLE_OAUTH)
+
+    implementation(Dependencies.KAFKA)
 }
 
 tasks.withType<KotlinCompile> {

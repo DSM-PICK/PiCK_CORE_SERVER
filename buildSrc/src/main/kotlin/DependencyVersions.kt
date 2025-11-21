@@ -13,4 +13,5 @@ object DependencyVersions {
     const val AWS = "1.12.281"
     const val FCM = "8.1.0"
     const val GOOGLE_OAUTH2 = "1.17.0"
+    const val KAFKA = "2.9.13"
 }

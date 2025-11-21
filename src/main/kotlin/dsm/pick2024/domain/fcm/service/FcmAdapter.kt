@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.fcm.service
 
 import dsm.pick2024.domain.fcm.domain.FcmMessage
+import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
@@ -12,17 +13,12 @@ class FcmAdapter(
     private val googleOauthServicePort: GoogleOauthServicePort
 ) : FcmSendPort {
 
-    override fun sendAll(deviceTokens: List<String>, title: String, body: String) {
+    override fun send(request: FcmRequest) {
         val token = googleOauthServicePort.getToken()
-        deviceTokens.filter { it.isNotBlank() }
+        request.tokens.filterNotNull().filter { it != "" }
             .forEach {
-                sendMessage(generateMessage(it, title, body), token)
+                sendMessage(generateMessage(it, request.title, request.body), token)
             }
-    }
-
-    override fun send(deviceToken: String, title: String, body: String) {
-        val token = googleOauthServicePort.getToken()
-        sendMessage(generateMessage(deviceToken.trim(), title, body), token)
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
