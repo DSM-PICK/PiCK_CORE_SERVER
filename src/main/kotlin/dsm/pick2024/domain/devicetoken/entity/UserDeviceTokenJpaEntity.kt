@@ -18,10 +18,10 @@ class UserDeviceTokenJpaEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", unique = true, nullable = false)
-    val user: UserJpaEntity,
+    val userId: UserJpaEntity,
 
-    @Column(name = "device_token")
-    val deviceToken: String? = null,
+    @Column(name = "device_token", nullable = false)
+    val deviceToken: String,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "os", nullable = false)
