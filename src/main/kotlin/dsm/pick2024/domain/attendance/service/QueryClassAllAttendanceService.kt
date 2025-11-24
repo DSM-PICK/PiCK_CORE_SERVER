@@ -4,7 +4,6 @@ import dsm.pick2024.domain.attendance.port.`in`.QueryClassAllAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAllAttendanceResponse
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -18,11 +17,9 @@ class QueryClassAllAttendanceService(
         queryAttendancePort.findByGradeAndClassNum(grade, classNum)
             .map {
                 val userId = it.userId
-                val classroomName = try {
+                val classroomName = userId.let {
                     val classroom = queryClassroomPort.findOKClassroom(userId)
                     classroom?.classroomName ?: ""
-                } catch (e: EmptyResultDataAccessException) {
-                    ""
                 }
 
                 QueryAllAttendanceResponse(
