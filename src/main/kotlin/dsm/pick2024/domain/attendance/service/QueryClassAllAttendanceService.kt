@@ -17,10 +17,7 @@ class QueryClassAllAttendanceService(
         queryAttendancePort.findByGradeAndClassNum(grade, classNum)
             .map {
                 val userId = it.userId
-                val classroomName = userId.let {
-                    val classroom = queryClassroomPort.findOKClassroom(userId)
-                    classroom?.classroomName ?: ""
-                }
+                val classroomName = queryClassroomPort.findOKClassroom(userId)?.classroomName ?: ""
 
                 QueryAllAttendanceResponse(
                     it,
