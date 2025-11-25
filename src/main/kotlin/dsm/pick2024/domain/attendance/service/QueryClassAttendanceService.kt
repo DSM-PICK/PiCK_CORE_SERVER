@@ -6,16 +6,14 @@ import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import dsm.pick2024.domain.attendance.port.`in`.QueryClassAttendanceUseCase
 import dsm.pick2024.domain.attendance.port.out.QueryAttendancePort
 import dsm.pick2024.domain.attendance.presentation.dto.response.QueryAttendanceResponse
-import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
-import org.springframework.dao.EmptyResultDataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class QueryClassAttendanceService(
     private val queryAttendancePort: QueryAttendancePort,
-    private val queryClassroomPort: QueryClassroomPort,
+    private val queryClassroomPort: QueryClassroomPort
 ) : QueryClassAttendanceUseCase {
 
     @Transactional(readOnly = true)
