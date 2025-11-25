@@ -97,7 +97,6 @@ class SecurityConfig(
                 "/weekend-meal/excel",
                 "/weekend-meal/excel/grade",
                 "/application/non-return"
-
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
