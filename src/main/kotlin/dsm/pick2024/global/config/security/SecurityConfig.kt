@@ -101,7 +101,7 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/meal/date",
+                "/meal/date"
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
@@ -159,7 +159,6 @@ class SecurityConfig(
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
