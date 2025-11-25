@@ -1,18 +1,25 @@
 package dsm.pick2024.domain.admin.facade
 
 import dsm.pick2024.domain.admin.domain.Admin
+import dsm.pick2024.domain.admin.exception.AdminNotFoundException
 import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
+import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 
 @Component
 class AdminFacade(
-    private val adminFinderUseCase: AdminFinderUseCase
+    private val adminFinderUseCase: AdminFinderUseCase,
+    private val queryAdminPort: QueryAdminPort
 ) : AdminFacadeUseCase {
 
     override fun currentAdmin(): Admin {
         val adminId = SecurityContextHolder.getContext().authentication.name
         return adminFinderUseCase.findByAdminIdOrThrow(adminId)
+    }
+
+    override fun getAdminByAdminId(adminId: String): Admin {
+        return queryAdminPort.findByAdminId(adminId) ?: throw AdminNotFoundException
     }
 }

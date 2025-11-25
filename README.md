@@ -1,4 +1,5 @@
 # 2025_PiCK_CORE SERVER
+
 ### RULE
 + 모든 문제는 이슈 파서 해결한다
 + 커밋명 앞에 refactor, modify, add, bug 를 붙인다 ex) add :: application dto

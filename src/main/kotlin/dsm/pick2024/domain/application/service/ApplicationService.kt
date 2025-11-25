@@ -52,18 +52,6 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
-            grade = user.grade,
-            classNum = user.classNum
-        ).deviceToken
-
-        deviceToken?.let {
-            fcmSendPort.send(
-                deviceToken = it,
-                title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 외출을 신청했습니다.",
-                body = "사유: ${request.reason}"
-            )
-        }
 
         eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.id))
     }

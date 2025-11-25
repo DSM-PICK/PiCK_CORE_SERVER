@@ -2,6 +2,7 @@ package dsm.pick2024.domain.admin.presentation
 
 import dsm.pick2024.domain.admin.port.`in`.*
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
+import dsm.pick2024.domain.admin.presentation.dto.request.AdminPasswordResetRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.SecretKeyRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import javax.validation.Valid
 
 @Tag(name = "admin API")
 @RestController
@@ -24,7 +26,8 @@ class AdminController(
     private val queryAdminNameUseCase: QueryAdminNameUseCase,
     private val queryAdminAllUseCase: QueryAdminAllUseCase,
     private val adminSignUpUseCase: AdminSignUpUseCase,
-    private val verifySecretKeyUseCase: VerifySecretKeyUseCase
+    private val verifySecretKeyUseCase: VerifySecretKeyUseCase,
+    private val adminPasswordResetUseCase: AdminPasswordResetUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -57,4 +60,11 @@ class AdminController(
     fun verifyKey(
         @RequestBody request: SecretKeyRequest
     ) = verifySecretKeyUseCase.verifySecretKey(request)
+
+    @Operation(summary = "어드민 비밀번호 변경")
+    @PostMapping("/password")
+    fun passwordReset(
+        @Valid @RequestBody
+        request: AdminPasswordResetRequest
+    ) = adminPasswordResetUseCase.execute(request)
 }
