@@ -32,7 +32,6 @@ class SecurityConfig(
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
@@ -57,18 +56,18 @@ class SecurityConfig(
                 "/admin/key"
             ).permitAll()
             .antMatchers(
-                HttpMethod.POST,
-                "/user/club",
-                "/after/**",
-                "/meal",
-                "/notice",
-                "/schedule/create",
-                "/self-study/register",
-                "/timetable",
-                "/weekend-meal/saveAll",
-                "/status/saveAll",
-                "/schedule/**"
-            ).hasRole(Role.SCH.name)
+                HttpMethod.GET,
+                "/user/simple",
+                "/user/details",
+                "/application/my",
+                "/application/simple",
+                "/class-room/move",
+                "/early-return/my",
+                "/timetable/today",
+                "/timetable/week",
+                "/weekend-meal/my",
+                "/notification/**"
+            ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
                 "/admin/**",
@@ -94,8 +93,42 @@ class SecurityConfig(
                 "/status/**",
                 "/user/all",
                 "/status/grade",
-                "/timetable/all"
+                "/timetable/all",
+                "/weekend-meal/excel",
+                "/weekend-meal/excel/grade",
+                "/application/non-return"
+
             ).hasRole(Role.SCH.name)
+            .antMatchers(
+                HttpMethod.GET,
+                "/meal/date",
+            ).authenticated()
+            .antMatchers(
+                HttpMethod.POST,
+                "/application",
+                "/class-room/move",
+                "/early-return/create"
+            ).hasRole(Role.STU.name)
+            .antMatchers(
+                HttpMethod.POST,
+                "/user/club",
+                "/after/**",
+                "/meal",
+                "/notice",
+                "/schedule/create",
+                "/self-study/register",
+                "/timetable",
+                "/weekend-meal/saveAll",
+                "/status/saveAll",
+                "/schedule/**"
+            ).hasRole(Role.SCH.name)
+            .antMatchers(
+                HttpMethod.PATCH,
+                "/application/status",
+                "/weekend-meal/my-status",
+                "/user/profile",
+                "/notification/**"
+            ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
                 "/application/**",
@@ -112,56 +145,21 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
+                "/class-room/return"
+            ).hasRole(Role.STU.name)
+            .antMatchers(
+                HttpMethod.DELETE,
                 "/after/**",
                 "/notice/delete/**",
                 "/schedule/delete/**",
                 "/after/delete"
             )
             .hasRole(Role.SCH.name)
-            .antMatchers(
-                HttpMethod.POST,
-                "/application",
-                "/class-room/move",
-                "/early-return/create"
-            ).hasRole(Role.STU.name)
-            .antMatchers(
-                HttpMethod.PATCH,
-                "/application/status",
-                "/weekend-meal/my-status",
-                "/user/profile",
-                "/notification/**"
-            ).hasRole(Role.STU.name)
-            .antMatchers(
-                HttpMethod.GET,
-                "/user/simple",
-                "/user/details",
-                "/application/my",
-                "/application/simple",
-                "/class-room/move",
-                "/early-return/my",
-                "/meal/date",
-                "/timetable/today",
-                "/timetable/week",
-                "/weekend-meal/my",
-                "/notification/**"
-            ).hasRole(Role.STU.name)
-            .antMatchers(
-                HttpMethod.DELETE,
-                "/class-room/return"
-            ).hasRole(Role.STU.name)
-            .antMatchers(
-                HttpMethod.GET,
-                "/application/non-return"
-            ).hasRole(Role.SCH.name)
-            .antMatchers(
-                HttpMethod.GET,
-                "/weekend-meal/excel",
-                "/weekend-meal/excel/grade"
-            ).hasRole(Role.SCH.name)
             .anyRequest().authenticated()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+
 
         http
             .apply(FilterConfig(objectMapper, jwtTokenProvider))
