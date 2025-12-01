@@ -50,4 +50,6 @@ object Dependencies {
     const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
 
     const val KAFKA = "org.springframework.kafka:spring-kafka:${DependencyVersions.KAFKA}"
+
+    const val APACHE_HTTP_CLIENT = "org.apache.httpcomponents:httpclient:${DependencyVersions.APACHE_HTTP_CLIENT}"
 }

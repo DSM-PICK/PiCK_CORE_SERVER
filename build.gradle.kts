@@ -81,6 +81,8 @@ dependencies {
     implementation(Dependencies.GOOGLE_OAUTH)
 
     implementation(Dependencies.KAFKA)
+
+    implementation(Dependencies.APACHE_HTTP_CLIENT)
 }
 
 tasks.withType<KotlinCompile> {
