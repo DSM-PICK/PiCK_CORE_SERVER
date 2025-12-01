@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service
 
-import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
+import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
@@ -25,7 +25,7 @@ class CreateEarlyReturnService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
-    private val adminFinderUseCase: AdminFinderUseCase,
+    private val queryAdminPort: QueryAdminPort,
     private val fcmSendPort: FcmSendPort
 ) : CreateEarlyReturnUseCase {
     @Transactional
@@ -51,6 +51,19 @@ class CreateEarlyReturnService(
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
+
+        val deviceToken = queryAdminPort.findByGradeAndClassNum(
+            grade = user.grade,
+            classNum = user.classNum
+        )?.deviceToken
+
+        deviceToken.let {
+            fcmSendPort.send(
+                deviceToken = it,
+                title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 조기귀가를 신청했습니다.",
+                body = "사유: ${request.reason}"
+            )
+        }
 
         eventPublisher.publishEvent(UserInfoRequest(this, user.id))
     }
