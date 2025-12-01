@@ -2,10 +2,20 @@ package dsm.pick2024.global.config.restemplate
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory
 import org.springframework.web.client.RestTemplate
 
 @Configuration
-class RestTemplateConfig {
+class RestTemplateConfig(
+    private val properties: RestTemplateProperties
+) {
     @Bean
-    fun restTemplate(): RestTemplate = RestTemplate()
+    fun restTemplate(): RestTemplate {
+        val factory = HttpComponentsClientHttpRequestFactory().apply {
+            setConnectTimeout(properties.connectTimeoutMs)
+            setReadTimeout(properties.readTimeoutMs)
+        }
+
+        return RestTemplate(factory)
+    }
 }
