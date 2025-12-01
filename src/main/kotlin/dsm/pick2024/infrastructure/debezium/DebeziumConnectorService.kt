@@ -2,25 +2,43 @@ package dsm.pick2024.infrastructure.debezium
 
 import com.google.gson.Gson
 import dsm.pick2024.global.config.debezium.DebeziumProperties
-import dsm.pick2024.infrastructure.debezium.exception.DebeziumConnectorException
+import dsm.pick2024.global.config.debezium.DebeziumRetryProperties
+import dsm.pick2024.infrastructure.debezium.exception.DebeziumConfigurationException
+import dsm.pick2024.infrastructure.debezium.exception.DebeziumRetryableException
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
+import org.springframework.web.client.HttpServerErrorException
+import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
 
 @Service
 class DebeziumConnectorService(
     private val debeziumProperties: DebeziumProperties,
+    private val debeziumRetryProperties: DebeziumRetryProperties,
+    @Qualifier("debeziumRestTemplate")
     private val restTemplate: RestTemplate,
     private val gson: Gson = Gson()
 ) {
     private val log = LoggerFactory.getLogger(this::class.java)
 
+    @Retryable(
+        value = [DebeziumRetryableException::class, ResourceAccessException::class, HttpServerErrorException::class],
+        maxAttemptsExpression = "#{@debeziumRetryProperties.maxAttempts}",
+        backoff = Backoff(
+            delayExpression = "#{@debeziumRetryProperties.initialDelayMs}",
+            multiplierExpression = "#{@debeziumRetryProperties.multiplier}",
+            maxDelayExpression = "#{@debeziumRetryProperties.maxDelayMs}"
+        )
+    )
     fun registerConnector() {
         val connectorName = debeziumProperties.connector.name
 
@@ -32,9 +50,18 @@ class DebeziumConnectorService(
                 log.info("Creating new Debezium connector '{}'", connectorName)
                 createConnector()
             }
+        } catch (e: HttpClientErrorException) {
+            log.error("Debezium 커넥터 설정 오류 (재시도 안 함): {}", e.message, e)
+            throw DebeziumConfigurationException
+        } catch (e: HttpServerErrorException) {
+            log.warn("Kafka Connect 서버 오류 (재시도 예정): {}", e.message)
+            throw DebeziumRetryableException
+        } catch (e: ResourceAccessException) {
+            log.warn("Kafka Connect 연결 실패 (재시도 예정): {}", e.message)
+            throw DebeziumRetryableException
         } catch (e: Exception) {
-            log.error("Debezium 커넥터를 등록하는데 실패함: {}", e.message, e)
-            throw DebeziumConnectorException
+            log.error("Debezium 커넥터 등록 중 예상치 못한 오류: {}", e.message, e)
+            throw DebeziumRetryableException
         }
     }
 
@@ -68,7 +95,11 @@ class DebeziumConnectorService(
             log.debug("응답: {}", response.body)
         } else {
             log.error("커넥터 생성 실패. 상태: {}, 응답: {}", response.statusCode, response.body)
-            throw DebeziumConnectorException
+            if (response.statusCode.is4xxClientError) {
+                throw DebeziumConfigurationException
+            } else {
+                throw DebeziumRetryableException
+            }
         }
     }
 
@@ -88,7 +119,11 @@ class DebeziumConnectorService(
             log.debug("응답: {}", response.body)
         } else {
             log.error("커넥터 업데이트 실패. 상태: {}, 응답: {}", response.statusCode, response.body)
-            throw DebeziumConnectorException
+            if (response.statusCode.is4xxClientError) {
+                throw DebeziumConfigurationException
+            } else {
+                throw DebeziumRetryableException
+            }
         }
     }
 
@@ -101,6 +136,32 @@ class DebeziumConnectorService(
             log.error("커넥터 상태 조회 실패: {}", e.message)
             null
         }
+    }
+
+    fun waitForConnectorReady(maxWaitMs: Long = 30000, pollIntervalMs: Long = 2000): Boolean {
+        val startTime = System.currentTimeMillis()
+        var attempt = 1
+
+        while (System.currentTimeMillis() - startTime < maxWaitMs) {
+            val status = getConnectorStatus()
+
+            if (status != null) {
+                if (status.contains("\"state\":\"RUNNING\"")) {
+                    log.info("Debezium 커넥터가 RUNNING 상태로 전환됨 (시도 횟수: {})", attempt)
+                    return true
+                } else if (status.contains("\"state\":\"FAILED\"")) {
+                    log.error("Debezium 커넥터가 FAILED 상태로 전환됨: {}", status)
+                    return false
+                }
+                log.debug("Debezium 커넥터 상태 확인 중 (시도 {}): {}", attempt, status)
+            }
+
+            Thread.sleep(pollIntervalMs)
+            attempt++
+        }
+
+        log.warn("Debezium 커넥터 준비 대기 시간 초과 ({}ms)", maxWaitMs)
+        return false
     }
 
     fun deleteConnector() {
