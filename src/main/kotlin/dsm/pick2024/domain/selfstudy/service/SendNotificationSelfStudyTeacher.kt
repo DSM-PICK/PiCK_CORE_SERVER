@@ -18,8 +18,7 @@ class SendNotificationSelfStudyTeacher(
 
         selfStudies.map {
             val admin = adminFinderUseCase.findByAdminNameOrThrow(it.teacherName)
-            admin.deviceToken?.let {
-                    token ->
+            admin.deviceToken.let { token ->
                 fcmSendPort.send(
                     deviceToken = token,
                     title = "[PiCK] 자습감독 알림",

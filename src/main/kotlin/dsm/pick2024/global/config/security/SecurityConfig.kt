@@ -123,13 +123,13 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
-                "/application/status",
                 "/weekend-meal/my-status",
                 "/user/profile",
                 "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
+                "/application/status",
                 "/application/**",
                 "/early-return/**",
                 "/notice/modify",
@@ -154,7 +154,7 @@ class SecurityConfig(
                 "/after/delete"
             )
             .hasRole(Role.SCH.name)
-            .anyRequest().authenticated()
+            .anyRequest().denyAll()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

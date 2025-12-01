@@ -51,11 +51,11 @@ class ApplicationApprovalProcessor(
         applicationStorySaveAllPort.saveAll(applicationStories)
         saveAttendancePort.saveAll(attendances)
 
-//        sendNotification(
-//            title = "외출 신청 승인 안내",
-//            message = "$adminName 선생님이 외출 신청을 승인하셨습니다.",
-//            deviceTokens = deviceTokens
-//        )
+        sendNotification(
+            title = "외출 신청 승인 안내",
+            message = "$adminName 선생님이 외출 신청을 승인하셨습니다.",
+            deviceTokens = deviceTokens
+        )
 
         eventPublisher.publishEvent(
             ChangeStatusRequest(EventTopic.HANDLE_EVENT, updateApplications.map { it.userId })

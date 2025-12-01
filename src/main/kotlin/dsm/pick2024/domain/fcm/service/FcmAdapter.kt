@@ -12,20 +12,26 @@ class FcmAdapter(
     private val googleOauthServicePort: GoogleOauthServicePort
 ) : FcmSendPort {
 
-    override fun sendAll(deviceTokens: List<String>, title: String, body: String) {
+    override fun sendAll(deviceTokens: List<String?>, title: String, body: String) {
         val token = googleOauthServicePort.getToken()
-        deviceTokens.filter { it.isNotBlank() }
+        deviceTokens
+            .filterNotNull()
+            .filter { it != "" }
             .forEach {
                 sendMessage(generateMessage(it, title, body), token)
             }
     }
 
-    override fun send(deviceToken: String, title: String, body: String) {
-        val token = googleOauthServicePort.getToken()
-        sendMessage(generateMessage(deviceToken.trim(), title, body), token)
+    override fun send(deviceToken: String?, title: String, body: String) {
+        if (deviceToken != null && deviceToken != "") {
+            val token = googleOauthServicePort.getToken()
+            sendMessage(generateMessage(deviceToken, title, body), token)
+        }
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
+        println("token=$token")
+        println("fcmMessage=$fcmMessage")
         fcmClient.sendMessage("Bearer " + token, fcmMessage)
     }
 

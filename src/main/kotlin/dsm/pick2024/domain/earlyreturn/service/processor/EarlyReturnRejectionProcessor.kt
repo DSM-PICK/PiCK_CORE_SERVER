@@ -17,10 +17,10 @@ class EarlyReturnRejectionProcessor(
 ) : EarlyReturnStatusProcessor(sendMessageUseCase) {
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
         applications.map {
-            deleteApplicationPort.deleteByIdAndApplicationKind(it.id!!, ApplicationKind.EARLY_RETURN)
+            deleteApplicationPort.deleteByIdAndApplicationKind(it.id, ApplicationKind.EARLY_RETURN)
         }
 
-        // sendNotification("조기귀가 신청 반려 안내", "$adminName 선생님께서 조기귀가 신청을 반려하였습니다. ", deviceTokens)
+        sendNotification("조기귀가 신청 반려 안내", "$adminName 선생님께서 조기귀가 신청을 반려하였습니다. ", deviceTokens)
 
         eventPublisher.publishEvent(ChangeStatusRequest(this, applications.map { it.userId }))
     }

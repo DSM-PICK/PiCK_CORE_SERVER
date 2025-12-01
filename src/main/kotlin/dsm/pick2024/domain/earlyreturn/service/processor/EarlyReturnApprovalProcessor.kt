@@ -32,7 +32,7 @@ class EarlyReturnApprovalProcessor(
             createApplicationStory(earlyReturn)
         }
 
-        // sendNotification("조기귀가 신청 승인 안내", "$adminName 선생님이 조기귀가 신청을 승인하셨습니다.", deviceTokens)
+        sendNotification("조기귀가 신청 승인 안내", "$adminName 선생님이 조기귀가 신청을 승인하셨습니다.", deviceTokens)
 
         val attendances = updateEarlyReturnList.map {
             val attendanceId = attendanceFinderUseCase.findByUserIdOrThrow(it.userId)

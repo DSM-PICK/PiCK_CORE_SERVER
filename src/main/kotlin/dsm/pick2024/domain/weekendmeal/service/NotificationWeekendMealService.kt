@@ -29,29 +29,25 @@ class NotificationWeekendMealService(
                 weekendMealPeriod.end -> {
                     users.map {
                         val status = weekendMealFinderUseCase.findByUserIdOrThrow(it.id).status
-                        if (it.deviceToken != null) {
-                            fcmSendPort.send(
-                                deviceToken = it.deviceToken,
-                                title = "[PiCK] 급식 신청 기간 알림",
-                                body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
-                                    " 현재 ${it.name}님은 ${weekendMealPeriod.month.ordinal}월 주말급식을" +
-                                    " ${ when (status){
-                                        Status.OK -> OK
-                                        Status.NO -> NO
-                                    }}"
-                            )
-                        }
+                        fcmSendPort.send(
+                            deviceToken = it.deviceToken,
+                            title = "[PiCK] 급식 신청 기간 알림",
+                            body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
+                                " 현재 ${it.name}님은 ${weekendMealPeriod.month.ordinal}월 주말급식을" +
+                                " ${ when (status){
+                                    Status.OK -> OK
+                                    Status.NO -> NO
+                                }}"
+                        )
                     }
                 }
                 weekendMealPeriod.start -> {
                     users.map {
-                        if (it.deviceToken != null) {
-                            fcmSendPort.send(
-                                deviceToken = it.deviceToken,
-                                title = "[PiCK] 급식 신청 기간 알림",
-                                body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}"
-                            )
-                        }
+                        fcmSendPort.send(
+                            deviceToken = it.deviceToken,
+                            title = "[PiCK] 급식 신청 기간 알림",
+                            body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}"
+                        )
                     }
                 }
             }
