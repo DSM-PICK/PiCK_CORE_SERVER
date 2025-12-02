@@ -8,6 +8,7 @@ import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.apache.coyote.http11.Constants.a
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,15 +23,17 @@ class AdminLoginService(
 ) : AdminLoginUseCase {
 
     @Transactional
-    override fun adminLogin(adminLoginRequest: AdminLoginRequest): TokenResponse {
-        val admin = adminFinderUseCase.findByAdminIdOrThrow(adminLoginRequest.adminId)
+    override fun adminLogin(request: AdminLoginRequest): TokenResponse {
+        val admin = adminFinderUseCase.findByAdminIdOrThrow(request.adminId)
 
-        if (!passwordEncoder.matches(adminLoginRequest.password, admin.password)) {
+        if (!passwordEncoder.matches(request.password, admin.password)) {
             throw PasswordMissMatchException
         }
 
-        adminSavePort.save(admin.updateDeviceToken(adminLoginRequest.deviceToken))
+        if(request.deviceToken  != null && admin.deviceToken != "") {
+            adminSavePort.save(admin.updateDeviceToken(request.deviceToken))
+        }
 
-        return jwtTokenProvider.generateToken(adminLoginRequest.adminId, admin.role.name)
+        return jwtTokenProvider.generateToken(request.adminId, admin.role.name)
     }
 }
