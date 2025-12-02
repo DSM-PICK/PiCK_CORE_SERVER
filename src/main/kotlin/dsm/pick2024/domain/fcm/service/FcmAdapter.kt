@@ -30,8 +30,6 @@ class FcmAdapter(
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
-        println("token=$token")
-        println("fcmMessage=$fcmMessage")
         fcmClient.sendMessage("Bearer " + token, fcmMessage)
     }
 
