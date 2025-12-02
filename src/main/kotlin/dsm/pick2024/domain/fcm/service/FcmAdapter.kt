@@ -4,6 +4,9 @@ import dsm.pick2024.domain.fcm.domain.FcmMessage
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
+import feign.FeignException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -11,6 +14,7 @@ class FcmAdapter(
     private val fcmClient: FcmClient,
     private val googleOauthServicePort: GoogleOauthServicePort
 ) : FcmSendPort {
+    val logger: Logger = LoggerFactory.getLogger("FcmAdapter")
 
     override fun sendAll(deviceTokens: List<String?>, title: String, body: String) {
         val token = googleOauthServicePort.getToken()
@@ -30,7 +34,21 @@ class FcmAdapter(
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
-        fcmClient.sendMessage("Bearer " + token, fcmMessage)
+        try {
+            fcmClient.sendMessage("Bearer $token", fcmMessage)
+        } catch (e: FeignException) {
+            logger.error(
+                "⚠️Fcm failed 403 FeignException" +
+                    "request: $fcmMessage" +
+                    "error: ${e.message}"
+            )
+        } catch (e: Exception) {
+            logger.error(
+                "⚠️Fcm failed" +
+                    "request: $fcmMessage" +
+                    "error: ${e.message}"
+            )
+        }
     }
 
     private fun generateMessage(
