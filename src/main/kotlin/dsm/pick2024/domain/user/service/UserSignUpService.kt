@@ -3,6 +3,8 @@ package dsm.pick2024.domain.user.service
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
+import dsm.pick2024.domain.devicetoken.domain.UserDeviceToken
+import dsm.pick2024.domain.devicetoken.port.out.UserDeviceTokenPort
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
@@ -19,6 +21,7 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 import javax.transaction.Transactional
 
 @Service
@@ -29,7 +32,8 @@ class UserSignUpService(
     private val existsUserPort: ExistsUserPort,
     private val verifyMailUseCase: VerifyMailUseCase,
     private val saveAttendancePort: SaveAttendancePort,
-    private val saveWeekendMealPort: SaveWeekendMealPort
+    private val saveWeekendMealPort: SaveWeekendMealPort,
+    private val userDeviceTokenPort: UserDeviceTokenPort
 ) : UserSignUpUseCase {
 
     @Transactional
@@ -73,6 +77,16 @@ class UserSignUpService(
             )
         }
 
+        request.deviceToken?.let { token ->
+            val userDeviceToken = UserDeviceToken(
+                id = UUID.randomUUID(),
+                userId = savedUser.id,
+                deviceToken = token,
+                os = request.os
+            )
+            userDeviceTokenPort.save(userDeviceToken)
+        }
+
         return jwtTokenProvider.generateToken(savedUser.accountId, Role.STU.name)
     }
 
@@ -91,8 +105,7 @@ class UserSignUpService(
             classNum = this.classNum,
             num = this.num,
             profile = null,
-            role = Role.STU,
-            deviceToken = this.deviceToken
+            role = Role.STU
         )
     }
 }
