@@ -9,14 +9,12 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatu
 import dsm.pick2024.domain.application.service.processor.ApplicationApprovalProcessor
 import dsm.pick2024.domain.application.service.processor.ApplicationRejectionProcessor
 import dsm.pick2024.domain.devicetoken.port.out.QueryUserDeviceTokenPort
-import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ChangeApplicationStatusService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
-    private val userFacadeUseCase: UserFacadeUseCase,
     private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val userDeviceTokenPort: QueryUserDeviceTokenPort,
     private val approvalProcessor: ApplicationApprovalProcessor,
