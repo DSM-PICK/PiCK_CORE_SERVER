@@ -10,10 +10,17 @@ import java.util.UUID
 @Component
 class UserDeviceTokenPersistenceAdapter(
     private val userDeviceTokenRepository: UserDeviceTokenRepository,
-    private val userAdminDeviceTokenMapper: UserDeviceTokenMapper
+    private val userAdminDeviceTokenMapper: UserDeviceTokenMapper,
+    private val userDeviceTokenMapper: UserDeviceTokenMapper
 ) : UserDeviceTokenPort {
     override fun findAllByUserId(userId: UUID): List<UserDeviceToken> {
         return userDeviceTokenRepository.findAllByUserId(userId)
             .map { userAdminDeviceTokenMapper.toDomain(it) }
+    }
+
+    override fun save(userDeviceToken: UserDeviceToken): UserDeviceToken {
+        val entity = userDeviceTokenMapper.toEntity(userDeviceToken)
+        val savedEntity = userDeviceTokenRepository.save(entity)
+        return userDeviceTokenMapper.toDomain(savedEntity)
     }
 }
