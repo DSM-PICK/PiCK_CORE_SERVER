@@ -8,6 +8,7 @@ import dsm.pick2024.domain.application.port.`in`.ChangeApplicationStatusUseCase
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationStatusRequest
 import dsm.pick2024.domain.application.service.processor.ApplicationApprovalProcessor
 import dsm.pick2024.domain.application.service.processor.ApplicationRejectionProcessor
+import dsm.pick2024.domain.devicetoken.port.out.QueryUserDeviceTokenPort
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -17,6 +18,7 @@ class ChangeApplicationStatusService(
     private val adminFacadeUseCase: AdminFacadeUseCase,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val applicationFinderUseCase: ApplicationFinderUseCase,
+    private val userDeviceTokenPort: QueryUserDeviceTokenPort,
     private val approvalProcessor: ApplicationApprovalProcessor,
     private val rejectionProcessor: ApplicationRejectionProcessor
 ) : ChangeApplicationStatusUseCase {
@@ -27,11 +29,12 @@ class ChangeApplicationStatusService(
         val applications = request.idList.map { applicationFinderUseCase.findByIdOrThrow(it) }
         applications.forEach { a -> if (a.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
 
-        val deviceTokens = applications.mapNotNull {
-            userFacadeUseCase.getUserById(
-                it.userId
-            ).deviceToken
-        }.filter { it.isNotBlank() }
+        val userIds = applications.map { it.userId }
+        val deviceTokens = userIds.flatMap { userId ->
+            userDeviceTokenPort.findAllByUserId(userId)
+                .map { it.deviceToken }
+                .filter { it.isNotBlank() }
+        }
 
         if (request.status == Status.OK) {
             approvalProcessor.process(applications, admin.name, deviceTokens)

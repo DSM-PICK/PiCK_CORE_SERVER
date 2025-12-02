@@ -6,7 +6,6 @@ import dsm.pick2024.domain.devicetoken.mapper.AdminDeviceTokenMapper
 import dsm.pick2024.domain.devicetoken.persistence.repository.AdminDeviceTokenRepository
 import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
 import org.springframework.stereotype.Component
-import kotlin.collections.List
 
 @Component
 class AdminDeviceTokenPersistenceAdapter(
