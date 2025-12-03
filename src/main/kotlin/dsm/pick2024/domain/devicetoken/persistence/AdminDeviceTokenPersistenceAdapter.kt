@@ -15,4 +15,9 @@ class AdminDeviceTokenPersistenceAdapter(
     override fun findAllByAdminId(adminId: UUID): List<AdminDeviceToken> =
         adminDeviceTokenRepository.findAllByAdminId(adminId)
             .map { adminDeviceTokenMapper.toDomain(it) }
+
+    override fun save(adminDeviceToken: AdminDeviceToken): AdminDeviceToken =
+        adminDeviceTokenMapper.toDomain(
+            adminDeviceTokenRepository.save(adminDeviceTokenMapper.toEntity(adminDeviceToken))
+        )
 }
