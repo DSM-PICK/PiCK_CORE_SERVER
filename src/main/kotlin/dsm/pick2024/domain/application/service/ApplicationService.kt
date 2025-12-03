@@ -9,6 +9,7 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
 import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
@@ -26,12 +27,14 @@ class ApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
     private val fcmSendPort: FcmSendPort,
-    private val adminFinderUseCase: AdminFinderUseCase
+    private val adminFinderUseCase: AdminFinderUseCase,
+    private val adminDeviceTokenPort: AdminDeviceTokenPort
 ) : ApplicationUseCase {
 
     @Transactional
     override fun application(request: ApplicationRequest) {
         val user = userFacadeUseCase.currentUser()
+
         if (existsApplicationPort.existByUserId(user.id)) {
             throw AlreadyApplyingForPicnicException
         }
@@ -52,14 +55,19 @@ class ApplicationService(
                 applicationKind = ApplicationKind.APPLICATION
             )
         )
-        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
+
+        val admin = adminFinderUseCase.findByGradeAndClassNumOrThrow(
             grade = user.grade,
             classNum = user.classNum
-        ).deviceToken
+        )
 
-        deviceToken?.let {
+        val deviceTokens = adminDeviceTokenPort.findAllByAdminId(admin.id)
+            .map { it.deviceToken }
+            .filter { it.isNotBlank() }
+
+        deviceTokens.forEach { token ->
             fcmSendPort.send(
-                deviceToken = it,
+                deviceToken = token,
                 title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 외출을 신청했습니다.",
                 body = "사유: ${request.reason}"
             )
