@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.admin.presentation.dto.request
 
+import dsm.pick2024.domain.devicetoken.enum.OSType
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
 
@@ -18,8 +19,10 @@ data class AdminSignUpRequest(
     val classNum: Int,
     @field:NotBlank
     val code: String,
-    val deviceToken: String,
+    val deviceToken: String?,
     @field:NotBlank
     @field:Size(min = 6, max = 6)
-    val secretKey: String
+    val secretKey: String,
+    @field:NotBlank
+    val os: OSType
 )

@@ -9,6 +9,8 @@ import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
 import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.properties.AdminProperties
+import dsm.pick2024.domain.devicetoken.domain.AdminDeviceToken
+import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.DuplicateUserException
@@ -16,6 +18,8 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class AdminSignUpService(
@@ -25,21 +29,31 @@ class AdminSignUpService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val adminSavePort: AdminSavePort,
     private val adminProperties: AdminProperties,
-    private val queryAdminPort: QueryAdminPort
+    private val queryAdminPort: QueryAdminPort,
+    private val adminDeviceTokenPort: AdminDeviceTokenPort
 ) : AdminSignUpUseCase {
+
+    @Transactional
     override fun execute(request: AdminSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
         checkDuplicateAccountId(request.accountId)
-
         checkSecretKey(request.secretKey)
-
         checkRegisteredGradeAndClass(request.grade, request.classNum)
-
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
-        val user = request.toEntity(encodedPassword)
-        adminSavePort.save(user)
+        val admin = request.toEntity(encodedPassword)
+        val savedAdmin = adminSavePort.save(admin)
+
+        request.deviceToken?.let { token ->
+            val adminDeviceToken = AdminDeviceToken(
+                id = UUID.randomUUID(),
+                adminId = savedAdmin.id,
+                deviceToken = token,
+                os = request.os
+            )
+            adminDeviceTokenPort.save(adminDeviceToken)
+        }
 
         return jwtTokenProvider.generateToken(request.accountId, Role.SCH.name)
     }
@@ -72,8 +86,7 @@ class AdminSignUpService(
             name = this.name,
             grade = this.grade,
             classNum = this.classNum,
-            role = Role.SCH,
-            deviceToken = this.deviceToken
+            role = Role.SCH
         )
     }
 }
