@@ -19,6 +19,7 @@ object SecurityPaths {
         "/admin/signup",
         "/PiCK_Logo.png",
         "/user/password",
-        "/admin/key"
+        "/admin/key",
+        "/admin/password"
     )
 }
