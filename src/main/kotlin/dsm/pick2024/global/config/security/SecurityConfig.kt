@@ -48,7 +48,8 @@ class SecurityConfig(
                 "/timetable/today",
                 "/timetable/week",
                 "/weekend-meal/my",
-                "/notification/**"
+                "/notification/**",
+                "/weekend-meal/period"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
@@ -111,8 +112,7 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/weekend-meal/my-status",
                 "/user/profile",
-                "/notification/**",
-                "/weekend-meal/period"
+                "/notification/**"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
