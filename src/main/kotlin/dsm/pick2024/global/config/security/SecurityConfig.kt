@@ -82,7 +82,10 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/meal/date"
+                "/meal/date",
+                "/self-study/today",
+                "/notice/today",
+                "/notice/simple"
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
@@ -101,7 +104,8 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**"
+                "/schedule/**",
+                "/notice/create"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
@@ -122,7 +126,8 @@ class SecurityConfig(
                 "/class-room/status",
                 "/class",
                 "/weekend-meal/period",
-                "/timetable/change"
+                "/timetable/change",
+                "/notice/modify"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
@@ -133,7 +138,8 @@ class SecurityConfig(
                 "/after/**",
                 "/notice/delete/**",
                 "/schedule/delete/**",
-                "/after/delete"
+                "/after/delete",
+                "/notice/delete"
             )
             .hasRole(Role.SCH.name)
             .anyRequest().denyAll()
