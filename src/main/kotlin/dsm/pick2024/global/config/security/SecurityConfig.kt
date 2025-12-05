@@ -111,7 +111,8 @@ class SecurityConfig(
                 HttpMethod.PATCH,
                 "/weekend-meal/my-status",
                 "/user/profile",
-                "/notification/**"
+                "/notification/**",
+                "/weekend-meal/period"
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
