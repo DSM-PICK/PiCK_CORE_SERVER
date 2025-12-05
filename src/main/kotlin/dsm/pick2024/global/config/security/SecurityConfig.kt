@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
+import dsm.pick2024.global.security.jwt.path.SecurityPaths
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
@@ -35,26 +36,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers(
-                "/admin/login",
-                "/admin/refresh",
-                "/user/login",
-                "/user/refresh",
-                "/main",
-                "/swagger-ui/**",
-                "/v3/api-docs/**",
-                "/swagger-resources/**",
-                "/webjars/**",
-                "/dsm-pick/swagger-ui/index.html",
-                "/dsm-pick/swagger-ui/index.html/**",
-                "/user/signup",
-                "/mail/send",
-                "/mail/check",
-                "/admin/signup",
-                "/PiCK_Logo.png",
-                "/user/password",
-                "/admin/key"
-            ).permitAll()
+            .antMatchers(*SecurityPaths.PERMITALLPATHS.toTypedArray()).permitAll()
             .antMatchers(
                 HttpMethod.GET,
                 "/user/simple",
@@ -100,7 +82,10 @@ class SecurityConfig(
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/meal/date"
+                "/meal/date",
+                "/self-study/today",
+                "/notice/today",
+                "/notice/simple"
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
@@ -119,7 +104,8 @@ class SecurityConfig(
                 "/timetable",
                 "/weekend-meal/saveAll",
                 "/status/saveAll",
-                "/schedule/**"
+                "/schedule/**",
+                "/notice/create"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
@@ -140,7 +126,8 @@ class SecurityConfig(
                 "/class-room/status",
                 "/class",
                 "/weekend-meal/period",
-                "/timetable/change"
+                "/timetable/change",
+                "/notice/modify"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
@@ -151,7 +138,8 @@ class SecurityConfig(
                 "/after/**",
                 "/notice/delete/**",
                 "/schedule/delete/**",
-                "/after/delete"
+                "/after/delete",
+                "/notice/delete"
             )
             .hasRole(Role.SCH.name)
             .anyRequest().denyAll()
