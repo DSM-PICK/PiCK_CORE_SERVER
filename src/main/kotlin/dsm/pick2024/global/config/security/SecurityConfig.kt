@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
+import dsm.pick2024.global.security.jwt.path.SecurityPaths
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
@@ -35,26 +36,7 @@ class SecurityConfig(
         http.authorizeRequests()
             .requestMatchers(CorsUtils::isCorsRequest)
             .permitAll()
-            .antMatchers(
-                "/admin/login",
-                "/admin/refresh",
-                "/user/login",
-                "/user/refresh",
-                "/main",
-                "/swagger-ui/**",
-                "/v3/api-docs/**",
-                "/swagger-resources/**",
-                "/webjars/**",
-                "/dsm-pick/swagger-ui/index.html",
-                "/dsm-pick/swagger-ui/index.html/**",
-                "/user/signup",
-                "/mail/send",
-                "/mail/check",
-                "/admin/signup",
-                "/PiCK_Logo.png",
-                "/user/password",
-                "/admin/key"
-            ).permitAll()
+            .antMatchers(*SecurityPaths.PERMITALLPATHS.toTypedArray()).permitAll()
             .antMatchers(
                 HttpMethod.GET,
                 "/user/simple",
