@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import dsm.pick2024.global.config.debezium.DebeziumProperties
 import dsm.pick2024.global.config.debezium.DebeziumRetryProperties
 import dsm.pick2024.infrastructure.debezium.exception.DebeziumConfigurationException
+import dsm.pick2024.infrastructure.debezium.exception.DebeziumConnectorException
 import dsm.pick2024.infrastructure.debezium.exception.DebeziumRetryableException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -90,17 +91,8 @@ class DebeziumConnectorService(
 
         val response = restTemplate.postForEntity(url, request, String::class.java)
 
-        if (response.statusCode.is2xxSuccessful) {
-            log.info("Debezium 커넥터가 성공적으로 생성됨: {}", debeziumProperties.connector.name)
-            log.debug("응답: {}", response.body)
-        } else {
-            log.error("커넥터 생성 실패. 상태: {}, 응답: {}", response.statusCode, response.body)
-            if (response.statusCode.is4xxClientError) {
-                throw DebeziumConfigurationException
-            } else {
-                throw DebeziumRetryableException
-            }
-        }
+        log.info("Debezium 커넥터가 성공적으로 생성됨: {}", debeziumProperties.connector.name)
+        log.debug("응답: {}", response.body)
     }
 
     private fun updateConnector(connectorName: String) {
@@ -114,17 +106,8 @@ class DebeziumConnectorService(
 
         val response = restTemplate.exchange(url, HttpMethod.PUT, request, String::class.java)
 
-        if (response.statusCode.is2xxSuccessful) {
-            log.info("Debezium 커넥터가 성공적으로 업데이트됨: {}", connectorName)
-            log.debug("응답: {}", response.body)
-        } else {
-            log.error("커넥터 업데이트 실패. 상태: {}, 응답: {}", response.statusCode, response.body)
-            if (response.statusCode.is4xxClientError) {
-                throw DebeziumConfigurationException
-            } else {
-                throw DebeziumRetryableException
-            }
-        }
+        log.info("Debezium 커넥터가 성공적으로 업데이트됨: {}", connectorName)
+        log.debug("응답: {}", response.body)
     }
 
     fun getConnectorStatus(): String? {
