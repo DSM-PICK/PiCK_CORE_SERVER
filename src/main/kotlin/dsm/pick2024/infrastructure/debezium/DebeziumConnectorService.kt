@@ -20,6 +20,9 @@ import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.ResourceAccessException
 import org.springframework.web.client.RestTemplate
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 @Service
 class DebeziumConnectorService(
@@ -60,9 +63,18 @@ class DebeziumConnectorService(
         } catch (e: ResourceAccessException) {
             log.warn("Kafka Connect 연결 실패 (재시도 예정): {}", e.message)
             throw DebeziumRetryableException
-        } catch (e: Exception) {
-            log.error("Debezium 커넥터 등록 중 예상치 못한 오류: {}", e.message, e)
+        } catch (e: SocketTimeoutException) {
+            log.warn("소켓 타임아웃 (재시도 예정): {}", e.message)
             throw DebeziumRetryableException
+        } catch (e: ConnectException) {
+            log.warn("연결 실패 (재시도 예정): {}", e.message)
+            throw DebeziumRetryableException
+        } catch (e: UnknownHostException) {
+            log.warn("호스트 해석 실패 (재시도 예정): {}", e.message)
+            throw DebeziumRetryableException
+        } catch (e: Exception) {
+            log.error("Debezium 커넥터 등록 중 예상치 못한 오류 (재시도 안 함): {}", e.message, e)
+            throw DebeziumConfigurationException
         }
     }
 
