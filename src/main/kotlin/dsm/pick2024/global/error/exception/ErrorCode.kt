@@ -56,5 +56,6 @@ enum class ErrorCode(
     FEIGN_SERVER_ERROR(500, "Feign 서버 오류"),
     GOOGLE_OAUTH_SERVER_ERROR(500, "Google OAuth 서버 오류"),
     FCM_SERVER_ERROR(500, "FCM 서버 오류"),
-    FCM_INITIALIZATION_ERROR(500, "FCM 초기화 오류")
+    FCM_INITIALIZATION_ERROR(500, "FCM 초기화 오류"),
+    DEBEZIUM_CONNECTOR_ERROR(500, "Debezium 커넥터 오류")
 }
