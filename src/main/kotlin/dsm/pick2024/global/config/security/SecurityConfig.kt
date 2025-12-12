@@ -34,8 +34,6 @@ class SecurityConfig(
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.authorizeRequests()
-            .requestMatchers(CorsUtils::isCorsRequest)
-            .permitAll()
             .antMatchers(*SecurityPaths.PERMITALLPATHS.toTypedArray()).permitAll()
             .antMatchers(
                 HttpMethod.GET,
@@ -156,39 +154,4 @@ class SecurityConfig(
 
     @Bean
     protected fun passwordEncoder() = BCryptPasswordEncoder()
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-
-        configuration.allowedOriginPatterns = listOf(
-            "https://*.dsmhs.kr",
-            "http://localhost:*",
-            "http://127.0.0.1:*"
-        )
-
-        configuration.allowedMethods = listOf(
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE",
-            "PATCH",
-            "OPTIONS"
-        )
-
-        configuration.allowedHeaders = listOf("*")
-
-        configuration.allowCredentials = true
-
-        configuration.maxAge = 3600L
-
-        configuration.exposedHeaders = listOf(
-            "Authorization",
-            "Refresh-Token"
-        )
-
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
 }
