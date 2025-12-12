@@ -30,111 +30,43 @@ class SecurityConfig(
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.authorizeRequests()
-            .antMatchers(*SecurityPaths.PERMITALLPATHS.toTypedArray()).permitAll()
+            .antMatchers(*SecurityPaths.PERMIT_ALL_ENDPOINTS).permitAll()
             .antMatchers(
                 HttpMethod.GET,
-                "/user/simple",
-                "/user/details",
-                "/application/my",
-                "/application/simple",
-                "/class-room/move",
-                "/early-return/my",
-                "/timetable/today",
-                "/timetable/week",
-                "/weekend-meal/my",
-                "/notification/**",
-                "/weekend-meal/period"
+                *SecurityPaths.STU_GET_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/admin/**",
-                "/after/**",
-                "/application/reason/all",
-                "/application/status",
-                "/application/floor",
-                "/application/grade",
-                "/application/all",
-                "/story/**",
-                "/class-room/floor",
-                "/class-room/grade",
-                "/early-return/grade",
-                "/early-return/floor",
-                "/early-return/reason/ok-all",
-                "/early-return/ok",
-                "/early-return/all",
-                "/self-study/month",
-                "/self-study/date",
-                "/self-study/admin",
-                "/weekend-meal/all",
-                "/weekend-meal/hey",
-                "/status/**",
-                "/user/all",
-                "/status/grade",
-                "/timetable/all",
-                "/weekend-meal/excel",
-                "/weekend-meal/excel/grade",
-                "/application/non-return"
+                *SecurityPaths.SCH_GET_ENDPOINTS,
+                "/attendance/time/grade/**"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/meal/date",
-                "/self-study/today",
-                "/notice/today",
-                "/notice/simple"
+                *SecurityPaths.GET_AUTHENTICATED
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
-                "/application",
-                "/class-room/move",
-                "/early-return/create"
+                *SecurityPaths.STU_POST_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.POST,
-                "/user/club",
-                "/after/**",
-                "/meal",
-                "/notice",
-                "/schedule/create",
-                "/self-study/register",
-                "/timetable",
-                "/weekend-meal/saveAll",
-                "/status/saveAll",
-                "/schedule/**",
-                "/notice/create"
+                *SecurityPaths.SCH_POST_ENDPOINTS
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
-                "/weekend-meal/my-status",
-                "/user/profile",
-                "/notification/**"
+                *SecurityPaths.STU_PATCH_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
-                "/application/status",
-                "/application/**",
-                "/early-return/**",
-                "/notice/modify",
-                "/status/change",
-                "/weekend-meal/status",
-                "/schedule/modify",
-                "/after/change",
-                "/class-room/status",
-                "/class",
-                "/weekend-meal/period",
-                "/timetable/change",
-                "/notice/modify"
+                *SecurityPaths.SCH_PATCH_ENDPOINTS
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
-                "/class-room/return"
+                *SecurityPaths.STU_DELETE_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.DELETE,
-                "/after/**",
-                "/notice/delete/**",
-                "/schedule/delete/**",
-                "/after/delete",
-                "/notice/delete"
+                *SecurityPaths.SCH_DELETE_ENDPOINTS
             )
             .hasRole(Role.SCH.name)
             .anyRequest().denyAll()
