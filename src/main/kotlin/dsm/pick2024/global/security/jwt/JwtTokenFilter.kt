@@ -17,7 +17,7 @@ class JwtTokenFilter(
 
     override fun shouldNotFilter(request: HttpServletRequest): Boolean {
         val path = request.servletPath
-        val shouldSkip = SecurityPaths.PERMITALLPATHS.any { permitPath ->
+        val shouldSkip = SecurityPaths.PERMIT_ALL_ENDPOINTS.any { permitPath ->
             pathMatcher.match(permitPath, path)
         }
         return shouldSkip
