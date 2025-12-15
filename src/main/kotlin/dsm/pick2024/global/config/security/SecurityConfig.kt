@@ -14,10 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
-import org.springframework.web.cors.CorsUtils
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @EnableWebSecurity
 class SecurityConfig(
@@ -34,110 +30,46 @@ class SecurityConfig(
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         http.authorizeRequests()
-            .requestMatchers(CorsUtils::isCorsRequest)
-            .permitAll()
-            .antMatchers(*SecurityPaths.PERMITALLPATHS.toTypedArray()).permitAll()
+            .antMatchers(*SecurityPaths.PERMIT_ALL_ENDPOINTS).permitAll()
             .antMatchers(
                 HttpMethod.GET,
-                "/user/simple",
-                "/user/details",
-                "/application/my",
-                "/application/simple",
-                "/class-room/move",
-                "/early-return/my",
-                "/timetable/today",
-                "/timetable/week",
-                "/weekend-meal/my",
-                "/notification/**"
+                *SecurityPaths.STU_GET_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/admin/**",
-                "/after/**",
-                "/application/reason/all",
-                "/application/status",
-                "/application/floor",
-                "/application/grade",
-                "/application/all",
-                "/story/**",
-                "/class-room/floor",
-                "/class-room/grade",
-                "/early-return/grade",
-                "/early-return/floor",
-                "/early-return/reason/ok-all",
-                "/early-return/ok",
-                "/early-return/all",
-                "/self-study/month",
-                "/self-study/date",
-                "/self-study/admin",
-                "/weekend-meal/all",
-                "/weekend-meal/hey",
-                "/status/**",
-                "/user/all",
-                "/status/grade",
-                "/timetable/all",
-                "/weekend-meal/excel",
-                "/weekend-meal/excel/grade",
-                "/application/non-return"
+                *SecurityPaths.SCH_GET_ENDPOINTS,
+                "/attendance/time/grade/**"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
-                "/meal/date"
+                *SecurityPaths.GET_AUTHENTICATED
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
-                "/application",
-                "/class-room/move",
-                "/early-return/create"
+                *SecurityPaths.STU_POST_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.POST,
-                "/user/club",
-                "/after/**",
-                "/meal",
-                "/notice",
-                "/schedule/create",
-                "/self-study/register",
-                "/timetable",
-                "/weekend-meal/saveAll",
-                "/status/saveAll",
-                "/schedule/**"
+                *SecurityPaths.SCH_POST_ENDPOINTS
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.PATCH,
-                "/application/status",
-                "/weekend-meal/my-status",
-                "/user/profile",
-                "/notification/**",
-                "/weekend-meal/period"
+                *SecurityPaths.STU_PATCH_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.PATCH,
-                "/application/**",
-                "/early-return/**",
-                "/notice/modify",
-                "/status/change",
-                "/weekend-meal/status",
-                "/schedule/modify",
-                "/after/change",
-                "/class-room/status",
-                "/class",
-                "/weekend-meal/period",
-                "/timetable/change"
+                *SecurityPaths.SCH_PATCH_ENDPOINTS
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.DELETE,
-                "/class-room/return"
+                *SecurityPaths.STU_DELETE_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.DELETE,
-                "/after/**",
-                "/notice/delete/**",
-                "/schedule/delete/**",
-                "/after/delete"
+                *SecurityPaths.SCH_DELETE_ENDPOINTS
             )
             .hasRole(Role.SCH.name)
-            .anyRequest().authenticated()
+            .anyRequest().denyAll()
             .and()
             .exceptionHandling()
             .authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
@@ -150,39 +82,4 @@ class SecurityConfig(
 
     @Bean
     protected fun passwordEncoder() = BCryptPasswordEncoder()
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-
-        configuration.allowedOriginPatterns = listOf(
-            "https://*.dsmhs.kr",
-            "http://localhost:*",
-            "http://127.0.0.1:*"
-        )
-
-        configuration.allowedMethods = listOf(
-            "GET",
-            "POST",
-            "PUT",
-            "DELETE",
-            "PATCH",
-            "OPTIONS"
-        )
-
-        configuration.allowedHeaders = listOf("*")
-
-        configuration.allowCredentials = true
-
-        configuration.maxAge = 3600L
-
-        configuration.exposedHeaders = listOf(
-            "Authorization",
-            "Refresh-Token"
-        )
-
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
-    }
 }
