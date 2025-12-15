@@ -94,7 +94,6 @@ object SecurityPaths {
         "/class",
         "/weekend-meal/period",
         "/timetable/change",
-        "/notice/modify",
         "/attendance/modify",
         "/attendance/total-time/modify"
     )
