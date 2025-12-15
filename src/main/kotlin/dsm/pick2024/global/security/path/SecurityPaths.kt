@@ -46,7 +46,6 @@ object SecurityPaths {
         "/weekend-meal/hey",
         "/status/grade",
         "/user/all",
-        "/status/grade",
         "/timetable/all",
         "/weekend-meal/excel",
         "/weekend-meal/excel/grade",
