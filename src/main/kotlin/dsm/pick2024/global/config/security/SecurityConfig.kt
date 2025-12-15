@@ -37,8 +37,7 @@ class SecurityConfig(
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
-                *SecurityPaths.SCH_GET_ENDPOINTS,
-                "/attendance/time/grade/**"
+                *SecurityPaths.SCH_GET_ENDPOINTS
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,
