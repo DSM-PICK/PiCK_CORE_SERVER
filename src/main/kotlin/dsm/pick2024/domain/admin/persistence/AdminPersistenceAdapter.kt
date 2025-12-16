@@ -46,6 +46,10 @@ class AdminPersistenceAdapter(
     override fun isGradeAndClassRegistered(grade: Int, classNum: Int) =
         adminRepository.existsByGradeAndClassNum(grade, classNum)
 
+    override fun deleteById(adminId: UUID) {
+        admin
+    }
+
     @Transactional
     override fun updateAdminPassword(adminId: UUID, password: String) {
         jpaQueryFactory
