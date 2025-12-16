@@ -1,10 +1,10 @@
 package dsm.pick2024.domain.admin.persistence.repository
 
 import dsm.pick2024.domain.admin.entity.AdminJpaEntity
-import org.springframework.data.repository.Repository
+import org.springframework.data.repository.CrudRepository
 import java.util.UUID
 
-interface AdminRepository : Repository<AdminJpaEntity, UUID> {
+interface AdminRepository : CrudRepository<AdminJpaEntity, UUID> {
     fun existsByName(name: String): Boolean
 
     fun save(admin: AdminJpaEntity): AdminJpaEntity
@@ -19,8 +19,6 @@ interface AdminRepository : Repository<AdminJpaEntity, UUID> {
     ): AdminJpaEntity?
 
     fun findByName(name: String): AdminJpaEntity?
-
-    fun deleteById(adminId: UUID)
 
     fun existsByGradeAndClassNum(grade: Int, classNum: Int): Boolean
 }
