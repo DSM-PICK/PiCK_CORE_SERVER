@@ -78,7 +78,8 @@ object SecurityPaths {
         "/notice/delete/**",
         "/schedule/delete/*",
         "/after/delete",
-        "/notice/delete"
+        "/notice/delete",
+        "/admin"
     )
     val SCH_PATCH_ENDPOINTS = arrayOf(
         "/application/status",
