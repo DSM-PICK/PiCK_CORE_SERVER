@@ -1,8 +1,8 @@
 package dsm.pick2024.domain.admin.service
 
 import dsm.pick2024.domain.admin.facade.AdminFacade
+import dsm.pick2024.domain.admin.port.`in`.AdminDeleteUseCase
 import dsm.pick2024.domain.admin.port.out.DeleteAdminPort
-import dsm.pick2024.domain.user.port.`in`.UserDeleteUseCase
 import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
@@ -10,7 +10,7 @@ import javax.transaction.Transactional
 class AdminDeleteService(
     private val deleteAdminPort: DeleteAdminPort,
     private val adminFacade: AdminFacade
-) : UserDeleteUseCase {
+) : AdminDeleteUseCase {
 
     @Transactional
     override fun delete() {
