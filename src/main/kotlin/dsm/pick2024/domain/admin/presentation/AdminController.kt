@@ -8,6 +8,7 @@ import dsm.pick2024.domain.admin.presentation.dto.request.SecretKeyRequest
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -27,7 +28,8 @@ class AdminController(
     private val queryAdminAllUseCase: QueryAdminAllUseCase,
     private val adminSignUpUseCase: AdminSignUpUseCase,
     private val verifySecretKeyUseCase: VerifySecretKeyUseCase,
-    private val adminPasswordResetUseCase: AdminPasswordResetUseCase
+    private val adminPasswordResetUseCase: AdminPasswordResetUseCase,
+    private val adminDeleteUseCase: AdminDeleteUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -67,4 +69,8 @@ class AdminController(
         @Valid @RequestBody
         request: AdminPasswordResetRequest
     ) = adminPasswordResetUseCase.execute(request)
+
+    @Operation(summary = "회원 탈퇴 API")
+    @DeleteMapping
+    fun deleteAdmin() = adminDeleteUseCase.delete()
 }
