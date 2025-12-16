@@ -23,8 +23,10 @@ class AdminPersistenceAdapter(
 
     override fun existsByAdminId(adminId: String) = adminRepository.existsByAdminId(adminId)
 
-    override fun save(admin: Admin) {
-        adminRepository.save(adminMapper.toEntity(admin))
+    override fun save(admin: Admin): Admin {
+        val entity = adminMapper.toEntity(admin)
+        val saved = adminRepository.save(entity)
+        return adminMapper.toDomain(saved)
     }
 
     override fun findByGradeAndClassNum(
@@ -47,7 +49,7 @@ class AdminPersistenceAdapter(
         adminRepository.existsByGradeAndClassNum(grade, classNum)
 
     override fun deleteById(adminId: UUID) {
-        admin
+        adminRepository.deleteById(adminId)
     }
 
     @Transactional
