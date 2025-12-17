@@ -8,7 +8,6 @@ import dsm.pick2024.domain.earlyreturn.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryFloorAndStatusEarlyReturnUseCase
-import dsm.pick2024.domain.earlyreturn.port.`in`.QueryFloorOKEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryEarlyReturnResponse
