@@ -39,6 +39,7 @@ object SecurityPaths {
         "/early-return/reason/ok-all",
         "/early-return/ok",
         "/early-return/all",
+        "/early-return/ok/{floor}",
         "/self-study/month",
         "/self-study/date",
         "/self-study/admin",
