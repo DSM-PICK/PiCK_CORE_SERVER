@@ -72,5 +72,5 @@ class AdminController(
 
     @Operation(summary = "회원 탈퇴 API")
     @DeleteMapping("/delete")
-    fun deleteAdmin() = adminDeleteUseCase.excute()
+    fun deleteAdmin() = adminDeleteUseCase.execute()
 }
