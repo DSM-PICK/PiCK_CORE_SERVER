@@ -83,5 +83,4 @@ class EarlyReturnController(
         @PathVariable floor: Int
     ): List<QueryEarlyReturnResponse> =
         queryFloorOKEarlyReturnUseCase.queryFloorOkEarlyReturn(floor)
-
 }
