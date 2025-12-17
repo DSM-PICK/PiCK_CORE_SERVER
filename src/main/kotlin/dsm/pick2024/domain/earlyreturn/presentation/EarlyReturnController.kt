@@ -7,13 +7,16 @@ import dsm.pick2024.domain.earlyreturn.port.`in`.QueryClassEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryFloorEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryMyEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.ChangeEarlyReturnStatusUseCase
+import dsm.pick2024.domain.earlyreturn.port.`in`.QueryFloorOKEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.StatusEarlyReturnRequest
+import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QueryEarlyReturnResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -32,7 +35,8 @@ class EarlyReturnController(
     private val queryFloorEarlyReturnUseCase: QueryFloorEarlyReturnUseCase,
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
     private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase,
-    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase
+    private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase,
+    private val queryFloorOKEarlyReturnUseCase: QueryFloorOKEarlyReturnUseCase
 ) {
     @Operation(summary = "조기귀가 신청 API")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -69,7 +73,15 @@ class EarlyReturnController(
     @GetMapping("/my")
     fun queryMyEarlyReturn() = queryMyEarlyReturnUseCase.queryMyEarlyReturn()
 
-    @Operation(summary = "조귀귀가중인 학생 조회 API")
+    @Operation(summary = "조기귀가중인 학생 조회 API")
     @GetMapping("/ok")
     fun queryOKEarlyReturn() = queryAllOKEarlyReturnUseCase.queryAllOKEarlyReturn()
+
+    @Operation(summary = "층별로 조기귀가중인 학생 조회 API")
+    @GetMapping("/ok/{floor}")
+    fun queryFloorOKEarlyReturn(
+        @PathVariable floor: Int
+    ): List<QueryEarlyReturnResponse> =
+        queryFloorOKEarlyReturnUseCase.queryFloorOkEarlyReturn(floor)
+
 }
