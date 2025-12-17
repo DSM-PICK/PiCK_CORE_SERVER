@@ -70,7 +70,7 @@ class AdminController(
         request: AdminPasswordResetRequest
     ) = adminPasswordResetUseCase.execute(request)
 
-    @Operation(summary = "회원 탈퇴 API")
+    @Operation(summary = "어드민 탈퇴 API")
     @DeleteMapping("/delete")
     fun deleteAdmin() = adminDeleteUseCase.execute()
 }
