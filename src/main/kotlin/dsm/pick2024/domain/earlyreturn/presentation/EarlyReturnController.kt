@@ -35,7 +35,6 @@ class EarlyReturnController(
     private val queryAllREarlyEarlyReturnUseCase: QueryAllREarlyEarlyReturnUseCase,
     private val queryMyEarlyReturnUseCase: QueryMyEarlyReturnUseCase,
     private val queryAllOKEarlyReturnUseCase: QueryAllOKEarlyReturnUseCase,
-    private val queryFloorOKEarlyReturnUseCase: QueryFloorOKEarlyReturnUseCase,
     private val queryFloorAndStatusEarlyReturnUseCase: QueryFloorAndStatusEarlyReturnUseCase
 ) {
     @Operation(summary = "조기귀가 신청 API")
