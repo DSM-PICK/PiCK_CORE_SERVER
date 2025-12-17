@@ -80,7 +80,7 @@ object SecurityPaths {
         "/schedule/delete/*",
         "/after/delete",
         "/notice/delete",
-        "/admin"
+        "/admin/delete"
     )
     val SCH_PATCH_ENDPOINTS = arrayOf(
         "/application/status",
@@ -119,7 +119,7 @@ object SecurityPaths {
     )
     val STU_DELETE_ENDPOINTS = arrayOf(
         "/class-room/return",
-        "/user"
+        "/user/delete"
     )
     val STU_PATCH_ENDPOINTS = arrayOf(
         "/weekend-meal/my-status",
