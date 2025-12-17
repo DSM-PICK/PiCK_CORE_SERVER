@@ -13,7 +13,7 @@ class AdminDeleteService(
 ) : AdminDeleteUseCase {
 
     @Transactional
-    override fun excute() {
+    override fun execute() {
         val admin = adminFacade.currentAdmin()
         deleteAdminPort.deleteById(admin.id)
     }
