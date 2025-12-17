@@ -1,11 +1,13 @@
 package dsm.pick2024.domain.admin.persistence.repository
 
 import dsm.pick2024.domain.admin.entity.AdminJpaEntity
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.repository.CrudRepository
 import java.util.UUID
 
-interface AdminRepository : JpaRepository<AdminJpaEntity, UUID> {
+interface AdminRepository : CrudRepository<AdminJpaEntity, UUID> {
     fun existsByName(name: String): Boolean
+
+    fun save(admin: AdminJpaEntity): AdminJpaEntity
 
     fun findByAdminId(adminId: String): AdminJpaEntity?
 

@@ -69,6 +69,6 @@ class UserController(
     fun passwordReset(@RequestBody request: PasswordResetRequest) = userPasswordResetService.execute(request)
 
     @Operation(summary = "회원 탈퇴 API")
-    @DeleteMapping
+    @DeleteMapping("/delete")
     fun deleteUser() = userDeleteUseCase.delete()
 }
