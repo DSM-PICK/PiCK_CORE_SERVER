@@ -1,8 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.presentation
 
 import dsm.pick2024.domain.application.enums.Status
-import dsm.pick2024.domain.application.port.`in`.QueryFloorAndStatusApplicationUseCase
-import dsm.pick2024.domain.application.presentation.dto.response.QueryApplicationResponse
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryAllOKEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.port.`in`.QueryAllREarlyEarlyReturnUseCase
@@ -19,7 +17,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -68,11 +65,9 @@ class EarlyReturnController(
         @RequestParam(name = "floor") floor: Int,
         @RequestParam(name = "status") status: Status
     ): List<QueryEarlyReturnResponse> {
-
         return queryFloorAndStatusEarlyReturnUseCase
             .queryFloorAndStatusEarlyReturn(floor, status)
     }
-
 
     @Operation(summary = "조기귀가 확인된 사람 사유 전체확인 API")
     @GetMapping("/reason/ok-all")

@@ -21,12 +21,11 @@ class QueryFloorEarlyReturnService(
         floor: Int,
         status: Status
     ): List<QueryEarlyReturnResponse> {
-
         val earlyReturns = when (floor) {
             2, 3, 4 -> {
                 val filterClassRoomList =
-                queryApplicationPort
-                    .findByFloorAndApplicationKind(floor, ApplicationKind.EARLY_RETURN)
+                    queryApplicationPort
+                        .findByFloorAndApplicationKind(floor, ApplicationKind.EARLY_RETURN)
                 filterClassRoomList.filter { it.status == status }
             }
             5 -> {
