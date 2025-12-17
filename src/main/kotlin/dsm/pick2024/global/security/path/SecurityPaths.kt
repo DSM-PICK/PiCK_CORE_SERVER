@@ -118,7 +118,8 @@ object SecurityPaths {
         "/early-return/create"
     )
     val STU_DELETE_ENDPOINTS = arrayOf(
-        "/class-room/return"
+        "/class-room/return",
+        "/user"
     )
     val STU_PATCH_ENDPOINTS = arrayOf(
         "/weekend-meal/my-status",
