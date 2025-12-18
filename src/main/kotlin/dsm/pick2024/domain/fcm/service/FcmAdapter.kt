@@ -5,6 +5,7 @@ import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
@@ -12,6 +13,8 @@ class FcmAdapter(
     private val fcmClient: FcmClient,
     private val googleOauthServicePort: GoogleOauthServicePort
 ) : FcmSendPort {
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun send(request: FcmRequest) {
         val token = googleOauthServicePort.getToken()
@@ -22,7 +25,12 @@ class FcmAdapter(
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
-        fcmClient.sendMessage("Bearer " + token, fcmMessage)
+        try{
+            fcmClient.sendMessage("Bearer " + token, fcmMessage)
+        } catch (e: Exception) {
+            log.error(e.message, e)
+        }
+
     }
 
     private fun generateMessage(
