@@ -56,7 +56,6 @@ object SecurityPaths {
         "/attendance/club",
         "/attendance/total-time/club",
         "/weekend-meal/application-list",
-        "/notice/*",
         "/schedule/date",
         "/schedule/month"
     )
@@ -64,7 +63,6 @@ object SecurityPaths {
         "/user/club",
         "/after/**",
         "/meal",
-        "/notice",
         "/schedule/create",
         "/self-study/register",
         "/timetable",
@@ -76,10 +74,9 @@ object SecurityPaths {
     )
     val SCH_DELETE_ENDPOINTS = arrayOf(
         "/after/**",
-        "/notice/delete/**",
+        "/notice/delete/*",
         "/schedule/delete/*",
-        "/after/delete",
-        "/notice/delete"
+        "/after/delete"
     )
     val SCH_PATCH_ENDPOINTS = arrayOf(
         "/application/status",
@@ -94,7 +91,6 @@ object SecurityPaths {
         "/class",
         "/weekend-meal/period",
         "/timetable/change",
-        "/notice/modify",
         "/attendance/modify",
         "/attendance/total-time/modify"
     )
@@ -130,6 +126,8 @@ object SecurityPaths {
         "/meal/date",
         "/self-study/today",
         "/notice/today",
-        "/notice/simple"
+        "/notice/simple",
+        "/notice/*",
+        "/weekend-meal/application"
     )
 }

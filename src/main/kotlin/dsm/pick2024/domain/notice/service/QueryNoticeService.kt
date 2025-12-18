@@ -21,7 +21,7 @@ class QueryNoticeService(
         queryNoticePort.findAll()
             .map { it ->
                 QuerySimpleNoticeResponse(
-                    it.id!!,
+                    it.id,
                     it.title,
                     format(it.createAt),
                     it.teacherName
@@ -44,7 +44,7 @@ class QueryNoticeService(
         queryNoticePort.findByToday()
             .map { it ->
                 QuerySimpleNoticeResponse(
-                    it.id!!,
+                    it.id,
                     it.title,
                     format(it.createAt),
                     it.teacherName
