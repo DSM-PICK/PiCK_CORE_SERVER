@@ -5,6 +5,7 @@ import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminPasswordResetRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.SecretKeyRequest
+import dsm.pick2024.domain.admin.presentation.dto.response.QueryMainInfoResponse
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -29,7 +30,8 @@ class AdminController(
     private val adminSignUpUseCase: AdminSignUpUseCase,
     private val verifySecretKeyUseCase: VerifySecretKeyUseCase,
     private val adminPasswordResetUseCase: AdminPasswordResetUseCase,
-    private val adminDeleteUseCase: AdminDeleteUseCase
+    private val adminDeleteUseCase: AdminDeleteUseCase,
+    private val queryMainInfoUseCase: QueryMainInfoUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -73,4 +75,9 @@ class AdminController(
     @Operation(summary = "어드민 탈퇴 API")
     @DeleteMapping("/delete")
     fun deleteAdmin() = adminDeleteUseCase.execute()
+
+    @Operation(summary = "메인 화면 자감/담임 정보 조회")
+    @GetMapping("/main")
+    fun queryMainInfo(): QueryMainInfoResponse =
+        queryMainInfoUseCase.execute()
 }
