@@ -18,4 +18,6 @@ interface SelfStudyRepository : Repository<SelfStudyJpaEntity, UUID> {
     fun findByDate(date: LocalDate): SelfStudyJpaEntity
 
     fun deleteByDate(date: LocalDate)
+
+    fun findByTeacherNameAndDate(teacherName: String, date: LocalDate): SelfStudyJpaEntity?
 }
