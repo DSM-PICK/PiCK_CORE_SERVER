@@ -79,6 +79,6 @@ class SelfStudyPersistenceAdapterPort(
     override fun findByTeacherNameAndDate(teacherName: String, date: LocalDate): SelfStudy? {
         return selfStudyRepository
             .findByTeacherNameAndDate(teacherName, date)
-            ?. let { selfStudyMapper.toDomain(it) }
+            ?.let { selfStudyMapper.toDomain(it) }
     }
 }
