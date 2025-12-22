@@ -68,8 +68,8 @@ class EarlyReturnController(
     @Operation(summary = "층별로 조기귀가자/신청자 조회 API")
     @GetMapping("/floor")
     fun queryFloorEarlyReturn(
-        @RequestParam (name = "floor") floor: Int,
-        @RequestParam (name = "status") status: Status
+        @RequestParam(name = "floor") floor: Int,
+        @RequestParam(name = "status") status: Status
     ): List<QueryEarlyReturnResponse> =
         queryFloorEarlyReturnUseCase.queryFloorAndStatusEarlyReturn(floor, status)
 }
