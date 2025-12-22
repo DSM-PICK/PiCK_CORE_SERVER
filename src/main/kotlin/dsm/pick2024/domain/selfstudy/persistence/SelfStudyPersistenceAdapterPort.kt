@@ -75,4 +75,10 @@ class SelfStudyPersistenceAdapterPort(
             .fetch()
             .map { selfStudyMapper.toDomain(it) }
     }
+
+    override fun findByTeacherNameAndDate(teacherName: String, date: LocalDate): SelfStudy? {
+        return selfStudyRepository
+            .findByTeacherNameAndDate(teacherName, date)
+            ?. let { selfStudyMapper.toDomain(it) }
+    }
 }

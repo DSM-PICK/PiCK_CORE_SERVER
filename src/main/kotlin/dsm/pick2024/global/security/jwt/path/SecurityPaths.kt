@@ -39,6 +39,7 @@ object SecurityPaths {
         "/early-return/reason/ok-all",
         "/early-return/ok",
         "/early-return/all",
+        "/early-return/floor",
         "/self-study/month",
         "/self-study/date",
         "/self-study/admin",
@@ -55,9 +56,7 @@ object SecurityPaths {
         "/attendance/total-time/grade",
         "/attendance/club",
         "/attendance/total-time/club",
-        "/weekend-meal/application-list",
-        "/schedule/date",
-        "/schedule/month"
+        "/weekend-meal/application-list"
     )
     val SCH_POST_ENDPOINTS = arrayOf(
         "/user/club",
@@ -76,7 +75,8 @@ object SecurityPaths {
         "/after/**",
         "/notice/delete/*",
         "/schedule/delete/*",
-        "/after/delete"
+        "/after/delete",
+        "/admin/delete"
     )
     val SCH_PATCH_ENDPOINTS = arrayOf(
         "/application/status",
@@ -114,7 +114,8 @@ object SecurityPaths {
         "/early-return/create"
     )
     val STU_DELETE_ENDPOINTS = arrayOf(
-        "/class-room/return"
+        "/class-room/return",
+        "/user/delete"
     )
     val STU_PATCH_ENDPOINTS = arrayOf(
         "/weekend-meal/my-status",
@@ -128,6 +129,8 @@ object SecurityPaths {
         "/notice/today",
         "/notice/simple",
         "/notice/*",
-        "/weekend-meal/application"
+        "/weekend-meal/application",
+        "/schedule/date",
+        "/schedule/month"
     )
 }
