@@ -25,12 +25,11 @@ class FcmAdapter(
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
-        try{
+        try {
             fcmClient.sendMessage("Bearer " + token, fcmMessage)
         } catch (e: Exception) {
             log.error(e.message, e)
         }
-
     }
 
     private fun generateMessage(
