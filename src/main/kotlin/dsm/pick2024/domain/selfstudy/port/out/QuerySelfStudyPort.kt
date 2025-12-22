@@ -14,4 +14,6 @@ interface QuerySelfStudyPort {
     fun findByMonthSelfStudyTeacher(year: Year, month: Month): List<SelfStudy>?
 
     fun findByTodayTeacher(teacher: String): SelfStudy?
+
+    fun findByTeacherNameAndDate(teacherName: String, date: LocalDate): SelfStudy?
 }
