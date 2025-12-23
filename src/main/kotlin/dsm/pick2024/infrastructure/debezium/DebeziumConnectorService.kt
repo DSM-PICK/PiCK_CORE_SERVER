@@ -27,7 +27,6 @@ import java.net.UnknownHostException
 @Service
 class DebeziumConnectorService(
     private val debeziumProperties: DebeziumProperties,
-    private val debeziumRetryProperties: DebeziumRetryProperties,
     @Qualifier("debeziumRestTemplate")
     private val restTemplate: RestTemplate,
     private val gson: Gson = Gson()
