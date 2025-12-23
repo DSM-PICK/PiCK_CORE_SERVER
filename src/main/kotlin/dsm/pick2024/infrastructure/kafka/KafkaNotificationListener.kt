@@ -6,6 +6,7 @@ import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Component
@@ -16,14 +17,17 @@ class KafkaNotificationListener(
     private val fcmSendPort: FcmSendPort
 ) {
 
+    val logger = LoggerFactory.getLogger(javaClass)
+
     @KafkaListener(groupId = "notification-service", topics = ["NOTIFICATION"])
     fun sendNotification(
         data: ConsumerRecord<String, String>,
         acknowledgment: Acknowledgment,
         consumer: Consumer<String, String>
     ) {
+        logger.info(objectMapper.writeValueAsString(data))
         val fcmSendRequest = objectMapper.readValue<FcmRequest>(toPayload(data))
-
+        logger.info(fcmSendRequest.toString())
         fcmSendPort.send(fcmSendRequest)
 
         acknowledgment.acknowledge()
