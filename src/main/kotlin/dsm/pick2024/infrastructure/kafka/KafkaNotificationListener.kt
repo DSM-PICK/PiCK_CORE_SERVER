@@ -42,6 +42,7 @@ class KafkaNotificationListener(
         } catch (e: Exception) {
             // 파싱/전송 중 실패 시 원문을 함께 남겨서 디버깅 가능하게 함
             logger.error("Failed to process NOTIFICATION message. rawValue={}", data.value(), e)
+
             // 필요하면 여기서 DLQ로 보내거나, 재처리 정책에 맞게 ack 여부를 결정하세요.
             // 지금은 ack 하지 않아 재시도(또는 컨테이너 설정에 따른 처리)가 가능하게 둡니다.
         }
