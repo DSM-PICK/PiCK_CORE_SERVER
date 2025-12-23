@@ -4,6 +4,7 @@ import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.exception.AleadyApplyingMovementException
+import dsm.pick2024.domain.classroom.exception.MoveRequiredOnClubDayException
 import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
@@ -14,6 +15,8 @@ import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 @Service
 class MoveClassroomApplicationService(
@@ -28,6 +31,18 @@ class MoveClassroomApplicationService(
     override fun moveClassroomApplication(request: UserMoveClassroomRequest) {
         val user = userFacadeUseCase.currentUser()
 
+        val day = LocalDate.now().dayOfWeek
+
+        val moveValue = when (day) {
+            DayOfWeek.TUESDAY, DayOfWeek.FRIDAY -> {
+                request.move
+                    ?: throw MoveRequiredOnClubDayException
+            }
+            else -> {
+                "${user.grade}-${user.classNum}"
+            }
+        }
+
         if (existClassRoomPort.existsByUserId(user.id) || existsApplicationPort.existByUserId(user.id)) {
             throw AleadyApplyingMovementException
         }
@@ -35,6 +50,7 @@ class MoveClassroomApplicationService(
             Classroom(
                 userId = user.id,
                 userName = user.name,
+                move = moveValue,
                 classroomName = request.classroomName,
                 floor = request.floor,
                 grade = user.grade,
