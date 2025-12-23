@@ -2,7 +2,6 @@ package dsm.pick2024.infrastructure.debezium
 
 import com.google.gson.Gson
 import dsm.pick2024.global.config.debezium.DebeziumProperties
-import dsm.pick2024.global.config.debezium.DebeziumRetryProperties
 import dsm.pick2024.infrastructure.debezium.exception.DebeziumConfigurationException
 import dsm.pick2024.infrastructure.debezium.exception.DebeziumConnectorException
 import dsm.pick2024.infrastructure.debezium.exception.DebeziumRetryableException
