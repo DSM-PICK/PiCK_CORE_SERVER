@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate
 @Configuration
 @EnableConfigurationProperties(
     DebeziumProperties::class,
-    DebeziumClientProperties::class,
-    DebeziumRetryProperties::class
+    DebeziumClientProperties::class
 )
 @ConditionalOnProperty(
     prefix = "debezium",
