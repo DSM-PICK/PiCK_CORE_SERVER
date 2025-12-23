@@ -25,12 +25,26 @@ class KafkaNotificationListener(
         acknowledgment: Acknowledgment,
         consumer: Consumer<String, String>
     ) {
-        logger.info(objectMapper.writeValueAsString(data))
-        val fcmSendRequest = objectMapper.readValue<FcmRequest>(toPayload(data))
-        logger.info(fcmSendRequest.toString())
-        fcmSendPort.send(fcmSendRequest)
+        logger.info(
+            "Kafka record topic={}, partition={}, offset={}, key={}, value={} ",
+            data.topic(),
+            data.partition(),
+            data.offset(),
+            data.key(),
+            data.value()
+        )
+        try {
+            val fcmSendRequest = objectMapper.readValue<FcmRequest>(toPayload(data))
+            logger.info("FCM request={}", fcmSendRequest)
+            fcmSendPort.send(fcmSendRequest)
 
-        acknowledgment.acknowledge()
+            acknowledgment.acknowledge()
+        } catch (e: Exception) {
+            // 파싱/전송 중 실패 시 원문을 함께 남겨서 디버깅 가능하게 함
+            logger.error("Failed to process NOTIFICATION message. rawValue={}", data.value(), e)
+            // 필요하면 여기서 DLQ로 보내거나, 재처리 정책에 맞게 ack 여부를 결정하세요.
+            // 지금은 ack 하지 않아 재시도(또는 컨테이너 설정에 따른 처리)가 가능하게 둡니다.
+        }
     }
 
     private fun toPayload(data: ConsumerRecord<String, String>): String {
