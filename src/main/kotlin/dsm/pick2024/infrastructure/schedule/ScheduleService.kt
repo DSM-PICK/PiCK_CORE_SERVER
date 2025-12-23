@@ -1,6 +1,5 @@
 package dsm.pick2024.infrastructure.schedule
 
-import dsm.pick2024.domain.afterschool.port.out.DeleteAfterSchoolStudentPort
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component
 class ScheduleService(
     private val deleteClassRoomPort: DeleteClassRoomPort,
     private val deleteApplicationPort: DeleteApplicationPort,
-    private val deleteAfterSchoolStudentPort: DeleteAfterSchoolStudentPort,
     private val deleteTimetablePort: DeleteTimeTablePort,
     private val mealUseCase: MealUseCase,
     private val resetAttendanceUseCase: ResetAttendanceUseCase,
@@ -34,7 +32,6 @@ class ScheduleService(
     fun deleteTable() {
         deleteClassRoomPort.deleteAll()
         deleteApplicationPort.deleteAll()
-        deleteAfterSchoolStudentPort.deleteAll()
     }
 
     @Scheduled(cron = "0 0 0 25 * ?", zone = "Asia/Seoul")

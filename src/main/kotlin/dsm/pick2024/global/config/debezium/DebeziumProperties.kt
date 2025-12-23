@@ -30,20 +30,20 @@ data class DebeziumProperties(
 
     data class SchemaConfig(
         val kafkaBootstrapServers: String,
-        val historyTopic: String = "dbz_schema_history",
-        val replicationFactor: Int = 1,
-        val includeSchemaChanges: Boolean = true
+        val historyTopic: String,
+        val replicationFactor: Int,
+        val includeSchemaChanges: Boolean
     )
 
     data class OutboxConfig(
         val tableIncludeList: String,
-        val topicPrefix: String = "dbz",
-        val tableName: String = "tbl_outbox",
-        val fieldEventId: String = "id",
-        val fieldEventKey: String = "id",
-        val fieldEventType: String = "event_type",
-        val fieldPayload: String = "payload",
-        val routeByField: String = "event_type",
+        val topicPrefix: String,
+        val tableName: String,
+        val fieldEventId: String,
+        val fieldEventKey: String,
+        val fieldEventType: String,
+        val fieldPayload: String,
+        val routeByField: String,
         val routeTopicReplacement: String = "\${routedByValue}"
     )
 
