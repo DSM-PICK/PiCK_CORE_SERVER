@@ -30,7 +30,19 @@ class KafkaNotificationListener(
     }
 
     private fun toPayload(data: ConsumerRecord<String, String>): String {
-        val root = objectMapper.readTree(data.value())
-        return root["payload"].asText()
+        val raw = data.value()
+        val node = objectMapper.readTree(raw)
+
+        // Debezium/Kafka UI에서 보이는 것처럼 값 자체가 JSON 문자열(이중 인코딩)로 오는 경우
+        // 예) "{\"body\":...}"  -> readTree 결과가 TextNode가 되고, asText()가 내부 JSON을 복원해줌
+        if (node.isTextual) {
+            return node.asText()
+        }
+
+        // wrapper 형태({"payload": ...})면 payload를 우선 사용
+        val payloadNode = node.get("payload") ?: return raw
+
+        // payload가 문자열이면 그대로 풀어서 반환, 객체면 JSON 문자열로 반환
+        return if (payloadNode.isTextual) payloadNode.asText() else payloadNode.toString()
     }
 }
