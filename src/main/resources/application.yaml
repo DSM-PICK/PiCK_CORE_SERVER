@@ -90,6 +90,7 @@ cloud:
         s3:
             bucket: ${AWS_BUCKET}
             exp-time: 604800000
+            fcm-config-key: ${FCM_CONFIG_KEY}
         region:
             static: ${AWS_STATIC}
         stack:
