@@ -44,6 +44,9 @@ class ClassroomJpaEntity(
     @Column(name = "end_period", nullable = false, columnDefinition = "TINYINT(10)")
     val endPeriod: Int,
 
+    @Column(name = "move", nullable = false, columnDefinition = "VARCHAR(20)")
+    val move: String,
+
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status", nullable = false)
     val status: Status
