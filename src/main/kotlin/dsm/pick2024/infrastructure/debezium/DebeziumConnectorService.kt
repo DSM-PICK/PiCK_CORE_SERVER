@@ -36,11 +36,11 @@ class DebeziumConnectorService(
 
     @Retryable(
         value = [DebeziumRetryableException::class, ResourceAccessException::class, HttpServerErrorException::class],
-        maxAttemptsExpression = "#{@debeziumRetryProperties.maxAttempts}",
+        maxAttemptsExpression = "\${debezium.retry.max-attempts:5}",
         backoff = Backoff(
-            delayExpression = "#{@debeziumRetryProperties.initialDelayMs}",
-            multiplierExpression = "#{@debeziumRetryProperties.multiplier}",
-            maxDelayExpression = "#{@debeziumRetryProperties.maxDelayMs}"
+            delayExpression = "\${debezium.retry.initial-delay-ms:2000}",
+            multiplierExpression = "\${debezium.retry.multiplier:2.0}",
+            maxDelayExpression = "\${debezium.retry.max-delay-ms:30000}"
         )
     )
     fun registerConnector() {
