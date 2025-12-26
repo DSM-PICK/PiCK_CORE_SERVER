@@ -44,6 +44,7 @@ class ClassroomJpaEntity(
     @Column(name = "end_period", nullable = false, columnDefinition = "TINYINT(10)")
     val endPeriod: Int,
 
+    // 교실이동 시작 위치
     @Column(name = "move", nullable = false, columnDefinition = "VARCHAR(20)")
     val move: String,
 
