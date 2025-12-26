@@ -11,6 +11,8 @@ data class Classroom(
     val classroomName: String,
     val floor: Int,
     val userName: String,
+    // 교실이동 시작 위치
+    val move: String,
     val grade: Int,
     val classNum: Int,
     val num: Int,

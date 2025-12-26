@@ -24,7 +24,8 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
                 num = num,
                 startPeriod = startPeriod,
                 endPeriod = endPeriod,
-                status = status
+                status = status,
+                move = move
             )
         }
 
@@ -41,7 +42,8 @@ class ClassroomMapper : GenericMapper<ClassroomJpaEntity, Classroom> {
                 num = num,
                 startPeriod = startPeriod,
                 endPeriod = endPeriod,
-                status = status
+                status = status,
+                move = move
             )
         }
 }
