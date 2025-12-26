@@ -72,8 +72,6 @@ dependencies {
 
     implementation(Dependencies.CACHE)
 
-    implementation(Dependencies.FCM)
-
     implementation(Dependencies.WEB_SOCKET)
 
     implementation(Dependencies.SMTP)
