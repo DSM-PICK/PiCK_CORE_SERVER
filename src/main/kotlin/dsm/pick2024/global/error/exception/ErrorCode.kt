@@ -13,7 +13,6 @@ enum class ErrorCode(
     INVALID_SUBJECT(400, "유효하지 않은 과목입니다"),
     MOVE_REQUIRED_ON_CLUB_DAY(400, "전공동아리 날에는 시작 위치가 필수입니다"),
 
-
     FEIGN_UNAUTHORIZED(401, "Feign 인증 실패"),
     PASSWORD_MISS_MATCH(401, "비밀번호가 일치하지 않습니다"),
     INVALID_TOKEN(401, "유효하지 않은 토큰입니다"),
