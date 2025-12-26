@@ -55,8 +55,7 @@ object SecurityPaths {
         "/attendance/total-time/grade",
         "/attendance/club",
         "/attendance/total-time/club",
-        "/weekend-meal/application-list",
-        "/notice/*"
+        "/weekend-meal/application-list"
     )
     val SCH_POST_ENDPOINTS = arrayOf(
         "/user/club",
@@ -131,6 +130,8 @@ object SecurityPaths {
         "/notice/today",
         "/notice/simple",
         "/schedule/date",
-        "/schedule/month"
+        "/schedule/month",
+        "/notice/*"
+
     )
 }
