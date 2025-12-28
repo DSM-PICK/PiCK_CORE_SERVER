@@ -29,7 +29,7 @@ class AdminLoginService(
             throw PasswordMissMatchException
         }
 
-        if (request.deviceToken != null && admin.deviceToken != "") {
+        if (request.deviceToken != null || admin.deviceToken != "") {
             adminSavePort.save(admin.updateDeviceToken(request.deviceToken))
         }
 
