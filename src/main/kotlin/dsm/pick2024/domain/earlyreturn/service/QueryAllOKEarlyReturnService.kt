@@ -18,7 +18,7 @@ class QueryAllOKEarlyReturnService(
 
         queryAllApplicationPort.findAllByApplicationKind(ApplicationKind.EARLY_RETURN)
             .filter { it.status == Status.OK }
-            .map { it ->
+            .map {
                 QueryAllOKEarlyReturnResponse(it)
             }.distinctBy { it.id }.sortedWith(compareBy({ it.grade }, { it.classNum }, { it.num }))
 }

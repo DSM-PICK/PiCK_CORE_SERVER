@@ -1,6 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service
 
-import dsm.pick2024.domain.admin.port.out.QueryAdminPort
+import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.enums.ApplicationType
@@ -12,6 +12,7 @@ import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
 import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
+import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
@@ -25,8 +26,9 @@ class CreateEarlyReturnService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
-    private val queryAdminPort: QueryAdminPort,
-    private val fcmSendPort: FcmSendPort
+    private val adminFinderUseCase: AdminFinderUseCase,
+    private val fcmSendPort: FcmSendPort,
+    private val outboxFacadeUseCase: OutboxFacadeUseCase
 ) : CreateEarlyReturnUseCase {
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
@@ -51,14 +53,13 @@ class CreateEarlyReturnService(
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
-
-        val deviceToken = queryAdminPort.findByGradeAndClassNum(
+        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
             grade = user.grade,
             classNum = user.classNum
-        )?.deviceToken
+        ).deviceToken
 
-        deviceToken.let {
-            fcmSendPort.send(
+        deviceToken?.let {
+            outboxFacadeUseCase.sendNotification(
                 deviceToken = it,
                 title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 조기귀가를 신청했습니다.",
                 body = "사유: ${request.reason}"

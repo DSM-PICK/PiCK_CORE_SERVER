@@ -72,26 +72,15 @@ dependencies {
 
     implementation(Dependencies.CACHE)
 
-    implementation(Dependencies.FCM)
-
     implementation(Dependencies.WEB_SOCKET)
 
     implementation(Dependencies.SMTP)
 
     implementation(Dependencies.GOOGLE_OAUTH)
 
-    implementation(Dependencies.LOG4J)
-}
+    implementation(Dependencies.KAFKA)
 
-configurations.configureEach {
-    exclude(
-        group = Excludes.SPRING_BOOT_LOGGING_GROUP,
-        module = Excludes.SPRING_BOOT_LOGGING_MODULE
-    )
-    exclude(
-        group = Excludes.LOG4J_TO_SLF4J_GROUP,
-        module = Excludes.LOG4J_TO_SLF4J_MODULE
-    )
+    implementation(Dependencies.APACHE_HTTP_CLIENT)
 }
 
 tasks.withType<KotlinCompile> {

@@ -9,7 +9,6 @@ object Dependencies {
 
     const val SPRING_DATA_JPA = "org.springframework.boot:spring-boot-starter-data-jpa:${PluginVersions.SPRING_BOOT_VERSION}"
     const val MYSQL_CONNECTOR = "mysql:mysql-connector-java:${DependencyVersions.MYSQL}"
-
     const val SPRING_REDIS = "org.springframework.boot:spring-boot-starter-data-redis:${PluginVersions.SPRING_BOOT_VERSION}"
 
     const val SPRING_SECURITY = "org.springframework.boot:spring-boot-starter-security"
@@ -42,14 +41,13 @@ object Dependencies {
 
     const val CACHE = "org.springframework.boot:spring-boot-starter-cache"
 
-    const val FCM = "com.google.firebase:firebase-admin:${DependencyVersions.FCM}"
-
     const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
 
     const val GOOGLE_OAUTH = "com.google.auth:google-auth-library-oauth2-http:${DependencyVersions.GOOGLE_OAUTH2}"
 
     const val SMTP = "org.springframework.boot:spring-boot-starter-mail"
 
-    const val LOG4J = "org.springframework.boot:spring-boot-starter-log4j2"
+    const val KAFKA = "org.springframework.kafka:spring-kafka:${DependencyVersions.KAFKA}"
 
+    const val APACHE_HTTP_CLIENT = "org.apache.httpcomponents:httpclient:${DependencyVersions.APACHE_HTTP_CLIENT}"
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.global.config.filter.FilterConfig
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
-import dsm.pick2024.global.security.jwt.path.SecurityPaths
+import dsm.pick2024.global.security.path.SecurityPaths
 import org.springframework.context.annotation.Bean
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
@@ -37,7 +37,8 @@ class SecurityConfig(
             ).hasRole(Role.STU.name)
             .antMatchers(
                 HttpMethod.GET,
-                *SecurityPaths.SCH_GET_ENDPOINTS
+                *SecurityPaths.SCH_GET_ENDPOINTS,
+                "/attendance/time/grade/**"
             ).hasRole(Role.SCH.name)
             .antMatchers(
                 HttpMethod.GET,

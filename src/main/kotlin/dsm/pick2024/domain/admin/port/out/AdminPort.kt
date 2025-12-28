@@ -4,4 +4,5 @@ interface AdminPort :
     QueryAdminPort,
     ExistsByAdminIdPort,
     AdminSavePort,
-    UpdateAdminPort
+    UpdateAdminPort,
+    DeleteAdminPort

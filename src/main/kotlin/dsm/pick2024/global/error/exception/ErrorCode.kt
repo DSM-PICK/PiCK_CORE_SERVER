@@ -11,6 +11,7 @@ enum class ErrorCode(
     INVALID_PERIOD(400, "유효하지 않은 기간입니다"),
     INVALID_TIME(400, "유효하지 않은 시간입니다"),
     INVALID_SUBJECT(400, "유효하지 않은 과목입니다"),
+    MOVE_REQUIRED_ON_CLUB_DAY(400, "전공동아리 날에는 시작 위치가 필수입니다"),
 
     FEIGN_UNAUTHORIZED(401, "Feign 인증 실패"),
     PASSWORD_MISS_MATCH(401, "비밀번호가 일치하지 않습니다"),
@@ -57,5 +58,6 @@ enum class ErrorCode(
     FEIGN_SERVER_ERROR(500, "Feign 서버 오류"),
     GOOGLE_OAUTH_SERVER_ERROR(500, "Google OAuth 서버 오류"),
     FCM_SERVER_ERROR(500, "FCM 서버 오류"),
-    FCM_INITIALIZATION_ERROR(500, "FCM 초기화 오류")
+    FCM_INITIALIZATION_ERROR(500, "FCM 초기화 오류"),
+    DEBEZIUM_CONNECTOR_ERROR(500, "Debezium 커넥터 오류")
 }

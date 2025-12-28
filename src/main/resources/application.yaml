@@ -42,6 +42,20 @@ spring:
       admin:
           enabled: false
 
+    kafka:
+        bootstrap-servers: ${BOOTSTRAP_SERVERS}
+
+        producer:
+            key-serializer: org.apache.kafka.common.serialization.StringSerializer
+            value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+logging:
+    level:
+        com.adjh.springbootkafka: DEBUG
+        org:
+            apache.kafka: INFO
+            springframework.kafka: INFO
+
 auth:
     jwt:
         secretKey: ${JWT_SECRET_KEY}
@@ -101,3 +115,36 @@ google:
 
 admin:
     secret-key: ${ADMIN_SECRET_KEY}
+
+debezium:
+    enabled: true
+
+    connect-url: ${DEBEZIUM_CONNECT_URL}
+
+    connector:
+        name: ${DEBEZIUM_CONNECTOR_NAME}
+
+    database:
+        hostname: ${DEBEZIUM_DATABASE_HOSTNAME}
+        port: ${DEBEZIUM_DATABASE_PORT}
+        user: ${DEBEZIUM_DATABASE_USER}
+        password: ${DEBEZIUM_DATABASE_PASSWORD}
+        server-id: ${DEBEZIUM_DATABASE_SERVER_ID}
+        server-name: ${DEBEZIUM_DATABASE_SERVER_NAME}
+        include-list: ${DEBEZIUM_DATABASE_INCLUDE_LIST}
+
+    schema:
+        kafka-bootstrap-servers: ${DEBEZIUM_SCHEMA_KAFKA_BOOTSTRAP_SERVERS}
+        history-topic: ${DEBEZIUM_SCHEMA_HISTORY_TOPIC}
+        replication-factor: ${DEBEZIUM_SCHEMA_REPLICATION_FACTOR}
+        include-schema-changes: ${DEBEZIUM_SCHEMA_INCLUDE_SCHEMA_CHANGES}
+
+    outbox:
+        table-include-list: ${DEBEZIUM_OUTBOX_TABLE_INCLUDE_LIST}
+        topic-prefix: ${DEBEZIUM_OUTBOX_TOPIC_PREFIX}
+        table-name: ${DEBEZIUM_OUTBOX_TABLE_NAME}
+        field-event-id: ${DEBEZIUM_OUTBOX_FIELD_EVENT_ID}
+        field-event-key: ${DEBEZIUM_OUTBOX_FIELD_EVENT_KEY}
+        field-event-type: ${DEBEZIUM_OUTBOX_FIELD_EVENT_TYPE}
+        field-payload: ${DEBEZIUM_OUTBOX_FIELD_PAYLOAD}
+        route-by-field: ${DEBEZIUM_OUTBOX_ROUTE_BY_FIELD}

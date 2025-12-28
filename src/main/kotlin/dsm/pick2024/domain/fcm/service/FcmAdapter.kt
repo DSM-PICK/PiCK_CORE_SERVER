@@ -1,11 +1,10 @@
 package dsm.pick2024.domain.fcm.service
 
 import dsm.pick2024.domain.fcm.domain.FcmMessage
+import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
-import feign.FeignException
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -14,40 +13,22 @@ class FcmAdapter(
     private val fcmClient: FcmClient,
     private val googleOauthServicePort: GoogleOauthServicePort
 ) : FcmSendPort {
-    val logger: Logger = LoggerFactory.getLogger("FcmAdapter")
 
-    override fun sendAll(deviceTokens: List<String?>, title: String, body: String) {
+    private val log = LoggerFactory.getLogger(this::class.java)
+
+    override fun send(request: FcmRequest) {
         val token = googleOauthServicePort.getToken()
-        deviceTokens
-            .filterNotNull()
-            .filter { it != "" }
+        request.tokens.filterNotNull().filter { it != "" }
             .forEach {
-                sendMessage(generateMessage(it, title, body), token)
+                sendMessage(generateMessage(it, request.title, request.body), token)
             }
-    }
-
-    override fun send(deviceToken: String?, title: String, body: String) {
-        if (deviceToken != null && deviceToken != "") {
-            val token = googleOauthServicePort.getToken()
-            sendMessage(generateMessage(deviceToken, title, body), token)
-        }
     }
 
     private fun sendMessage(fcmMessage: FcmMessage, token: String) {
         try {
-            fcmClient.sendMessage("Bearer $token", fcmMessage)
-        } catch (e: FeignException) {
-            logger.error(
-                "⚠️Fcm failed 403 FeignException" +
-                    "request: $fcmMessage" +
-                    "error: ${e.message}"
-            )
+            fcmClient.sendMessage("Bearer " + token, fcmMessage)
         } catch (e: Exception) {
-            logger.error(
-                "⚠️Fcm failed" +
-                    "request: $fcmMessage" +
-                    "error: ${e.message}"
-            )
+            log.error(e.message, e)
         }
     }
 

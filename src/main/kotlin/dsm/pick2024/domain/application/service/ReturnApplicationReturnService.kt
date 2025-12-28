@@ -22,7 +22,7 @@ class ReturnApplicationReturnService(
         applicationId.map {
             val application = applicationFinder.findByIdOrThrow(it)
 
-            deleteApplicationPort.deleteByIdAndApplicationKind(application.id!!, ApplicationKind.APPLICATION)
+            deleteApplicationPort.deleteByIdAndApplicationKind(application.id, ApplicationKind.APPLICATION)
             eventPublisher.publishEvent(UserInfoRequest(EventTopic.UPDATE_RETURN_TEACHER, application.userId))
         }
     }

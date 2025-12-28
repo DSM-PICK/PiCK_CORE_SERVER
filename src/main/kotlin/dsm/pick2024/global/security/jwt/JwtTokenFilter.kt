@@ -1,7 +1,7 @@
 package dsm.pick2024.global.security.jwt
 
-import dsm.pick2024.global.security.jwt.exception.AUTH_TOKEN_MISSING
-import dsm.pick2024.global.security.jwt.path.SecurityPaths
+import dsm.pick2024.global.security.jwt.exception.AuthTokenMissingException
+import dsm.pick2024.global.security.path.SecurityPaths
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.util.AntPathMatcher
 import org.springframework.web.filter.OncePerRequestFilter
@@ -29,7 +29,7 @@ class JwtTokenFilter(
         filterChain: FilterChain
     ) {
         // 토큰이 없어도 되는 경우는 shouldNotFilter에서 통과됨
-        val token = jwtTokenProvider.resolveToken(request) ?: throw AUTH_TOKEN_MISSING
+        val token = jwtTokenProvider.resolveToken(request) ?: throw AuthTokenMissingException
 
         val authentication = jwtTokenProvider.authentication(token)
         SecurityContextHolder.getContext().authentication = authentication
