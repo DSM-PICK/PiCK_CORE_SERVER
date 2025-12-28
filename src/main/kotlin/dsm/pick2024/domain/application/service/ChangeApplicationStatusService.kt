@@ -25,7 +25,7 @@ class ChangeApplicationStatusService(
     override fun changeStatusApplication(request: ApplicationStatusRequest) {
         val admin = adminFacadeUseCase.currentAdmin()
         val applications = request.idList.map { applicationFinderUseCase.findByIdOrThrow(it) }
-        applications.forEach { a -> if (a.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
+        applications.forEach { if (it.status != Status.QUIET) throw AlreadyApplyingForPicnicException }
 
         val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserById(
