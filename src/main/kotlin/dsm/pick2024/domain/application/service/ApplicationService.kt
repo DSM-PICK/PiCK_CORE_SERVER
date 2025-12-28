@@ -12,7 +12,6 @@ import dsm.pick2024.domain.application.presentation.dto.request.ApplicationReque
 import dsm.pick2024.domain.event.dto.UserInfoRequest
 import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.fcm.dto.request.FcmRequest
-import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.domain.outbox.domain.Outbox
 import dsm.pick2024.domain.outbox.enum.EventType
 import dsm.pick2024.domain.outbox.port.out.SaveOutboxPort
@@ -29,7 +28,6 @@ class ApplicationService(
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val eventPublisher: ApplicationEventPublisher,
-    private val fcmSendPort: FcmSendPort,
     private val adminFinderUseCase: AdminFinderUseCase,
     private val saveOutboxPort: SaveOutboxPort
 ) : ApplicationUseCase {
