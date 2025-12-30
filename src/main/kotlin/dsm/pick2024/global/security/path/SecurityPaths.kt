@@ -131,7 +131,7 @@ object SecurityPaths {
         "/notice/simple",
         "/schedule/date",
         "/schedule/month",
-        "/notice/*"
-
+        "/notice/*",
+        "/event"
     )
 }
