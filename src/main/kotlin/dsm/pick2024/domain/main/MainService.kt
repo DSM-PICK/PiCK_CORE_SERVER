@@ -51,7 +51,7 @@ class MainService(
             existsQuietApplication(userId, ApplicationKind.APPLICATION) -> waiting(userId, Main.APPLICATION)
             existsQuietApplication(userId, ApplicationKind.EARLY_RETURN) -> waiting(userId, Main.EARLY_RETURN)
             existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
-            else -> null
+            else -> waiting(userId, Main.NONE)
         }
     }
 
@@ -113,8 +113,10 @@ class MainService(
             ).status
 
             Main.CLASSROOM -> classroomFinderUseCase.findByUserIdOrThrow(userId).status
+
+            Main.NONE -> Main.NONE
         }
 
-        return if (status == Status.QUIET) WaitingResponse(type) else null
+        return if (status == Status.QUIET) WaitingResponse(type) else WaitingResponse(Main.NONE)
     }
 }
