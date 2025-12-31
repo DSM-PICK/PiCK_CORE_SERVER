@@ -114,7 +114,7 @@ class MainService(
 
             Main.CLASSROOM -> classroomFinderUseCase.findByUserIdOrThrow(userId).status
 
-            Main.NONE -> Main.NONE
+            Main.NONE -> Status.NO
         }
 
         return if (status == Status.QUIET) WaitingResponse(type) else WaitingResponse(Main.NONE)
