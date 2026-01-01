@@ -6,6 +6,9 @@ import dsm.pick2024.domain.fcm.port.out.FcmSendPort
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort
 import org.slf4j.LoggerFactory
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Recover
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 
 @Service
@@ -24,12 +27,18 @@ class FcmAdapter(
             }
     }
 
-    private fun sendMessage(fcmMessage: FcmMessage, token: String) {
-        try {
-            fcmClient.sendMessage("Bearer " + token, fcmMessage)
-        } catch (e: Exception) {
-            log.error(e.message, e)
-        }
+    @Retryable(
+        maxAttempts = 5,
+        backoff = Backoff(delay = 1000, maxDelay = 5000, multiplier = 2.0)
+    )
+    fun sendMessage(fcmMessage: FcmMessage, token: String) {
+        fcmClient.sendMessage("Bearer $token", fcmMessage)
+    }
+
+    @Recover
+    fun failedSendMessage(e: Exception, fcmMessage: FcmMessage, token: String) {
+        log.error("FCM 전송 5회 재시도 실패. token={}, msg={}", token, e.message, e)
+        log.error("fcmMessage={}", fcmMessage)
     }
 
     private fun generateMessage(
