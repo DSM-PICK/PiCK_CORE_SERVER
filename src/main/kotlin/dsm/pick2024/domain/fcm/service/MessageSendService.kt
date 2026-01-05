@@ -1,3 +1,5 @@
+package dsm.pick2024.domain.fcm.service
+
 import dsm.pick2024.domain.fcm.domain.FcmMessage
 import dsm.pick2024.infrastructure.feign.fcm.FcmClient
 import dsm.pick2024.infrastructure.googleoauth.port.out.GoogleOauthServicePort

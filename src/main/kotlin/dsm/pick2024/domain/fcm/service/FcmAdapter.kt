@@ -1,3 +1,5 @@
+package dsm.pick2024.domain.fcm.service
+
 import dsm.pick2024.domain.fcm.domain.FcmMessage
 import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.fcm.port.out.FcmSendPort
