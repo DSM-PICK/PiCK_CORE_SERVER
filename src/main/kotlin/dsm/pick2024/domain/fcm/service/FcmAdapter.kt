@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class FcmAdapter(
-    private val fcmSenderWithRetry: MessageSendService
+    private val messageSender: MessageSendService
 ) : FcmSendPort {
 
     override fun send(request: FcmRequest) {
@@ -14,7 +14,7 @@ class FcmAdapter(
             .filter { it.isNotBlank() }
             .forEach { token ->
                 val message = generateMessage(token, request.title, request.body)
-                fcmSenderWithRetry.sendMessage(message)
+                messageSender.sendMessage(message)
             }
     }
 
