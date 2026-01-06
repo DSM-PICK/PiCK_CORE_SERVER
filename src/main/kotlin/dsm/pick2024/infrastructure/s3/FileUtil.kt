@@ -4,11 +4,8 @@ import com.amazonaws.HttpMethod
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
-import com.amazonaws.services.s3.model.GetObjectRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
-import com.fasterxml.jackson.databind.ObjectMapper
-import dsm.pick2024.global.config.fcm.FcmConfig
 import dsm.pick2024.infrastructure.s3.exception.BadFileExtensionException
 import dsm.pick2024.infrastructure.s3.exception.EmptyFileException
 import org.springframework.beans.factory.annotation.Value
@@ -21,17 +18,13 @@ import java.util.*
 
 @Service
 class FileUtil(
-    private val amazonS3: AmazonS3,
-    private val objectMapper: ObjectMapper
+    private val amazonS3: AmazonS3
 ) {
     @Value("\${cloud.aws.s3.bucket}")
     lateinit var bucketName: String
 
     @Value("\${cloud.aws.s3.exp-time}")
     private lateinit var s3Exp: String
-
-    @Value("\${cloud.aws.s3.fcm-config-path}")
-    private lateinit var fcmConfigPath: String
 
     fun upload(file: MultipartFile, path: String): String {
         val ext = verificationFile(file)
@@ -83,13 +76,5 @@ class FileUtil(
         }
 
         return ext
-    }
-
-    fun getFcmConfig(): FcmConfig {
-        val path = fcmConfigPath
-        val s3Object = amazonS3.getObject(GetObjectRequest(bucketName, path))
-        return s3Object.objectContent.use { inputStream ->
-            objectMapper.readValue(inputStream, FcmConfig::class.java)
-        }
     }
 }
