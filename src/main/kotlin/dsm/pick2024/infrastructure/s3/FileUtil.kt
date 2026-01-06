@@ -30,8 +30,8 @@ class FileUtil(
     @Value("\${cloud.aws.s3.exp-time}")
     private lateinit var s3Exp: String
 
-    @Value("\${cloud.aws.s3.fcm-config-key}")
-    private lateinit var fcmConfigKey: String
+    @Value("\${cloud.aws.s3.fcm-config-path}")
+    private lateinit var fcmConfigPath: String
 
     fun upload(file: MultipartFile, path: String): String {
         val ext = verificationFile(file)
@@ -86,8 +86,8 @@ class FileUtil(
     }
 
     fun getFcmConfig(): FcmConfig {
-        val key = fcmConfigKey
-        val s3Object = amazonS3.getObject(GetObjectRequest(bucketName, key))
+        val path = fcmConfigPath
+        val s3Object = amazonS3.getObject(GetObjectRequest(bucketName, path))
         return s3Object.objectContent.use { inputStream ->
             objectMapper.readValue(inputStream, FcmConfig::class.java)
         }

@@ -15,14 +15,14 @@ class FcmConfig(
     private val amazonS3: AmazonS3,
     @Value("\${cloud.aws.s3.bucket}")
     private val bucketName: String,
-    @Value("\${cloud.aws.s3.fcm-config-key}")
-    private val fcmConfigKey: String
+    @Value("\${cloud.aws.s3.fcm-config-path}")
+    private val fcmConfigPath: String
 ) {
 
     @PostConstruct
     fun init() {
         try {
-            val s3Object = amazonS3.getObject(GetObjectRequest(bucketName, fcmConfigKey))
+            val s3Object = amazonS3.getObject(GetObjectRequest(bucketName, fcmConfigPath))
 
             s3Object.objectContent.use { inputStream ->
                 val options = FirebaseOptions.builder()
@@ -34,7 +34,6 @@ class FcmConfig(
                 }
             }
         } catch (e: Exception) {
-            e.printStackTrace()
             throw FcmInitializationException
         }
     }
