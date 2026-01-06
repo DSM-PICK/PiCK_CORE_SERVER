@@ -9,10 +9,8 @@ import dsm.pick2024.domain.classroom.port.`in`.MoveClassroomApplicationUseCase
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.ExistClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.UserMoveClassroomRequest
-import dsm.pick2024.domain.event.dto.UserInfoRequest
-import dsm.pick2024.domain.event.enums.EventTopic
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.DayOfWeek
@@ -24,7 +22,7 @@ class MoveClassroomApplicationService(
     private val existClassRoomPort: ExistClassRoomPort,
     private val userFacadeUseCase: UserFacadeUseCase,
     private val existsApplicationPort: ExistsApplicationPort,
-    private val eventPublisher: ApplicationEventPublisher
+    private val mainUseCase: MainUseCase
 ) : MoveClassroomApplicationUseCase {
 
     @Transactional
@@ -61,6 +59,7 @@ class MoveClassroomApplicationService(
                 status = Status.QUIET
             )
         )
-        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.id))
+
+        mainUseCase.sendEvent(user.id)
     }
 }

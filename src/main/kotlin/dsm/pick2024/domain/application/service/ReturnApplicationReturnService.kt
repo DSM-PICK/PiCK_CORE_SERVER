@@ -4,9 +4,7 @@ import dsm.pick2024.domain.application.enums.ApplicationKind
 import dsm.pick2024.domain.application.finder.ApplicationFinder
 import dsm.pick2024.domain.application.port.`in`.ReturnApplicationStatusUseCase
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
-import dsm.pick2024.domain.event.dto.UserInfoRequest
-import dsm.pick2024.domain.event.enums.EventTopic
-import org.springframework.context.ApplicationEventPublisher
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -15,7 +13,7 @@ import java.util.UUID
 class ReturnApplicationReturnService(
     private val applicationFinder: ApplicationFinder,
     private val deleteApplicationPort: DeleteApplicationPort,
-    private val eventPublisher: ApplicationEventPublisher
+    private val mainUseCase: MainUseCase
 ) : ReturnApplicationStatusUseCase {
     @Transactional
     override fun returnApplicationStatus(applicationId: List<UUID>) {
@@ -23,7 +21,7 @@ class ReturnApplicationReturnService(
             val application = applicationFinder.findByIdOrThrow(it)
 
             deleteApplicationPort.deleteByIdAndApplicationKind(application.id, ApplicationKind.APPLICATION)
-            eventPublisher.publishEvent(UserInfoRequest(EventTopic.UPDATE_RETURN_TEACHER, application.userId))
+            mainUseCase.sendEvent(application.userId)
         }
     }
 }

@@ -11,10 +11,8 @@ import dsm.pick2024.domain.classroom.presentation.dto.response.QueryMainUserMove
 import dsm.pick2024.domain.earlyreturn.presentation.dto.response.QuerySimpleMyEarlyResponse
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import dsm.pick2024.domain.event.dto.WebSocketStatusUpdateRequest
-import org.springframework.context.ApplicationEventPublisher
+import dsm.pick2024.infrastructure.sse.port.out.SseRegistryPort
 import org.springframework.stereotype.Service
-import org.springframework.web.socket.WebSocketSession
 import java.util.UUID
 
 @Service
@@ -22,21 +20,16 @@ class MainService(
     private val applicationFinderUseCase: ApplicationFinderUseCase,
     private val existApplicationPort: ExistsApplicationPort,
     private val existClassRoomPort: ExistClassRoomPort,
-    private val eventPublisher: ApplicationEventPublisher,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val classroomFinderUseCase: ClassroomFinderUseCase
+    private val classroomFinderUseCase: ClassroomFinderUseCase,
+    private val sseRegistryPort: SseRegistryPort
 ) : MainUseCase {
 
-    override fun main(userId: String, session: WebSocketSession) {
-        val user = userFacadeUseCase.getUserByAccountId(userId)
-        val newStatus = findStatus(user.id)
-        publishStatusUpdate(newStatus, user.accountId)
-    }
-
-    override fun onHandleEvent(userId: UUID) {
+    override fun sendEvent(userId: UUID) {
         val user = userFacadeUseCase.getUserById(userId)
         val newStatus = findStatus(user.id)
-        publishStatusUpdate(newStatus, user.accountId)
+
+        sseRegistryPort.sendToUser(user.id, newStatus)
     }
 
     private fun findStatus(userId: UUID): Any? {
@@ -58,7 +51,7 @@ class MainService(
             existsQuietApplication(userId, ApplicationKind.APPLICATION) -> waiting(userId, Main.APPLICATION)
             existsQuietApplication(userId, ApplicationKind.EARLY_RETURN) -> waiting(userId, Main.EARLY_RETURN)
             existClassRoomPort.existsByUserId(userId) -> waiting(userId, Main.CLASSROOM)
-            else -> null
+            else -> waiting(userId, Main.NONE)
         }
     }
 
@@ -112,18 +105,18 @@ class MainService(
                 userId,
                 ApplicationKind.APPLICATION
             ).status
+
             Main.EARLY_RETURN -> applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.QUIET,
                 userId,
                 ApplicationKind.EARLY_RETURN
             ).status
+
             Main.CLASSROOM -> classroomFinderUseCase.findByUserIdOrThrow(userId).status
+
+            Main.NONE -> Status.NO
         }
 
-        return if (status == Status.QUIET) WaitingResponse(type) else null
-    }
-
-    private fun publishStatusUpdate(newStatus: Any?, accountId: String) {
-        eventPublisher.publishEvent(WebSocketStatusUpdateRequest(this, newStatus, accountId))
+        return if (status == Status.QUIET) WaitingResponse(type) else WaitingResponse(Main.NONE)
     }
 }
