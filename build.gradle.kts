@@ -72,8 +72,6 @@ dependencies {
 
     implementation(Dependencies.CACHE)
 
-    implementation(Dependencies.FCM)
-
     implementation(Dependencies.WEB_SOCKET)
 
     implementation(Dependencies.SMTP)
@@ -83,6 +81,8 @@ dependencies {
     implementation(Dependencies.KAFKA)
 
     implementation(Dependencies.APACHE_HTTP_CLIENT)
+
+    implementation(Dependencies.SPRING_RETRY)
 }
 
 tasks.withType<KotlinCompile> {

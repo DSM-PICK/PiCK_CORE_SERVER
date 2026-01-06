@@ -3,7 +3,6 @@ package dsm.pick2024.domain.classroom.service
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.application.enums.Status.NO
 import dsm.pick2024.domain.application.enums.Status.OK
-import dsm.pick2024.domain.event.dto.ChangeStatusRequest
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
@@ -18,7 +17,7 @@ import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
-import org.springframework.context.ApplicationEventPublisher
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -28,8 +27,8 @@ class ChangeClassroomStatusService(
     private val saveClassRoomPort: SaveClassRoomPort,
     private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort,
-    private val eventPublisher: ApplicationEventPublisher,
-    private val classroomFinderUseCase: ClassroomFinderUseCase
+    private val classroomFinderUseCase: ClassroomFinderUseCase,
+    private val mainUseCase: MainUseCase
 ) : ChangeClassroomStatusUseCase {
     @Transactional
     override fun changeClassroomStatus(request: ClassroomStatusRequest) {
@@ -37,8 +36,8 @@ class ChangeClassroomStatusService(
             for (id in request.idList) {
                 val classroom = classroomFinderUseCase.findByUserIdOrThrow(id)
                 deleteClassRoomPort.deleteByUserId(classroom.userId)
+                mainUseCase.sendEvent(classroom.userId)
             }
-            eventPublisher.publishEvent(ChangeStatusRequest(this, request.idList))
         } else {
             val update = mutableListOf<Classroom>()
             val updateAttendanceList = mutableListOf<Attendance>()
@@ -60,11 +59,11 @@ class ChangeClassroomStatusService(
                 }
 
                 updateAttendanceList.add(updatedAttendance)
+                mainUseCase.sendEvent(classroom.userId)
             }
 
             saveClassRoomPort.saveAll(update)
             saveAttendancePort.saveAll(updateAttendanceList)
-            eventPublisher.publishEvent(ChangeStatusRequest(this, updateAttendanceList.map { it.userId }))
         }
     }
 

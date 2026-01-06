@@ -1,4 +1,4 @@
-package dsm.pick2024.global.security.path
+package dsm.pick2024.global.security.jwt.path
 
 object SecurityPaths {
     val PERMIT_ALL_ENDPOINTS = arrayOf(
@@ -39,7 +39,7 @@ object SecurityPaths {
         "/early-return/reason/ok-all",
         "/early-return/ok",
         "/early-return/all",
-        "/early-return/ok/{floor}",
+        "/early-return/floor",
         "/self-study/month",
         "/self-study/date",
         "/self-study/admin",
@@ -47,6 +47,7 @@ object SecurityPaths {
         "/weekend-meal/hey",
         "/status/grade",
         "/user/all",
+        "/status/grade",
         "/timetable/all",
         "/weekend-meal/excel",
         "/weekend-meal/excel/grade",
@@ -61,7 +62,6 @@ object SecurityPaths {
         "/user/club",
         "/after/**",
         "/meal",
-        "/notice",
         "/schedule/create",
         "/self-study/register",
         "/timetable",
@@ -73,10 +73,9 @@ object SecurityPaths {
     )
     val SCH_DELETE_ENDPOINTS = arrayOf(
         "/after/**",
-        "/notice/delete/**",
+        "/notice/delete/*",
         "/schedule/delete/*",
         "/after/delete",
-        "/notice/delete",
         "/admin/delete"
     )
     val SCH_PATCH_ENDPOINTS = arrayOf(
@@ -129,9 +128,9 @@ object SecurityPaths {
         "/self-study/today",
         "/notice/today",
         "/notice/simple",
-        "/schedule/date",
-        "/schedule/month",
         "/notice/*",
-        "/event"
+        "/weekend-meal/application",
+        "/schedule/date",
+        "/schedule/month"
     )
 }

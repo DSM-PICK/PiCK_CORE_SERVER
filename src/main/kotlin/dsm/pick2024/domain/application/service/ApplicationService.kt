@@ -9,15 +9,12 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
-import dsm.pick2024.domain.event.dto.UserInfoRequest
-import dsm.pick2024.domain.event.enums.EventTopic
 import dsm.pick2024.domain.fcm.dto.request.FcmRequest
-import dsm.pick2024.domain.fcm.port.out.FcmSendPort
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.domain.Outbox
 import dsm.pick2024.domain.outbox.enum.EventType
 import dsm.pick2024.domain.outbox.port.out.SaveOutboxPort
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -28,10 +25,9 @@ class ApplicationService(
     private val existsApplicationPort: ExistsApplicationPort,
     private val saveApplicationPort: SaveApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val eventPublisher: ApplicationEventPublisher,
-    private val fcmSendPort: FcmSendPort,
     private val adminFinderUseCase: AdminFinderUseCase,
-    private val saveOutboxPort: SaveOutboxPort
+    private val saveOutboxPort: SaveOutboxPort,
+    private val mainUseCase: MainUseCase
 ) : ApplicationUseCase {
 
     @Transactional
@@ -74,6 +70,6 @@ class ApplicationService(
             )
         )
 
-        eventPublisher.publishEvent(UserInfoRequest(EventTopic.HANDLE_EVENT, user.id))
+        mainUseCase.sendEvent(user.id)
     }
 }

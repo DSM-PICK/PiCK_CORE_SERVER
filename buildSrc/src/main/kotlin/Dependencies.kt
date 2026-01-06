@@ -41,8 +41,6 @@ object Dependencies {
 
     const val CACHE = "org.springframework.boot:spring-boot-starter-cache"
 
-    const val FCM = "com.google.firebase:firebase-admin:${DependencyVersions.FCM}"
-
     const val WEB_SOCKET = "org.springframework.boot:spring-boot-starter-websocket"
 
     const val GOOGLE_OAUTH = "com.google.auth:google-auth-library-oauth2-http:${DependencyVersions.GOOGLE_OAUTH2}"
@@ -52,4 +50,7 @@ object Dependencies {
     const val KAFKA = "org.springframework.kafka:spring-kafka:${DependencyVersions.KAFKA}"
 
     const val APACHE_HTTP_CLIENT = "org.apache.httpcomponents:httpclient:${DependencyVersions.APACHE_HTTP_CLIENT}"
+
+    const val SPRING_RETRY = "org.springframework.retry:spring-retry:${DependencyVersions.SPRING_RETRY_VERSION}"
+
 }

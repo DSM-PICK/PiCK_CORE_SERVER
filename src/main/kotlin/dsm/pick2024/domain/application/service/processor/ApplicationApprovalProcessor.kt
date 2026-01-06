@@ -9,10 +9,8 @@ import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
-import dsm.pick2024.domain.event.dto.ChangeStatusRequest
-import dsm.pick2024.domain.event.enums.EventTopic
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -23,7 +21,7 @@ class ApplicationApprovalProcessor(
     private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val saveAttendancePort: SaveAttendancePort,
     private val attendanceService: AttendanceService,
-    private val eventPublisher: ApplicationEventPublisher,
+    private val mainUseCase: MainUseCase,
     outboxFacadeUseCase: OutboxFacadeUseCase
 ) : ApplicationStatusProcessor(outboxFacadeUseCase) {
 
@@ -58,9 +56,8 @@ class ApplicationApprovalProcessor(
             message = "$adminName 선생님이 외출 신청을 승인하셨습니다.",
             deviceTokens = deviceTokens
         )
-
-        eventPublisher.publishEvent(
-            ChangeStatusRequest(EventTopic.HANDLE_EVENT, updateApplications.map { it.userId })
-        )
+        attendances.forEach {
+            mainUseCase.sendEvent(it.userId)
+        }
     }
 }

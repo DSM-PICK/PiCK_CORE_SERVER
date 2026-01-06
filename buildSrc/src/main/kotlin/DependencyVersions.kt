@@ -11,8 +11,8 @@ object DependencyVersions {
     const val APACHE_POI = "5.2.5"
     const val GSON = "2.8.7"
     const val AWS = "1.12.281"
-    const val FCM = "8.1.0"
     const val GOOGLE_OAUTH2 = "1.17.0"
     const val KAFKA = "2.9.13"
     const val APACHE_HTTP_CLIENT = "4.5.14"
+    const val SPRING_RETRY_VERSION = "1.3.4"
 }
