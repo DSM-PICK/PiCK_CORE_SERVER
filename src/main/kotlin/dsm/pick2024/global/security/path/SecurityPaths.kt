@@ -134,4 +134,6 @@ object SecurityPaths {
         "/notice/*",
         "/event"
     )
+
+    const val POST_AUTHENTICATED = "/bug/**"
 }

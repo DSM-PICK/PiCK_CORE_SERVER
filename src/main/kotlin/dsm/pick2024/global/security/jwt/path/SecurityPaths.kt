@@ -133,4 +133,8 @@ object SecurityPaths {
         "/schedule/date",
         "/schedule/month"
     )
+
+    val POST_AUTHENTICATED = arrayOf(
+        "/bug/**"
+    )
 }
