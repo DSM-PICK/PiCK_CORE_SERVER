@@ -96,7 +96,7 @@ class AttendanceService {
             }
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
-                periods.filter { it.first.isAfter(startTime) || it.first == startTime }
+                periods.filter { startTime < it.second }
             }
         }
         var updateAttendance = attendance
