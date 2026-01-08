@@ -14,4 +14,5 @@ object DependencyVersions {
     const val GOOGLE_OAUTH2 = "1.17.0"
     const val KAFKA = "2.9.13"
     const val APACHE_HTTP_CLIENT = "4.5.14"
+    const val SPRING_RETRY_VERSION = "1.3.4"
 }
