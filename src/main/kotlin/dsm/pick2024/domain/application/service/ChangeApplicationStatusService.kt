@@ -34,7 +34,6 @@ class ChangeApplicationStatusService(
             if (it.status != Status.QUIET) {
                 throw AlreadyApplyingForPicnicException
             }
-
         }
         val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserById(
