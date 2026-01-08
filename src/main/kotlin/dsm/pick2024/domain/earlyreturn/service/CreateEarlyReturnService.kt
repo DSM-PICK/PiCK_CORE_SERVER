@@ -9,11 +9,9 @@ import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
-import dsm.pick2024.domain.event.dto.UserInfoRequest
-import dsm.pick2024.domain.fcm.port.out.FcmSendPort
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -24,10 +22,9 @@ class CreateEarlyReturnService(
     private val saveApplicationPort: SaveApplicationPort,
     private val existsApplicationPort: ExistsApplicationPort,
     private val userFacadeUseCase: UserFacadeUseCase,
-    private val eventPublisher: ApplicationEventPublisher,
     private val adminFinderUseCase: AdminFinderUseCase,
-    private val fcmSendPort: FcmSendPort,
-    private val outboxFacadeUseCase: OutboxFacadeUseCase
+    private val outboxFacadeUseCase: OutboxFacadeUseCase,
+    private val mainUseCase: MainUseCase
 ) : CreateEarlyReturnUseCase {
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
@@ -65,6 +62,6 @@ class CreateEarlyReturnService(
             )
         }
 
-        eventPublisher.publishEvent(UserInfoRequest(this, user.id))
+        mainUseCase.sendEvent(user.id)
     }
 }

@@ -81,6 +81,8 @@ dependencies {
     implementation(Dependencies.KAFKA)
 
     implementation(Dependencies.APACHE_HTTP_CLIENT)
+
+    implementation(Dependencies.SPRING_RETRY)
 }
 
 tasks.withType<KotlinCompile> {

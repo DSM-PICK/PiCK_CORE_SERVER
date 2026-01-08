@@ -50,4 +50,7 @@ object Dependencies {
     const val KAFKA = "org.springframework.kafka:spring-kafka:${DependencyVersions.KAFKA}"
 
     const val APACHE_HTTP_CLIENT = "org.apache.httpcomponents:httpclient:${DependencyVersions.APACHE_HTTP_CLIENT}"
+
+    const val SPRING_RETRY = "org.springframework.retry:spring-retry:${DependencyVersions.SPRING_RETRY_VERSION}"
+
 }

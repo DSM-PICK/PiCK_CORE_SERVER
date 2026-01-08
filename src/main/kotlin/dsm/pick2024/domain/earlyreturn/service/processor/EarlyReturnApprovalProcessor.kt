@@ -9,9 +9,8 @@ import dsm.pick2024.domain.applicationstory.port.out.SaveAllApplicationStoryPort
 import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
-import dsm.pick2024.domain.event.dto.ChangeStatusRequest
+import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,8 +21,8 @@ class EarlyReturnApprovalProcessor(
     private val saveAttendancePort: SaveAttendancePort,
     private val attendanceFinderUseCase: AttendanceFinderUseCase,
     private val attendanceService: AttendanceService,
-    private val eventPublisher: ApplicationEventPublisher,
-    private val outboxFacadeUseCase: OutboxFacadeUseCase
+    private val outboxFacadeUseCase: OutboxFacadeUseCase,
+    private val mainUseCase: MainUseCase
 ) : EarlyReturnStatusProcessor(outboxFacadeUseCase) {
     @Transactional
     override fun process(applications: List<Application>, adminName: String, deviceTokens: List<String>) {
@@ -43,7 +42,10 @@ class EarlyReturnApprovalProcessor(
         saveApplicationPort.saveAll(updateEarlyReturnList)
         applicationStorySaveAllPort.saveAll(applicationStory)
         saveAttendancePort.saveAll(attendances)
-        eventPublisher.publishEvent(ChangeStatusRequest(this, updateEarlyReturnList.map { it.userId }))
+
+        attendances.forEach {
+            mainUseCase.sendEvent(it.userId)
+        }
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
