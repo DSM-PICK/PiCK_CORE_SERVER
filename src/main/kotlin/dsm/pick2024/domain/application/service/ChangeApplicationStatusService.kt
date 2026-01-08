@@ -28,13 +28,11 @@ class ChangeApplicationStatusService(
         applications.forEach {
             if (it.status != Status.QUIET) throw AlreadyApplyingForPicnicException
         }
-
         val deviceTokens = applications.mapNotNull {
             userFacadeUseCase.getUserById(
                 it.userId
             ).deviceToken
         }
-
         if (request.status == Status.OK) {
             approvalProcessor.process(applications, admin.name, deviceTokens)
         } else {
