@@ -6,11 +6,6 @@ import dsm.pick2024.domain.application.enums.Status.OK
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
-import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period10
-import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period6
-import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period7
-import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period8
-import dsm.pick2024.domain.attendance.service.QueryClubAllAttendanceService.Companion.period9
 import dsm.pick2024.domain.classroom.domain.Classroom
 import dsm.pick2024.domain.classroom.port.`in`.ChangeClassroomStatusUseCase
 import dsm.pick2024.domain.classroom.port.`in`.ClassroomFinderUseCase
@@ -59,11 +54,13 @@ class ChangeClassroomStatusService(
                 }
 
                 updateAttendanceList.add(updatedAttendance)
-                mainUseCase.sendEvent(classroom.userId)
             }
 
             saveClassRoomPort.saveAll(update)
             saveAttendancePort.saveAll(updateAttendanceList)
+            request.idList.forEach { id ->
+                mainUseCase.sendEvent(id)
+            }
         }
     }
 
