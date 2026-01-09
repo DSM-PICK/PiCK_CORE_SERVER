@@ -133,7 +133,7 @@ object SecurityPaths {
         "/schedule/month",
         "/notice/*",
         "/event",
-        "weekend-meal/application"
+        "/weekend-meal/application"
     )
 
     const val POST_AUTHENTICATED = "/bug/**"
