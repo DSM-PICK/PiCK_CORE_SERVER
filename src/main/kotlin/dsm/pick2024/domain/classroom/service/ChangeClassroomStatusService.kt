@@ -18,6 +18,7 @@ import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.classroom.port.out.SaveClassRoomPort
 import dsm.pick2024.domain.classroom.presentation.dto.request.ClassroomStatusRequest
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -59,11 +60,13 @@ class ChangeClassroomStatusService(
                 }
 
                 updateAttendanceList.add(updatedAttendance)
-                mainUseCase.sendEvent(classroom.userId)
             }
 
             saveClassRoomPort.saveAll(update)
             saveAttendancePort.saveAll(updateAttendanceList)
+            request.idList.forEach { id ->
+                mainUseCase.sendEvent(id)
+            }
         }
     }
 
