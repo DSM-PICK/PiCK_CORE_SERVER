@@ -7,6 +7,7 @@ import org.springframework.retry.annotation.EnableRetry
 import org.springframework.scheduling.annotation.AsyncConfigurer
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor // 추가
 import java.util.concurrent.Executor
 import java.util.concurrent.RejectedExecutionException
 
@@ -23,6 +24,7 @@ import java.util.concurrent.RejectedExecutionException
  * - 최대 5회 재시도
  * - 지수 백오프 (2초 → 4초 → 8초 → 16초 → 30초)
  */
+
 @Configuration
 @EnableAsync
 @EnableRetry
@@ -30,7 +32,7 @@ class AsyncConfig : AsyncConfigurer {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun getAsyncExecutor(): Executor {
-        return ThreadPoolTaskExecutor().apply {
+        val executor = ThreadPoolTaskExecutor().apply {
             corePoolSize = 2
             maxPoolSize = 5
             queueCapacity = 10
@@ -43,6 +45,8 @@ class AsyncConfig : AsyncConfigurer {
             }
             initialize()
         }
+
+        return DelegatingSecurityContextAsyncTaskExecutor(executor)
     }
 
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
