@@ -7,22 +7,10 @@ import org.springframework.retry.annotation.EnableRetry
 import org.springframework.scheduling.annotation.AsyncConfigurer
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor // 추가
 import java.util.concurrent.Executor
 import java.util.concurrent.RejectedExecutionException
 
-/**
- * 비동기 실행 및 재시도 로직 설정
- *
- * @EnableAsync: Debezium 커넥터 초기화 등 비동기 작업 활성화
- * - ThreadPoolTaskExecutor를 사용하여 스레드 풀 관리
- * - corePoolSize: 2 (기본 스레드 수)
- * - maxPoolSize: 5 (최대 스레드 수)
- * - queueCapacity: 10 (대기 큐 크기)
- *
- * @EnableRetry: Debezium 커넥터 등록 시 재시도 로직 활성화
- * - 최대 5회 재시도
- * - 지수 백오프 (2초 → 4초 → 8초 → 16초 → 30초)
- */
 @Configuration
 @EnableAsync
 @EnableRetry
@@ -30,7 +18,7 @@ class AsyncConfig : AsyncConfigurer {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     override fun getAsyncExecutor(): Executor {
-        return ThreadPoolTaskExecutor().apply {
+        val executor = ThreadPoolTaskExecutor().apply {
             corePoolSize = 2
             maxPoolSize = 5
             queueCapacity = 10
@@ -43,6 +31,8 @@ class AsyncConfig : AsyncConfigurer {
             }
             initialize()
         }
+
+        return DelegatingSecurityContextAsyncTaskExecutor(executor)
     }
 
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
