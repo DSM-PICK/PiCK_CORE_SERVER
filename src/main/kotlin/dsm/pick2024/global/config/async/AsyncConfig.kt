@@ -11,6 +11,20 @@ import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecu
 import java.util.concurrent.Executor
 import java.util.concurrent.RejectedExecutionException
 
+/**
+ * 비동기 실행 및 재시도 로직 설정
+ *
+ * @EnableAsync: Debezium 커넥터 초기화 등 비동기 작업 활성화
+ * - ThreadPoolTaskExecutor를 사용하여 스레드 풀 관리
+ * - corePoolSize: 2 (기본 스레드 수)
+ * - maxPoolSize: 5 (최대 스레드 수)
+ * - queueCapacity: 10 (대기 큐 크기)
+ *
+ * @EnableRetry: Debezium 커넥터 등록 시 재시도 로직 활성화
+ * - 최대 5회 재시도
+ * - 지수 백오프 (2초 → 4초 → 8초 → 16초 → 30초)
+ */
+
 @Configuration
 @EnableAsync
 @EnableRetry
