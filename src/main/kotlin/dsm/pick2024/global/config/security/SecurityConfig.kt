@@ -46,6 +46,10 @@ class SecurityConfig(
             ).authenticated()
             .antMatchers(
                 HttpMethod.POST,
+                SecurityPaths.POST_AUTHENTICATED
+            ).authenticated()
+            .antMatchers(
+                HttpMethod.POST,
                 *SecurityPaths.STU_POST_ENDPOINTS
             ).hasRole(Role.STU.name)
             .antMatchers(
