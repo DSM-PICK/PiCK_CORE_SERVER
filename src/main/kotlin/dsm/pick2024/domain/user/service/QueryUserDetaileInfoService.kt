@@ -21,7 +21,7 @@ class QueryUserDetaileInfoService(
         val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
 
         return QueryUserDetailsInfoResponse(
-            profile = profileUrl?.substringBefore("?"),
+            profile = profileUrl,
             userName = user.name,
             grade = user.grade,
             classNum = user.classNum,

@@ -106,7 +106,6 @@ firebase:
         url:
             host: ${FIREBASE_HOST}
             path: ${FIREBASE_PATH}
-            key: ${FIREBASE_KEY_JSON}
             credentials: ${FIREBASE_CREDENTIALS_URL}
 
 google:

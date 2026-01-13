@@ -32,7 +32,10 @@ class QueryTeacherTimetableService(
 
             val timetables = (1..7).mapNotNull { period ->
                 tables.find { it.period == period }?.let { timetable ->
-                    val imageUrl = fileUtil.generateObjectUrl("${timetable.subjectName}.png", PathList.TIMETABLE)
+                    val imageUrl = fileUtil.generateObjectUrl(
+                        "${timetable.subjectName}.png",
+                        PathList.TIMETABLE
+                    )
                     PeriodTimetableResponse(timetable.id!!, period, timetable.subjectName, imageUrl)
                 }
             }
