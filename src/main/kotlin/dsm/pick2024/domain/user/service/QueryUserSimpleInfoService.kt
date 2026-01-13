@@ -25,7 +25,7 @@ class QueryUserSimpleInfoService(
             user.grade,
             user.classNum,
             user.num,
-            profileUrl?.substringBefore("?")
+            profileUrl
         )
     }
 }

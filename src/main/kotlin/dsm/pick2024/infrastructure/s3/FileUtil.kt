@@ -49,6 +49,7 @@ class FileUtil(
 
         return filename
     }
+
     fun delete(objectName: String, path: String) {
         amazonS3.deleteObject(bucketName, path + objectName)
     }
