@@ -24,8 +24,9 @@ data class DayTimetableResponse(
                 break
             }
 
-            val imageUrl =
-                fileUtil.generateObjectUrl("$subjectName.png", PathList.TIMETABLE)
+            val imageUrl = subjectName?.let {
+                fileUtil.generateObjectUrl("$it.png", PathList.TIMETABLE)
+            }
 
             dayTimetableResponses.add(PeriodTimetableResponse(id, period, subjectName, imageUrl))
         }
