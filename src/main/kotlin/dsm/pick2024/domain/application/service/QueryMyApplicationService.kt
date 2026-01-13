@@ -37,7 +37,7 @@ class QueryMyApplicationService(
             start = application.start.take(5),
             end = application.end!!.take(5),
             reason = application.reason,
-            profile = profileUrl?.substringBefore("?"),
+            profile = profileUrl,
             grade = user.grade,
             classNum = user.classNum,
             num = user.num,
