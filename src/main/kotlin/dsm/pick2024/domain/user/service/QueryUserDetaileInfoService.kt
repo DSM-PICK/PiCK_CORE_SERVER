@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.user.service
 
+import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.domain.user.port.`in`.QueryUserDetailsInfoUseCase
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.domain.user.presentation.dto.response.QueryUserDetailsInfoResponse
@@ -18,7 +19,7 @@ class QueryUserDetaileInfoService(
     override fun queryUserDetailsInfo(): QueryUserDetailsInfoResponse {
         val user = userFacadeUseCase.currentUser()
 
-        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(FileNameVo(it), PathList.PROFILE) }
 
         return QueryUserDetailsInfoResponse(
             profile = profileUrl?.substringBefore("?"),

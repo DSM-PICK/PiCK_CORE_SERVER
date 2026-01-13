@@ -6,6 +6,7 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationFinderUseCase
 import dsm.pick2024.domain.application.port.`in`.QueryMyApplicationUseCase
 import dsm.pick2024.domain.application.presentation.dto.response.QueryMyApplicationResponse
 import dsm.pick2024.domain.applicationstory.enums.Type
+import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.domain.user.port.`in`.UserFacadeUseCase
 import dsm.pick2024.infrastructure.s3.FileUtil
 import dsm.pick2024.infrastructure.s3.PathList
@@ -22,7 +23,7 @@ class QueryMyApplicationService(
     @Transactional(readOnly = true)
     override fun queryMyApplication(): QueryMyApplicationResponse {
         val user = userFacadeUseCase.currentUser()
-        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(it, PathList.PROFILE) }
+        val profileUrl = user.profile?.let { fileUtil.generateObjectUrl(FileNameVo(it), PathList.PROFILE) }
         val application =
             applicationFinderUseCase.findByUserIdAndStatusAndApplicationKindOrThrow(
                 Status.OK,

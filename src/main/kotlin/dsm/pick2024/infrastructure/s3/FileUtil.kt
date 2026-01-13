@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.services.s3.model.PutObjectRequest
+import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.infrastructure.s3.exception.BadFileExtensionException
 import dsm.pick2024.infrastructure.s3.exception.EmptyFileException
 import org.springframework.beans.factory.annotation.Value
@@ -48,12 +49,11 @@ class FileUtil(
 
         return filename
     }
-
     fun delete(objectName: String, path: String) {
         amazonS3.deleteObject(bucketName, path + objectName)
     }
 
-    fun generateObjectUrl(fileName: String, path: String): String {
+    fun generateObjectUrl(fileName: FileNameVo, path: String): String {
         val expiration = Date().apply {
             time += s3Exp.toLong()
         }
@@ -61,7 +61,7 @@ class FileUtil(
         return amazonS3.generatePresignedUrl(
             GeneratePresignedUrlRequest(
                 bucketName,
-                "${path}$fileName"
+                "${path}${fileName.value}"
             ).withMethod(HttpMethod.GET).withExpiration(expiration)
         ).toString()
     }

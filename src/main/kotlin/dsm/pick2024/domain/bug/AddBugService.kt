@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.bug
 
 import dsm.pick2024.domain.bug.presentation.dto.request.BugRequest
+import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.infrastructure.feign.client.DiscordBugClient
 import dsm.pick2024.infrastructure.feign.client.dto.request.DiscordMessageRequest
 import dsm.pick2024.infrastructure.s3.FileUtil
@@ -33,7 +34,7 @@ class AddBugService(
                                 ### 🔗 버그 내용
                                 ${request.content}
                                 ### 📄 이미지
-                                ${request.fileName?.map { fileUtil.generateObjectUrl(it, PathList.BUG) } ?: emptyList()}
+                                ${request.fileName?.map { fileUtil.generateObjectUrl(FileNameVo(it), PathList.BUG) } ?: emptyList()}
                                 ### 🧑🏻‍💻 버그 제보자
                                 ${SecurityContextHolder.getContext().authentication.name}
                         """.trimIndent()

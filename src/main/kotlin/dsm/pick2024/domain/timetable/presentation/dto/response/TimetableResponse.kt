@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.timetable.presentation.dto.response
 
 import dsm.pick2024.domain.timetable.domain.Timetable
+import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.infrastructure.s3.FileUtil
 import dsm.pick2024.infrastructure.s3.PathList
 import java.time.LocalDate
@@ -25,7 +26,7 @@ data class DayTimetableResponse(
             }
 
             val imageUrl =
-                fileUtil.generateObjectUrl("$subjectName.png", PathList.TIMETABLE)
+                fileUtil.generateObjectUrl(FileNameVo("$subjectName.png"), PathList.TIMETABLE)
 
             dayTimetableResponses.add(PeriodTimetableResponse(id, period, subjectName, imageUrl))
         }
