@@ -1,6 +1,5 @@
 package dsm.pick2024.domain.timetable.service
 
-import dsm.pick2024.domain.timetable.domain.vo.FileNameVo
 import dsm.pick2024.domain.timetable.port.`in`.QueryTeacherTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
 import dsm.pick2024.domain.timetable.presentation.dto.response.DayTimetableResponse
@@ -34,7 +33,7 @@ class QueryTeacherTimetableService(
             val timetables = (1..7).mapNotNull { period ->
                 tables.find { it.period == period }?.let { timetable ->
                     val imageUrl = fileUtil.generateObjectUrl(
-                        FileNameVo("${timetable.subjectName}.png"),
+                        "${timetable.subjectName}.png",
                         PathList.TIMETABLE
                     )
                     PeriodTimetableResponse(timetable.id!!, period, timetable.subjectName, imageUrl)
