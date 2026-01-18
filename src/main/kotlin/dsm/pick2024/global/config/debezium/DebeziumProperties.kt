@@ -54,6 +54,9 @@ data class DebeziumProperties(
             "connector.class" to connector.connectorClass,
             "tasks.max" to connector.tasksMax.toString(),
 
+            "time.precision.mode" to connector.timePrecisionMode,
+
+            "database.server.timezone" to database.serverTimeZone,
             "database.hostname" to database.hostname,
             "database.port" to database.port.toString(),
             "database.user" to database.user,
