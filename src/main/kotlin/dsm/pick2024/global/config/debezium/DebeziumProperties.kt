@@ -15,7 +15,8 @@ data class DebeziumProperties(
     data class ConnectorConfig(
         val name: String,
         val connectorClass: String = "io.debezium.connector.mysql.MySqlConnector",
-        val tasksMax: Int = 1
+        val tasksMax: Int = 1,
+        val timePrecisionMode: String = "connect"
     )
 
     data class DatabaseConfig(
@@ -25,7 +26,8 @@ data class DebeziumProperties(
         val password: String,
         val serverId: String,
         val serverName: String,
-        val includeList: String
+        val includeList: String,
+        val serverTimeZone: String = "Asia/Seoul"
     )
 
     data class SchemaConfig(

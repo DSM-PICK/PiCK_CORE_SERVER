@@ -22,6 +22,7 @@ spring:
 
     jackson:
         property-naming-strategy : SNAKE_CASE
+        time-zone: Asia/Seoul
 
     cache:
         type: simple
@@ -123,8 +124,10 @@ debezium:
 
     connector:
         name: ${DEBEZIUM_CONNECTOR_NAME}
+        time-precision-mode: "connect"
 
     database:
+        server-timezone: "Asia/Seoul"
         hostname: ${DEBEZIUM_DATABASE_HOSTNAME}
         port: ${DEBEZIUM_DATABASE_PORT}
         user: ${DEBEZIUM_DATABASE_USER}
