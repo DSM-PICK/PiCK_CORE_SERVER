@@ -54,8 +54,8 @@ class AttendanceService {
                 }
             }
             ApplicationType.PERIOD -> {
-                val startPeriod = start.replace("교시", "").toInt()
-                val endPeriod = end.replace("교시", "").toInt()
+                val startPeriod = start.replace("교시", "").toIntOrNull() ?: throw InvalidPeriodException
+                val endPeriod = end.replace("교시", "").toIntOrNull() ?: throw InvalidPeriodException
                 if (startPeriod > endPeriod || startPeriod < 1 || endPeriod > 10) {
                     throw InvalidPeriodException
                 }
@@ -73,7 +73,7 @@ class AttendanceService {
             }
             ApplicationType.PERIOD -> {
                 val startPeriod = start.replace("교시", "").toInt()
-                if (startPeriod < 1) {
+                if (startPeriod < 1 || startPeriod > 10) {
                     throw InvalidPeriodException
                 }
             }
