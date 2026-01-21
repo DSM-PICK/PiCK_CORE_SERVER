@@ -7,6 +7,7 @@ import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
+import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
@@ -25,7 +26,8 @@ class CreateEarlyReturnService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val adminFinderUseCase: AdminFinderUseCase,
     private val outboxFacadeUseCase: OutboxFacadeUseCase,
-    private val mainUseCase: MainUseCase
+    private val mainUseCase: MainUseCase,
+    private val attendanceService: AttendanceService
 ) : CreateEarlyReturnUseCase {
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
@@ -34,6 +36,8 @@ class CreateEarlyReturnService(
         if (existsApplicationPort.existByUserId(user.id)) {
             throw AlreadyApplyingForEarlyReturnException
         }
+
+        attendanceService.checkEarlyReturnTime(request.)
 
         saveApplicationPort.save(
             Application(
