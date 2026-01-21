@@ -49,7 +49,7 @@ class EarlyReturnApprovalProcessor(
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
-        val start = attendanceService.translateEarlyReturn(application.start, ApplicationType.TIME)
+        val start = attendanceService.translateEarlyReturn(application.start, application.applicationType)
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,
