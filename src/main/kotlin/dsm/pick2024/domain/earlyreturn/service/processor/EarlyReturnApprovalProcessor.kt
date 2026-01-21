@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.earlyreturn.service.processor
 
 import dsm.pick2024.domain.application.domain.Application
-import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.applicationstory.domain.ApplicationStory
@@ -37,7 +36,7 @@ class EarlyReturnApprovalProcessor(
 
         val attendances = updateEarlyReturnList.map {
             val attendanceId = attendanceFinderUseCase.findByUserIdOrThrow(it.userId)
-            attendanceService.updateAttendanceToEarlyReturn(it.start, attendanceId)
+            attendanceService.updateAttendanceToEarlyReturn(it.start, it.applicationType, attendanceId)
         }.toMutableList()
 
         saveApplicationPort.saveAll(updateEarlyReturnList)
@@ -50,7 +49,7 @@ class EarlyReturnApprovalProcessor(
     }
 
     private fun createApplicationStory(application: Application): ApplicationStory {
-        val start = attendanceService.translateApplication(application.start, null, ApplicationType.TIME)
+        val start = attendanceService.translateEarlyReturn(application.start, application.applicationType)
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,
