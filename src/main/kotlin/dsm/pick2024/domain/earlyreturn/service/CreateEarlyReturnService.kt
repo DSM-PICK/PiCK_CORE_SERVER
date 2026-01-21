@@ -36,7 +36,7 @@ class CreateEarlyReturnService(
             throw AlreadyApplyingForEarlyReturnException
         }
 
-        attendanceService.checkEarlyReturnTime(request.)
+        attendanceService.checkEarlyReturnTime(request.applicationType, request.start)
 
         saveApplicationPort.save(
             Application(
