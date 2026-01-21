@@ -9,6 +9,7 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.domain.Outbox
@@ -27,7 +28,8 @@ class ApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val adminFinderUseCase: AdminFinderUseCase,
     private val saveOutboxPort: SaveOutboxPort,
-    private val mainUseCase: MainUseCase
+    private val mainUseCase: MainUseCase,
+    private val attendanceService: AttendanceService
 ) : ApplicationUseCase {
 
     @Transactional
@@ -36,6 +38,12 @@ class ApplicationService(
         if (existsApplicationPort.existByUserId(user.id)) {
             throw AlreadyApplyingForPicnicException
         }
+
+        attendanceService.checkApplicationTime(
+            applicationType = request.applicationType,
+            start = request.start,
+            end = request.end
+        )
 
         saveApplicationPort.save(
             Application(
