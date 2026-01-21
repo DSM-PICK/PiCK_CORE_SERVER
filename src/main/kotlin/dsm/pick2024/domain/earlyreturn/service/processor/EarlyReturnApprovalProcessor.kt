@@ -53,7 +53,7 @@ class EarlyReturnApprovalProcessor(
         return ApplicationStory(
             reason = application.reason,
             userName = application.userName,
-            start = start.first(),
+            start = start,
             date = application.date,
             type = Type.EARLY_RETURN,
             userId = application.userId

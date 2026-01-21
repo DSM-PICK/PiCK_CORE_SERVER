@@ -3,6 +3,7 @@ package dsm.pick2024.domain.attendance.domain.service
 import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
+import dsm.pick2024.domain.attendance.exception.InvalidPeriodException
 import org.springframework.stereotype.Component
 import java.time.LocalTime
 
@@ -14,7 +15,7 @@ class AttendanceService {
             LocalTime.of(8, 40) to LocalTime.of(9, 40), // 1교시
             LocalTime.of(9, 40) to LocalTime.of(10, 40), // 2교시
             LocalTime.of(10, 40) to LocalTime.of(11, 40), // 3교시
-            LocalTime.of(12, 40) to LocalTime.of(13, 30), // 4교시
+            LocalTime.of(11, 40) to LocalTime.of(13, 30), // 4교시
             LocalTime.of(13, 30) to LocalTime.of(14, 40), // 5교시
             LocalTime.of(14, 30) to LocalTime.of(15, 30), // 6교시
             LocalTime.of(15, 30) to LocalTime.of(16, 30), // 7교시
@@ -29,13 +30,66 @@ class AttendanceService {
     }
 
     // 교시 혹은 시간을 기반으로 교시 목록을 반환하는 함수
-    fun translateApplication(start: String, end: String?, applicationType: ApplicationType): List<String> {
+    fun translateApplication(start: String, end: String, applicationType: ApplicationType): Pair<String, String> {
         return when (applicationType) {
-            ApplicationType.PERIOD -> listOf(start, end!!)
+            ApplicationType.PERIOD -> Pair(start, end)
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
-                val endTime = end?.let { LocalTime.parse(it) }
+                val endTime = LocalTime.parse(end)
                 getMatchPeriods(startTime, endTime)
+            }
+        }
+    }
+
+    fun checkApplicationTime(applicationType: ApplicationType, start: String, end: String) {
+        when (applicationType) {
+            ApplicationType.TIME -> {
+                val startTime = LocalTime.parse(start)
+                val endTime = LocalTime.parse(end)
+                if (startTime > endTime ||
+                    endTime > LocalTime.of(20, 30) ||
+                    startTime < LocalTime.of(8, 30)
+                ) {
+                    throw InvalidPeriodException
+                }
+            }
+            ApplicationType.PERIOD -> {
+                val startPeriod = start.replace("교시", "").toIntOrNull() ?: throw InvalidPeriodException
+                val endPeriod = end.replace("교시", "").toIntOrNull() ?: throw InvalidPeriodException
+                if (startPeriod > endPeriod || startPeriod < 1 || endPeriod > 10) {
+                    throw InvalidPeriodException
+                }
+            }
+        }
+    }
+
+    fun checkEarlyReturnTime(applicationType: ApplicationType, start: String) {
+        when (applicationType) {
+            ApplicationType.TIME -> {
+                val startTime = LocalTime.parse(start)
+                if (startTime < LocalTime.of(8, 30)) {
+                    throw InvalidPeriodException
+                }
+            }
+            ApplicationType.PERIOD -> {
+                val startPeriod = start.replace("교시", "").toInt()
+                if (startPeriod < 1 || startPeriod > 10) {
+                    throw InvalidPeriodException
+                }
+            }
+        }
+    }
+
+    fun translateEarlyReturn(start: String, applicationType: ApplicationType): String {
+        return when (applicationType) {
+            ApplicationType.PERIOD -> start
+            ApplicationType.TIME -> {
+                val startTime = LocalTime.parse(start)
+                val startIndex = periods.indexOfFirst { (start, endAt) ->
+                    startTime >= start && startTime < endAt
+                }
+                if (startIndex == -1) throw InvalidPeriodException
+                periodNames[startIndex]
             }
         }
     }
@@ -113,27 +167,16 @@ class AttendanceService {
         return updateAttendance
     }
 
-    fun translateEarlyReturn(start: String, applicationType: ApplicationType): List<String> {
-        return when (applicationType) {
-            ApplicationType.PERIOD -> {
-                val startIndex = periodNames.indexOf(start).coerceAtLeast(0)
-                periodNames.subList(startIndex, periodNames.size)
-            }
-            ApplicationType.TIME -> {
-                val startTime = LocalTime.parse(start)
-                getMatchPeriods(startTime, null)
-            }
+    private fun getMatchPeriods(startTime: LocalTime, endTime: LocalTime): Pair<String, String> {
+        val startIndex = periods.indexOfFirst { (start, endAt) ->
+            startTime in start..endAt
         }
-    }
+        val endIndex = periods.indexOfFirst { (start, endAt) ->
+            endTime in start..endAt
+        }
 
-    private fun getMatchPeriods(startTime: LocalTime, endTime: LocalTime?): List<String> {
-        return periods
-            .mapIndexed { index, period ->
-                if ((startTime < period.second) && (endTime == null || endTime > period.first)) {
-                    periodNames[index]
-                } else {
-                    null
-                }
-            }.filterNotNull()
+        if (startIndex == -1 || endIndex == -1) throw InvalidPeriodException
+
+        return periodNames[startIndex] to periodNames[endIndex]
     }
 }
