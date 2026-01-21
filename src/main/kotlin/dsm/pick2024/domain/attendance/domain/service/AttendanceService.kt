@@ -140,10 +140,19 @@ class AttendanceService {
 
     fun updateAttendanceToEarlyReturn(
         start: String,
+        applicationType: ApplicationType,
         attendance: Attendance
     ): Attendance {
-        val startTime = LocalTime.parse(start)
-        val list = periods.filter { it.first.isAfter(startTime) || it.first == startTime }
+        val list = when (applicationType) {
+            ApplicationType.PERIOD -> {
+                val startIndex = periodNames.indexOf(start).coerceAtLeast(0)
+                periods.subList(startIndex, periods.size)
+            }
+            ApplicationType.TIME -> {
+                val startTime = LocalTime.parse(start)
+                periods.filter { startTime < it.second }
+            }
+        }
         var updateAttendance = attendance
         list.forEach { period ->
             updateAttendance = when (period) {
