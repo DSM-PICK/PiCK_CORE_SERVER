@@ -42,4 +42,18 @@ class SseRegistry : SseRegistryPort {
             }
         }
     }
+
+    override fun sendHeartbeat() {
+        for (eMutableMap in emitters) {
+            val userId = eMutableMap.key
+            for (emitter in eMutableMap.value) {
+                try {
+                    emitter.send(SseEmitter.event().name("heartbeat").data("ping"))
+                } catch (e: Exception) {
+                    logger.error("User Event Send Failed ${e.message}", e)
+                    remove(userId, emitter)
+                }
+            }
+        }
+    }
 }
