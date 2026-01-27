@@ -30,6 +30,11 @@ class ScheduleService(
     private val notificationWeekendMealUseCase: NotificationWeekendMealUseCase,
     private val sseRegistryPort: SseRegistryPort
 ) {
+    /**
+     * Removes all classroom and application entries from their data stores.
+     *
+     * Runs on the scheduled cron (20:30 Asia/Seoul) to clear classroom and application data.
+     */
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
         deleteClassRoomPort.deleteAll()
@@ -74,11 +79,19 @@ class ScheduleService(
         sendNotificationSelfStudyTeacherUseCase.execute()
     }
 
+    /**
+     * Sends notifications about weekend meals to recipients.
+     *
+     * Scheduled to run daily at 08:00 Asia/Seoul to trigger weekend-meal notification delivery.
+     */
     @Scheduled(cron = "0 0 8 * * *", zone = "Asia/Seoul")
     fun notificationWeekendMeal() {
         notificationWeekendMealUseCase.execute()
     }
 
+    /**
+     * Sends a heartbeat signal to the server-sent events registry to keep client connections active.
+     */
     @Scheduled(cron = "0/30 * 8-21 * * 1-5", zone = "Asia/Seoul")
     fun sseHeartbeat() {
         sseRegistryPort.sendHeartbeat()
