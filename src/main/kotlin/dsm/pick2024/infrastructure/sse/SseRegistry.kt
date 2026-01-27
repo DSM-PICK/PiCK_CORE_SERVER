@@ -71,7 +71,6 @@ class SseRegistry : SseRegistryPort {
             cleanup.run()
         }
         emitter.onError {
-            emitter.complete()
             cleanup.run()
         }
     }
