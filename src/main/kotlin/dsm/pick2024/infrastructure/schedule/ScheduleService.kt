@@ -11,6 +11,7 @@ import dsm.pick2024.domain.timetable.port.`in`.SaveTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.DeleteTimeTablePort
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.UpdateWeekendMealUseCase
+import dsm.pick2024.infrastructure.sse.port.out.SseRegistryPort
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 
@@ -26,7 +27,8 @@ class ScheduleService(
     private val saveScheduleUseCase: SaveScheduleUseCase,
     private val updateWeekendMealUseCase: UpdateWeekendMealUseCase,
     private val sendNotificationSelfStudyTeacherUseCase: SendNotificationSelfStudyTeacherUseCase,
-    private val notificationWeekendMealUseCase: NotificationWeekendMealUseCase
+    private val notificationWeekendMealUseCase: NotificationWeekendMealUseCase,
+    private val sseRegistryPort: SseRegistryPort
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -75,5 +77,10 @@ class ScheduleService(
     @Scheduled(cron = "0 0 8 * * *", zone = "Asia/Seoul")
     fun notificationWeekendMeal() {
         notificationWeekendMealUseCase.execute()
+    }
+
+    @Scheduled(cron = "0/30 * 8-21 * * 1-5", zone = "Asia/Seoul")
+    fun sseHeartbeat() {
+        sseRegistryPort.sendHeartbeat()
     }
 }
