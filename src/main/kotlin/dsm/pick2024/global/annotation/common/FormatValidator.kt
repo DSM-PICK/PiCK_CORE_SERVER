@@ -28,7 +28,11 @@ class FormatValidator : ConstraintValidator<ValidFormat, Any> {
     }
 
     private fun validateCreateEarlyReturnRequest(request: CreateEarlyReturnRequest): Boolean {
-        return isValidTimeFormat(request.start)
+        return if (request.applicationType == ApplicationType.PERIOD) {
+            isValidPeriodFormat(request.start)
+        } else {
+            isValidTimeFormat(request.start)
+        }
     }
 
     private fun isValidPeriodFormat(period: String): Boolean {

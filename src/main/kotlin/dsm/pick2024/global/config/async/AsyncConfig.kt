@@ -24,7 +24,6 @@ import java.util.concurrent.RejectedExecutionException
  * - 최대 5회 재시도
  * - 지수 백오프 (2초 → 4초 → 8초 → 16초 → 30초)
  */
-
 @Configuration
 @EnableAsync
 @EnableRetry
