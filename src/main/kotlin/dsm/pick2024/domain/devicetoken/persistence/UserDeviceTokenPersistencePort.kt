@@ -16,7 +16,7 @@ class UserDeviceTokenPersistencePort (
             .map { userDeviceTokenMapper.toDomain(it) }
 
     override fun save(userDeviceToken: UserDeviceToken): UserDeviceToken {
-        val token = userDeviceToken.deviceToken ?: return userDeviceToken
+        val token = userDeviceToken.deviceToken
 
         val entityToSave = resolveEntity(token, userDeviceToken)
 
