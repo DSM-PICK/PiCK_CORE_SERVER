@@ -15,7 +15,7 @@ class AdminDeviceTokenJpaEntity(
     @Column(name = "admin_id", nullable = false)
     val adminId: UUID,
 
-    @Column(name = "device_token")
+    @Column(name = "device_token", nullable = false)
     val deviceToken: String,
 
     @Enumerated(EnumType.STRING)

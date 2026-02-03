@@ -5,5 +5,5 @@ import java.util.UUID
 
 interface UserDeviceTokenRepository {
     fun findAllByUserId(userId: UUID): List<UserDeviceTokenJpaEntity>
-    fun save(userDeviceToken: UserDeviceTokenJpaEntity): UserDeviceTokenJpaEntity
+    fun findByDeviceToken(deviceToken: String): UserDeviceTokenJpaEntity?
 }
