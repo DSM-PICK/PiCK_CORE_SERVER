@@ -7,7 +7,7 @@ import dsm.pick2024.domain.devicetoken.persistence.repository.UserDeviceTokenRep
 import dsm.pick2024.domain.devicetoken.port.out.UserDeviceTokenPort
 import java.util.*
 
-class UserDeviceTokenPersistencePort (
+class UserDeviceTokenPersistencePort(
     private val userDeviceTokenRepository: UserDeviceTokenRepository,
     private val userDeviceTokenMapper: UserDeviceTokenMapper
 ) : UserDeviceTokenPort {
@@ -30,8 +30,7 @@ class UserDeviceTokenPersistencePort (
 
         return if (existingEntity != null) {
             userDeviceTokenMapper.updateEntity(existingEntity, domain)
-        }
-        else {
+        } else {
             userDeviceTokenMapper.toEntity(domain)
         }
     }

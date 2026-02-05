@@ -9,6 +9,7 @@ import dsm.pick2024.domain.application.port.`in`.ApplicationUseCase
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.application.presentation.dto.request.ApplicationRequest
+import dsm.pick2024.domain.devicetoken.port.out.QueryAdminDeviceTokenPort
 import dsm.pick2024.domain.fcm.dto.request.FcmRequest
 import dsm.pick2024.domain.main.port.`in`.MainUseCase
 import dsm.pick2024.domain.outbox.domain.Outbox
@@ -27,7 +28,8 @@ class ApplicationService(
     private val userFacadeUseCase: UserFacadeUseCase,
     private val adminFinderUseCase: AdminFinderUseCase,
     private val saveOutboxPort: SaveOutboxPort,
-    private val mainUseCase: MainUseCase
+    private val mainUseCase: MainUseCase,
+    private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort
 ) : ApplicationUseCase {
 
     @Transactional
@@ -54,21 +56,26 @@ class ApplicationService(
             )
         )
 
-        val deviceToken = adminFinderUseCase.findByGradeAndClassNumOrThrow(
+        val admin = adminFinderUseCase.findByGradeAndClassNumOrThrow(
             grade = user.grade,
             classNum = user.classNum
-        ).deviceToken
-
-        saveOutboxPort.saveOutbox(
-            Outbox(
-                payload = FcmRequest(
-                    tokens = listOf(deviceToken),
-                    title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 외출을 신청했습니다.",
-                    body = "사유: ${request.reason}"
-                ),
-                eventType = EventType.NOTIFICATION
-            )
         )
+
+        val tokens = queryAdminDeviceTokenPort.findAllByAdminId(admin.id)
+            .map { it.deviceToken }
+
+        if (tokens.isNotEmpty()) {
+            saveOutboxPort.saveOutbox(
+                Outbox(
+                    payload = FcmRequest(
+                        tokens = tokens,
+                        title = "[PiCK] ${user.grade}학년 ${user.classNum}반 ${user.num}번 ${user.name} 학생이 외출을 신청했습니다.",
+                        body = "사유: ${request.reason}"
+                    ),
+                    eventType = EventType.NOTIFICATION
+                )
+            )
+        }
 
         mainUseCase.sendEvent(user.id)
     }

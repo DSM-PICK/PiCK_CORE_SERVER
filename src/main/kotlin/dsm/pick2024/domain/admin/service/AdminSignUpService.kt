@@ -82,7 +82,7 @@ class AdminSignUpService(
             name = this.name,
             grade = this.grade,
             classNum = this.classNum,
-            role = Role.SCH,
+            role = Role.SCH
         )
     }
 }
