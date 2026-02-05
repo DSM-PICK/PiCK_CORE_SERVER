@@ -4,6 +4,9 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.admin.port.`in`.AdminLoginUseCase
 import dsm.pick2024.domain.admin.port.out.AdminSavePort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
+import dsm.pick2024.domain.devicetoken.domain.AdminDeviceToken
+import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
+import dsm.pick2024.domain.devicetoken.port.out.QueryAdminDeviceTokenPort
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
@@ -18,7 +21,7 @@ class AdminLoginService(
     private val adminFinderUseCase: AdminFinderUseCase,
     private val passwordEncoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val adminSavePort: AdminSavePort
+    private val adminDeviceTokenPort: AdminDeviceTokenPort
 ) : AdminLoginUseCase {
 
     @Transactional
@@ -29,8 +32,14 @@ class AdminLoginService(
             throw PasswordMissMatchException
         }
 
-        if (request.deviceToken != null || admin.deviceToken != "") {
-            adminSavePort.save(admin.updateDeviceToken(request.deviceToken))
+        request.deviceToken?.let { token ->
+            adminDeviceTokenPort.save(
+                AdminDeviceToken(
+                    adminId = admin.id,
+                    deviceToken = token,
+                    os = request.os
+                )
+            )
         }
 
         return jwtTokenProvider.generateToken(request.adminId, admin.role.name)

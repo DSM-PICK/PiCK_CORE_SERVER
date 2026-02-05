@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.admin.service
 
+import dsm.pick2024.domain.devicetoken.domain.AdminDeviceToken
 import dsm.pick2024.domain.admin.domain.Admin
 import dsm.pick2024.domain.admin.exception.RegisteredClassAndGrade
 import dsm.pick2024.domain.admin.exception.SecretKeyMissMatchException
@@ -9,6 +10,7 @@ import dsm.pick2024.domain.admin.port.out.ExistsByAdminIdPort
 import dsm.pick2024.domain.admin.port.out.QueryAdminPort
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
 import dsm.pick2024.domain.admin.properties.AdminProperties
+import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.entity.enums.Role
 import dsm.pick2024.domain.user.exception.DuplicateUserException
@@ -25,21 +27,29 @@ class AdminSignUpService(
     private val jwtTokenProvider: JwtTokenProvider,
     private val adminSavePort: AdminSavePort,
     private val adminProperties: AdminProperties,
-    private val queryAdminPort: QueryAdminPort
+    private val queryAdminPort: QueryAdminPort,
+    private val adminDeviceTokenPort: AdminDeviceTokenPort
 ) : AdminSignUpUseCase {
     override fun execute(request: AdminSignUpRequest): TokenResponse {
         val encodedPassword = passwordEncoder.encode(request.password)
 
         checkDuplicateAccountId(request.accountId)
-
         checkSecretKey(request.secretKey)
-
         checkRegisteredGradeAndClass(request.grade, request.classNum)
-
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
-        val user = request.toEntity(encodedPassword)
-        adminSavePort.save(user)
+        val admin = request.toEntity(encodedPassword)
+        val savedAdmin = adminSavePort.save(admin)
+
+        request.deviceToken?.let { token ->
+            adminDeviceTokenPort.save(
+                AdminDeviceToken(
+                    adminId = savedAdmin.id,
+                    deviceToken = token,
+                    os = request.os
+                )
+            )
+        }
 
         return jwtTokenProvider.generateToken(request.accountId, Role.SCH.name)
     }
@@ -73,7 +83,6 @@ class AdminSignUpService(
             grade = this.grade,
             classNum = this.classNum,
             role = Role.SCH,
-            deviceToken = this.deviceToken
         )
     }
 }
