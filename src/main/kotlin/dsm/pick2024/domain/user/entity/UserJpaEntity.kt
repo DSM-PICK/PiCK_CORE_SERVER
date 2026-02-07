@@ -22,9 +22,6 @@ class UserJpaEntity(
     @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(10)")
     val name: String,
 
-    @Column(name = "device_token", nullable = true)
-    val deviceToken: String?,
-
     @Column(name = "profile_file_name", nullable = true)
     val profile: String? = null,
 

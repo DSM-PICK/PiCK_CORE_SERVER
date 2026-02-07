@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.user.presentation.dto.request
 
+import dsm.pick2024.domain.devicetoken.enum.OSType
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
@@ -26,5 +27,6 @@ data class UserSignUpRequest(
     @field:NotBlank
     @field:Size(min = 6, max = 6)
     val code: String,
-    val deviceToken: String?
+    val deviceToken: String?,
+    val os: OSType?
 )

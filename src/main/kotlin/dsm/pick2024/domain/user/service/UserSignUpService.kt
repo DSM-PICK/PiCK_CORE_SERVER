@@ -3,6 +3,8 @@ package dsm.pick2024.domain.user.service
 import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
+import dsm.pick2024.domain.devicetoken.domain.UserDeviceToken
+import dsm.pick2024.domain.devicetoken.port.out.SaveUserDeviceTokenPort
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
@@ -19,6 +21,7 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 import javax.transaction.Transactional
 
 @Service
@@ -29,7 +32,8 @@ class UserSignUpService(
     private val existsUserPort: ExistsUserPort,
     private val verifyMailUseCase: VerifyMailUseCase,
     private val saveAttendancePort: SaveAttendancePort,
-    private val saveWeekendMealPort: SaveWeekendMealPort
+    private val saveWeekendMealPort: SaveWeekendMealPort,
+    private val saveUserDeviceTokenPort: SaveUserDeviceTokenPort
 ) : UserSignUpUseCase {
 
     @Transactional
@@ -43,37 +47,54 @@ class UserSignUpService(
         checkRegisteredGradeAndClassNumAndNum(request.grade, request.classNum, request.num)
         verifyMailUseCase.verifyAndConsume(request.code, request.accountId)
 
-        val user = request.toEntity(encodedPassword)
+        val user = request.toDomain(encodedPassword)
         val savedUser = savePort.save(user)
 
-        savedUser.let {
-            saveAttendancePort.save(
-                Attendance(
-                    userId = it.id,
-                    grade = it.grade,
-                    classNum = it.classNum,
-                    num = it.num,
-                    userName = it.name,
-                    period6 = AttendanceStatus.ATTENDANCE,
-                    period7 = AttendanceStatus.ATTENDANCE,
-                    period8 = AttendanceStatus.ATTENDANCE,
-                    period9 = AttendanceStatus.ATTENDANCE,
-                    period10 = AttendanceStatus.ATTENDANCE
+        request.deviceToken?.let { token ->
+            request.os?.let {
+                UserDeviceToken(
+                    id = UUID.randomUUID(),
+                    userId = savedUser.id,
+                    deviceToken = token,
+                    os = it
                 )
-            )
-            saveWeekendMealPort.save(
-                WeekendMeal(
-                    userId = it.id,
-                    userName = it.name,
-                    grade = it.grade,
-                    classNum = it.classNum,
-                    num = it.num,
-                    status = Status.NO
+            }?.let {
+                saveUserDeviceTokenPort.save(
+                    it
                 )
-            )
+            }
         }
 
+        setupInitialData(savedUser)
+
         return jwtTokenProvider.generateToken(savedUser.accountId, Role.STU.name)
+    }
+
+    private fun setupInitialData(user: User) {
+        saveAttendancePort.save(
+            Attendance(
+                userId = user.id,
+                grade = user.grade,
+                classNum = user.classNum,
+                num = user.num,
+                userName = user.name,
+                period6 = AttendanceStatus.ATTENDANCE,
+                period7 = AttendanceStatus.ATTENDANCE,
+                period8 = AttendanceStatus.ATTENDANCE,
+                period9 = AttendanceStatus.ATTENDANCE,
+                period10 = AttendanceStatus.ATTENDANCE
+            )
+        )
+        saveWeekendMealPort.save(
+            WeekendMeal(
+                userId = user.id,
+                userName = user.name,
+                grade = user.grade,
+                classNum = user.classNum,
+                num = user.num,
+                status = Status.NO
+            )
+        )
     }
 
     private fun checkRegisteredGradeAndClassNumAndNum(grade: Int, classNum: Int, num: Int) {
@@ -82,7 +103,7 @@ class UserSignUpService(
         }
     }
 
-    private fun UserSignUpRequest.toEntity(encodedPassword: String): User {
+    private fun UserSignUpRequest.toDomain(encodedPassword: String): User {
         return User(
             accountId = this.accountId,
             password = encodedPassword,
@@ -91,8 +112,7 @@ class UserSignUpService(
             classNum = this.classNum,
             num = this.num,
             profile = null,
-            role = Role.STU,
-            deviceToken = this.deviceToken
+            role = Role.STU
         )
     }
 }
