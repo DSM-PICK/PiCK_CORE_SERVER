@@ -7,4 +7,5 @@ interface SseRegistryPort {
     fun sendToUser(userId: UUID, data: Any?)
     fun remove(userId: UUID, emitter: SseEmitter)
     fun add(userId: UUID): SseEmitter
+    fun sendHeartbeat()
 }

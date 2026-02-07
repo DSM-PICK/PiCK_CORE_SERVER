@@ -3,11 +3,11 @@ package dsm.pick2024.domain.earlyreturn.service
 import dsm.pick2024.domain.admin.port.`in`.AdminFinderUseCase
 import dsm.pick2024.domain.application.domain.Application
 import dsm.pick2024.domain.application.enums.ApplicationKind
-import dsm.pick2024.domain.application.enums.ApplicationType
 import dsm.pick2024.domain.application.enums.Status
 import dsm.pick2024.domain.application.port.out.ExistsApplicationPort
 import dsm.pick2024.domain.application.port.out.SaveApplicationPort
 import dsm.pick2024.domain.devicetoken.port.out.QueryAdminDeviceTokenPort
+import dsm.pick2024.domain.attendance.domain.service.AttendanceService
 import dsm.pick2024.domain.earlyreturn.exception.AlreadyApplyingForEarlyReturnException
 import dsm.pick2024.domain.earlyreturn.port.`in`.CreateEarlyReturnUseCase
 import dsm.pick2024.domain.earlyreturn.presentation.dto.request.CreateEarlyReturnRequest
@@ -28,6 +28,7 @@ class CreateEarlyReturnService(
     private val outboxFacadeUseCase: OutboxFacadeUseCase,
     private val mainUseCase: MainUseCase,
     private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort
+    private val attendanceService: AttendanceService
 ) : CreateEarlyReturnUseCase {
     @Transactional
     override fun createEarlyReturn(request: CreateEarlyReturnRequest) {
@@ -36,6 +37,8 @@ class CreateEarlyReturnService(
         if (existsApplicationPort.existByUserId(user.id)) {
             throw AlreadyApplyingForEarlyReturnException
         }
+
+        attendanceService.checkEarlyReturnTime(request.applicationType, request.start)
 
         saveApplicationPort.save(
             Application(
@@ -48,7 +51,7 @@ class CreateEarlyReturnService(
                 classNum = user.classNum,
                 num = user.num,
                 userId = user.id,
-                applicationType = ApplicationType.TIME,
+                applicationType = request.applicationType,
                 applicationKind = ApplicationKind.EARLY_RETURN
             )
         )
