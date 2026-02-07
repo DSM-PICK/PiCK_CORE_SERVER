@@ -30,7 +30,7 @@ class ApplicationService(
     private val adminFinderUseCase: AdminFinderUseCase,
     private val saveOutboxPort: SaveOutboxPort,
     private val mainUseCase: MainUseCase,
-    private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort
+    private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort,
     private val attendanceService: AttendanceService
 ) : ApplicationUseCase {
 

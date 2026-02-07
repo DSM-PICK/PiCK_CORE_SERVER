@@ -27,7 +27,7 @@ class CreateEarlyReturnService(
     private val adminFinderUseCase: AdminFinderUseCase,
     private val outboxFacadeUseCase: OutboxFacadeUseCase,
     private val mainUseCase: MainUseCase,
-    private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort
+    private val queryAdminDeviceTokenPort: QueryAdminDeviceTokenPort,
     private val attendanceService: AttendanceService
 ) : CreateEarlyReturnUseCase {
     @Transactional
