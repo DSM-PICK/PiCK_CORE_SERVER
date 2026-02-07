@@ -19,10 +19,9 @@ data class AdminSignUpRequest(
     val classNum: Int,
     @field:NotBlank
     val code: String,
-    val deviceToken: String,
+    val deviceToken: String?,
     @field:NotBlank
     @field:Size(min = 6, max = 6)
     val secretKey: String,
-    @field:NotBlank
-    val os: OSType
+    val os: OSType?
 )

@@ -31,13 +31,17 @@ class AdminLoginService(
         }
 
         request.deviceToken?.let { token ->
-            adminDeviceTokenPort.save(
+            request.os?.let {
                 AdminDeviceToken(
                     adminId = admin.id,
                     deviceToken = token,
-                    os = request.os
+                    os = it
                 )
-            )
+            }?.let {
+                adminDeviceTokenPort.save(
+                    it
+                )
+            }
         }
 
         return jwtTokenProvider.generateToken(request.adminId, admin.role.name)

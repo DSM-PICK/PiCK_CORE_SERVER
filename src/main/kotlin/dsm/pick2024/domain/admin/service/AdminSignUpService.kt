@@ -18,6 +18,7 @@ import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class AdminSignUpService(
@@ -42,13 +43,18 @@ class AdminSignUpService(
         val savedAdmin = adminSavePort.save(admin)
 
         request.deviceToken?.let { token ->
-            adminDeviceTokenPort.save(
+            request.os?.let {
                 AdminDeviceToken(
+                    id = UUID.randomUUID(),
                     adminId = savedAdmin.id,
                     deviceToken = token,
-                    os = request.os
+                    os = it
                 )
-            )
+            }?.let {
+                adminDeviceTokenPort.save(
+                    it
+                )
+            }
         }
 
         return jwtTokenProvider.generateToken(request.accountId, Role.SCH.name)

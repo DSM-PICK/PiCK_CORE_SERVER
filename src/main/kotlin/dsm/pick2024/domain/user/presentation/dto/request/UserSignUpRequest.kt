@@ -28,5 +28,5 @@ data class UserSignUpRequest(
     @field:Size(min = 6, max = 6)
     val code: String,
     val deviceToken: String?,
-    val os: OSType
+    val os: OSType?
 )

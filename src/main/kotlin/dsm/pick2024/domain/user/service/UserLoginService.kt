@@ -32,13 +32,17 @@ class UserLoginService(
         }
 
         request.deviceToken?.let { token ->
-            val userDeviceToken = UserDeviceToken(
-                id = UUID.randomUUID(),
-                userId = user.id,
-                deviceToken = token,
-                os = request.os
-            )
-            saveUserDeviceTokenPort.save(userDeviceToken)
+            val userDeviceToken = request.os?.let {
+                UserDeviceToken(
+                    id = UUID.randomUUID(),
+                    userId = user.id,
+                    deviceToken = token,
+                    os = it
+                )
+            }
+            if (userDeviceToken != null) {
+                saveUserDeviceTokenPort.save(userDeviceToken)
+            }
         }
 
         return jwtTokenProvider.generateToken(request.accountId, user.role.name)
