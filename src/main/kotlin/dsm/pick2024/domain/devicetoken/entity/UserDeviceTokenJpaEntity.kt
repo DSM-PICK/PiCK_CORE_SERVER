@@ -8,7 +8,7 @@ import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
 
-@Entity(name = "tbl_admin_device_token")
+@Entity(name = "tbl_user_device_token")
 class UserDeviceTokenJpaEntity(
     id: UUID,
 

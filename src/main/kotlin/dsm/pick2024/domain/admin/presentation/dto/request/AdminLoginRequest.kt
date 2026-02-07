@@ -6,5 +6,5 @@ data class AdminLoginRequest(
     val adminId: String,
     val password: String,
     val deviceToken: String?,
-    val os: OSType
+    val os: OSType?
 )
