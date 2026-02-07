@@ -33,7 +33,7 @@ class ChangeApplicationStatusService(
         val deviceTokens = applications.flatMap { application ->
             queryUserDeviceTokenPort.findAllByUserId(application.userId)
                 .map { it.deviceToken }
-        }
+        }.distinct()
         if (request.status == Status.OK) {
             approvalProcessor.process(applications, admin.name, deviceTokens)
         } else {
