@@ -24,10 +24,10 @@ class NotificationWeekendMealService(
     }
 
     override fun execute() {
+        val today = LocalDate.now()
         val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(LocalDate.now())
         if (weekendMealPeriod != null) {
             val users = queryUserPort.findAll()
-            val today = LocalDate.now()
 
             when (today) {
                 weekendMealPeriod.end -> {
@@ -43,7 +43,7 @@ class NotificationWeekendMealService(
                                 deviceToken = token,
                                 title = "[PiCK] 급식 신청 기간 알림",
                                 body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
-                                    " 현재 ${user.name}님은 ${weekendMealPeriod.month.ordinal}월 주말급식을" +
+                                    " 현재 ${user.name}님은 ${weekendMealPeriod.month.value}월 주말급식을" +
                                     " ${if (status == Status.OK) OK else NO}"
                             )
                         }

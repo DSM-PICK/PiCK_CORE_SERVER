@@ -53,7 +53,7 @@ enum class ErrorCode(
 
     TOO_MANY_REQUEST(429, "너무 많은 요청입니다."),
 
-    ENTITY_STATE_EXCEPTION(500, "조회된 엔티티에 ID가 존재히지 않습니다"),
+    ENTITY_STATE_EXCEPTION(500, "조회된 엔티티에 ID가 존재하지 않습니다"),
 
     // Internal Server Error
     INTERNAL_SERVER_ERROR(500, "내부 서버 오류"),
