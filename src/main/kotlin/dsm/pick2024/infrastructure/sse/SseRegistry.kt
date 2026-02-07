@@ -1,9 +1,11 @@
 package dsm.pick2024.infrastructure.sse
 
 import dsm.pick2024.infrastructure.sse.port.out.SseRegistryPort
+import org.apache.catalina.connector.ClientAbortException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter
+import java.io.IOException
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
@@ -17,10 +19,7 @@ class SseRegistry : SseRegistryPort {
         val emitter = SseEmitter(60 * 60 * 1000L * 2) // 2시간
         emitters.computeIfAbsent(userId) { CopyOnWriteArrayList() }.add(emitter)
 
-        val cleanup = Runnable { remove(userId, emitter) }
-        emitter.onCompletion(cleanup)
-        emitter.onTimeout(cleanup)
-        emitter.onError { cleanup.run() }
+        registerEmitterCallbacks(emitter, userId)
 
         return emitter
     }
@@ -37,9 +36,42 @@ class SseRegistry : SseRegistryPort {
             try {
                 emitter.send(SseEmitter.event().data(data ?: "."))
             } catch (e: Exception) {
+                if (isClientAbort(e)) {
+                    emitter.completeWithError(e)
+                    remove(userId, emitter)
+                    continue
+                }
                 logger.error("User Event Send Failed ${e.message}", e)
+                emitter.completeWithError(e)
                 remove(userId, emitter)
             }
+        }
+    }
+
+    override fun sendHeartbeat() {
+        for (userId in emitters.keys) {
+            sendToUser(userId, "heartbeat")
+        }
+    }
+
+    // Broken pipe error인지 확인
+    private fun isClientAbort(e: Exception): Boolean {
+        if (e is ClientAbortException) return true
+        val io = e as? IOException
+        val message = (io?.message ?: e.message).orEmpty()
+        return message.contains("Broken pipe", ignoreCase = true)
+    }
+
+    private fun registerEmitterCallbacks(emitter: SseEmitter, userId: UUID) {
+        val cleanup = Runnable { remove(userId, emitter) }
+
+        emitter.onCompletion(cleanup)
+        emitter.onTimeout {
+            emitter.complete()
+            cleanup.run()
+        }
+        emitter.onError {
+            cleanup.run()
         }
     }
 }

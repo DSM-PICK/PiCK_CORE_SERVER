@@ -31,6 +31,7 @@ enum class ErrorCode(
     SELF_STUDY_NOT_FOUND(404, "자습 정보를 찾을 수 없습니다"),
     EARLY_RETURN_NOT_FOUND(404, "조기 귀가 신청을 찾을 수 없습니다"),
     APPLICATION_NOT_FOUND(404, "신청서를 찾을 수 없습니다"),
+    INVALID_APPLICATION_KIND(404, "유효하지 않은 신청 종류입니다"),
     STATUS_NOT_FOUND(404, "상태를 찾을 수 없습니다"),
     CLASSROOM_NOT_FOUND(404, "교실을 찾을 수 없습니다"),
     WEEKEND_MEAL_NOT_FOUND(404, "존재하지 않는 주말 급식입니다."),
