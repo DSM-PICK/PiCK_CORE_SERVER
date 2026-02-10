@@ -2,6 +2,7 @@ package dsm.pick2024.infrastructure.feign.neis
 
 import com.google.gson.Gson
 import dsm.pick2024.domain.timetable.domain.Timetable
+import dsm.pick2024.global.common.TimeUtils
 import dsm.pick2024.infrastructure.feign.neis.client.NeisFeignClient
 import dsm.pick2024.infrastructure.feign.neis.dto.response.NeisFeignClientTimetableResponse
 import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignClientRequestProperty
@@ -17,7 +18,7 @@ class NeisTimetableFeignClientService(
     private val neisFeignClient: NeisFeignClient
 ) {
     fun getNeisInfoToEntity(baseDay: Long): MutableList<Timetable>? {
-        val runDay = LocalDate.now().plusDays(baseDay)
+        val runDay = TimeUtils.nowLocalDate().plusDays(baseDay)
         val neisTimetableServiceInfoString =
             neisFeignClient.hisTimetable(
                 key = neisKey,

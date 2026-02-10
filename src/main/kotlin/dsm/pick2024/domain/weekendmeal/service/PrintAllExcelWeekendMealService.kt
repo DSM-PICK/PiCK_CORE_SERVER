@@ -6,7 +6,7 @@ import dsm.pick2024.domain.weekendmeal.enums.Status.NO
 import dsm.pick2024.domain.weekendmeal.enums.Status.OK
 import dsm.pick2024.domain.weekendmeal.port.`in`.PrintExcelWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
-import java.time.LocalDate
+import dsm.pick2024.global.common.TimeUtils
 import org.apache.poi.ss.usermodel.BorderStyle
 import org.apache.poi.ss.usermodel.CellStyle
 import org.apache.poi.ss.usermodel.FillPatternType
@@ -29,7 +29,8 @@ class PrintAllExcelWeekendMealService(
 
     @Transactional(readOnly = true)
     override fun execute(response: HttpServletResponse) {
-        val month = LocalDate.now().monthValue + 1
+        val kstNow = TimeUtils.nowLocalDate()
+        val month = kstNow.plusMonths(1).monthValue
         val workbook: Workbook = XSSFWorkbook()
 
         // 주말급식 정보
