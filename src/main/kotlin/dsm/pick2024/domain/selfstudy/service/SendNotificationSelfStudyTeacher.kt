@@ -6,7 +6,6 @@ import dsm.pick2024.domain.selfstudy.port.`in`.SelfStudyFinderUseCase
 import dsm.pick2024.domain.selfstudy.port.`in`.SendNotificationSelfStudyTeacherUseCase
 import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class SendNotificationSelfStudyTeacher(
