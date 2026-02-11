@@ -4,11 +4,11 @@ import dsm.pick2024.domain.timetable.port.`in`.QueryTeacherTimetableUseCase
 import dsm.pick2024.domain.timetable.port.out.QueryTimeTablePort
 import dsm.pick2024.domain.timetable.presentation.dto.response.DayTimetableResponse
 import dsm.pick2024.domain.timetable.presentation.dto.response.PeriodTimetableResponse
+import dsm.pick2024.global.common.TimeUtils
 import dsm.pick2024.infrastructure.s3.FileUtil
 import dsm.pick2024.infrastructure.s3.PathList
 import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.ZoneId
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -20,7 +20,7 @@ class QueryTeacherTimetableService(
 
     @Transactional(readOnly = true)
     override fun queryTeacherTimetable(grade: Int, classNum: Int): List<DayTimetableResponse> {
-        val startOfWeek = getStartOfWeek(LocalDate.now(ZoneId.of("Asia/Seoul")))
+        val startOfWeek = getStartOfWeek(TimeUtils.nowLocalDate())
 
         return (0 until 5).map { i ->
             val date = startOfWeek.plusDays(i.toLong())

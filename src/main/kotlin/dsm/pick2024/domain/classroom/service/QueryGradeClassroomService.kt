@@ -4,9 +4,10 @@ import dsm.pick2024.domain.attendance.port.`in`.AttendanceFinderUseCase
 import dsm.pick2024.domain.classroom.port.`in`.QueryGradeClassroomUseCase
 import dsm.pick2024.domain.classroom.port.out.QueryClassroomPort
 import dsm.pick2024.domain.classroom.presentation.dto.response.QueryClassroomResponse
-import org.joda.time.LocalDate
+import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.DayOfWeek
 
 @Service
 class QueryGradeClassroomService(
@@ -18,11 +19,11 @@ class QueryGradeClassroomService(
         grade: Int,
         classNum: Int
     ): List<QueryClassroomResponse> {
-        val today = LocalDate.now().dayOfWeek
+        val today = TimeUtils.nowLocalDate().dayOfWeek
 
         return queryClassroomPort.queryGradeClassroom(grade, classNum)
             .map { classroom ->
-                val move = if (today == 2 || today == 5) {
+                val move = if (today == DayOfWeek.TUESDAY || today == DayOfWeek.FRIDAY) {
                     attendanceFinderUseCase.findByUserIdOrThrow(classroom.userId).place ?: ""
                 } else {
                     "${classroom.grade}-${classroom.classNum}"

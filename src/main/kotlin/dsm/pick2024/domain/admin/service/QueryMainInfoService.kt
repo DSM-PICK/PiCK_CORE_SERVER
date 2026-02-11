@@ -4,9 +4,9 @@ import dsm.pick2024.domain.admin.port.`in`.AdminFacadeUseCase
 import dsm.pick2024.domain.admin.port.`in`.QueryMainInfoUseCase
 import dsm.pick2024.domain.admin.presentation.dto.response.QueryMainInfoResponse
 import dsm.pick2024.domain.selfstudy.port.out.QuerySelfStudyPort
+import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDate
 
 @Service
 class QueryMainInfoService(
@@ -19,7 +19,7 @@ class QueryMainInfoService(
         val admin = adminFacadeUseCase.currentAdmin()
 
         val todaySelfStudy = querySelfStudyPort
-            .findByTeacherNameAndDate(admin.name, LocalDate.now())
+            .findByTeacherNameAndDate(admin.name, TimeUtils.nowLocalDate())
 
         return QueryMainInfoResponse(
             selfStudyFloor = todaySelfStudy?.floor ?: 0,
