@@ -6,8 +6,8 @@ import dsm.pick2024.domain.weekendmeal.enums.Status
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
+import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 
 @Service
 class NotificationWeekendMealService(
@@ -22,10 +22,11 @@ class NotificationWeekendMealService(
     }
 
     override fun execute() {
-        val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(LocalDate.now())
+        val today = TimeUtils.nowLocalDate()
+        val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(today)
         if (weekendMealPeriod != null) {
             val users = queryUserPort.findAll()
-            when (LocalDate.now()) {
+            when (today) {
                 weekendMealPeriod.end -> {
                     users.map {
                         val status = weekendMealFinderUseCase.findByUserIdOrThrow(it.id).status

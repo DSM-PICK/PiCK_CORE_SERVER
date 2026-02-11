@@ -3,6 +3,7 @@ package dsm.pick2024.infrastructure.feign.neis
 import com.google.gson.Gson
 import dsm.pick2024.domain.meal.domain.Meal
 import dsm.pick2024.domain.meal.enum.MealType
+import dsm.pick2024.global.common.TimeUtils
 import dsm.pick2024.infrastructure.feign.neis.client.NeisFeignClient
 import dsm.pick2024.infrastructure.feign.neis.dto.response.NeisFeignClientMealServiceDietInfoResponse
 import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignClientRequestProperty
@@ -19,7 +20,8 @@ class NeisMealFeignClientService(
 ) {
 
     fun getNeisInfoToEntity(): MutableList<Meal> {
-        val nextMonth = LocalDate.now().plusMonths(1)
+        val kstToday = TimeUtils.nowLocalDate()
+        val nextMonth = kstToday.plusMonths(1)
 
         val neisMealServiceDietInfoString =
             neisFeignClient.getMealServiceDietInfo(
