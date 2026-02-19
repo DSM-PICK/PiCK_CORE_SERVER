@@ -11,11 +11,16 @@ import java.util.*
 @Component
 class UserDeviceTokenPersistenceAdapter(
     private val userDeviceTokenRepository: UserDeviceTokenRepository,
-    private val userDeviceTokenMapper: UserDeviceTokenMapper
+    private val userDeviceTokenMapper: UserDeviceTokenMapper,
 ) : UserDeviceTokenPort {
     override fun findAllByUserId(userId: UUID): List<UserDeviceToken> =
         userDeviceTokenRepository.findAllByUserId(userId)
             .map { userDeviceTokenMapper.toDomain(it) }
+
+    override fun findByUserIds(userIds: List<UUID>): List<UserDeviceToken> {
+            return userDeviceTokenRepository.findAllByUserIdIn(userIds)
+                .map { userDeviceTokenMapper.toDomain(it) }
+    }
 
     override fun save(userDeviceToken: UserDeviceToken): UserDeviceToken {
         val token = userDeviceToken.deviceToken

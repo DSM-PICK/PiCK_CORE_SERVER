@@ -1,5 +1,6 @@
 package dsm.pick2024.domain.weekendmeal.finder
 
+import dsm.pick2024.domain.weekendmeal.domain.WeekendMeal
 import dsm.pick2024.domain.weekendmeal.exception.WeekendMealNotFoundException
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.QueryWeekendMealPort
@@ -15,4 +16,8 @@ class WeekendMealFinder(
 
     override fun findByUserIdOrThrow(id: UUID) =
         queryWeekendMealPort.findByUserId(id) ?: throw WeekendMealNotFoundException
+
+    override fun findByUserIds(userIds: List<UUID>): List<WeekendMeal> {
+        return queryWeekendMealPort.findAllByUserIds(userIds)
+    }
 }

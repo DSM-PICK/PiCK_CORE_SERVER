@@ -7,4 +7,5 @@ import java.util.UUID
 interface UserDeviceTokenRepository : JpaRepository<UserDeviceTokenJpaEntity, UUID> {
     fun findAllByUserId(userId: UUID): List<UserDeviceTokenJpaEntity>
     fun findByDeviceToken(deviceToken: String): UserDeviceTokenJpaEntity?
+    fun findAllByUserIdIn(userIds: List<UUID>): List<UserDeviceTokenJpaEntity>
 }

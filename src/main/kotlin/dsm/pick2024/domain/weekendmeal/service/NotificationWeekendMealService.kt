@@ -26,47 +26,45 @@ class NotificationWeekendMealService(
 
     override fun execute() {
         val today = LocalDate.now()
-        val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(LocalDate.now())
-        if (weekendMealPeriod != null) {
-            val users = queryUserPort.findAll()
+        val weekendMealPeriod = weekendMealPeriodPort.queryWeekendPeriodByDate(today) ?: return
 
-            when (today) {
-                weekendMealPeriod.end -> {
-                    users.forEach { user ->
-                        val status = try {
-                            weekendMealFinderUseCase.findByUserIdOrThrow(user.id).status
-                        } catch (e: WeekendMealNotFoundException) {
-                            return@forEach
-                        }
+        val users = queryUserPort.findAll()
+        val userIds = users.map { it.id }
 
+        val deviceTokensByUserId = queryUserDeviceTokenPort.findByUserIds(userIds)
+            .groupBy({ it.userId }, { it.deviceToken })
 
-                        val tokens = queryUserDeviceTokenPort.findAllByUserId(user.id)
-                            .map { it.deviceToken }
+        when (today) {
+            weekendMealPeriod.end -> {
+                val weekendMealsByUserId = weekendMealFinderUseCase.findByUserIds(userIds)
+                    .associateBy { it.userId }
 
-                        tokens.forEach { token ->
-                            outboxFacadeUseCase.sendNotification(
-                                deviceToken = token,
-                                title = "[PiCK] 급식 신청 기간 알림",
-                                body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
-                                    " 현재 ${user.name}님은 ${weekendMealPeriod.month.value}월 주말급식을" +
-                                    " ${if (status == Status.OK) OK else NO}"
-                            )
-                        }
+                users.forEach { user ->
+                    val status = weekendMealsByUserId[user.id]?.status ?: return@forEach
+                    val tokens = deviceTokensByUserId[user.id] ?: return@forEach
+
+                    tokens.forEach { token ->
+                        outboxFacadeUseCase.sendNotification(
+                            deviceToken = token,
+                            title = "[PiCK] 급식 신청 기간 알림",
+                            body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}" +
+                                " 현재 ${user.name}님은 ${weekendMealPeriod.month.value}월 주말급식을" +
+                                " ${if (status == Status.OK) OK else NO}"
+                        )
                     }
                 }
+            }
 
-                weekendMealPeriod.start -> {
-                    users.forEach { user ->
-                        val tokens = queryUserDeviceTokenPort.findAllByUserId(user.id)
-                            .map { it.deviceToken }
+            weekendMealPeriod.start -> {
+                users.forEach { user ->
+                    val tokens = deviceTokensByUserId[user.id] ?: return@forEach
 
-                        tokens.forEach { token ->
-                            outboxFacadeUseCase.sendNotification(
-                                deviceToken = token,
-                                title = "[PiCK] 급식 신청 기간 알림",
-                                body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}"
-                            )
-                        }
+                    tokens.forEach { token ->
+                        outboxFacadeUseCase.sendNotification(
+                            deviceToken = token,
+                            title = "[PiCK] 급식 신청 기간 알림",
+                            body = "신청 기간: ${weekendMealPeriod.start} ~ ${weekendMealPeriod.end}"
+                        )
                     }
                 }
             }

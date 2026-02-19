@@ -5,4 +5,5 @@ import java.util.UUID
 
 interface QueryUserDeviceTokenPort {
     fun findAllByUserId(userId: UUID): List<UserDeviceToken>
+    fun findByUserIds(userIds: List<UUID>): List<UserDeviceToken>
 }
