@@ -19,7 +19,6 @@ class UserLoginService(
     private val passwordEncoder: PasswordEncoder,
     private val userFinderUseCase: UserFinderUseCase,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val userSavePort: UserSavePort,
     private val saveUserDeviceTokenPort: SaveUserDeviceTokenPort
 ) : UserLoginUseCase {
 
@@ -31,18 +30,17 @@ class UserLoginService(
             throw PasswordMissMatchException
         }
 
-        request.deviceToken?.let { token ->
-            val userDeviceToken = request.os?.let {
+        val token = request.deviceToken
+        val os = request.os
+        if (token != null && os != null) {
+            saveUserDeviceTokenPort.save(
                 UserDeviceToken(
                     id = UUID.randomUUID(),
                     userId = user.id,
                     deviceToken = token,
-                    os = it
+                    os = os
                 )
-            }
-            if (userDeviceToken != null) {
-                saveUserDeviceTokenPort.save(userDeviceToken)
-            }
+            )
         }
 
         return jwtTokenProvider.generateToken(request.accountId, user.role.name)
