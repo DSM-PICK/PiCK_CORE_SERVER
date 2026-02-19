@@ -4,6 +4,7 @@ import dsm.pick2024.domain.devicetoken.port.out.QueryUserDeviceTokenPort
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.domain.weekendmeal.enums.Status
+import dsm.pick2024.domain.weekendmeal.exception.WeekendMealNotFoundException
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
@@ -32,9 +33,13 @@ class NotificationWeekendMealService(
             when (today) {
                 weekendMealPeriod.end -> {
                     users.forEach { user ->
-                        val status = weekendMealFinderUseCase.findByUserIdOrThrow(user.id).status
+                        val status = try {
+                            weekendMealFinderUseCase.findByUserIdOrThrow(user.id).status
+                        } catch (e: WeekendMealNotFoundException) {
+                            return@forEach
+                        }
 
-                        // 2. 해당 학생의 모든 기기 토큰 조회
+
                         val tokens = queryUserDeviceTokenPort.findAllByUserId(user.id)
                             .map { it.deviceToken }
 
