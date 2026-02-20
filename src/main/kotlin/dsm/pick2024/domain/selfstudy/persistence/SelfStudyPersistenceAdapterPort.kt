@@ -6,6 +6,7 @@ import dsm.pick2024.domain.selfstudy.entity.QSelfStudyJpaEntity
 import dsm.pick2024.domain.selfstudy.mapper.SelfStudyMapper
 import dsm.pick2024.domain.selfstudy.persistence.repository.SelfStudyRepository
 import dsm.pick2024.domain.selfstudy.port.out.SelfStudyPort
+import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.Month
@@ -40,17 +41,17 @@ class SelfStudyPersistenceAdapterPort(
     }
 
     override fun findByTodayTeacher(teacher: String): SelfStudy? {
-        val day = LocalDate.now()
-        val nullCheck =
+        val today = TimeUtils.nowLocalDate()
+        val entity =
             jpaQueryFactory
                 .selectFrom(QSelfStudyJpaEntity.selfStudyJpaEntity)
                 .where(
-                    QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(day),
+                    QSelfStudyJpaEntity.selfStudyJpaEntity.date.eq(today),
                     QSelfStudyJpaEntity.selfStudyJpaEntity.teacherName.eq(teacher)
                 )
                 .fetchOne()
 
-        return nullCheck?.let { selfStudyMapper.toDomain(it) }
+        return entity?.let { selfStudyMapper.toDomain(it) }
     }
 
     override fun findByDaySelfStudy(date: LocalDate) =

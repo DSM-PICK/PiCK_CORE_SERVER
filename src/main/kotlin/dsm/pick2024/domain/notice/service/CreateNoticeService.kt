@@ -5,10 +5,9 @@ import dsm.pick2024.domain.notice.domain.Notice
 import dsm.pick2024.domain.notice.port.`in`.CreateNoticeUseCase
 import dsm.pick2024.domain.notice.port.out.NoticeSavePort
 import dsm.pick2024.domain.notice.presentation.dto.request.NoticeRequest
+import dsm.pick2024.global.common.TimeUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 @Service
 class CreateNoticeService(
@@ -24,7 +23,7 @@ class CreateNoticeService(
             Notice(
                 adminId = admin.id,
                 teacherName = admin.name,
-                createAt = LocalDateTime.now(ZoneId.of("Asia/Seoul")),
+                createAt = TimeUtils.nowLocalDateTime(),
                 title = request.title,
                 content = request.content
             )

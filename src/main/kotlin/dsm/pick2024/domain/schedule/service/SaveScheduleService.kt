@@ -3,6 +3,7 @@ package dsm.pick2024.domain.schedule.service
 import dsm.pick2024.domain.schedule.port.`in`.SaveScheduleUseCase
 import dsm.pick2024.domain.schedule.port.out.DeleteSchedulePort
 import dsm.pick2024.domain.schedule.port.out.SaveSchedulePort
+import dsm.pick2024.global.common.TimeUtils
 import dsm.pick2024.global.config.cache.CacheName
 import dsm.pick2024.infrastructure.feign.neis.NeisScheduleFeignClientService
 import org.springframework.cache.annotation.CacheEvict
@@ -30,11 +31,11 @@ class SaveScheduleService(
     }
 
     private fun formatDate(): Pair<String, String> {
-        val today = LocalDate.now()
+        val kstToday = TimeUtils.nowLocalDate()
 
-        val start = LocalDate.of(today.year - 1, 1, 1)
+        val start = LocalDate.of(kstToday.year - 1, 1, 1)
 
-        val end = LocalDate.of(today.year + 1, 3, 1)
+        val end = LocalDate.of(kstToday.year + 1, 3, 1)
 
         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
