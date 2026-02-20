@@ -5,7 +5,6 @@ import dsm.pick2024.domain.devicetoken.port.out.SaveUserDeviceTokenPort
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.port.`in`.UserFinderUseCase
 import dsm.pick2024.domain.user.port.`in`.UserLoginUseCase
-import dsm.pick2024.domain.user.port.out.UserSavePort
 import dsm.pick2024.domain.user.presentation.dto.request.UserLoginRequest
 import dsm.pick2024.global.security.jwt.JwtTokenProvider
 import dsm.pick2024.global.security.jwt.dto.TokenResponse

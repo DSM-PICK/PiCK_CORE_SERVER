@@ -4,7 +4,6 @@ import dsm.pick2024.domain.devicetoken.port.out.QueryUserDeviceTokenPort
 import dsm.pick2024.domain.outbox.port.`in`.OutboxFacadeUseCase
 import dsm.pick2024.domain.user.port.out.QueryUserPort
 import dsm.pick2024.domain.weekendmeal.enums.Status
-import dsm.pick2024.domain.weekendmeal.exception.WeekendMealNotFoundException
 import dsm.pick2024.domain.weekendmeal.port.`in`.NotificationWeekendMealUseCase
 import dsm.pick2024.domain.weekendmeal.port.`in`.WeekendMealFinderUseCase
 import dsm.pick2024.domain.weekendmeal.port.out.WeekendMealPeriodPort
