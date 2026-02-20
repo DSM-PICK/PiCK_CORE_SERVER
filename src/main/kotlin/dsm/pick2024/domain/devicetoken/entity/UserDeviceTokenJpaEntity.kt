@@ -15,7 +15,7 @@ class UserDeviceTokenJpaEntity(
     @Column(name = "user_id", nullable = false)
     val userId: UUID,
 
-    @Column(name = "device_token", nullable = false)
+    @Column(name = "device_token", nullable = false, unique = true)
     val deviceToken: String,
 
     @Enumerated(EnumType.STRING)

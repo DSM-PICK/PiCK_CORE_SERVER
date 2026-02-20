@@ -18,6 +18,7 @@ class UserDeviceTokenPersistenceAdapter(
             .map { userDeviceTokenMapper.toDomain(it) }
 
     override fun findByUserIds(userIds: List<UUID>): List<UserDeviceToken> {
+        if (userIds.isEmpty()) return emptyList()
         return userDeviceTokenRepository.findAllByUserIdIn(userIds)
             .map { userDeviceTokenMapper.toDomain(it) }
     }
