@@ -32,7 +32,8 @@ class AdminDeviceTokenPersistenceAdapter(
         val existingEntity = adminDeviceTokenRepository.findByDeviceToken(token)
 
         return if (existingEntity != null) {
-            adminDeviceTokenMapper.updateEntity(existingEntity, domain)
+            val updatedDomain = adminDeviceTokenMapper.toDomain(existingEntity).update(domain.adminId)
+            adminDeviceTokenMapper.toEntity(updatedDomain)
         } else {
             adminDeviceTokenMapper.toEntity(domain)
         }

@@ -10,4 +10,8 @@ data class AdminDeviceToken(
     val adminId: UUID,
     val deviceToken: String,
     val os: OSType
-)
+) {
+    fun update(adminId: UUID): AdminDeviceToken {
+        return this.copy(adminId = adminId)
+    }
+}

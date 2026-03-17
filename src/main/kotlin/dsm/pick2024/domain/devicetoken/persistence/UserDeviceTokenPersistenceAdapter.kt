@@ -37,7 +37,8 @@ class UserDeviceTokenPersistenceAdapter(
         val existingEntity = userDeviceTokenRepository.findByDeviceToken(token)
 
         return if (existingEntity != null) {
-            userDeviceTokenMapper.updateEntity(existingEntity, domain)
+            val updatedDomain = userDeviceTokenMapper.toDomain(existingEntity).update(domain.userId)
+            userDeviceTokenMapper.toEntity(updatedDomain)
         } else {
             userDeviceTokenMapper.toEntity(domain)
         }
