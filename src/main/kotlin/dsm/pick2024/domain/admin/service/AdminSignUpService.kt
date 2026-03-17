@@ -43,18 +43,14 @@ class AdminSignUpService(
         val savedAdmin = adminSavePort.save(admin)
 
         request.deviceToken?.let { token ->
-            request.os?.let {
+            adminDeviceTokenPort.save(
                 AdminDeviceToken(
                     id = UUID.randomUUID(),
                     adminId = savedAdmin.id,
                     deviceToken = token,
-                    os = it
+                    os = request.os
                 )
-            }?.let {
-                adminDeviceTokenPort.save(
-                    it
-                )
-            }
+            )
         }
 
         return jwtTokenProvider.generateToken(request.accountId, Role.SCH.name)

@@ -29,15 +29,13 @@ class UserLoginService(
             throw PasswordMissMatchException
         }
 
-        val token = request.deviceToken
-        val os = request.os
-        if (token != null && os != null) {
+        request.deviceToken?.let { token ->
             saveUserDeviceTokenPort.save(
                 UserDeviceToken(
                     id = UUID.randomUUID(),
                     userId = user.id,
                     deviceToken = token,
-                    os = os
+                    os = request.os
                 )
             )
         }

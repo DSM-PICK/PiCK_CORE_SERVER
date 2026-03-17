@@ -23,5 +23,5 @@ data class AdminSignUpRequest(
     @field:NotBlank
     @field:Size(min = 6, max = 6)
     val secretKey: String,
-    val os: OSType?
+    val os: OSType
 )

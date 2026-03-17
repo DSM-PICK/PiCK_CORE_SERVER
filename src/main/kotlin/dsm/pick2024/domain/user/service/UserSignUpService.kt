@@ -51,18 +51,14 @@ class UserSignUpService(
         val savedUser = savePort.save(user)
 
         request.deviceToken?.let { token ->
-            request.os?.let {
+            saveUserDeviceTokenPort.save(
                 UserDeviceToken(
                     id = UUID.randomUUID(),
                     userId = savedUser.id,
                     deviceToken = token,
-                    os = it
+                    os = request.os
                 )
-            }?.let {
-                saveUserDeviceTokenPort.save(
-                    it
-                )
-            }
+            )
         }
 
         setupInitialData(savedUser)
