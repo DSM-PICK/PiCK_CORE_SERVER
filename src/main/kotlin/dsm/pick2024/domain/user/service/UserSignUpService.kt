@@ -51,7 +51,7 @@ class UserSignUpService(
         val savedUser = savePort.save(user)
 
         request.deviceToken?.let { token ->
-            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.update(savedUser.id)
+            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.updateUserId(savedUser.id)
                 ?: UserDeviceToken(id = UUID.randomUUID(), userId = savedUser.id, deviceToken = token, os = request.os)
             userDeviceTokenPort.save(tokenToSave)
         }

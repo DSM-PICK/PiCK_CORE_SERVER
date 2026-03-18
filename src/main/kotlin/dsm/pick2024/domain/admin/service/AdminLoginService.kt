@@ -31,7 +31,7 @@ class AdminLoginService(
         }
 
         request.deviceToken?.let { token ->
-            val tokenToSave = adminDeviceTokenPort.findByDeviceToken(token)?.update(admin.id)
+            val tokenToSave = adminDeviceTokenPort.findByDeviceToken(token)?.updateAdminId(admin.id)
                 ?: AdminDeviceToken(adminId = admin.id, deviceToken = token, os = request.os)
             adminDeviceTokenPort.save(tokenToSave)
         }

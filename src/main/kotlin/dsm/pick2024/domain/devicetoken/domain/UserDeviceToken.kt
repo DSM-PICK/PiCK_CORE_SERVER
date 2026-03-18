@@ -11,7 +11,7 @@ data class UserDeviceToken(
     val deviceToken: String,
     val os: OSType
 ) {
-    fun update(userId: UUID): UserDeviceToken {
+    fun updateUserId(userId: UUID): UserDeviceToken {
         return this.copy(userId = userId)
     }
 }

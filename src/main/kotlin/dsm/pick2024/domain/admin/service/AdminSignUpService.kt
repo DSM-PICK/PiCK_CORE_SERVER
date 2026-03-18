@@ -43,8 +43,13 @@ class AdminSignUpService(
         val savedAdmin = adminSavePort.save(admin)
 
         request.deviceToken?.let { token ->
-            val tokenToSave = adminDeviceTokenPort.findByDeviceToken(token)?.update(savedAdmin.id)
-                ?: AdminDeviceToken(id = UUID.randomUUID(), adminId = savedAdmin.id, deviceToken = token, os = request.os)
+            val tokenToSave = adminDeviceTokenPort.findByDeviceToken(token)?.updateAdminId(savedAdmin.id)
+                ?: AdminDeviceToken(
+                    id = UUID.randomUUID(),
+                    adminId = savedAdmin.id,
+                    deviceToken = token,
+                    os = request.os
+                )
             adminDeviceTokenPort.save(tokenToSave)
         }
 

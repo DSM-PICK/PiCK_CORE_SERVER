@@ -30,7 +30,7 @@ class UserLoginService(
         }
 
         request.deviceToken?.let { token ->
-            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.update(user.id)
+            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.updateUserId(user.id)
                 ?: UserDeviceToken(id = UUID.randomUUID(), userId = user.id, deviceToken = token, os = request.os)
             userDeviceTokenPort.save(tokenToSave)
         }
