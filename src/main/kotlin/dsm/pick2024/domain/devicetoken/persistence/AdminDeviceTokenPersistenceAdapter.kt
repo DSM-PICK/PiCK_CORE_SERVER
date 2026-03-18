@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.devicetoken.persistence
 
 import dsm.pick2024.domain.devicetoken.domain.AdminDeviceToken
-import dsm.pick2024.domain.devicetoken.entity.AdminDeviceTokenJpaEntity
 import dsm.pick2024.domain.devicetoken.mapper.AdminDeviceTokenMapper
 import dsm.pick2024.domain.devicetoken.persistence.repository.AdminDeviceTokenRepository
 import dsm.pick2024.domain.devicetoken.port.out.AdminDeviceTokenPort
@@ -18,24 +17,12 @@ class AdminDeviceTokenPersistenceAdapter(
         adminDeviceTokenRepository.findAllByAdminId(adminId)
             .map { adminDeviceTokenMapper.toDomain(it) }
 
-    override fun save(adminDeviceToken: AdminDeviceToken): AdminDeviceToken {
-        val token = adminDeviceToken.deviceToken
+    override fun findByDeviceToken(deviceToken: String): AdminDeviceToken? =
+        adminDeviceTokenRepository.findByDeviceToken(deviceToken)
+            ?.let { adminDeviceTokenMapper.toDomain(it) }
 
-        val entityToSave = resolveEntity(token, adminDeviceToken)
-
-        return adminDeviceTokenMapper.toDomain(
-            adminDeviceTokenRepository.save(entityToSave)
+    override fun save(adminDeviceToken: AdminDeviceToken): AdminDeviceToken =
+        adminDeviceTokenMapper.toDomain(
+            adminDeviceTokenRepository.save(adminDeviceTokenMapper.toEntity(adminDeviceToken))
         )
-    }
-
-    private fun resolveEntity(token: String, domain: AdminDeviceToken): AdminDeviceTokenJpaEntity {
-        val existingEntity = adminDeviceTokenRepository.findByDeviceToken(token)
-
-        return if (existingEntity != null) {
-            val updatedDomain = adminDeviceTokenMapper.toDomain(existingEntity).update(domain.adminId)
-            adminDeviceTokenMapper.toEntity(updatedDomain)
-        } else {
-            adminDeviceTokenMapper.toEntity(domain)
-        }
-    }
 }

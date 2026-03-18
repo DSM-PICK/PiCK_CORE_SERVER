@@ -31,13 +31,9 @@ class AdminLoginService(
         }
 
         request.deviceToken?.let { token ->
-            adminDeviceTokenPort.save(
-                AdminDeviceToken(
-                    adminId = admin.id,
-                    deviceToken = token,
-                    os = request.os
-                )
-            )
+            val tokenToSave = adminDeviceTokenPort.findByDeviceToken(token)?.update(admin.id)
+                ?: AdminDeviceToken(adminId = admin.id, deviceToken = token, os = request.os)
+            adminDeviceTokenPort.save(tokenToSave)
         }
 
         return jwtTokenProvider.generateToken(request.adminId, admin.role.name)

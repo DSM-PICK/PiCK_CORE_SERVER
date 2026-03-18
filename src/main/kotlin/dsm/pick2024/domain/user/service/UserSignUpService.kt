@@ -4,7 +4,7 @@ import dsm.pick2024.domain.attendance.domain.Attendance
 import dsm.pick2024.domain.attendance.enums.AttendanceStatus
 import dsm.pick2024.domain.attendance.port.out.SaveAttendancePort
 import dsm.pick2024.domain.devicetoken.domain.UserDeviceToken
-import dsm.pick2024.domain.devicetoken.port.out.SaveUserDeviceTokenPort
+import dsm.pick2024.domain.devicetoken.port.out.UserDeviceTokenPort
 import dsm.pick2024.domain.mail.port.`in`.VerifyMailUseCase
 import dsm.pick2024.domain.user.domain.User
 import dsm.pick2024.domain.user.entity.enums.Role
@@ -33,7 +33,7 @@ class UserSignUpService(
     private val verifyMailUseCase: VerifyMailUseCase,
     private val saveAttendancePort: SaveAttendancePort,
     private val saveWeekendMealPort: SaveWeekendMealPort,
-    private val saveUserDeviceTokenPort: SaveUserDeviceTokenPort
+    private val userDeviceTokenPort: UserDeviceTokenPort
 ) : UserSignUpUseCase {
 
     @Transactional
@@ -51,14 +51,9 @@ class UserSignUpService(
         val savedUser = savePort.save(user)
 
         request.deviceToken?.let { token ->
-            saveUserDeviceTokenPort.save(
-                UserDeviceToken(
-                    id = UUID.randomUUID(),
-                    userId = savedUser.id,
-                    deviceToken = token,
-                    os = request.os
-                )
-            )
+            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.update(savedUser.id)
+                ?: UserDeviceToken(id = UUID.randomUUID(), userId = savedUser.id, deviceToken = token, os = request.os)
+            userDeviceTokenPort.save(tokenToSave)
         }
 
         setupInitialData(savedUser)

@@ -5,4 +5,5 @@ import java.util.*
 
 interface QueryAdminDeviceTokenPort {
     fun findAllByAdminId(adminId: UUID): List<AdminDeviceToken>
+    fun findByDeviceToken(deviceToken: String): AdminDeviceToken?
 }

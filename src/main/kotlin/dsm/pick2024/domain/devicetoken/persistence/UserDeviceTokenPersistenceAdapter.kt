@@ -1,7 +1,6 @@
 package dsm.pick2024.domain.devicetoken.persistence
 
 import dsm.pick2024.domain.devicetoken.domain.UserDeviceToken
-import dsm.pick2024.domain.devicetoken.entity.UserDeviceTokenJpaEntity
 import dsm.pick2024.domain.devicetoken.mapper.UserDeviceTokenMapper
 import dsm.pick2024.domain.devicetoken.persistence.repository.UserDeviceTokenRepository
 import dsm.pick2024.domain.devicetoken.port.out.UserDeviceTokenPort
@@ -23,24 +22,12 @@ class UserDeviceTokenPersistenceAdapter(
             .map { userDeviceTokenMapper.toDomain(it) }
     }
 
-    override fun save(userDeviceToken: UserDeviceToken): UserDeviceToken {
-        val token = userDeviceToken.deviceToken
+    override fun findByDeviceToken(deviceToken: String): UserDeviceToken? =
+        userDeviceTokenRepository.findByDeviceToken(deviceToken)
+            ?.let { userDeviceTokenMapper.toDomain(it) }
 
-        val entityToSave = resolveEntity(token, userDeviceToken)
-
-        return userDeviceTokenMapper.toDomain(
-            userDeviceTokenRepository.save(entityToSave)
+    override fun save(userDeviceToken: UserDeviceToken): UserDeviceToken =
+        userDeviceTokenMapper.toDomain(
+            userDeviceTokenRepository.save(userDeviceTokenMapper.toEntity(userDeviceToken))
         )
-    }
-
-    private fun resolveEntity(token: String, domain: UserDeviceToken): UserDeviceTokenJpaEntity {
-        val existingEntity = userDeviceTokenRepository.findByDeviceToken(token)
-
-        return if (existingEntity != null) {
-            val updatedDomain = userDeviceTokenMapper.toDomain(existingEntity).update(domain.userId)
-            userDeviceTokenMapper.toEntity(updatedDomain)
-        } else {
-            userDeviceTokenMapper.toEntity(domain)
-        }
-    }
 }

@@ -1,7 +1,7 @@
 package dsm.pick2024.domain.user.service
 
 import dsm.pick2024.domain.devicetoken.domain.UserDeviceToken
-import dsm.pick2024.domain.devicetoken.port.out.SaveUserDeviceTokenPort
+import dsm.pick2024.domain.devicetoken.port.out.UserDeviceTokenPort
 import dsm.pick2024.domain.user.exception.PasswordMissMatchException
 import dsm.pick2024.domain.user.port.`in`.UserFinderUseCase
 import dsm.pick2024.domain.user.port.`in`.UserLoginUseCase
@@ -18,7 +18,7 @@ class UserLoginService(
     private val passwordEncoder: PasswordEncoder,
     private val userFinderUseCase: UserFinderUseCase,
     private val jwtTokenProvider: JwtTokenProvider,
-    private val saveUserDeviceTokenPort: SaveUserDeviceTokenPort
+    private val userDeviceTokenPort: UserDeviceTokenPort
 ) : UserLoginUseCase {
 
     @Transactional
@@ -30,14 +30,9 @@ class UserLoginService(
         }
 
         request.deviceToken?.let { token ->
-            saveUserDeviceTokenPort.save(
-                UserDeviceToken(
-                    id = UUID.randomUUID(),
-                    userId = user.id,
-                    deviceToken = token,
-                    os = request.os
-                )
-            )
+            val tokenToSave = userDeviceTokenPort.findByDeviceToken(token)?.update(user.id)
+                ?: UserDeviceToken(id = UUID.randomUUID(), userId = user.id, deviceToken = token, os = request.os)
+            userDeviceTokenPort.save(tokenToSave)
         }
 
         return jwtTokenProvider.generateToken(request.accountId, user.role.name)
