@@ -21,6 +21,6 @@ class WeekendMealPeriodJpaEntity(
     val month: Month,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
+    @JoinColumn(name = "admin_id", unique = true)
     val admin: AdminJpaEntity
 ) : BaseUUIDEntity(id)
