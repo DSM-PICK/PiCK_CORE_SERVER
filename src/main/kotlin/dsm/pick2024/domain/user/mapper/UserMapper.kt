@@ -15,7 +15,6 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             name = name,
             profile = profile,
             role = role,
-            deviceToken = deviceToken,
             grade = grade,
             classNum = classNum,
             num = num
@@ -30,7 +29,6 @@ class UserMapper : GenericMapper<UserJpaEntity, User> {
             name = name,
             profile = profile,
             role = role,
-            deviceToken = deviceToken,
             grade = grade,
             classNum = classNum,
             num = num

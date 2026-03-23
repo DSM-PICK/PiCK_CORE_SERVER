@@ -77,6 +77,11 @@ class WeekendMealPersistenceAdapter(
             status
         )
 
+    override fun findAllByUserIds(userIds: List<UUID>): List<WeekendMeal> {
+        return weekendMealRepository.findAllByUserIdIn(userIds)
+            .map { weekendMealMapper.toDomain(it) }
+    }
+
     override fun findAll(): List<WeekendMeal> =
         jpaQueryFactory
             .selectFrom(QWeekendMealJpaEntity.weekendMealJpaEntity)

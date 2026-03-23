@@ -5,6 +5,6 @@ import java.util.*
 
 interface WeekendMealFinderUseCase {
     fun findByIdOrThrow(id: UUID): WeekendMeal
-
     fun findByUserIdOrThrow(id: UUID): WeekendMeal
+    fun findByUserIds(userIds: List<UUID>): List<WeekendMeal>
 }
