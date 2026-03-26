@@ -170,12 +170,14 @@ class AttendanceService {
     private fun getMatchPeriods(startTime: LocalTime, endTime: LocalTime): Pair<String, String> {
         val startIndex = periods.indexOfFirst { (start, endAt) ->
             startTime in start..endAt
-        }
+        }.takeIf { it != -1 }
+            ?: if (startTime < periods.first().first) 0 else throw InvalidPeriodException
+
         val endIndex = periods.indexOfFirst { (start, endAt) ->
             endTime in start..endAt
         }
 
-        if (startIndex == -1 || endIndex == -1) throw InvalidPeriodException
+        if (endIndex == -1) throw InvalidPeriodException
 
         return periodNames[startIndex] to periodNames[endIndex]
     }
