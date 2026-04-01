@@ -126,10 +126,10 @@ class NeisMealFeignClientService(
             sb.toString()
         }
 
-    private fun getMealType(mealCode: String): MealType? = when (mealCode) {
+    private fun getMealType(mealCode: String): MealType = when (mealCode) {
         "1" -> MealType.BREAKFAST
         "2" -> MealType.LUNCH
         "3" -> MealType.DINNER
-        else -> null
+        else -> throw IllegalArgumentException("알 수 없는 NEIS 식사 코드입니다: $mealCode")
     }
 }

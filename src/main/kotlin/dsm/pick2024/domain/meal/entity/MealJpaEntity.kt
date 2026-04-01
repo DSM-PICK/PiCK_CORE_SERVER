@@ -23,8 +23,8 @@ class MealJpaEntity(
     val mealDate: LocalDate,
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = true, columnDefinition = "TEXT")
-    val mealType: MealType?,
+    @Column(nullable = false, columnDefinition = "TEXT")
+    val mealType: MealType,
 
     val menu: String? = null,
 
