@@ -30,8 +30,11 @@ class RetryMealService(
                     .mapNotNull { (mealType, mealsOfType) ->
                         val menu = mealsOfType.mapNotNull { it.menu }.distinct().joinToString("||")
                         val cal = mealsOfType.map { it.cal }.get(0)
-                        if (menu.isNotEmpty()) Meal(mealDate = date, mealType = mealType, menu = menu, cal = cal)
-                        else null
+                        if (menu.isNotEmpty()) {
+                            Meal(mealDate = date, mealType = mealType, menu = menu, cal = cal)
+                        } else {
+                            null
+                        }
                     }
             }
 
