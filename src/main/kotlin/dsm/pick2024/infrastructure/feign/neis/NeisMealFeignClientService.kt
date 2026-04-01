@@ -10,6 +10,7 @@ import dsm.pick2024.infrastructure.feign.neis.property.NeisFeignClientRequestPro
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @Component
@@ -21,8 +22,15 @@ class NeisMealFeignClientService(
 
     fun getNeisInfoToEntity(): MutableList<Meal> {
         val kstToday = TimeUtils.nowLocalDate()
-        val nextMonth = kstToday.plusMonths(1)
+        val nextMonth = YearMonth.from(kstToday).plusMonths(1)
+        return fetchMealsByYearMonth(nextMonth)
+    }
 
+    fun getNeisInfoToEntityByYearMonth(yearMonth: YearMonth): MutableList<Meal> {
+        return fetchMealsByYearMonth(yearMonth)
+    }
+
+    private fun fetchMealsByYearMonth(yearMonth: YearMonth): MutableList<Meal> {
         val neisMealServiceDietInfoString =
             neisFeignClient.getMealServiceDietInfo(
                 key = neisKey,
@@ -31,8 +39,8 @@ class NeisMealFeignClientService(
                 pageSize = NeisFeignClientRequestProperty.PAGE_SIZE,
                 sdSchoolCode = NeisFeignClientRequestProperty.SD_SCHUL_CODE,
                 atptCode = NeisFeignClientRequestProperty.ATPT_OFCDC_CODE,
-                startedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(1).toString()),
-                endedYmd = changeDateTimeFormat(nextMonth.withDayOfMonth(nextMonth.lengthOfMonth()).toString())
+                startedYmd = changeDateTimeFormat(yearMonth.atDay(1).toString()),
+                endedYmd = changeDateTimeFormat(yearMonth.atEndOfMonth().toString())
             )
 
         val mealJson =
