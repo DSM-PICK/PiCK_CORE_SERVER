@@ -1,4 +1,10 @@
-CREATE TABLE `tbl_user_device_token`
+ALTER TABLE `tbl_user`
+    DROP COLUMN `device_token`;
+
+ALTER TABLE `tbl_admin`
+    DROP COLUMN `device_token`;
+
+CREATE TABLE IF NOT EXISTS `tbl_user_device_token`
 (
     `id`           BINARY(16)   NOT NULL,
     `user_id`      BINARY(16)   NOT NULL,
@@ -14,7 +20,7 @@ CREATE TABLE `tbl_user_device_token`
             ON DELETE CASCADE
 );
 
-CREATE TABLE `tbl_admin_device_token`
+CREATE TABLE IF NOT EXISTS `tbl_admin_device_token`
 (
     `id`           BINARY(16)   NOT NULL,
     `admin_id`     BINARY(16)   NOT NULL,
