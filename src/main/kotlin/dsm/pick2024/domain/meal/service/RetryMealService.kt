@@ -19,6 +19,7 @@ class RetryMealService(
 
     private val transactionTemplate = TransactionTemplate(transactionManager)
 
+    @Synchronized
     override fun execute() {
         val currentMonth = YearMonth.from(TimeUtils.nowLocalDate())
 
