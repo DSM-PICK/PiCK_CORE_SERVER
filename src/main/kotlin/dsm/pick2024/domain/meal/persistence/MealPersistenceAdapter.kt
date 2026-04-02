@@ -8,6 +8,7 @@ import dsm.pick2024.domain.meal.persistence.repository.MealRepository
 import dsm.pick2024.domain.meal.port.out.MealPort
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.YearMonth
 
 @Component
 class MealPersistenceAdapter(
@@ -25,5 +26,12 @@ class MealPersistenceAdapter(
             .where(QMealJpaEntity.mealJpaEntity.mealDate.eq(date))
             .fetch()
             .map { mealMapper.toDomain(it) }
+    }
+
+    override fun deleteByYearMonth(yearMonth: YearMonth) {
+        mealRepository.deleteAllByMealDateBetween(
+            yearMonth.atDay(1),
+            yearMonth.atEndOfMonth()
+        )
     }
 }

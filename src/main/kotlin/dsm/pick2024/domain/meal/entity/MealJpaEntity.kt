@@ -8,8 +8,14 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.EnumType
 import javax.persistence.Enumerated
+import javax.persistence.Table
+import javax.persistence.UniqueConstraint
 
-@Entity(name = "tbl_meal")
+@Entity
+@Table(
+    name = "tbl_meal",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["mealDate", "mealType"])]
+)
 class MealJpaEntity(
     id: UUID?,
 
@@ -17,8 +23,8 @@ class MealJpaEntity(
     val mealDate: LocalDate,
 
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = true, columnDefinition = "TEXT")
-    val mealType: MealType?,
+    @Column(nullable = false, columnDefinition = "TEXT")
+    val mealType: MealType,
 
     val menu: String? = null,
 

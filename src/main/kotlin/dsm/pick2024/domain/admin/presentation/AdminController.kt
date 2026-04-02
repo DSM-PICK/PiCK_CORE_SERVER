@@ -1,6 +1,7 @@
 package dsm.pick2024.domain.admin.presentation
 
 import dsm.pick2024.domain.admin.port.`in`.*
+import dsm.pick2024.domain.meal.port.`in`.RetryMealUseCase
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminLoginRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminPasswordResetRequest
 import dsm.pick2024.domain.admin.presentation.dto.request.AdminSignUpRequest
@@ -31,7 +32,8 @@ class AdminController(
     private val verifySecretKeyUseCase: VerifySecretKeyUseCase,
     private val adminPasswordResetUseCase: AdminPasswordResetUseCase,
     private val adminDeleteUseCase: AdminDeleteUseCase,
-    private val queryMainInfoUseCase: QueryMainInfoUseCase
+    private val queryMainInfoUseCase: QueryMainInfoUseCase,
+    private val retryMealUseCase: RetryMealUseCase
 ) {
     @Operation(summary = "어드민 로그인 API")
     @PostMapping("/login")
@@ -80,4 +82,10 @@ class AdminController(
     @GetMapping("/main")
     fun queryMainInfo(): QueryMainInfoResponse =
         queryMainInfoUseCase.execute()
+
+    @Operation(summary = "이번 달 급식 데이터 수동 재조회 API")
+    @PostMapping("/scheduler/meal/retry")
+    fun retryMealScheduler() {
+        retryMealUseCase.execute()
+    }
 }
