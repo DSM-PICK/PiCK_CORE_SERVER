@@ -9,7 +9,7 @@ import java.util.UUID
 data class Meal(
     val id: UUID = UUID(0, 0),
     val mealDate: LocalDate,
-    val mealType: MealType?,
+    val mealType: MealType,
     val menu: String?,
     val cal: String?
 ) {

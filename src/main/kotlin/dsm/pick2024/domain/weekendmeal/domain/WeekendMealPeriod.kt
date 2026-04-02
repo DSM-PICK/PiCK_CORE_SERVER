@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Aggregate
 data class WeekendMealPeriod(
-    val id: UUID = UUID(0, 0),
+    val id: UUID = UUID.randomUUID(),
     val admin: Admin,
     var start: LocalDate,
     var end: LocalDate,

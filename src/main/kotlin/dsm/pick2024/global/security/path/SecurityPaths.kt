@@ -69,7 +69,8 @@ object SecurityPaths {
         "/status/saveAll",
         "/schedule/save",
         "/notice/create",
-        "/weekend-meal/application-list"
+        "/weekend-meal/application-list",
+        "/admin/scheduler/meal/retry"
     )
     val SCH_DELETE_ENDPOINTS = arrayOf(
         "/after/**",
