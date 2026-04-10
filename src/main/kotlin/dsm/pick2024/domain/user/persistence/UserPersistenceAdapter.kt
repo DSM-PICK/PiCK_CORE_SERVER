@@ -46,6 +46,9 @@ class UserPersistenceAdapter(
         return userRepository.findByAccountId(accountId)?.let { userMapper.toDomain(it) }
     }
 
+    override fun findByGradeAndClassNum(grade: Int, classNum: Int): List<User> =
+        userRepository.findAllByGradeAndClassNum(grade, classNum).map { userMapper.toDomain(it) }
+
     override fun deleteById(userId: UUID) {
         userRepository.deleteById(userId)
     }
