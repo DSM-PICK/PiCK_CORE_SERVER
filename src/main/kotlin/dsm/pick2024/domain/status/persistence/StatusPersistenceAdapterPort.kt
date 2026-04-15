@@ -43,4 +43,10 @@ class StatusPersistenceAdapterPort(
     }
 
     override fun findAll(): List<Status> = statusRepository.findAll().map { statusMapper.toDomain(it) }
+
+    override fun deleteByUserIds(userIds: List<UUID>) {
+        if (userIds.isNotEmpty()) {
+            statusRepository.deleteByUserIdIn(userIds)
+        }
+    }
 }

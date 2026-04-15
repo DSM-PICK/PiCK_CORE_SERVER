@@ -12,4 +12,6 @@ interface StatusRepository : Repository<StatusJpaEntity, UUID> {
     fun save(entity: StatusJpaEntity)
 
     fun findAll(): List<StatusJpaEntity>
+
+    fun deleteByUserIdIn(userIds: Collection<UUID>)
 }

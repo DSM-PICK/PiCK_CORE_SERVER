@@ -16,7 +16,8 @@ data class DebeziumProperties(
         val name: String,
         val connectorClass: String = "io.debezium.connector.mysql.MySqlConnector",
         val tasksMax: Int = 1,
-        val timePrecisionMode: String = "connect"
+        val timePrecisionMode: String = "connect",
+        val snapshotMode: String = "never"
     )
 
     data class DatabaseConfig(
@@ -54,6 +55,7 @@ data class DebeziumProperties(
             "connector.class" to connector.connectorClass,
             "tasks.max" to connector.tasksMax.toString(),
 
+            "snapshot.mode" to connector.snapshotMode,
             "time.precision.mode" to connector.timePrecisionMode,
 
             "database.server.timezone" to database.serverTimeZone,
