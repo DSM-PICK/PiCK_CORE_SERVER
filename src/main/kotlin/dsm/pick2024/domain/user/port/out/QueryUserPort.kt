@@ -15,4 +15,6 @@ interface QueryUserPort {
     fun findAll(): List<User>
 
     fun findByUserId(userId: UUID): User?
+
+    fun findByGradeAndClassNum(grade: Int, classNum: Int): List<User>
 }
