@@ -53,4 +53,6 @@ object Dependencies {
 
     const val SPRING_RETRY = "org.springframework.retry:spring-retry:${DependencyVersions.SPRING_RETRY_VERSION}"
 
+    const val FLYWAY = "org.flywaydb:flyway-core"
+
 }
