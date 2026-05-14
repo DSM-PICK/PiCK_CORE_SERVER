@@ -83,6 +83,8 @@ dependencies {
     implementation(Dependencies.APACHE_HTTP_CLIENT)
 
     implementation(Dependencies.SPRING_RETRY)
+
+    implementation(Dependencies.FLYWAY)
 }
 
 tasks.withType<KotlinCompile> {
