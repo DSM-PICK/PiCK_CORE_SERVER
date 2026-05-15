@@ -42,3 +42,5 @@ out/
 
 ### Secrets ###
 .env
+
+!.idea/fileTemplates
