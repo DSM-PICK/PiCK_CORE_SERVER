@@ -85,6 +85,8 @@ dependencies {
     implementation(Dependencies.SPRING_RETRY)
 
     implementation(Dependencies.FLYWAY)
+
+    implementation(Dependencies.FLYWAY_MYSQL)
 }
 
 tasks.withType<KotlinCompile> {
