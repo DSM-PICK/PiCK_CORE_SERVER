@@ -14,4 +14,8 @@ class OutboxAdapter(
     override fun saveOutbox(outbox: Outbox) {
         outboxRepository.save(outboxMapper.toEntity(outbox))
     }
+
+    override fun deleteAll() {
+        outboxRepository.deleteAll()
+    }
 }
