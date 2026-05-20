@@ -1,6 +1,7 @@
 package dsm.pick2024.infrastructure.schedule
 
 import dsm.pick2024.domain.application.port.out.DeleteApplicationPort
+import dsm.pick2024.domain.outbox.port.out.DeleteOutboxPort
 import dsm.pick2024.domain.attendance.port.`in`.ResetAttendanceUseCase
 import dsm.pick2024.domain.classroom.port.out.DeleteClassRoomPort
 import dsm.pick2024.domain.meal.port.`in`.MealUseCase
@@ -28,7 +29,8 @@ class ScheduleService(
     private val updateWeekendMealUseCase: UpdateWeekendMealUseCase,
     private val sendNotificationSelfStudyTeacherUseCase: SendNotificationSelfStudyTeacherUseCase,
     private val notificationWeekendMealUseCase: NotificationWeekendMealUseCase,
-    private val sseRegistryPort: SseRegistryPort
+    private val sseRegistryPort: SseRegistryPort,
+    private val deleteOutboxPort: DeleteOutboxPort
 ) {
     @Scheduled(cron = "0 30 20 * * ?", zone = "Asia/Seoul")
     fun deleteTable() {
@@ -82,5 +84,10 @@ class ScheduleService(
     @Scheduled(cron = "0/30 * 8-21 * * 1-5", zone = "Asia/Seoul")
     fun sseHeartbeat() {
         sseRegistryPort.sendHeartbeat()
+    }
+
+    @Scheduled(cron = "0 59 23 * * ?", zone = "Asia/Seoul")
+    fun cleanOutbox() {
+        deleteOutboxPort.deleteAll()
     }
 }

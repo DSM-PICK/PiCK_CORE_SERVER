@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+.idea/*
 *.iws
 *.iml
 *.ipr
@@ -39,3 +39,12 @@ out/
 *.log
 
 .DS_Store
+
+### Secrets ###
+.env
+
+### File Template ###
+!.idea/fileTemplates
+
+### AI ###
+.omc
