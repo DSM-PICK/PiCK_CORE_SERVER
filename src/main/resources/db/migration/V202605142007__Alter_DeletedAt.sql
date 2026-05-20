@@ -1,0 +1,2 @@
+ALTER TABLE tbl_user
+    ADD COLUMN deleted_at DATETIME NULL DEFAULT NULL;
