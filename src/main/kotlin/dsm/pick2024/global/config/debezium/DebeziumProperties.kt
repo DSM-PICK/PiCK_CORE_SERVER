@@ -17,7 +17,7 @@ data class DebeziumProperties(
         val connectorClass: String = "io.debezium.connector.mysql.MySqlConnector",
         val tasksMax: Int = 1,
         val timePrecisionMode: String = "connect",
-        val snapshotMode: String = "never"
+        val snapshotMode: String
     )
 
     data class DatabaseConfig(
