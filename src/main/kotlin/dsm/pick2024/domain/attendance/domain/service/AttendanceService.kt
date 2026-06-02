@@ -17,7 +17,7 @@ class AttendanceService {
             LocalTime.of(10, 40) to LocalTime.of(11, 40), // 3교시
             LocalTime.of(11, 40) to LocalTime.of(13, 30), // 4교시
             LocalTime.of(13, 30) to LocalTime.of(14, 40), // 5교시
-            LocalTime.of(14, 30) to LocalTime.of(15, 30), // 6교시
+            LocalTime.of(14, 40) to LocalTime.of(15, 30), // 6교시
             LocalTime.of(15, 30) to LocalTime.of(16, 30), // 7교시
             LocalTime.of(16, 30) to LocalTime.of(18, 40), // 8교시
             LocalTime.of(18, 40) to LocalTime.of(19, 40), // 9교시
