@@ -14,7 +14,7 @@ class ResetStatusService(
     private val saveStatusPort: SaveStatusPort
 ) : ResetStatusUseCase {
 
-    @Transactional(readOnly = true)
+    @Transactional
     override fun reset() {
         val allStudent = queryStatusPort.findAll()
         val update = mutableListOf<Status>()
