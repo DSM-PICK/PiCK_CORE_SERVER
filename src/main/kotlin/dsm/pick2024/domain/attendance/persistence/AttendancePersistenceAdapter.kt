@@ -24,7 +24,7 @@ class AttendancePersistenceAdapter(
     }
 
     override fun findByUserId(userId: UUID) =
-        attendanceJpaRepository.findByUserId(userId).let { attendanceMapper.toDomain(it) }
+        attendanceJpaRepository.findFirstByUserId(userId)?.let { attendanceMapper.toDomain(it) }
 
     override fun findAll() = attendanceJpaRepository.findAll().map { attendanceMapper.toDomain(it) }
 
