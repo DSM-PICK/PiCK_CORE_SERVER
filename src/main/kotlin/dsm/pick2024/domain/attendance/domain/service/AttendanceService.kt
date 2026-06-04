@@ -46,7 +46,7 @@ class AttendanceService {
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
                 val endTime = LocalTime.parse(end)
-                if (startTime > endTime ||
+                if (!startTime.isBefore(endTime) ||
                     endTime > LocalTime.of(20, 30) ||
                     startTime < LocalTime.of(8, 30)
                 ) {
