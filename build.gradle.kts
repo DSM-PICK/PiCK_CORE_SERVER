@@ -87,6 +87,9 @@ dependencies {
     implementation(Dependencies.FLYWAY)
 
     implementation(Dependencies.FLYWAY_MYSQL)
+
+    implementation(Dependencies.ACTUATOR)
+    implementation(Dependencies.MICROMETER_PROMETHEUS)
 }
 
 tasks.withType<KotlinCompile> {
