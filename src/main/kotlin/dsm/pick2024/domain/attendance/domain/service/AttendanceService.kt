@@ -17,7 +17,7 @@ class AttendanceService {
             LocalTime.of(10, 40) to LocalTime.of(11, 40), // 3교시
             LocalTime.of(11, 40) to LocalTime.of(13, 30), // 4교시
             LocalTime.of(13, 30) to LocalTime.of(14, 40), // 5교시
-            LocalTime.of(14, 30) to LocalTime.of(15, 30), // 6교시
+            LocalTime.of(14, 40) to LocalTime.of(15, 30), // 6교시
             LocalTime.of(15, 30) to LocalTime.of(16, 30), // 7교시
             LocalTime.of(16, 30) to LocalTime.of(18, 40), // 8교시
             LocalTime.of(18, 40) to LocalTime.of(19, 40), // 9교시
@@ -46,7 +46,7 @@ class AttendanceService {
             ApplicationType.TIME -> {
                 val startTime = LocalTime.parse(start)
                 val endTime = LocalTime.parse(end)
-                if (startTime > endTime ||
+                if (!startTime.isBefore(endTime) ||
                     endTime > LocalTime.of(20, 30) ||
                     startTime < LocalTime.of(8, 30)
                 ) {
@@ -168,17 +168,12 @@ class AttendanceService {
     }
 
     private fun getMatchPeriods(startTime: LocalTime, endTime: LocalTime): Pair<String, String> {
-        val startIndex = periods.indexOfFirst { (start, endAt) ->
-            startTime in start..endAt
-        }.takeIf { it != -1 }
-            ?: if (startTime < periods.first().first) 0 else throw InvalidPeriodException
+        val matchedIndices = periods.withIndex()
+            .filter { (_, period) -> period.first.isBefore(endTime) && period.second.isAfter(startTime) }
+            .map { it.index }
 
-        val endIndex = periods.indexOfFirst { (start, endAt) ->
-            endTime in start..endAt
-        }
+        if (matchedIndices.isEmpty()) throw InvalidPeriodException
 
-        if (endIndex == -1) throw InvalidPeriodException
-
-        return periodNames[startIndex] to periodNames[endIndex]
+        return periodNames[matchedIndices.first()] to periodNames[matchedIndices.last()]
     }
 }

@@ -56,4 +56,7 @@ object Dependencies {
     const val FLYWAY = "org.flywaydb:flyway-core"
     const val FLYWAY_MYSQL = "org.flywaydb:flyway-mysql"
 
+    const val ACTUATOR = "org.springframework.boot:spring-boot-starter-actuator"
+    const val MICROMETER_PROMETHEUS = "io.micrometer:micrometer-registry-prometheus"
+
 }

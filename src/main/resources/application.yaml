@@ -72,6 +72,18 @@ auth:
         header: ${JWT_HEADER}
         prefix: ${JWT_PREFIX}
 
+management:
+    endpoints:
+        web:
+            exposure:
+                include: prometheus,health
+    endpoint:
+        prometheus:
+            enabled: true
+    metrics:
+        tags:
+            application: pick-core
+
 server:
     servlet:
         context-path: /dsm-pick

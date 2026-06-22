@@ -9,7 +9,7 @@ interface AttendanceRepository : Repository<AttendanceJpaEntity, UUID> {
 
     fun saveAll(entity: Iterable<AttendanceJpaEntity>)
 
-    fun findByUserId(userId: UUID): AttendanceJpaEntity
+    fun findFirstByUserId(userId: UUID): AttendanceJpaEntity?
 
     fun findAll(): List<AttendanceJpaEntity>
 

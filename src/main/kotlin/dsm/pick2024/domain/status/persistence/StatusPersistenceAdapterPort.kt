@@ -35,7 +35,7 @@ class StatusPersistenceAdapterPort(
     }
 
     override fun findStatusByUserId(id: UUID): Status? {
-        return statusRepository.findByUserId(id).let { statusMapper.toDomain(it) }
+        return statusRepository.findFirstByUserId(id)?.let { statusMapper.toDomain(it) }
     }
 
     override fun save(status: Status) {

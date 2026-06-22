@@ -33,5 +33,6 @@ class MealPersistenceAdapter(
             yearMonth.atDay(1),
             yearMonth.atEndOfMonth()
         )
+        mealRepository.flush()
     }
 }
