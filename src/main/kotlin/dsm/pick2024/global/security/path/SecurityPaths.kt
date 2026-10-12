@@ -2,6 +2,7 @@ package dsm.pick2024.global.security.path
 
 object SecurityPaths {
     val PERMIT_ALL_ENDPOINTS = arrayOf(
+        "/actuator/**",
         "/admin/login",
         "/admin/refresh",
         "/user/login",
