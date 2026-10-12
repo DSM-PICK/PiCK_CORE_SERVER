@@ -16,6 +16,9 @@ dependencyManagement {
     }
 }
 
+// Tomcat 9.0.80의 SSE 연결 종료 시 NPE(Bug 67235) 수정 버전
+extra["tomcat.version"] = "9.0.83"
+
 group = "DSM"
 version = "0.0.1-SNAPSHOT"
 

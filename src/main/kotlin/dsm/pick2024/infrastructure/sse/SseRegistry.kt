@@ -36,13 +36,11 @@ class SseRegistry : SseRegistryPort {
             try {
                 emitter.send(SseEmitter.event().data(data ?: "."))
             } catch (e: Exception) {
-                if (isClientAbort(e)) {
-                    emitter.completeWithError(e)
-                    remove(userId, emitter)
-                    continue
+                // send 실패 시 컨테이너가 onError로 정리하므로 completeWithError를 호출하지 않는다
+                // (끊긴 연결에 completeWithError → error dispatch가 Tomcat NPE를 유발)
+                if (!isClientAbort(e)) {
+                    logger.error("User Event Send Failed ${e.message}", e)
                 }
-                logger.error("User Event Send Failed ${e.message}", e)
-                emitter.completeWithError(e)
                 remove(userId, emitter)
             }
         }
